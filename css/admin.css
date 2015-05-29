@@ -1,0 +1,28 @@
+
+.barra-Principal,.pie {
+	margin-top: 5px;
+	margin-right: 2%;
+	margin-left: 2%;
+	border-radius: 5%;
+	
+}
+
+.pie{
+	text-align: center;
+	 color: #777;
+}
+
+header{width:95%;margin: 0 auto;}
+
+.glyphicon{padding:2px;}
+.glyphicon-home{font-size:14px;}
+
+li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
+
+#inicio{font-size:16px;}
+
+.header-izq{float:left;}
+.header-der{float:right;}
+
+.clearfix{clear: both}
+#contenedor{width:90%; margin:0 auto;}

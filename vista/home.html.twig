@@ -1,28 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Plantilla básica de Bootstrap</title>
+{% extends "basePrivada.html.twig" %}
  
-    <!-- CSS de Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
- 
-    <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <h1>¡Hola mundo!</h1>
- 
-    <!-- Librería jQuery requerida por los plugins de JavaScript -->
-    <script src="http://code.jquery.com/jquery.js"></script>
- 
-    <!-- Todos los plugins JavaScript de Bootstrap (también puedes
-         incluir archivos JavaScript individuales de los únicos
-         plugins que utilices) -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>
+{% block title %} Inicio {% endblock %}
+{% block contenedor %}
+   
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec cursus odio. Quisque sit amet viverra sem. Nulla a cursus purus, et posuere eros. Aliquam commodo odio ut pretium eleifend. Duis facilisis orci vitae sollicitudin convallis. Sed cursus mi lacus, nec maximus nunc pretium vitae. Integer placerat ac elit at eleifend. Nullam scelerisque facilisis nulla, in semper mi venenatis quis. Curabitur iaculis interdum porta. Cras nunc est, efficitur vel commodo sed, semper id odio. Donec eu metus euismod, aliquet lorem eget, pulvinar est. Quisque non turpis neque. Nam sit amet dictum diam, vel commodo mauris. Curabitur vel lacus eget leo ornare sollicitudin. Aenean tempor malesuada lacus. Suspendisse malesuada est quam, nec viverra ligula tempus eu.
+
+Nullam quis orci erat. Vestibulum vestibulum libero ultricies bibendum molestie. Nam dignissim laoreet porta. Phasellus eleifend, quam vel venenatis dictum, nisi elit bibendum orci, eu semper sem ex ac arcu. Vivamus laoreet, sem id commodo volutpat, nibh lectus malesuada tortor, id auctor nisi leo sed ante. Suspendisse sagittis magna nisi, et semper nibh finibus sed. Phasellus vehicula enim sapien. Pellentesque sit amet purus risus. In venenatis efficitur nisl ac ultrices. Quisque sed sollicitudin orci.
+
+Cras tellus ex, malesuada at porttitor ut, aliquam at libero. Ut dictum mi placerat tellus pellentesque, eu venenatis augue dictum. Sed sed dictum augue. Curabitur ut interdum diam. Donec blandit aliquet tellus nec dictum. Fusce ornare aliquam tempor. Etiam at pretium lectus, blandit mattis mi. Curabitur pharetra dolor non arcu sodales, quis auctor mauris finibus. Donec aliquet cursus erat at ornare. Mauris sit amet mollis nunc, tristique eleifend dui. Etiam dictum eu lorem at pellentesque. Donec ante orci, aliquam ut rhoncus vel, gravida in lorem. Suspendisse ultrices ante nec quam aliquam auctor. Fusce ante odio, elementum sit amet varius ut, pretium quis augue. Proin sed ligula molestie, facilisis orci et, vehicula orci.
+         
+{% endblock %}
