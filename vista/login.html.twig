@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="../css/admin.css" rel="stylesheet" media="screen">
+        <title> Sistema de gestión Cámara Económica Tres Arroyos</title> 
+    </head>
+    <div id="loginbox" class="cajaLogin col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">    
+
+
+    {% if error is null %}
+    
+    {% else %}
+      <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+            {% if error == 1 %}
+              Debe ingresar un usuario válido
+            {% elseif error == 2 %}
+              Debe ingresar una contraseña válida
+            {% elseif error == 3 %}
+              Se produjo un error desconocido, intente nuevamente
+            {% elseif error == 4 %}
+              Los datos son incorrectos
+            {% endif %}
+      </div>
+    {% endif %}
+
+        <div class="panel panel-info" >
+          <div class="panel-heading">
+              <div class="panel-title">Ingrese sus datos </div>
+          </div>     
+          <div class="panel-body panel-login">              
+            <form id="loginform" action="comprobar-login.php" class="form-horizontal" role="form" method="POST">                    
+              <div class="input-group input-login">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input id="login-username" type="text" class="form-control" name="user" value="" placeholder="Usuario ">                                        
+              </div>                 
+              <div class="input-group input-login">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                  <input id="login-password" type="password" class="form-control" name="clave" placeholder="Clave de acceso">
+              </div>
+                                         
+              <div class="form-group">
+                  <!-- Button -->
+                  <div class="col-md-4 col-sm-12 controls right">
+                      <button id="btn-login" class="btn btn-success boton-enviar" type="submit">Ingresar</button>
+                      
+                  </div>
+              </div>                 
+              </form>     
+            </div>                     
+        </div>
+      </div>
+
+</html>
+
