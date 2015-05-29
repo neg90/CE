@@ -1,0 +1,20 @@
+* { margin: 0px;padding: 0px; outline: 0;}
+html, body { width: 100%;}
+body {background: #fff;font-family: Verdana, Arial, Helvetica, sans-serif;}
+nav {text-align: center; font-size: 0.7em; width: 820px; margin: 20px auto; position: relative;}
+nav ul { list-style-type: none;}
+nav ul li.nivel1 { float: left;width: 162px;margin-right: 2px;position: relative;}
+nav ul li { float: left;}
+nav ul li a {display: block;text-decoration: none;color: #fff;background-color: #399;border: solid 1px #fff;padding: 8px;position: relative;}
+nav ul li a:hover, #menu ul li:hover a.nivel1 {background-color: #6CC;color: #000;position: relative;border-bottom: solid 1px #6CC;}
+nav ul li a.nivel1 {display: block!important;display: none;}
+nav ul li ul {display: none;}
+nav ul li a:hover ul, #menu ul li:hover ul {display: block;position: absolute;width: 816px;border: solid 1px #fff;border-top: none;background-color: #6CC;}
+nav ul li ul li a {width: 160px;padding: 6px 0px 8px 0px;border: none;background-color: #6CC;}
+nav ul li ul li a:hover {position: relative;text-decoration: underline;border-bottom: none;}
+table.falsa {border-collapse:collapse;border:0px;float: left;position: relative;}
+ul.uno {left: -0px;}
+ul.dos {left: -164px;}
+ul.tres {left: -328px;}
+ul.cuatro {left: -492px;}
+ul.cinco {left: -656px;}
