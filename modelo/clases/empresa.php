@@ -2,7 +2,7 @@
 
 class empresa {
 	//Atributos
-	private $id;
+	private $idempresa;
 	private $denominacion;
 	private $telefono;
 	private $domicilio;
@@ -12,13 +12,13 @@ class empresa {
 	private $cantempleados;
 	private $idcategoria;
 	private $fechainicioce;
-	private $nrosocio;
+	private $nrosocio;  //de momento autoincremental. no tiene set!!
 	private $activo;
 
-	public function	__construct($id,$denominacion,$telefono,$domicilio,$web,$idrubro,
+	public function	__construct($idempresa,$denominacion,$telefono,$domicilio,$web,$idrubro,
 	$detactividad,$cantempleados,$idcategoria,$fechainicioce,$nrosocio,$activo) {
 	
-		$this->id = $id;
+		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
 		$this->telefono = $telefono;
 		$this->domicilio = $domicilio;
@@ -33,8 +33,8 @@ class empresa {
 	
 	}
 
-	public function getId(){
-		return $this->id;
+	public function getIdempresa(){
+		return $this->idempresa;
 	}
 
 	public function getDenominacion(){
@@ -111,10 +111,6 @@ class empresa {
 
 	public function getNrosocio(){
 		return $this->nrosocio;
-	}
-
-	public function setNrosocio($nrosocio){
-		$this->nrosocio = $nrosocio;
 	}
 
 	public function setActivo($activo){

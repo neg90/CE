@@ -2,7 +2,7 @@
 
 class usuario {
 	//Atributos
-	private $id;
+	private $idusuario;
 	private $username;
 	private $nombre;
 	private $apellido;
@@ -12,9 +12,9 @@ class usuario {
 	private $idrol;
 	
 
-	public function	__construct ($id,$username,$correo,$password,$nombre,$apellido,$idrol) {
+	public function	__construct ($idusuario,$username,$correo,$password,$nombre,$apellido,$idrol) {
 		//Se crea activo el user
-		$this->id = $id;
+		$this->idusuario = $idusuario;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 		$this->username = $username;
@@ -25,8 +25,8 @@ class usuario {
 	}
 
 	//id
-	public function getId(){
-		return $this->id;
+	public function getIdusuario(){
+		return $this->idusuario;
 	}
 
 	//nombre
