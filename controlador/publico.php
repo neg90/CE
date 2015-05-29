@@ -13,7 +13,7 @@ class ControladorPublico {
 
 
 		$template = $twig->loadTemplate('home.html.twig');
-		echo $template->render(array('errorLoginVista'=>$errorLoginVista));
+		echo $template->render(array());
 		
 	}		
 }

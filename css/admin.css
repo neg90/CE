@@ -1,0 +1,15 @@
+
+.barra-Principal,.pie {
+	margin-top: 5%;
+	margin-right: 2%;
+	margin-left: 2%;
+	border-radius: 5%;
+	
+}
+
+.pie{
+	text-align: center;
+	 color: #777;
+}
+
+
