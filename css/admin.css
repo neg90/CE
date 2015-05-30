@@ -51,3 +51,7 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 .input-login{
 	margin:10px 0px 10px 0px;
 }
+
+.glyphicon-eye-open:hover{color:blue;}
+.glyphicon-pencil:hover{color:green;}
+.glyphicon-remove:hover{color:red;}
