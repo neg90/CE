@@ -2,23 +2,23 @@
 
 class rol {
 	//Atributos
-	private $id;
+	private $idrol;
 	private $nombre;
 	private $idpermiso;
 	
 	
 
-	public function	__construct ($id,$nombre,$idpermiso) {
+	public function	__construct ($idrol,$nombre,$idpermiso) {
 		//Se crea activo el user
-		$this->id = $id;
+		$this->idrol = $idrol;
 		$this->nombre = $nombre;
 		$this->idpermiso = $idpermiso;
 	
 	}
 
 	//id
-	public function getId(){
-		return $this->id;
+	public function getIdrol(){
+		return $this->idrol;
 	}
 
 	//nombre

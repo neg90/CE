@@ -5,7 +5,7 @@ class permisos {
 	//	R->Read
 	//	U->Update
 	//	d->Delete
-	private $id;
+	private $idpermiso;
 	private $csocio;
 	private $rsocio;
 	private $usocio;
@@ -29,10 +29,10 @@ class permisos {
 	
 	
 
-	public function	__construct ($id,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,$umedidor,$dmedidor,$cci,$rci,$uci,$dci,
+	public function	__construct ($idpermiso,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,$umedidor,$dmedidor,$cci,$rci,$uci,$dci,
 	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol){
 		
-		$this->id = $id;
+		$this->idpermiso = $idpermiso;
 		$this->csocio = $csocio;
 		$this->rsocio = $rsocio;
 		$this->usocio= $usocio;
@@ -57,12 +57,8 @@ class permisos {
 	
 	}
 
-	public function getId(){
-		return $this->id;
-	}
-
-	public function setId($id){
-		$this->id = $id;
+	public function getIdpermiso(){
+		return $this->idpermiso;
 	}
 
 	public function getCsocio(){

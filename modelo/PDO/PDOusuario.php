@@ -1,7 +1,7 @@
 <?php
 
 require_once '../modelo/conexionDB.php';
-require_once 'usuario.php';
+require_once '../modelo/clases/usuario.php';
 
 class PDOusuario extends usuario{
 	
