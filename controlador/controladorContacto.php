@@ -3,12 +3,12 @@
 	require_once('../modelo/conexionDB.php');
 	require_once('../modelo/PDO/PDOContacto.php');
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
+
 	
 
 class controladorContacto {
 
 	static function alta(){
-
 
 	}
 		
@@ -19,9 +19,10 @@ class controladorContacto {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
-		
+		$contactos = PDOContacto::listar();
+
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array());
+		echo $template->render(array('contactos'=>$contactos));
 
 		}
 		
