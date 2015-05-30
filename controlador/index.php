@@ -18,7 +18,7 @@
 	}
 
 	if (isset($_SESSION['user'])) {
-		header("Location:privado.php");
+		header("Location:privado.php?c=inicio&a=inicio");
 	}
 
 	include_once('publico.php');

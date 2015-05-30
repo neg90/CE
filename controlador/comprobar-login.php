@@ -3,6 +3,7 @@
 session_start();
 require_once('../modelo/conexionDB.php');
 require_once('../modelo/PDO/PDOusuario.php');
+
 	if (!isset($_SESSION['user']) && (htmlEntities(isset($_POST['user'])))) {
 		if (!empty(htmlEntities($_POST['user'])) && !empty(htmlEntities($_POST['clave']))){
 			$user = filter_var(htmlEntities($_POST['user']), FILTER_SANITIZE_STRING); //FILTER_SANITIZE_STRING -> Elimina etiquetas, opcionalmente elimina o codifica caracteres especiales.
@@ -17,14 +18,13 @@ require_once('../modelo/PDO/PDOusuario.php');
 				
 				if ($verificado == 1) {
 					$_SESSION['user'] = htmlEntities($_POST['user']);
-					header("Location:privado.php");
+					header("Location:privado.php?c=inicio&a=inicio");
 				} else {
 					//aca el usuario no existe por uno u otro campo
 	        		header("Location:index.php?aviso=4");
 				}
 			}catch(Exception $e){
-				//echo $e->getMessage();
-				//controladorError::ErrorDB();
+				
 			}
 		}elseif (empty(htmlEntities($_POST['user'])) && !empty(htmlEntities($_POST['clave']))) {
 	        header("Location: index.php?aviso=1");
