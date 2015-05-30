@@ -17,10 +17,8 @@
 		$_SESSION['error'] = 0;
 	}
 
-if (isset($_SESSION['user'])) {
-	
-	
-	header("Location:privado.php");
+	if (isset($_SESSION['user'])) {
+		header("Location:privado.php?c=inicio&a=inicio");
 	}
 
 	include_once('publico.php');
