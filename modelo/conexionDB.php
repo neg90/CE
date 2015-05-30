@@ -4,8 +4,8 @@
    private $tipo_de_base = 'mysql';       //todos los atributos privados
    private $host = 'localhost';
    private $nombre_de_base = 'CE';
-   private $usuario = 'root'; 
-   private $contrasena = '';
+   private $usuario = 'kapanga'; 
+   private $contrasena = 'kapanga';
 
    public function __construct() { //modificando el construcctor de pdo (parent invoca al constructor padre)
       try{

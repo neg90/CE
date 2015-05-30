@@ -9,9 +9,8 @@ class controladorContacto {
 
 	static function alta(){
 
-	
 
-		}
+	}
 		
 
 	static function listar(){
@@ -19,7 +18,6 @@ class controladorContacto {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		
 		
 		
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
