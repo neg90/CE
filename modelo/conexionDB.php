@@ -5,7 +5,7 @@
    private $host = 'localhost';
    private $nombre_de_base = 'CE';
    private $usuario = 'root'; 
-   private $contrasena = '';
+   private $contrasena = 'root';
 
    public function __construct() { //modificando el construcctor de pdo (parent invoca al constructor padre)
       try{

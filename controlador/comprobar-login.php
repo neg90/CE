@@ -36,9 +36,6 @@ require_once('../modelo/PDO/PDOusuario.php');
 	        header("Location: index.php?aviso=3");
 	        //quilombo en la franja de gaza
 		}
-	}elseif (isset($_SESSION['user'])) {
-		//el tipo tien sesion abierta
-		header("Location:privado.php");
 	}
  
 ?>

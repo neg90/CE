@@ -16,7 +16,7 @@ class empresa {
 	private $activo;
 
 	public function	__construct($idempresa,$denominacion,$telefono,$domicilio,$web,$idrubro,
-	$detactividad,$cantempleados,$idcategoria,$fechainicioce,$nrosocio,$activo) {
+	$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo) {
 	
 		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
@@ -28,7 +28,6 @@ class empresa {
 		$this->cantempleados = $cantempleados;
 		$this->idcategoria = $idcategoria;
 		$this->fechainicioce = $fechainicioce;
-		$this->nrosocio = $nrosocio;
 		$this->activo = true;
 	
 	}

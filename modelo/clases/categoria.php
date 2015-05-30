@@ -24,7 +24,6 @@ class categoria {
 		$this->descripcion = $descripcion;
 	}
 	
-
-
 }
+
 ?>
