@@ -12,6 +12,8 @@
 			$_SESSION['error'] = 3;
 		elseif (htmlentities($_GET['aviso'] == 4))
 			$_SESSION['error'] = 4;
+		elseif (htmlentities($_GET['aviso'] == 5))
+			$_SESSION['error'] = 5;
 	}
 	else {
 		$_SESSION['error'] = 0;

@@ -10,18 +10,20 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 	if (!isset($_SESSION['user']) and !isset($_SESSION['clave']) ){
 		header("Location:index.php?aviso=5");
 	}else{
+		$user = $_SESSION['user'];
+
 		$controlador=htmlEntities(@$_GET['c']); 
 		$accion=htmlEntities(@$_GET['a']); 
 		if ((!empty($controlador)) and (!empty($accion))){
 			if ($controlador=='inicio') {
 				if($accion == 'inicio'){
 					$template = $twig->loadTemplate('home.html.twig');
-					echo $template->render(array());
+					echo $template->render(array('user'=>$user));
 				}
 			}
 		}else{
 			//Avisar q pifio path
-			
+			//puso Acción o Controlador MAL
 		}
 
 	}
