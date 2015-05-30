@@ -52,5 +52,16 @@ class PDOusuario extends usuario{
 		$consulta->execute();
 		
 	}
+
+	public static function listarUsuarios(){
+		try{
+			$conexion=new conexion; //creo la instancia de la conexión
+		}
+		catch (PDOException $e){}
+		$consulta = $conexion->prepare('SELECT * FROM usuario');
+		$consulta->execute();
+		$filas=$consulta->fetchAll();
+		return $filas;
+	}
 }
 ?>
