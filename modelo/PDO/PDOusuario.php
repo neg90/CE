@@ -60,8 +60,8 @@ class PDOusuario extends usuario{
 		catch (PDOException $e){}
 		$consulta = $conexion->prepare('SELECT * FROM usuario');
 		$consulta->execute();
-		$filas=$consulta->fetchAll();
-		return $filas;
+		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		return $objeto;
 	}
 }
 ?>

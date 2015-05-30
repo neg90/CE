@@ -2,6 +2,7 @@
 
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
+require_once 'usuario.php';
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -30,6 +31,17 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorContacto::baja();
 				}elseif($accion == 'listar'){
 					controladorContacto::listar();
+				}
+			}
+			elseif($controlador == 'usuarios'){
+				if($accion == 'alta'){
+					controladorUsuario::alta();
+				}elseif($accion == 'modificar'){
+					controladorUsuario::modificar();
+				}elseif($accion == 'baja'){
+					controladorUsuario::baja();
+				}elseif($accion == 'listar'){
+					controladorUsuario::listar();
 				}
 			}
 		}else{
