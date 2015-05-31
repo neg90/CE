@@ -12,6 +12,19 @@
 	 color: #777;
 }
 
+.boton-centrado{
+	position: center;
+
+    float: none;
+}
+th,td {
+	text-align: center;
+}
+
+.fila-de-boton{
+	margin-top: 3%;
+}
+
 header{width:95%;margin: 0 auto;}
 
 .glyphicon{padding:2px;}
