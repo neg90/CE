@@ -37,6 +37,12 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
         // line 5
         echo "\t<form class=\"form-horizontal\" role=\"form\">
 \t\t<div class=\"contenedor-formulario\">
+\t\t\t<div class=\"row fila-de-titulo\">
+\t\t\t\t<div class=\" col-lg-4\"></div>
+\t\t\t\t <div class=\" col-lg-4\">
+\t\t\t\t\t<h3> Nuevo Contacto</h3>
+\t\t\t\t </div>
+\t\t\t</div>
 \t\t\t <div class=\"row\">
 \t\t\t \t<div class=\"col-lg-6\"> 
 \t\t\t \t\t<div class=\"form-group\">

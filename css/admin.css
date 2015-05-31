@@ -25,6 +25,12 @@ th,td {
 	margin-top: 3%;
 }
 
+.fila-de-titulo{
+	
+	text-align: center;
+	margin-bottom: 3%;
+}
+
 header{width:95%;margin: 0 auto;}
 
 .glyphicon{padding:2px;}
