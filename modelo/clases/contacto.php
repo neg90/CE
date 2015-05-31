@@ -9,11 +9,10 @@ class contacto {
 	private $domicio;
 	private $correo;
 	private $asociadosm;
-	private $fechainicioce;
 	private $activo;
 	
 
-	public function	__construct($id,$idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$fechainicioce,$activo) {
+	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$activo) {
 	
 		$this->idcontacto = $idcontacto;
 		
@@ -23,7 +22,6 @@ class contacto {
 		$this->domicio = $domicio;
 		$this->correo = $correo;
 		$this->asociadosm = $asociadosm;
-		$this->fechainicioce = $fechainicioce;
 		$this->activo = true;
 	
 	}
@@ -78,14 +76,6 @@ class contacto {
 
 	public function setAsociadosm($asociadosm){
 		$this->asociadosm = $asociadosm;
-	}
-
-	public function getFechainicioce(){
-		return $this->fechainicioce;
-	}
-
-	public function setFechainicioce($fechainicioce){
-		$this->fechainicioce = $fechainicioce;
 	}
 
 	public function getActivo(){

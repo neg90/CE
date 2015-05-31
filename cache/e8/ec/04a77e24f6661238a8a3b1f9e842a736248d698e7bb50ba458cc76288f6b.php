@@ -35,7 +35,7 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
     public function block_contenedor($context, array $blocks = array())
     {
         // line 5
-        echo "\t<form class=\"form-horizontal\" role=\"form\">
+        echo "\t<form class=\"form-horizontal\" action=\"privado.php?c=contacto&a=alta\" role=\"form\" method=\"POST\">
 \t\t<div class=\"contenedor-formulario\">
 \t\t\t<div class=\"row fila-de-titulo\">
 \t\t\t\t<div class=\" col-lg-4\"></div>
@@ -48,7 +48,7 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
 \t\t\t \t\t<div class=\"form-group\">
 \t\t\t\t\t\t<label class=\"col-lg-2 control-label\">Nombre: </label>
 \t\t\t\t\t\t<div class=\"col-lg-6 \"> 
-\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\">
+\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\" name=\"nombre\">
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
@@ -56,7 +56,7 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
 \t\t\t \t\t<div class=\"form-group\">
 \t\t\t\t\t\t<label class=\"col-lg-2 control-label\">Apellido: </label>
 \t\t\t\t\t\t<div class=\"col-lg-6 \"> 
-\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\">
+\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\" name=\"apellido\">
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
@@ -66,7 +66,7 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
 \t\t\t \t\t<div class=\"form-group\">
 \t\t\t\t\t\t<label class=\"col-lg-2 control-label\">Telefono: </label>
 \t\t\t\t\t\t<div class=\"col-lg-6 \"> 
-\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\">
+\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\" name=\"telefono\">
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
@@ -74,7 +74,7 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
 \t\t\t \t\t<div class=\"form-group\">
 \t\t\t\t\t\t<label class=\"col-lg-2 control-label\">Domicilio: </label>
 \t\t\t\t\t\t<div class=\"col-lg-6 \"> 
-\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\">
+\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\" name=\"domicilio\">
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
@@ -84,25 +84,25 @@ class __TwigTemplate_e8ec04a77e24f6661238a8a3b1f9e842a736248d698e7bb50ba458cc762
 \t\t\t \t\t<div class=\"form-group\">
 \t\t\t\t\t\t<label class=\"col-lg-2 control-label\">Correo: </label>
 \t\t\t\t\t\t<div class=\"col-lg-6 \"> 
-\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\">
+\t\t\t\t\t\t  <input type=\"text\" class=\"form-control\" name=\"correo\">
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
 \t\t\t\t</div>
 \t\t\t </div>
 \t\t\t  <div class=\"row\">
 \t\t\t \t<div class=\" col-lg-6\">
-\t\t\t\t\t<input class=\"col-lg-2\" type=\"checkbox\"> 
+\t\t\t\t\t<input class=\"col-lg-2\" type=\"checkbox\" name=\"sw\"> 
 \t\t\t\t\t<label class=\"col-lg-8\">¿Asociado a SW? </label>
 \t\t\t    </div>
 \t\t\t\t<div class=\" col-lg-6\">
-\t\t\t\t\t<input class=\"col-lg-2\" type=\"checkbox\"> 
+\t\t\t\t\t<input class=\"col-lg-2\" type=\"checkbox\" name=\"activo\"> 
 \t\t\t\t\t<label class=\"col-lg-8\">¿Activo? </label>
 \t\t\t\t</div>
 \t\t\t </div>
 \t\t\t <div class=\"row fila-de-boton\">
 \t\t\t \t<div class=\" col-lg-4\"></div>
 \t\t\t \t<div class=\" col-lg-4\">
-\t\t\t\t<button type=\"submit\" class=\"btn btn-default btn-lg btn-block col-lg-4\">Enviar</button>
+\t\t\t\t<button type=\"submit\" class=\"btn btn-default btn-lg btn-block col-lg-4\" name=\"enviarContacto\">Enviar</button>
 \t\t\t\t</div>
 \t\t\t\t<div class=\" col-lg-4\"></div>
 \t\t\t</div>

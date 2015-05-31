@@ -6,9 +6,9 @@ require_once '../modelo/clases/contacto.php';
 class PDOcontacto extends contacto{
 	
 
-	public function __construct ($id,$idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$fechainicioce,$activo){
+	public function __construct ($idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$activo){
 
-		parent::__construct($id,$idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$fechainicioce,$activo);
+		parent::__construct($idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$activo);
 	}
 
 	

@@ -13,6 +13,18 @@ class controladorContacto {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
+		if (!isset($_POST['enviarContacto'])){
+			$nombre = htmlEntities($_POST['nombre']);
+			$apellido = htmlEntities($_POST['apellido']);
+			$telefono = htmlEntities($_POST['telefono']);
+			$correo = htmlEntities($_POST['correo']);
+			$domicilio = htmlEntities($_POST['domicilio']);
+			$sw = htmlEntities($_POST['sw']);
+			$activo = htmlentities($_POST['activo']);
+			$unContacto = new PDOContacto ();
+		}else{
+			
+		}
 		
 
 		$template = $twig->loadTemplate('contacto/altaContacto.html.twig');

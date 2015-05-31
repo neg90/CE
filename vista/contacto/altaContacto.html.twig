@@ -2,7 +2,7 @@
  
 {% block title %} Crear Nuevo Contacto {% endblock %}
 {% block contenedor %}
-	<form class="form-horizontal" role="form">
+	<form class="form-horizontal" action="privado.php?c=contacto&a=alta" role="form" method="POST">
 		<div class="contenedor-formulario">
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
@@ -15,7 +15,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Nombre: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control">
+						  <input type="text" class="form-control" name="nombre">
 						</div>
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Apellido: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control">
+						  <input type="text" class="form-control" name="apellido">
 						</div>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Telefono: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control">
+						  <input type="text" class="form-control" name="telefono">
 						</div>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Domicilio: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control">
+						  <input type="text" class="form-control" name="domicilio">
 						</div>
 					</div>
 				</div>
@@ -51,25 +51,25 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Correo: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control">
+						  <input type="text" class="form-control" name="correo">
 						</div>
 					</div>
 				</div>
 			 </div>
 			  <div class="row">
 			 	<div class=" col-lg-6">
-					<input class="col-lg-2" type="checkbox"> 
+					<input class="col-lg-2" type="checkbox" name="sw"> 
 					<label class="col-lg-8">¿Asociado a SW? </label>
 			    </div>
 				<div class=" col-lg-6">
-					<input class="col-lg-2" type="checkbox"> 
+					<input class="col-lg-2" type="checkbox" name="activo"> 
 					<label class="col-lg-8">¿Activo? </label>
 				</div>
 			 </div>
 			 <div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-4">
-				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4">Enviar</button>
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarContacto">Enviar</button>
 				</div>
 				<div class=" col-lg-4"></div>
 			</div>
