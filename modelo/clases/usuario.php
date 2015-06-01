@@ -12,9 +12,8 @@ class usuario {
 	private $idrol;
 	
 
-	public function	__construct ($idusuario,$username,$correo,$password,$nombre,$apellido,$idrol) {
+	public function	__construct ($nombre,$apellido,$username,$password,$activo,$correo,$idrol) {
 		//Se crea activo el user
-		$this->idusuario = $idusuario;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 		$this->username = $username;

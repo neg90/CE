@@ -48,7 +48,7 @@ class controladorUsuario {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		
+		$user=$_SESSION['user'];		
 		if (isset($_POST['enviarUsuario'])){
 			$nombre = htmlEntities($_POST['nombre']);
 			$apellido = htmlEntities($_POST['apellido']);
@@ -60,15 +60,17 @@ class controladorUsuario {
 			//$activo = htmlentities($_POST['activo']);
 			// de momento
 			$activo = true;
-			$unContacto = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			$unContacto->guardar();
+			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
+			$unUsuario->guardar();
 			$aviso=true;
+			$ListaRoles=PDORol::listarRoles();
 			$template = $twig->loadTemplate('usuarios/altaUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso));
+			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
 		}else{
+			$ListaRoles=PDORol::listarRoles();
 			$aviso=false;
 			$template = $twig->loadTemplate('usuarios/altaUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso));
+			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
 		}
 	}
 }

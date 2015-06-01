@@ -70,7 +70,13 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Rol: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="rol">
+							<select name="rol" class="form-control">
+								{% for rol in ListaRoles %}
+									<option value="{{rol.idrol}}">{{rol.nombre}}</option>
+								{% endfor %}
+								
+						  </select>
+						  <!--<input type="text" class="form-control" name="rol">-->
 						</div>
 					</div>
 				</div>
