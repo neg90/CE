@@ -51,7 +51,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$usuario=PDOusuario::detalleUsuario($idusuario);
 						controladorUsuario::verUsuario($usuario);
 					}
-					else {header('Location:privado.php?c=inicio&accion=inicio');}
+					else {header('Location:privado.php?c=usuarios&a=listar');}
 				}
 			}
 		}else{

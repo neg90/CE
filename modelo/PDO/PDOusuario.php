@@ -6,9 +6,9 @@ require_once '../modelo/clases/usuario.php';
 class PDOusuario extends usuario{
 	
 
-	public function __construct ($id,$user,$email,$password,$activo,$id_rol,$id_persona){
+	public function __construct ($idusuario,$username,$correo,$password,$nombre,$apellido,$idrol){
 
-		parent::__construct($id,$user,$email,$password,$activo,$id_rol,$id_persona);
+		parent::__construct($idusuario,$username,$correo,$password,$nombre,$apellido,$idrol);
 	}
 
 	public static function verificarUser($unusername,$unapassword){
@@ -90,5 +90,46 @@ class PDOusuario extends usuario{
 		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
 		return $objeto;
 	}
+
+	public function guardar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      if($this->getIdUsuario()) /*Si tiene id entonces existe y solo lo modifico*/ {
+         $consulta = $conexion->prepare('UPDATE usuario SET nombre = :nombre, apellido = :apellido, 
+         username = :username, password = :password, activo = :activo, correo = :correo, idrol = :idrol WHERE idusuario = :idusuario');
+         
+         $consulta->bindParam(':nombre', $this->getNombre());
+         $consulta->bindParam(':apellido', $this->getApellido());
+         $consulta->bindParam(':username', $this->getUsername());
+         $consulta->bindParam(':password', $this->getPassword());
+         $consulta->bindParam(':activo', $this->getActivo());
+         $consulta->bindParam(':correo', $this->getCorreo());
+         $consulta->bindParam(':idrol', $this->getIdRol());
+         $consulta->bindParam(':idusuario', $this->getIdUsuario());
+         $consulta->execute();
+
+      }else /*si no tiene id es un campo mas apra la tabla.*/ {
+      	
+         $consulta = $conexion->prepare('INSERT INTO usuario (nombre, apellido, username, password, activo, correo, idrol) 
+         VALUES(:nombre, :apellido, :username, :password, :activo, :correo, :idrol)');
+         
+         
+         $consulta->bindParam(':nombre', $this->getNombre());
+         $consulta->bindParam(':apellido', $this->getApellido());
+         $consulta->bindParam(':username', $this->getUsername());
+         $consulta->bindParam(':password', $this->getPassword());
+         $consulta->bindParam(':activo', $this->getActivo());
+         $consulta->bindParam(':correo', $this->getCorreo());
+         $consulta->bindParam(':idrol', $this->getIdRol());
+         $consulta->execute();
+
+         $consulta->execute();
+         
+      }
+
+      $conexion = null;
+   }
+
+
 }
 ?>
