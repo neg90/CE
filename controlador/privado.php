@@ -39,7 +39,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'modificar'){
 					controladorUsuario::modificar();
 				}elseif($accion == 'baja'){
-					controladorUsuario::baja();
+					if (!empty($_GET['id'])){
+						$idusuario=htmlEntities($_GET['id']);
+						controladorUsuario::bajaUsuario($idusuario);
+					}
 				}elseif($accion == 'listar'){
 					controladorUsuario::listar();
 				}elseif($accion == 'detalle'){

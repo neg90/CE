@@ -37,6 +37,12 @@ class controladorUsuario {
 			$template = $twig->loadTemplate('usuarios/verUsuario.html.twig');
 			echo $template->render(array('user'=>$user,'usuario'=>$Usuario,'ListaRoles'=>$ListaRoles));	
 	}
+
+	static function bajaUsuario($idusuario){
+			PDOusuario::baja($idusuario);
+			$ultPag = $_SERVER['HTTP_REFERER'];
+			header('Location:'.$ultPag);
+	}
 }
 
 ?>

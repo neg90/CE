@@ -73,5 +73,22 @@ class PDOusuario extends usuario{
 		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
 		return $objeto;
 	}
+
+	public static function baja($idusuario){
+		try {
+		$conexion = new conexion; //creo instancia de la conexion
+		}catch (PDOException $e){}
+		$usuario=self::detalleUsuario($idusuario);
+		if ($usuario->activo) $activo=0;
+								 else $activo=1;
+
+
+		$consulta = $conexion->prepare('UPDATE usuario SET activo = :activo WHERE idusuario = :id');
+		$consulta->bindParam(':id',$idusuario);
+		$consulta->bindParam(':activo',$activo);
+		$consulta->execute();
+		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
+		return $objeto;
+	}
 }
 ?>
