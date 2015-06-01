@@ -2,6 +2,7 @@
 
 require_once '../modelo/clases/usuario.php';
 require_once '../modelo/PDO/PDOusuario.php';
+require_once '../modelo/PDO/PDORol.php';
 
 
 class controladorUsuario {
@@ -16,9 +17,10 @@ class controladorUsuario {
 			));
 
 			$ListaUsuarios=PDOusuario::listarUsuarios();
+			$ListaRoles=PDORol::listarRoles();
 
 			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
-			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios));	
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles));	
 	}
 }
 
