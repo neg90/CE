@@ -37,7 +37,6 @@ class PDOusuario extends usuario{
 		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE username = :username and password = :password');
 		$consulta->execute();
 		$existe=$consulta->fetch();
-		
 
 	}
 
@@ -61,6 +60,17 @@ class PDOusuario extends usuario{
 		$consulta = $conexion->prepare('SELECT * FROM usuario');
 		$consulta->execute();
 		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		return $objeto;
+	}
+
+	public static function detalleUsuario($idusuario){
+		try {
+		$conexion = new conexion; //creo instancia de la conexion
+		}catch (PDOException $e){}
+		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE idusuario = :id');
+		$consulta->bindParam(':id',$idusuario);
+		$consulta->execute();
+		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
 		return $objeto;
 	}
 }

@@ -45,7 +45,7 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 .header-der{float:right;}
 
 .clearfix{clear: both}
-#contenedor{width:90%; margin:0 auto;}
+#contenedor{width:90%; margin:0 auto; min-height: 300px}
 
 .cajaLogin{
 	display:block; 
@@ -75,3 +75,10 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 .glyphicon-eye-open:hover{color:blue;}
 .glyphicon-pencil:hover{color:green;}
 .glyphicon-remove:hover{color:red;}
+
+#tituloBloque{border-bottom: 2px solid #e7e7e7; padding-bottom:5px; padding-right:10px; float:left; margin:0 auto; margin-bottom:20px; border-bottom-right-radius: 10px; border-right:2px solid #e7e7e7;}
+#bloqueInfo{margin-left:20px; margin-bottom:20px;}
+.botonVer{width:150px; padding:0; font-size: 15px; display:inline-block; margin:0!important;}
+
+.controles form{display:inline-block;}
+.controles form a{color:black;}

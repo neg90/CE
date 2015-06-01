@@ -1,0 +1,37 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Usuario {{usuario.username}} {% endblock %}
+{% block contenedor %}
+  <h3 id="tituloBloque">Detalle de usuario</h3>
+  <div class="clearfix"></div>
+  <div id="bloqueInfo">
+	  <p><b>Nombre de usuario: </b> {{usuario.username}} </p>
+	  <p> <b> Apellido y Nombre: </b> {{usuario.apellido}}, {{usuario.nombre}}</p>
+	  <p> <b> E-mail: </b> {{usuario.correo}}</p>
+	  <p> <b> Rol: </b>
+	  	{% if ListaRoles is null %}
+						<td> - </td>
+					{% else %}
+						{% for rol in ListaRoles %}
+							{% if rol.idrol == usuario.idrol %}
+								<td> {{ rol.nombre }}</td>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+		</p>
+			<!-- BOTON SI / NO -->
+		<b> Activo: </b>
+			<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			{% if usuario.activo == 1 %}
+  				<button type="button" class="btn btn-default" style="background-color:#45B500; color:white; font-weight:bold"> SI </button>
+  				<button type="button" class="btn btn-default"> NO </button>
+			{% else %}
+				<button type="button" class="btn btn-default"> SI </button>
+  				<button type="button" class="btn btn-default" style="background-color:#F33D00;color:white;font-weight:bold"> NO </button>
+			{% endif %}
+			</div>
+	</div> 
+<button type="submit" class="btn btn-default btn-lg btn-block botonVer" name="modificarUsuario">Modificar</button>
+<a class="btn btn-default btn-lg btn-block botonVer" href="privado.php?c=usuarios&a=listar" name="back">Volver al listado</a>
+
+{% endblock %}

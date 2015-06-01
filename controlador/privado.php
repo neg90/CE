@@ -42,6 +42,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorUsuario::baja();
 				}elseif($accion == 'listar'){
 					controladorUsuario::listar();
+				}elseif($accion == 'detalle'){
+					if (!empty($_GET['id'])){
+						$idusuario=htmlEntities($_GET['id']);
+						$usuario=PDOusuario::detalleUsuario($idusuario);
+						controladorUsuario::verUsuario($usuario);
+					}
+					else {header('Location:privado.php?c=inicio&accion=inicio');}
 				}
 			}
 		}else{
