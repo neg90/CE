@@ -14,8 +14,8 @@
 
 .boton-centrado{
 	position: center;
-
     float: none;
+   
 }
 th,td {
 	text-align: center;
@@ -26,9 +26,10 @@ th,td {
 }
 
 .fila-de-titulo{
-	
+
 	text-align: center;
 	margin-bottom: 3%;
+	border-bottom: medium solid #e7e7e7;
 }
 
 header{width:95%;margin: 0 auto;}

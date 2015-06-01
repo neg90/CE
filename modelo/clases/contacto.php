@@ -6,20 +6,18 @@ class contacto {
 	private $nombre;
 	private $apellido;
 	private $telefono;
-	private $domicio;
+	private $domicilio;
 	private $correo;
 	private $asociadosm;
 	private $activo;
 	
 
-	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicio,$correo,$asociadosm,$activo) {
-	
-		$this->idcontacto = $idcontacto;
-		
+	public function	__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$activo) {
+
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 		$this->telefono = $telefono;
-		$this->domicio = $domicio;
+		$this->domicilio = $domicilio;
 		$this->correo = $correo;
 		$this->asociadosm = $asociadosm;
 		$this->activo = true;
@@ -54,12 +52,12 @@ class contacto {
 		$this->telefono = $telefono;
 	}
 
-	public function getDomicio(){
-		return $this->domicio;
+	public function getDomicilio(){
+		return $this->domicilio;
 	}
 
-	public function setDomicio($domicio){
-		$this->domicio = $domicio;
+	public function setDomicilio($domicilio){
+		$this->domicilio = $domicilio;
 	}
 
 	public function getCorreo(){
