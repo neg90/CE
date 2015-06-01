@@ -39,15 +39,11 @@
 					{% endfor %}
 				{% endif %}
 				<td> 
-					<div class="btn-group btn-group-xs" role="group" aria-label="...">
 					{% if usuario.activo == 1 %}
-  							<button type="button" class="btn btn-default" style="background-color:#45B500; color:white; font-weight:bold"> SI </button>
-  							<button type="button" class="btn btn-default"> NO</button>
+						<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
 					{% else %}
-							<button type="button" class="btn btn-default"> SI </button>
-  							<button type="button" class="btn btn-default" style="background-color:#F33D00;color:white;font-weight:bold"> NO</button>
+						<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
 					{% endif %}
-					</div>
 				</td>
 				<td>
 					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
