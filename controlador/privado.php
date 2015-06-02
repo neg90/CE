@@ -37,7 +37,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				if($accion == 'alta'){
 					controladorUsuario::alta();
 				}elseif($accion == 'modificar'){
-					controladorUsuario::modificar();
+					if (!empty($_POST['idusuario'])){
+						$idusuario=htmlEntities($_POST['idusuario']);
+						controladorUsuario::modificar($idusuario);
+					}
 				}elseif($accion == 'baja'){
 					if (!empty($_GET['id'])){
 						$idusuario=htmlEntities($_GET['id']);
@@ -46,8 +49,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'listar'){
 					controladorUsuario::listar();
 				}elseif($accion == 'detalle'){
-					if (!empty($_GET['id'])){
-						$idusuario=htmlEntities($_GET['id']);
+					if (!empty($_POST['id'])){
+						$idusuario=htmlEntities($_POST['id']);
 						$usuario=PDOusuario::detalleUsuario($idusuario);
 						controladorUsuario::verUsuario($usuario);
 					}

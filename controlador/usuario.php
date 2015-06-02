@@ -73,5 +73,36 @@ class controladorUsuario {
 			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
 		}
 	}
+
+	static function modificar($idusuario){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		$user=$_SESSION['user'];		
+		if (isset($_POST['enviarUsuario'])){
+			$nombre = htmlEntities($_POST['nombre']);
+			$apellido = htmlEntities($_POST['apellido']);
+			$usuario = htmlEntities($_POST['usuario']);
+			$password = htmlEntities($_POST['password']);
+			$email = htmlEntities($_POST['email']);
+			$rol = htmlEntities($_POST['rol']);
+			$activo = htmlEntities($_POST['activo']);
+
+
+			//$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
+			$unUsuario = PDOusuario::detalleUsuario($idusuario);
+			$unUsuario->guardar();
+			$aviso=true;
+			$ListaRoles=PDORol::listarRoles();
+			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
+		}else{
+			$unUsuario = PDOusuario::detalleUsuario($idusuario);
+			$ListaRoles = PDORol::listarRoles();
+			$aviso=false;
+			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
+		}
+	}
 }
 ?>
