@@ -1,0 +1,201 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Lista de roles {% endblock %}
+{% block contenedor %}
+  <h3 id="tituloBloque">Listado de roles</h3>
+  <div class="clearfix"></div>
+  	<h5 id="referenciasRol"><span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>Referencias<small>[ C=Crear, L=Leer, A=Actualizar, B=Borrar ]</small></h5>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th colspan="4"></th>
+      <th colspan="4" class="bi bt">Socios</th>
+      <th colspan="4" class="bi bt">Medidores</th>
+      <th colspan="4" class="bi bt">Empresas</th>
+      <th colspan="4" class="bi bt">Roles</th>
+      <th colspan="4" class="bi bt">Usuarios</th>
+      <th colspan="4" class="bi"></th>
+    </tr>
+    <tr>
+      <th colspan="4" class="bi">Nombre Rol</th>
+      <th class="bi">C</th>
+      <th>L</th>
+      <th>A</th>
+      <th class="bd">B</th>
+      <th>C</th>
+      <th>L</th>
+      <th>A</th>
+      <th class="bd">B</th>
+      <th>C</th>
+      <th>L</th>
+      <th>A</th>
+      <th class="bd">B</th>
+      <th>C</th>
+      <th>L</th>
+      <th>A</th>
+      <th class="bd">B</th>
+      <th>C</th>
+      <th>L</th>
+      <th>A</th>
+      <th class="bd">B</th>
+      <th class="bd">Controles</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% if Roles is null %}
+  	<td colspan="28">No se encontraron roles.</td>
+  {% else %}
+  	{% for rol in Roles %}
+  		<tr>
+  			<td colspan="4" class="text-uppercase bi bb">{{rol.nombre}}</td>
+  			{% for p in Permisos %}
+  				{% if rol.idpermisos == p.idpermiso %}
+  					<td class="bi bb">
+  						{% if p.csocio == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.rsocio == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.usocio == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bd bb">
+  						{% if p.dsocio == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.cmedidor == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.rmedidor == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.umedidor == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bd bb">
+  						{% if p.dmedidor == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.cci == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.rci == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.uci == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bd bb">
+  						{% if p.dci == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.crol == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.rrol == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.urol == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td  class="bd bb">
+  						{% if p.drol == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+  					<td class="bb">
+  						{% if p.cusuario == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+					<td class="bb">
+  						{% if p.rusuario == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+					<td class="bb">
+  						{% if p.uusuario == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+					<td  class="bd bb">
+  						{% if p.dusuario == 1 %}
+							<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+						{% endif %}
+					</td>
+					<td colspan="4" class="bd bb">Controles</td>
+  				{% endif %}
+  			{% endfor %}
+  		</tr>
+  	{% endfor %}
+  {% endif %}
+  </tbody>
+  </table>
+{% endblock %}

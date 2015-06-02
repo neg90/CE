@@ -28,6 +28,11 @@ class usuario {
 		return $this->idusuario;
 	}
 
+	public function setIdusuario($idusuario){
+		$this->idusuario = $idusuario;
+		return $this;
+	}
+
 	//nombre
 	public function getNombre(){
 		return $this->nombre;

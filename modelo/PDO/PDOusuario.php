@@ -93,7 +93,6 @@ class PDOusuario extends usuario{
 
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
-      die($this->getIdusuario);
       if($this->getIdusuario()) /*Si tiene id entonces existe y solo lo modifico*/ {
          $consulta = $conexion->prepare('UPDATE usuario SET nombre = :nombre, apellido = :apellido, 
          username = :username, password = :password, activo = :activo, correo = :correo, idrol = :idrol WHERE idusuario = :idusuario');

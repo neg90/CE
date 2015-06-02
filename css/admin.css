@@ -82,3 +82,11 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 
 .controles form{display:inline-block;}
 .controles form a{color:black;}
+
+/* Bordes de tabla Roles */
+.bi {border-left: 1px solid #ccc} /*Borde Izquierdo*/
+.bd {border-right: 1px solid #ccc} /*Borde Derecho*/
+.bt {border-top: 1px solid #ccc!important} /* Borde Arriba */
+.bb {border-bottom: 1px solid #ccc} /* Borde Abajo */
+
+#referenciasRol{ margin-bottom:30px;}
