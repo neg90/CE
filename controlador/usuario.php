@@ -86,11 +86,13 @@ class controladorUsuario {
 			$password = htmlEntities($_POST['password']);
 			$email = htmlEntities($_POST['email']);
 			$rol = htmlEntities($_POST['rol']);
-			$activo = htmlEntities($_POST['activo']);
+			//$activo = htmlEntities($_POST['activo']);
+			$activo=true;
+			$idusuario = htmlEntities($_POST['idusuario']);
 
 
-			//$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			$unUsuario = PDOusuario::detalleUsuario($idusuario);
+			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
+			$unUsuario->setIdusuario($idusuario);
 			$unUsuario->guardar();
 			$aviso=true;
 			$ListaRoles=PDORol::listarRoles();

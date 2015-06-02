@@ -3,6 +3,7 @@
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
 require_once 'usuario.php';
+require_once 'controladorRol.php';
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -32,7 +33,18 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'listar'){
 					controladorContacto::listar();
 				}
+			}elseif($controlador == 'roles'){
+				if($accion == 'alta'){
+					controladorRol::alta();
+				}elseif($accion == 'modificar'){
+					controladorRol::modificar();
+				}elseif($accion == 'baja'){
+					controladorRol::baja();
+				}elseif($accion == 'listar'){
+					controladorRol::listar();
+				}
 			}
+			//controladorRol
 			elseif($controlador == 'usuarios'){
 				if($accion == 'alta'){
 					controladorUsuario::alta();
