@@ -3,6 +3,7 @@
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
 require_once 'usuario.php';
+require_once 'controladorRol.php';
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -32,16 +33,40 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'listar'){
 					controladorContacto::listar();
 				}
+			}elseif($controlador == 'roles'){
+				if($accion == 'alta'){
+					controladorRol::alta();
+				}elseif($accion == 'modificar'){
+					controladorRol::modificar();
+				}elseif($accion == 'baja'){
+					controladorRol::baja();
+				}elseif($accion == 'listar'){
+					controladorRol::listar();
+				}
 			}
+			//controladorRol
 			elseif($controlador == 'usuarios'){
 				if($accion == 'alta'){
 					controladorUsuario::alta();
 				}elseif($accion == 'modificar'){
-					controladorUsuario::modificar();
+					if (!empty($_POST['idusuario'])){
+						$idusuario=htmlEntities($_POST['idusuario']);
+						controladorUsuario::modificar($idusuario);
+					}
 				}elseif($accion == 'baja'){
-					controladorUsuario::baja();
+					if (!empty($_GET['id'])){
+						$idusuario=htmlEntities($_GET['id']);
+						controladorUsuario::bajaUsuario($idusuario);
+					}
 				}elseif($accion == 'listar'){
 					controladorUsuario::listar();
+				}elseif($accion == 'detalle'){
+					if (!empty($_POST['id'])){
+						$idusuario=htmlEntities($_POST['id']);
+						$usuario=PDOusuario::detalleUsuario($idusuario);
+						controladorUsuario::verUsuario($usuario);
+					}
+					else {header('Location:privado.php?c=usuarios&a=listar');}
 				}
 			}
 		}else{

@@ -11,7 +11,9 @@ class controladorContacto {
 	static function alta(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
-	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  	
 		
 		if (isset($_POST['enviarContacto'])){
 			$nombre = htmlEntities($_POST['nombre']);
@@ -26,6 +28,8 @@ class controladorContacto {
 			$unContacto = new PDOContacto($nombre,$apellido,$telefono,$domicilio,$correo,$sm,$activo);
 			$unContacto->guardar();
 			$aviso=true;
+			//limpieza de los campos
+			$_POST['enviarContacto'] = 1;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
 			echo $template->render(array('aviso'=>$aviso));
 		}else{
