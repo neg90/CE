@@ -6,9 +6,9 @@ require_once '../modelo/clases/contacto.php';
 class PDOcontacto extends contacto{
 	
 
-	public function __construct ($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$activo){
+	public function __construct ($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm){
 
-		parent::__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$activo);
+		parent::__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm);
 	}
 
 	
@@ -20,6 +20,29 @@ class PDOcontacto extends contacto{
 		
 		return $objeto;
 	}
+
+   public function validarInsertar(){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM contacto WHERE (nombre = :nombre and apellido = :apellido and 
+      telefono = :telefono and domicilio = :domicilio)');
+      
+      $consulta->bindParam(':nombre', $this->getNombre());
+      $consulta->bindParam(':apellido', $this->getApellido());
+      $consulta->bindParam(':telefono', $this->getTelefono());
+      $consulta->bindParam(':domicilio', $this->getDomicilio());
+      
+      $consulta->execute();
+
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+     
+      if ($objeto) {
+         //Si el array de obejtos viene cargado
+         return false;
+      }else{
+         return true;
+      }
+
+   }
 
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}

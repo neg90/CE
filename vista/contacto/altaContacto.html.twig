@@ -11,12 +11,17 @@
 			<div class="row fila-de-alerta">
 				<div class=" col-lg-2"></div>
 				 <div class=" col-lg-8">
-				 	{% if aviso == true %}
+				 	{% if aviso == 1 %}
 						<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
 		    				<strong>Perfecto!</strong> El contacto fue dado de alta con exito.
 	  					</div>
-  					{% endif %}
+  					{% elseif  aviso == 2 %}
+  						<div class="alert alert-danger alert-dismissable">
+		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
+		    				<strong>No se cargo el contacto!</strong> No re cagues ni utilicez f5 en el formulario. Causa: El contacto ya se encuentra en la base de datos
+	  					</div>
+	  				{% endif %}
 				 </div>
 			</div>
 			<div class="row fila-de-titulo">

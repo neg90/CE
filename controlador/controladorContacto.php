@@ -5,7 +5,10 @@
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
-
+//Valores para la variable aviso :
+	//1->Inserto con exito
+	//2->Ya existe un contacto igual
+	//0->No mostrar mensaje, es solo carga del formulario.
 class controladorContacto {
 
 	static function alta(){
@@ -13,27 +16,33 @@ class controladorContacto {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
-	  	
+
 		
 		if (isset($_POST['enviarContacto'])){
+			$aviso=2;
 			$nombre = htmlEntities($_POST['nombre']);
 			$apellido = htmlEntities($_POST['apellido']);
 			$telefono = htmlEntities($_POST['telefono']);
 			$correo = htmlEntities($_POST['correo']);
 			$domicilio = htmlEntities($_POST['domicilio']);
+
 			//$sm = htmlEntities($_POST['sm']);
-			//$activo = htmlentities($_POST['activo']);
-			// de momento
-			$sm =true; $activo = true;
-			$unContacto = new PDOContacto($nombre,$apellido,$telefono,$domicilio,$correo,$sm,$activo);
-			$unContacto->guardar();
-			$aviso=true;
-			//limpieza de los campos
-			$_POST['enviarContacto'] = 1;
+			$sm = true;
+			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
+			$unContacto = new PDOContacto($nombre,$apellido,$telefono,$domicilio,$correo,$sm);
+
+			if($unContacto->validarInsertar()){
+				$unContacto->guardar();
+				$aviso=1;
+			}else{
+				$aviso=2;
+			}
+			
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
 			echo $template->render(array('aviso'=>$aviso));
+
 		}else{
-			$aviso=false;
+			$aviso=0;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
 			echo $template->render(array('aviso'=>$aviso));
 		}

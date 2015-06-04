@@ -12,7 +12,7 @@ class contacto {
 	private $activo;
 	
 
-	public function	__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$activo) {
+	public function	__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm) {
 
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
