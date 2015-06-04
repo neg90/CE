@@ -1,7 +1,8 @@
 <?php
 
-	require_once('../modelo/conexionDB.php');
-	require_once('../modelo/PDO/PDOContacto.php');
+	require_once ('../modelo/conexionDB.php');
+	require_once ('../modelo/PDO/PDOContacto.php');
+	
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
@@ -18,7 +19,7 @@ class controladorContacto {
 	  	$modo = 'alta';
 
 		
-		if (isset($_POST['enviarContacto'])){
+		if (isset($_POST['guardarContacto'])){
 			$aviso=2;
 			$nombre = htmlEntities($_POST['nombre']);
 			$apellido = htmlEntities($_POST['apellido']);
@@ -32,7 +33,8 @@ class controladorContacto {
 			}
 			
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
-			$unContacto = new PDOContacto($nombre,$apellido,$telefono,$domicilio,$correo,$sm);
+			//id 1 pero se gaurda incremental en el PDO
+			$unContacto = new PDOContacto(0,$nombre,$apellido,$telefono,$domicilio,$correo,$sm);
 
 			if($unContacto->validarInsertar()){
 				$unContacto->guardar();
@@ -50,6 +52,62 @@ class controladorContacto {
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
 		}
 	}
+
+	static function modificar(){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	$modo = 'modificar';
+
+		$idcontacto = htmlEntities($_POST['idcontacto']);
+		if (isset($_POST['guardarContacto'])){
+			$aviso=2;
+			if (PDOContacto::buscarContacto($idcontacto)){
+
+				$nombre = htmlEntities($_POST['nombre']);
+				$apellido = htmlEntities($_POST['apellido']);
+				$telefono = htmlEntities($_POST['telefono']);
+				$correo = htmlEntities($_POST['correo']);
+				$domicilio = htmlEntities($_POST['domicilio']);
+				if ( isset($_POST['sm'])) {
+					$sm = true;
+				}else{
+					$sm = false;
+				}
+				if ( isset($_POST['activo'])) {
+					$activo = true;
+				}else{
+					$activo = false;
+				}
+
+				$unContacto = PDOContacto::buscarContacto($idcontacto);
+				
+				$unContacto->setNombre($nombre);
+				$unContacto->setApellido($apellido);
+				$unContacto->setTelefono($telefono);
+				$unContacto->setDomicilio($domicilio);
+				$unContacto->setCorreo($correo);
+				$unContacto->setAsociadosm($sm);
+				$unContacto->setActivo($activo);
+				$unContacto->guardar();
+				$aviso=1;
+
+			}else{
+				//No se encontro el contacto para modificar
+				$aviso = 3;
+			}
+
+			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto));
+
+		}else{
+			$aviso=0;
+			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto));
+		}
+	}
+
+	
 		
 
 	static function listar(){

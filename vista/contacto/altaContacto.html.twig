@@ -3,9 +3,12 @@
 {% block title %} Crear Nuevo Contacto {% endblock %}
 
 {% block contenedor %}
-	
-	<form class="form-horizontal" action="privado.php?c=contacto&a=alta" role="form" method="POST">
-
+	{% if modo == 'alta' %}
+		<form class="form-horizontal" action="privado.php?c=contacto&a=alta" role="form" method="POST">
+	{% elseif modo == 'modificar' %}
+		<form class="form-horizontal" action="privado.php?c=contacto&a=modificar" role="form" method="POST">
+	{% endif %}
+		<input type="hidden" name="idcontacto" value="{{idcontacto}}">
 		<div class="contenedor-formulario">
 			<h5 id="referenciasRol"><span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>Referencias <small>[ SM = Swiss Medical ]</small></h5>
 			<div class="row fila-de-alerta">
@@ -14,12 +17,12 @@
 				 	{% if aviso == 1 %}
 						<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>Perfecto!</strong> El contacto fue dado de alta con exito.
+		    				<strong>Perfecto!</strong> El contacto fue dado de guardado correctamente.
 	  					</div>
   					{% elseif  aviso == 2 %}
   						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>No se cargo el contacto!</strong> No re cagues ni utilicez f5 en el formulario. Causa: El contacto ya se encuentra en la base de datos.
+		    				<strong>No se guardo el contacto!</strong> No re cagues ni utilicez f5 en el formulario. Causa: El contacto ya se encuentra registrado.
 	  					</div>
 	  				{% endif %}
 				 </div>
@@ -35,7 +38,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Nombre:*</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="nombre" required/>
+						  <input type="text" class="form-control" name="nombre" placeholder="Nombre" pattern="[a-zA-Z].{2,}" title="No parece un nombre valido" required/>
 						</div>
 					</div>
 				</div>
@@ -43,7 +46,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Apellido:*</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="apellido" required/>
+						  <input type="text" class="form-control" name="apellido" placeholder="Apellido"pattern="[a-zA-Z].{2,}" title="No parece un apellido valido" required/>
 						</div>
 					</div>
 				</div>
@@ -53,7 +56,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Telefono: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="telefono">
+						  <input type="tel" class="form-control" name="telefono" placeholder="(2983) - 212121" pattern="[0-9._()+-].{2,}">
 						</div>
 					</div>
 				</div>
@@ -61,7 +64,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Domicilio:* </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="domicilio" required/>
+						  <input type="text" class="form-control" name="domicilio" placeholder="Calle Ejemplo 655" required/>
 						</div>
 					</div>
 				</div>
@@ -71,7 +74,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Correo: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="correo">
+						  <input type="email" class="form-control" name="correo" placeholder="ejemplo@ejemplo.com">
 						</div>
 					</div>
 				</div>
@@ -91,7 +94,7 @@
 			 <div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-4">
-				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarContacto">Enviar</button>
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="guardarContacto">Guardar</button>
 				</div>
 				<div class=" col-lg-4"></div>
 			</div>

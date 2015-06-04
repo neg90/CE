@@ -6,9 +6,9 @@ require_once '../modelo/clases/contacto.php';
 class PDOcontacto extends contacto{
 	
 
-	public function __construct ($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm){
+	public function __construct ($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm){
 
-		parent::__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm);
+		parent::__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm);
 	}
 
 	
@@ -80,6 +80,23 @@ class PDOcontacto extends contacto{
       }
 
       $conexion = null;
+   }
+
+   public function buscarContacto ($idcontacto){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM contacto WHERE (idcontacto = :idcontacto)');
+      
+      $consulta->bindParam(':idcontacto', $idcontacto);
+    
+      $consulta->execute();
+
+      $resultado = $consulta->fetch();
+     
+      $objeto = new PDOcontacto($resultado['idcontacto'],$resultado['nombre'],$resultado['apellido'],$resultado['telefono'],
+      $resultado['domicilio'],$resultado['correo'],$resultado['asociadosm']);
+      
+      return $objeto;
+
    }
 
 	
