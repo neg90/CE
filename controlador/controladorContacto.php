@@ -15,7 +15,7 @@ class controladorContacto {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-
+	  	$modo = 'alta';
 
 		
 		if (isset($_POST['enviarContacto'])){
@@ -25,9 +25,12 @@ class controladorContacto {
 			$telefono = htmlEntities($_POST['telefono']);
 			$correo = htmlEntities($_POST['correo']);
 			$domicilio = htmlEntities($_POST['domicilio']);
-
-			//$sm = htmlEntities($_POST['sm']);
-			$sm = true;
+			if ( isset($_POST['sm'])) {
+				$sm = true;
+			}else{
+				$sm = false;
+			}
+			
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			$unContacto = new PDOContacto($nombre,$apellido,$telefono,$domicilio,$correo,$sm);
 
@@ -39,17 +42,13 @@ class controladorContacto {
 			}
 			
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
 		}
-		
-		
-		
-
 	}
 		
 
