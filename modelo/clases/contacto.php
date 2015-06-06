@@ -12,8 +12,8 @@ class contacto {
 	private $activo;
 	
 
-	public function	__construct($nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$activo) {
-
+	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm) {
+		$this->idcontacto = $idcontacto;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
 		$this->telefono = $telefono;
@@ -26,6 +26,10 @@ class contacto {
 
 	public function getIdcontacto(){
 		return $this->idcontacto;
+	}
+
+	public function setIdcontacto($idcontacto){
+		$this->idcontacto = $idcontacto;
 	}
 
 	public function getNombre(){
