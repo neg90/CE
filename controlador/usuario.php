@@ -78,16 +78,23 @@ class controladorUsuario {
 			$password = htmlEntities($_POST['password']);
 			$email = htmlEntities($_POST['email']);
 			$rol = htmlEntities($_POST['rol']);
-			//$sm = htmlEntities($_POST['sm']);
-			//$activo = htmlentities($_POST['activo']);
-			// de momento
-			$activo = true;
+			if ( isset($_POST['activo'])) {
+					$activo = true;
+				}else{
+					$activo = false;
+				}
 			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			$unUsuario->guardar();
-			$aviso=true;
+			if (!PDOusuario::emailExiste($email)){
+				$unUsuario->guardar();
+				$aviso='Perfecto! El usuario fue dado de alta con éxito. ';
+				$tipoAviso= 'exito';
+			}
+			else {$aviso='ERROR! El email ya se encuentra en uso.';
+				  $tipoAviso='error';
+			}
 			$ListaRoles=PDORol::listarRoles();
 			$template = $twig->loadTemplate('usuarios/altaUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
+			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
 		}else{
 			$ListaRoles=PDORol::listarRoles();
 			$aviso=false;
@@ -113,18 +120,35 @@ class controladorUsuario {
 			$idusuario = htmlEntities($_POST['idusuario']);
 
 
+			//ESTABA HACIENDO LA PARTE DE SI EL EMAIL EXISTE, PERO EL MODIFICAR SE ROMPIÓ,
+			// VERIFICAR LO QUE LE LLEGA A LA CONSULTA.
+			$datosAnteriores = PDOusuario::detalleUsuario($idusuario);
 			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
 			$unUsuario->setIdusuario($idusuario);
-			$unUsuario->setActivo($activo);
-			$unUsuario->guardar();
-			$aviso=true;
+			if ($email == $datosAnteriores->correo){
+				$unUsuario->setActivo($activo);
+				$unUsuario->guardar();
+				$aviso="Perfecto! El usuario fue modificado con éxito!";
+				$tipoAviso= 'exito';
+			}
+			else{
+				if (!PDOusuario::emailExiste($email)){
+					$unUsuario->setActivo($activo);
+					$unUsuario->guardar();
+					$aviso="Perfecto! El usuario fue modificado con éxito!";
+					$tipoAviso= 'exito';		
+				}
+				else {$aviso = 'ERROR! El email ya se encuentra en uso.';
+				  	  $tipoAviso= 'error';}
+			}
+
 			$ListaRoles=PDORol::listarRoles();
 			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
+			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
 		}else{
 			$unUsuario = PDOusuario::detalleUsuario($idusuario);
 			$ListaRoles = PDORol::listarRoles();
-			$aviso=false;
+			$aviso=null;
 			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
 		}

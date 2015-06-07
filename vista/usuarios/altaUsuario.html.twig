@@ -7,11 +7,19 @@
 			<div class="row fila-de-alerta">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
-				 	{% if aviso == true %}
-						<div class="alert alert-success alert-dismissable">
+				 	{% if aviso is null %}
+				 	{% else %}
+				 		{% if tipoAviso == 'exito' %}
+				 		<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>Perfecto!</strong> El usuario fue dado de alta con exito.
+		    				  {{aviso}}
 	  					</div>
+	  					{% elseif tipoAviso == 'error' %}
+	  						<div class="alert alert-danger alert-dismissable">
+		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
+		    				  {{aviso}}
+	  					</div>
+	  					{% endif %}
   					{% endif %}
 				 </div>
 			</div>
@@ -62,7 +70,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">E-mail: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="email" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido">
+						  <input type="text" class="form-control" name="email" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido" required/>
 						</div>
 					</div>
 				</div>
@@ -83,7 +91,7 @@
 			 </div>
 			  <div class="row">
 				<div class=" col-lg-6">
-					<input class="col-lg-2" type="checkbox" name="activo"> 
+					<input class="col-lg-2" type="checkbox" name="activo" checked> 
 					<label class="col-lg-8">¿Activo? </label>
 				</div>
 			 </div>

@@ -142,6 +142,17 @@ class PDOusuario extends usuario{
       $conexion = null;
    }
 
+   public static function emailExiste($email){
+		try {
+		$conexion = new conexion; //creo instancia de la conexion
+		}catch (PDOException $e){}
+		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE correo = :email');
+		$consulta->bindParam(':email', $email);
+		$resultado=$consulta->execute();
+		if ($resultado) return true;
+		else return false;
+	}
+
 
 }
 ?>
