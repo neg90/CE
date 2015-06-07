@@ -2,6 +2,38 @@
  
 {% block title %} Modificar Usuario {% endblock %}
 {% block contenedor %}
+<script>
+
+$(document).ready(function() {
+      "{%if unUsuario.activo == 1 %}"
+	      	$("#botonActivoSI").addClass("activoSI");
+			$("#botonActivoNO").removeClass("activoSI");
+			$("#botonActivoNO").removeClass("activoNO");
+		"{%else%}"
+			$("#botonActivoSI").removeClass("activoSI");
+			$("#botonActivoSI").removeClass("activoNO");
+			$("#botonActivoNO").addClass("activoNO");
+		"{% endif %}"
+});
+
+
+function cambiarActivo(nuevoActivo){
+	document.getElementById("activo").value=nuevoActivo;
+	if (nuevoActivo == 1){
+		$("#botonActivoSI").addClass("activoSI");
+		$("#botonActivoNO").removeClass("activoSI");
+		$("#botonActivoNO").removeClass("activoNO");
+	}
+	else {
+		$("#botonActivoSI").removeClass("activoSI");
+		$("#botonActivoSI").removeClass("activoNO");
+		$("#botonActivoNO").addClass("activoNO");
+	}
+}
+
+</script>
+
+
 	<form class="form-horizontal" action="privado.php?c=usuarios&a=modificar&id={{unUsuario.idusuario}}" role="form" method="POST">
 		<input type="hidden" value="{{unUsuario.idusuario}}" name="idusuario">
 		<div class="contenedor-formulario">
@@ -89,12 +121,12 @@
 			 </div>
 			  <div class="row">
 				<div class=" col-lg-6">
-					{% if unUsuario.activo == true %}
-						<input class="col-lg-2" type="checkbox" name="activo" value="true" checked> 
-					{% else %}
-						<input class="col-lg-2" type="checkbox" name="activo" value="false"> 
-					{% endif %}
-					<label class="col-lg-8">¿Activo? </label>
+				<label class="col-lg-2">Activo: </label>
+				<input type="hidden" name="activo" id="activo" value="{{unUsuario.activo}}">
+					<div class="btn-group btn-group-xs" role="group" aria-label="...">
+	  						<button type="button" id="botonActivoSI" class="btn btn-default" onclick="cambiarActivo(1)"> SI </button>
+	  						<button type="button" id="botonActivoNO" class="btn btn-default" onclick="cambiarActivo(0)"> NO </button>
+					</div>
 				</div>
 			 </div>
 			 <div class="row fila-de-boton">

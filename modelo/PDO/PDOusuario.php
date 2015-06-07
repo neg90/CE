@@ -91,6 +91,22 @@ class PDOusuario extends usuario{
 		return $objeto;
 	}
 
+	public static function eliminar($idusuario){
+		try {
+		$conexion = new conexion; //creo instancia de la conexion
+		}catch (PDOException $e){}
+		//ELIMINAR USUARIO
+		$consulta = $conexion->prepare('DELETE FROM usuario WHERE idusuario = :idusuario');
+		$consulta->bindParam(':idusuario', $idusuario);
+		$consulta->execute();
+
+		if (empty(self::detalleUsuario($idusuario))){ //si no se encuentra el usuario, lo eliminó
+			return 1;
+		}
+		else return 0;
+	}
+
+
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       if($this->getIdusuario()) /*Si tiene id entonces existe y solo lo modifico*/ {

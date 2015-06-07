@@ -53,10 +53,15 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$idusuario=htmlEntities($_POST['idusuario']);
 						controladorUsuario::modificar($idusuario);
 					}
-				}elseif($accion == 'baja'){
+				}elseif($accion == 'baja'){ //invierte activos
 					if (!empty($_GET['id'])){
 						$idusuario=htmlEntities($_GET['id']);
 						controladorUsuario::bajaUsuario($idusuario);
+					}
+				}elseif($accion == 'eliminar'){ //elimina fisicamente
+					if (!empty($_GET['id'])){
+						$idusuario=htmlEntities($_GET['id']);
+						controladorUsuario::eliminaUsuario($idusuario);
 					}
 				}elseif($accion == 'listar'){
 					controladorUsuario::listar();
