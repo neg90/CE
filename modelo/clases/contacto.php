@@ -10,9 +10,12 @@ class contacto {
 	private $correo;
 	private $asociadosm;
 	private $activo;
+	private $tipodocumento;
+	private $documento;
+	private $cuit;
 	
 
-	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm) {
+	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$tipodocumento,$documento,$cuit) {
 		$this->idcontacto = $idcontacto;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
@@ -21,6 +24,9 @@ class contacto {
 		$this->correo = $correo;
 		$this->asociadosm = $asociadosm;
 		$this->activo = true;
+		$this->tipodocumento = $tipodocumento;
+		$this->documento = $documento;
+		$this->cuit = $cuit;
 	
 	}
 
@@ -86,6 +92,30 @@ class contacto {
 
 	public function setActivo($activo){
 		$this->activo = $activo;
+	}
+
+	public function getTipodocumento(){
+		return $this->tipodocumento;
+	}
+
+	public function setTipodocumento($tipodocumento){
+		$this->tipodocumento = $tipodocumento;
+	}
+
+	public function getDocumento(){
+		return $this->documento;
+	}
+
+	public function setDocumento($documento){
+		$this->documento = $documento;
+	}
+
+	public function getCuit(){
+		return $this->cuit;
+	}
+
+	public function setCuit($cuit){
+		$this->cuit = $cuit;
 	}
 
 }

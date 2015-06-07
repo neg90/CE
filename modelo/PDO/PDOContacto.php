@@ -6,9 +6,9 @@ require_once '../modelo/clases/contacto.php';
 class PDOcontacto extends contacto{
 	
 
-	public function __construct ($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm){
+	public function __construct ($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$tipodocumento,$documento,$cuit){
 
-		parent::__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm);
+		parent::__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$tipodocumento,$documento,$cuit);
 	}
 
 	
@@ -24,17 +24,22 @@ class PDOcontacto extends contacto{
    public function validarInsertar(){
       try {$conexion = new conexion;}catch (PDOException $e){} 
       $consulta = $conexion->prepare('SELECT * FROM contacto WHERE (nombre = :nombre and apellido = :apellido and 
-      telefono = :telefono and domicilio = :domicilio)');
+      telefono = :telefono and domicilio = :domicilio and tipodocumento = :tipodocumento and documento = :documento and correo = :correo and cuit = :cuit )');
+      
       
       $consulta->bindParam(':nombre', $this->getNombre());
       $consulta->bindParam(':apellido', $this->getApellido());
       $consulta->bindParam(':telefono', $this->getTelefono());
       $consulta->bindParam(':domicilio', $this->getDomicilio());
-      
+      $consulta->bindParam(':tipodocumento', $this->getTipodocumento());
+      $consulta->bindParam(':documento', $this->getDocumento());
+      $consulta->bindParam(':correo',$this->getCorreo());
+      $consulta->bindParam(':cuit',$this->getCuit());
+    
+
       $consulta->execute();
 
       $objeto = $consulta->fetch(PDO::FETCH_OBJ);
-     
       if ($objeto) {
          //Si el array de obejtos viene cargado
          return false;
@@ -49,7 +54,8 @@ class PDOcontacto extends contacto{
       
       if($this->getIdcontacto()) /*Si tiene id entonces existe y solo lo modifico*/ {
          $consulta = $conexion->prepare('UPDATE contacto SET nombre = :nombre, apellido = :apellido, 
-         telefono = :telefono, domicilio = :domicilio, correo = :correo, asociadosm = :asociadosm, activo = :activo WHERE idcontacto = :idcontacto');
+         telefono = :telefono, domicilio = :domicilio, correo = :correo, asociadosm = :asociadosm, activo = :activo, tipodocumento = :tipodocumento, 
+         documento = :documento, cuit = :cuit WHERE idcontacto = :idcontacto');
          
          $consulta->bindParam(':nombre', $this->getNombre());
          $consulta->bindParam(':apellido', $this->getApellido());
@@ -59,13 +65,15 @@ class PDOcontacto extends contacto{
          $consulta->bindParam(':asociadosm', $this->getAsociadosm());
          $consulta->bindParam(':activo', $this->getActivo());
          $consulta->bindParam(':idcontacto', $this->getIdcontacto());
+         $consulta->bindParam(':tipodocumento', $this->getTipodocumento());
+         $consulta->bindParam(':documento', $this->getDocumento());
+         $consulta->bindParam(':cuit', $this->getCuit());
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
-      	
-         $consulta = $conexion->prepare('INSERT INTO contacto (nombre, apellido, telefono, domicilio, correo, asociadosm, activo) 
-         VALUES(:nombre,:apellido,:telefono,:domicilio,:correo,:asociadosm,:activo)');
          
+         $consulta = $conexion->prepare('INSERT INTO contacto (nombre, apellido, telefono, domicilio, correo, asociadosm, activo,
+         tipodocumento, documento, cuit) VALUES(:nombre,:apellido,:telefono,:domicilio,:correo,:asociadosm,:activo,:tipodocumento,:documento,:cuit)');
          
          $consulta->bindParam(':nombre', $this->getNombre());
          $consulta->bindParam(':apellido', $this->getApellido());
@@ -74,6 +82,9 @@ class PDOcontacto extends contacto{
          $consulta->bindParam(':correo', $this->getCorreo());
          $consulta->bindParam(':asociadosm', $this->getAsociadosm());
          $consulta->bindParam(':activo', $this->getActivo());
+         $consulta->bindParam(':tipodocumento', $this->getTipodocumento());
+         $consulta->bindParam(':documento', $this->getDocumento());
+         $consulta->bindParam(':cuit', $this->getCuit());
 
          $consulta->execute();
          
@@ -93,12 +104,21 @@ class PDOcontacto extends contacto{
       $resultado = $consulta->fetch();
      
       $objeto = new PDOcontacto($resultado['idcontacto'],$resultado['nombre'],$resultado['apellido'],$resultado['telefono'],
-      $resultado['domicilio'],$resultado['correo'],$resultado['asociadosm']);
+      $resultado['domicilio'],$resultado['correo'],$resultado['asociadosm'],$resultado['tipodocumento'],$resultado['documento'],$resultado['cuit']);
       
       return $objeto;
 
    }
 
+   public function baja($idcontacto){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM contacto WHERE idcontacto =  :idcontacto');
+
+      $consulta->bindParam(':idcontacto', $idcontacto);
+    
+      $consulta->execute();
+      
+   }
 	
 }
 ?>

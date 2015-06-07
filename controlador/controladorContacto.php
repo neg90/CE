@@ -26,15 +26,17 @@ class controladorContacto {
 			$telefono = htmlEntities($_POST['telefono']);
 			$correo = htmlEntities($_POST['correo']);
 			$domicilio = htmlEntities($_POST['domicilio']);
+			$tipodocumento = htmlEntities($_POST['tipodocumento']);
+			$documento = htmlEntities($_POST['documento']);
+			$cuit = htmlEntities($_POST['cuit']);
 			if ( isset($_POST['sm'])) {
 				$sm = true;
 			}else{
 				$sm = false;
 			}
-			
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 1 pero se gaurda incremental en el PDO
-			$unContacto = new PDOContacto(0,$nombre,$apellido,$telefono,$domicilio,$correo,$sm);
+			$unContacto = new PDOContacto(0,$nombre,$apellido,$telefono,$domicilio,$correo,$sm,$tipodocumento,$documento,$cuit);
 
 			if($unContacto->validarInsertar()){
 				$unContacto->guardar();
@@ -60,6 +62,7 @@ class controladorContacto {
 	  	$modo = 'modificar';
 
 		$idcontacto = htmlEntities($_POST['idcontacto']);
+
 		if (isset($_POST['guardarContacto'])){
 			$aviso=2;
 			if (PDOContacto::buscarContacto($idcontacto)){
@@ -69,6 +72,10 @@ class controladorContacto {
 				$telefono = htmlEntities($_POST['telefono']);
 				$correo = htmlEntities($_POST['correo']);
 				$domicilio = htmlEntities($_POST['domicilio']);
+				$tipodocumento = htmlEntities($_POST['tipodocumento']);
+				$documento = htmlEntities($_POST['documento']);
+				$cuit = htmlEntities($_POST['cuit']);
+
 				if ( isset($_POST['sm'])) {
 					$sm = true;
 				}else{
@@ -79,9 +86,7 @@ class controladorContacto {
 				}else{
 					$activo = false;
 				}
-
 				$unContacto = PDOContacto::buscarContacto($idcontacto);
-				
 				$unContacto->setNombre($nombre);
 				$unContacto->setApellido($apellido);
 				$unContacto->setTelefono($telefono);
@@ -97,18 +102,19 @@ class controladorContacto {
 				$aviso = 3;
 			}
 
+			$unContacto = PDOContacto::buscarContacto($idcontacto);
+
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto,'contacto'=>$unContacto));
 
 		}else{
+			$unContacto = PDOContacto::buscarContacto($idcontacto);
 			$aviso=0;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto,'contacto'=>$unContacto));
 		}
 	}
 
-	
-		
 
 	static function listar(){
 
@@ -121,10 +127,28 @@ class controladorContacto {
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
 		echo $template->render(array('contactos'=>$contactos));
 
-		}
-		
 	}
+		
+	public function baja(){
 
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		
+	  	$idcontacto = htmlentities($_POST['idcontacto']);
+		
+		if(PDOContacto::buscarContacto($idcontacto)){
+			PDOContacto::baja($idcontacto);
+			$aviso = 1;
+		}else{
+			$aviso = 2;
+		}
+		$contactos = PDOContacto::listar();
+		
+		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
+		echo $template->render(array('contactos'=>$contactos,$aviso=>'aviso'));
+      
+   }
 
-
+}
 ?>
