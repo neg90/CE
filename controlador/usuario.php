@@ -23,6 +23,22 @@ class controladorUsuario {
 			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles));	
 	}
 
+	static function listarConCartel($eliminado){
+			$user=$_SESSION['user'];
+			Twig_Autoloader::register();
+			$loader = new Twig_Loader_Filesystem('../vista');
+			$twig = new Twig_Environment($loader, array(
+			//'cache' => '../cache','
+			'debug' => 'false'
+			));
+
+			$ListaUsuarios=PDOusuario::listarUsuarios();
+			$ListaRoles=PDORol::listarRoles();
+
+			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'eliminado'=>$eliminado));	
+	}
+
 	static function verUsuario($Usuario){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
@@ -42,6 +58,12 @@ class controladorUsuario {
 			PDOusuario::baja($idusuario);
 			$ultPag = $_SERVER['HTTP_REFERER'];
 			header('Location:'.$ultPag);
+	}
+
+	static function eliminaUsuario($idusuario){
+			if (PDOusuario::eliminar($idusuario)) ($usuarioEliminado=1);
+			else $usuarioEliminado=0;
+			self::listarConCartel($usuarioEliminado);
 	}
 
 	static function alta(){
@@ -87,12 +109,13 @@ class controladorUsuario {
 			$email = htmlEntities($_POST['email']);
 			$rol = htmlEntities($_POST['rol']);
 			//$activo = htmlEntities($_POST['activo']);
-			$activo=true;
+			$activo=htmlEntities($_POST['activo']);
 			$idusuario = htmlEntities($_POST['idusuario']);
 
 
 			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
 			$unUsuario->setIdusuario($idusuario);
+			$unUsuario->setActivo($activo);
 			$unUsuario->guardar();
 			$aviso=true;
 			$ListaRoles=PDORol::listarRoles();

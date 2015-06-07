@@ -3,6 +3,13 @@
 {% block title %} Lista de usuarios {% endblock %}
 {% block contenedor %}
   <h3 id="tituloBloque">Listado de usuarios</h3>
+  <div class="clearfix"></div>
+  {% if eliminado == null %}
+  {% elseif eliminado == 1 %}
+  	<div class="alert alert-success" role="alert">El usuario fue eliminado correctamente</div>
+  {% else %}
+  	<div class="alert alert-success" role="alert">El usuario no pudo ser eliminado</div>
+  {% endif %}
   <table class="table table-hover">
   <thead>
     <tr>
@@ -61,8 +68,8 @@
 						</a>
 					</form>
 				<!--Eliminar user -->
-					<form method="post" action="privado.php?c=usuarios&a=baja&id={{usuario.idusuario}}" id="bajaUsuario{{usuario.idusuario}}">
-						<a href="javascript:{}" onclick="document.getElementById('bajaUsuario{{usuario.idusuario}}').submit(); return false;">
+					<form method="post" action="privado.php?c=usuarios&a=eliminar&id={{usuario.idusuario}}" id="eliminaUsuario{{usuario.idusuario}}">
+						<a href="javascript:{}" onclick="document.getElementById('eliminaUsuario{{usuario.idusuario}}').submit(); return false;">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</a>
 					</form>

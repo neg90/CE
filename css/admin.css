@@ -95,3 +95,6 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 
 #referenciasRol{ margin-bottom:30px;}
 .tituloRol {font-weight: bold; color:#666;}
+
+.activoSI{background-color:#45B500; color:white; font-weight:bold}
+.activoNO{background-color:red; color:white; font-weight:bold}
