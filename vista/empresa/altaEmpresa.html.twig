@@ -5,7 +5,7 @@
 {% block contenedor %}
 	<script type="text/javascript">
 		 counter = 1;
-		 var limit = 4;
+		 var limit = 12;
 		 var contador = 1;
 		 function agregarInput(divName,nombre){
 			 if (counter == limit){
@@ -16,11 +16,37 @@
 			    newdiv.innerHTML = "<div class='row'><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div></div>";
 			    document.getElementById(divName).appendChild(newdiv);
 
-			    $("#telefono"+contador).addClass()
 			    counter++;
 			   	contador++;
 			   }
 		 }
+		 var cantRubro = 0;
+
+		 function cargarRubro(divName,nombre){
+			 if ((cantRubro == 1)){
+			 	alert("No se pueden agregar mas campos!");
+			 }else{
+			  //Creo el elemento
+			  var newdiv = document.createElement('div');
+			  newdiv.innerHTML = "<div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div>";
+			  document.getElementById(divName).appendChild(newdiv);
+			  cantRubro++;
+			 }
+		 }
+		 var cantCat = 0;
+
+		 function cargarCategoria(divName,nombre){
+			 if ((cantCat == 1)){
+			 	alert("No se pueden agregar mas campos!");
+			 }else{
+			  //Creo el elemento
+			  var newdiv = document.createElement('div');
+			  newdiv.innerHTML = "<div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div>";
+			  document.getElementById(divName).appendChild(newdiv);
+			  cantCat++;
+			 }
+		 }
+		 
 	</script>
 
 	{% if modo == 'alta' %}
@@ -136,23 +162,29 @@
 					</div>
 				</div> 
 			 </div>
-			 <div class="row">
-			 	<div class="col-lg-6"> 
+			 <div class="row" id="insertarRubro">
+			 	<div class="col-lg-6" > 
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Rubro: </label>
 						<div class="col-lg-4 "> 
 							<select class="form-control" name="rubro"></select>
 						</div>
-						<button class="btn btn-default col-lg-2"><span class="glyphicon glyphicon-plus-sign"></span></button>
+						<button type="button" class="btn btn-default col-lg-2" onclick="cargarRubro('insertarRubro','Descripcion');">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</button>
 					</div>
 				</div>
+			</div>
+			 <div class="row" id="insertarCategoria">
 				<div class="col-lg-6"> 
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Categoria: </label>
 						<div class="col-lg-4 "> 
 							<select class="form-control" name="categoria"></select>
 						</div>
-						<button class="btn btn-default col-lg-2"><span class="glyphicon glyphicon-plus-sign"></span></button>
+						<button type="button" class="btn btn-default col-lg-2" onclick="cargarCategoria('insertarCategoria','Descripcion');">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -210,7 +242,7 @@
 			 <div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-2">
-					<a href="privado.php?c=contacto&a=listar">
+					<a href="privado.php?c=empresa&a=listar">
 						<button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono"s>
 							Volver al listado
 						</button>
