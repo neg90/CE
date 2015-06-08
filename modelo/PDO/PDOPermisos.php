@@ -98,5 +98,27 @@ class PDOPermisos extends permisos{
 
       $conexion = null;
    }
+
+   public static function ultimoPermisoCreado(){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM permisos ORDER BY idpermiso DESC');
+      $consulta->execute();
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function borrar($idpermiso){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('DELETE FROM permisos WHERE idpermiso = :idpermiso');
+      $consulta->bindParam(':idpermiso', $idpermiso);
+      $consulta->execute();
+   }
+
 }
 ?>

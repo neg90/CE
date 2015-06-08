@@ -1,0 +1,292 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %}Formulario Contacto {% endblock %}
+
+{% block contenedor %}
+<script>
+$(document).ready(function() {
+      for (i=1; i<=20; i++){
+		$("#botonActivoSI"+i).removeClass("activoSI");
+		$("#botonActivoSI"+i).removeClass("activoNO");
+		$("#botonActivoNO"+i).removeClass("activoSI");
+		$("#botonActivoNO"+i).addClass("activoNO");
+		document.getElementById("input"+i).value=0;
+	}
+});
+
+function marcarTodos(){
+	for (i=1; i<=20; i++){
+		$("#botonActivoSI"+i).addClass("activoSI");
+		$("#botonActivoSI"+i).removeClass("activoNO");
+		$("#botonActivoNO"+i).removeClass("activoSI");
+		$("#botonActivoNO"+i).removeClass("activoNO");
+		document.getElementById("input"+i).value=1;
+	}
+}
+
+function desmarcarTodos(){
+	for (i=1; i<=20; i++){
+		$("#botonActivoSI"+i).removeClass("activoSI");
+		$("#botonActivoSI"+i).removeClass("activoNO");
+		$("#botonActivoNO"+i).removeClass("activoSI");
+		$("#botonActivoNO"+i).addClass("activoNO");
+		document.getElementById("input"+i).value=0;
+	}
+}
+
+function marcarSI(numeroSI){
+	$("#botonActivoSI"+numeroSI).addClass("activoSI");
+	$("#botonActivoSI"+numeroSI).removeClass("activoNO");
+	$("#botonActivoNO"+numeroSI).removeClass("activoSI");
+	$("#botonActivoNO"+numeroSI).removeClass("activoNO");
+	document.getElementById("input"+numeroSI).value=1;
+}
+
+function marcarNO(numeroNO){
+	$("#botonActivoSI"+numeroNO).removeClass("activoSI");
+	$("#botonActivoSI"+numeroNO).removeClass("activoNO");
+	$("#botonActivoNO"+numeroNO).removeClass("activoSI");
+	$("#botonActivoNO"+numeroNO).addClass("activoNO");
+	document.getElementById("input"+numeroNO).value=0;
+}
+
+</script>
+
+	<div class="row fila-de-alerta">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+				 	{% if aviso is null %}
+				 	{% else %}
+				 		{% if tipoAviso == 'exito' %}
+				 		<div class="alert alert-success alert-dismissable">
+		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
+		    				  {{aviso}}
+	  					</div>
+	  					{% elseif tipoAviso == 'error' %}
+	  						<div class="alert alert-danger alert-dismissable">
+		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
+		    				  {{aviso}}
+	  					</div>
+	  					{% endif %}
+  					{% endif %}
+				 </div>
+			</div>
+	<div class="row fila-de-titulo">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+					<h3> Nuevo Rol</h3>
+				 </div>
+			</div>
+	<form class="form-horizontal" action="privado.php?c=roles&a=alta" role="form" method="POST">
+	<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-3 control-label">Nombre del rol: </label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="nombre_rol" pattern="[a-zA-Z0-9_- ]+" title="No parece un nombre de rol válido" required/>
+						</div>
+					</div>
+	</div>
+
+		<a class="btn btn-default btn-xs" onclick="marcarTodos()">Marcar todos los privilegios</a>
+		<a class="btn btn-default btn-xs" onclick="desmarcarTodos()">Desmarcar todos los privilegios</a>
+	<div class="clearfix"></div>
+	<div class="row col-lg-6" >
+			<h3>Socios</h3>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Crear socios: </label>
+						<input type="hidden" name="csocio" id="input1">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI1" class="btn btn-default" onclick="marcarSI(1)"> SI </button>
+			  						<button type="button" id="botonActivoNO1" class="btn btn-default" onclick="marcarNO(1)"> NO </button>
+							</div>
+			</div>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Ver socios: </label>
+						<input type="hidden" name="rsocio" id="input2">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI2" class="btn btn-default" onclick="marcarSI(2)"> SI </button>
+			  						<button type="button" id="botonActivoNO2" class="btn btn-default" onclick="marcarNO(2)"> NO </button>
+							</div>
+			</div>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Modificar socios: </label>
+						<input type="hidden" name="usocio" id="input3">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI3" class="btn btn-default" onclick="marcarSI(3)"> SI </button>
+			  						<button type="button" id="botonActivoNO3" class="btn btn-default" onclick="marcarNO(3)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Borrar socios: </label>
+						<input type="hidden" name="dsocio" id="input4">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI4" class="btn btn-default" onclick="marcarSI(4)"> SI </button>
+			  						<button type="button" id="botonActivoNO4" class="btn btn-default" onclick="marcarNO(4)"> NO </button>
+							</div>
+			</div>
+	</div>
+	
+	<div class="row col-lg-6">
+			<h3>Titular de Medidor</h3>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Crear titulares: </label>
+						<input type="hidden" name="cmedidor" id="input5">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI5" class="btn btn-default" onclick="marcarSI(5)"> SI </button>
+			  						<button type="button" id="botonActivoNO5" class="btn btn-default" onclick="marcarNO(5)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Ver titulares: </label>
+						<input type="hidden" name="rmedidor" id="input6">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI6" class="btn btn-default" onclick="marcarSI(6)"> SI </button>
+			  						<button type="button" id="botonActivoNO6" class="btn btn-default" onclick="marcarNO(6)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Modificar titulares: </label>
+						<input type="hidden" name="umedidor" id="input7">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI7" class="btn btn-default" onclick="marcarSI(7)"> SI </button>
+			  						<button type="button" id="botonActivoNO7" class="btn btn-default" onclick="marcarNO(7)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Borrar titulares: </label>
+						<input type="hidden" name="dmedidor" id="input8">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI8" class="btn btn-default" onclick="marcarSI(8)"> SI </button>
+			  						<button type="button" id="botonActivoNO8" class="btn btn-default" onclick="marcarNO(8)"> NO </button>
+							</div>
+			</div>
+	</div>
+	<div class="row col-lg-6">
+			<h3>Empresas</h3>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Crear empresas: </label>
+						<input type="hidden" name="cci" id="input9">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI9" class="btn btn-default" onclick="marcarSI(9)"> SI </button>
+			  						<button type="button" id="botonActivoNO9" class="btn btn-default" onclick="marcarNO(9)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Ver empresas: </label>
+						<input type="hidden" name="rci" id="input10">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI10" class="btn btn-default" onclick="marcarSI(10)"> SI </button>
+			  						<button type="button" id="botonActivoNO10" class="btn btn-default" onclick="marcarNO(10)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Modificar empresas: </label>
+						<input type="hidden" name="uci" id="input11">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI11" class="btn btn-default" onclick="marcarSI(11)"> SI </button>
+			  						<button type="button" id="botonActivoNO11" class="btn btn-default" onclick="marcarNO(11)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Borrar empresas: </label>
+						<input type="hidden" name="dci" id="input12">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI12" class="btn btn-default" onclick="marcarSI(12)"> SI </button>
+			  						<button type="button" id="botonActivoNO12" class="btn btn-default" onclick="marcarNO(12)"> NO </button>
+							</div>
+			</div>
+	</div>
+
+	<div class="row col-lg-6">
+			<h3>Roles</h3>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Crear roles: </label>
+						<input type="hidden" name="crol" id="input13">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI13" class="btn btn-default" onclick="marcarSI(13)"> SI </button>
+			  						<button type="button" id="botonActivoNO13" class="btn btn-default" onclick="marcarNO(13)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Ver roles: </label>
+						<input type="hidden" name="rrol" id="input14">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI14" class="btn btn-default" onclick="marcarSI(14)"> SI </button>
+			  						<button type="button" id="botonActivoNO14" class="btn btn-default" onclick="marcarNO(14)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Modificar roles: </label>
+						<input type="hidden" name="urol" id="input15">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI15" class="btn btn-default" onclick="marcarSI(15)"> SI </button>
+			  						<button type="button" id="botonActivoNO15" class="btn btn-default" onclick="marcarNO(15)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Borrar roles: </label>
+						<input type="hidden" name="drol" id="input16">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI16" class="btn btn-default" onclick="marcarSI(16)"> SI </button>
+			  						<button type="button" id="botonActivoNO16" class="btn btn-default" onclick="marcarNO(16)"> NO </button>
+							</div>
+			</div>
+	</div>
+	<div class="row col-lg-6">
+			<h3>Usuarios</h3>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Crear usuarios: </label>
+						<input type="hidden" name="cusuario" id="input17">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI17" class="btn btn-default" onclick="marcarSI(17)"> SI </button>
+			  						<button type="button" id="botonActivoNO17" class="btn btn-default" onclick="marcarNO(17)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Ver usuarios: </label>
+						<input type="hidden" name="rusuario" id="input18">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI18" class="btn btn-default" onclick="marcarSI(18)"> SI </button>
+			  						<button type="button" id="botonActivoNO18" class="btn btn-default" onclick="marcarNO(18)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Modificar usuarios: </label>
+						<input type="hidden" name="uusuario" id="input19">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI19" class="btn btn-default" onclick="marcarSI(19)"> SI </button>
+			  						<button type="button" id="botonActivoNO19" class="btn btn-default" onclick="marcarNO(19)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Borrar usuarios: </label>
+						<input type="hidden" name="dusuario" id="input20">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI20" class="btn btn-default" onclick="marcarSI(20)"> SI </button>
+			  						<button type="button" id="botonActivoNO20" class="btn btn-default" onclick="marcarNO(20)"> NO </button>
+							</div>
+			</div>
+	</div>
+	<div class="row col-lg-4 enviarRol">
+			<div class="row fila-de-boton">
+			 	<div class=" col-lg-12">
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarRol">Enviar</button>
+				</div>
+				<div class=" col-lg-4"></div>
+			</div>
+	</div>
+	<div class="clearfix"></div>
+{% endblock %}

@@ -71,6 +71,14 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 .right{
 	float:right;
 }
+.left{
+	float:left;
+}
+
+.center{
+	display:block;
+	margin: 0 auto;
+}
 
 .input-login{
 	margin:10px 0px 10px 0px;
@@ -98,3 +106,7 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 
 .activoSI{background-color:#45B500; color:white; font-weight:bold}
 .activoNO{background-color:red; color:white; font-weight:bold}
+
+hr{border:1px solid #ccc;}
+
+.enviarRol{margin-top:100px;}
