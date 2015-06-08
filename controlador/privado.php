@@ -76,6 +76,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 
 			/* -------- USUARIOS ---------- */
 			elseif($controlador == 'usuarios'){
+				//ALTA
 				if($accion == 'alta'){
 					controladorUsuario::alta();
 				}elseif($accion == 'modificar'){
@@ -84,20 +85,20 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorUsuario::modificar($idusuario);
 					}
 					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+
+				//BAJA
 				}elseif($accion == 'baja'){ //invierte activos
 					if (!empty($_GET['id'])){
 						$idusuario=htmlEntities($_GET['id']);
 						controladorUsuario::bajaUsuario($idusuario);
 					}
 					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-				}elseif($accion == 'eliminar'){ //elimina fisicamente
-					if (!empty($_GET['id'])){
-						$idusuario=htmlEntities($_GET['id']);
-						controladorUsuario::eliminaUsuario($idusuario);
-					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+
+				//Listar
 				}elseif($accion == 'listar'){
 					controladorUsuario::listar();
+
+				//Detalle
 				}elseif($accion == 'detalle'){
 					if (!empty($_POST['id'])){
 						$idusuario=htmlEntities($_POST['id']);
@@ -105,11 +106,23 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorUsuario::verUsuario($usuario);
 					}
 					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+
+				//Eliminar
+				}elseif($accion == 'eliminar'){ //elimina fisicamente
+					if (!empty($_GET['id'])){
+						$idusuario=htmlEntities($_GET['id']);
+						controladorUsuario::eliminaUsuario($idusuario);
+					}
+					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
 				}
-			}
+				//Modif. Mis datos
+				}elseif($accion == 'misdatos'){ //elimina fisicamente
+						controladorUsuario::misDatos();
+				}
 		}else{
 			//Avisar q pifio path
 			//puso Acción o Controlador MAL
+			header('Location:privado.php?c=inicio&a=inicio');
 		}
 
 	}
