@@ -41,7 +41,7 @@ class PDORol extends rol{
          $consulta = $conexion->prepare('UPDATE rol SET nombre = :nombre, idpermisos = :idpermisos WHERE idrol = :idrol');
          
          $consulta->bindParam(':nombre', $this->getNombre());
-         $consulta->bindParam(':idpermisos', $this->getIdpermiso());
+         $consulta->bindParam(':idpermisos', $this->getIdpermisos());
          $consulta->bindParam(':idrol', $this->getIdrol());
          $consulta->execute();
 
@@ -75,9 +75,9 @@ class PDORol extends rol{
       catch (PDOException $e){}
       $consulta = $conexion->prepare('SELECT * FROM rol WHERE nombre = :nombre');
       $consulta->bindParam(':nombre', $nombre);
-      $resultado=$consulta->execute();
-      if ($resultado)return true;
-      else return false;
+      $consulta->execute();
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      return $objeto;
    }
 
 }
