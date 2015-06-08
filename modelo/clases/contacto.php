@@ -12,10 +12,9 @@ class contacto {
 	private $activo;
 	private $tipodocumento;
 	private $documento;
-	private $cuit;
 	
 
-	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$tipodocumento,$documento,$cuit) {
+	public function	__construct($idcontacto,$nombre,$apellido,$telefono,$domicilio,$correo,$asociadosm,$tipodocumento,$documento) {
 		$this->idcontacto = $idcontacto;
 		$this->nombre = $nombre;
 		$this->apellido = $apellido;
@@ -25,9 +24,7 @@ class contacto {
 		$this->asociadosm = $asociadosm;
 		$this->activo = true;
 		$this->tipodocumento = $tipodocumento;
-		$this->documento = $documento;
-		$this->cuit = $cuit;
-	
+		$this->documento = $documento;	
 	}
 
 	public function getIdcontacto(){
@@ -108,14 +105,6 @@ class contacto {
 
 	public function setDocumento($documento){
 		$this->documento = $documento;
-	}
-
-	public function getCuit(){
-		return $this->cuit;
-	}
-
-	public function setCuit($cuit){
-		$this->cuit = $cuit;
 	}
 
 }

@@ -28,7 +28,6 @@ class controladorContacto {
 			$domicilio = htmlEntities($_POST['domicilio']);
 			$tipodocumento = htmlEntities($_POST['tipodocumento']);
 			$documento = htmlEntities($_POST['documento']);
-			$cuit = htmlEntities($_POST['cuit']);
 			if ( isset($_POST['sm'])) {
 				$sm = true;
 			}else{
@@ -36,7 +35,7 @@ class controladorContacto {
 			}
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 1 pero se gaurda incremental en el PDO
-			$unContacto = new PDOContacto(0,$nombre,$apellido,$telefono,$domicilio,$correo,$sm,$tipodocumento,$documento,$cuit);
+			$unContacto = new PDOContacto(0,$nombre,$apellido,$telefono,$domicilio,$correo,$sm,$tipodocumento,$documento);
 
 			if($unContacto->validarInsertar()){
 				$unContacto->guardar();
@@ -74,7 +73,6 @@ class controladorContacto {
 				$domicilio = htmlEntities($_POST['domicilio']);
 				$tipodocumento = htmlEntities($_POST['tipodocumento']);
 				$documento = htmlEntities($_POST['documento']);
-				$cuit = htmlEntities($_POST['cuit']);
 
 				if ( isset($_POST['sm'])) {
 					$sm = true;
@@ -94,6 +92,8 @@ class controladorContacto {
 				$unContacto->setCorreo($correo);
 				$unContacto->setAsociadosm($sm);
 				$unContacto->setActivo($activo);
+				$unContacto->setDocumento($documento);
+				$unContacto->setTipodocumento($tipodocumento);
 				$unContacto->guardar();
 				$aviso=1;
 
@@ -146,7 +146,7 @@ class controladorContacto {
 		$contactos = PDOContacto::listar();
 		
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('contactos'=>$contactos,$aviso=>'aviso'));
+		echo $template->render(array('contactos'=>$contactos,'aviso'=>$aviso));
       
    }
 

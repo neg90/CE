@@ -2,6 +2,7 @@
 
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
+require_once 'controladorEmpresa.php';
 require_once 'usuario.php';
 require_once 'controladorRol.php';
 
@@ -42,6 +43,18 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorRol::baja();
 				}elseif($accion == 'listar'){
 					controladorRol::listar();
+				}
+			}
+			//controlador empresa
+			elseif($controlador == 'empresa'){
+				if($accion == 'alta'){
+					controladorEmpresa::alta();
+				}elseif($accion == 'modificar'){
+					controladorEmpresa::modificar();
+				}elseif($accion == 'baja'){
+					controladorEmpresa::baja();
+				}elseif($accion == 'listar'){
+					controladorEmpresa::listar();
 				}
 			}
 			//controladorRol

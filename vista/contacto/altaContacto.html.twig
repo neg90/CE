@@ -82,13 +82,11 @@
 						</div>
 					</div>
 				</div>
-			
-			 	<div class="col-lg-6"> 
-			 		<div class="form-group">
-						<label class="col-lg-2 control-label">CUIT:*</label>
+			 	<div class=" col-lg-6">
+				    <div class="form-group">
+						<label class="col-lg-2 control-label">Empresa:* </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="cuit" placeholder="20-88888888-5" 
-						  value="{% if modo == 'modificar' %}{{contacto.getCuit}}{% endif %}" required/>
+							<select class="form-control" name="empresa"></select>
 						</div>
 					</div>
 				</div>
@@ -109,7 +107,17 @@
 							 value="{% if modo == 'modificar' %}{{contacto.getDocumento}}{% endif %}" required/>
 						 </div>
 					</div>
-			    </div>
+				</div>
+				<div class=" col-lg-6">
+				    <div class="form-group">
+						<label class="col-lg-2 control-label">Relacion: </label>
+						<div class="col-lg-6 "> 
+							<input type="text" class="form-control" name="relacion" placeholder="Empleado" 
+						  patter="[a-zA-Z].{2,}" />
+						</div>
+					</div>
+				</div>
+			    
 			 </div>
 			 <div class="row">
 			 	<div class=" col-lg-6">

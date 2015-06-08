@@ -4,8 +4,6 @@ class empresa {
 	//Atributos
 	private $idempresa;
 	private $denominacion;
-	private $telefono;
-	private $domicilio;
 	private $web;
 	private $idrubro;
 	private $detactividad;
@@ -14,14 +12,15 @@ class empresa {
 	private $fechainicioce;
 	private $nrosocio;  //de momento autoincremental. no tiene set!!
 	private $activo;
+	private $cuit;
+	private $fechafundacion;
+	private $importemensual;
 
-	public function	__construct($idempresa,$denominacion,$telefono,$domicilio,$web,$idrubro,
-	$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo) {
+	public function	__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,
+	$activo,$cuit,$fechafundacion,$importemensual) {
 	
 		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
-		$this->telefono = $telefono;
-		$this->domicilio = $domicilio;
 		$this->web = $web;
 		$this->idrubro = $idrubro;
 		$this->detactividad = $detactividad;
@@ -29,6 +28,9 @@ class empresa {
 		$this->idcategoria = $idcategoria;
 		$this->fechainicioce = $fechainicioce;
 		$this->activo = true;
+		$this->cuit = $cuit;
+		$this->fechafundacion = $fechafundacion;
+		$this->importemensual = $importemensual;
 	
 	}
 
@@ -42,22 +44,6 @@ class empresa {
 
 	public function setDenominacion($denominacion){
 		$this->denominacion = $denominacion;
-	}
-
-	public function getTelefono(){
-		return $this->telefono;
-	}
-
-	public function setTelefono($telefono){
-		$this->telefono = $telefono;
-	}
-
-	public function getDomicilio(){
-		return $this->domicilio;
-	}
-
-	public function setDomicilio($domicilio){
-		$this->domicilio = $domicilio;
 	}
 
 	public function getWeb(){
@@ -117,6 +103,30 @@ class empresa {
 	}
 	public function getActivo(){
 		return $this->activo;
+	}
+
+	public function getCuit(){
+		return $this->cuit;
+	}
+
+	public function setCuit($cuit){
+		$this->cuit = $cuit;
+	}
+
+	public function getFechafundacion(){
+		return $this->fechafundacion;
+	}
+
+	public function setFechafundacion($fechafundacion){
+		$this->fechafundacion = $fechafundacion;
+	}
+
+	public function getImportemensual(){
+		return $this->importemensual;
+	}
+
+	public function setImportemensual($importemensual){
+		$this->importemensual = $importemensual;
 	}
 
 }
