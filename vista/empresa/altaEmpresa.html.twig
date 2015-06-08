@@ -5,21 +5,17 @@
 {% block contenedor %}
 	<script type="text/javascript">
 		 counter = 1;
-		 var limit = 5;
+		 var limit = 4;
 		 var contador = 1;
-		 function addInput(divName){
+		 function agregarInput(divName,nombre){
 			 if (counter == limit){
 			 	alert("No se pueden agregar mas campos!");
 			  }else{
+			  	//Creo el elemento
 			    var newdiv = document.createElement('div');
-			    newdiv.innerHTML = "
-			 		<div class='form-group' >
-						<label class='col-lg-2 control-label'>Telefono:* </label>
-						<div class='col-lg-4'> 
-							<input type='text' class='form-control' name='telefono3' required/>
-						</div>
-					</div>";
+			    newdiv.innerHTML = "<div class='row'><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div></div>";
 			    document.getElementById(divName).appendChild(newdiv);
+
 			    $("#telefono"+contador).addClass()
 			    counter++;
 			   	contador++;
@@ -160,36 +156,52 @@
 					</div>
 				</div>
 			</div>
-			<div class="row" >
-			 	<div class="col-lg-6"> 
-			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Domicilio:* </label>
-						<div class="col-lg-4 "> 
-							<input type="text" class="form-control" name="domicilio" required/>
+			<div id="insertarTelefono">
+				<div class="row">
+					<div class="col-lg-6" > 
+				 		<div class="form-group"  >
+							<label class="col-lg-2 control-label">Telefono:* </label>
+							<div class="col-lg-4 "> 
+								<input type="text" class="form-control" name="Telefono" required/>
+							</div>
+							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarTelefono','Telefono');">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</button>
 						</div>
-						<button class="btn btn-default col-lg-2"><span class="glyphicon glyphicon-plus-sign"></span></button>
-					</div>
-				</div>
-				<div class="col-lg-6"> 
-			 		<div class="form-group" id="insertarTelefono" >
-						<label class="col-lg-2 control-label">Telefono:* </label>
-						<div class="col-lg-4 "> 
-							<input type="text" class="form-control" name="telefono" required/>
-						</div>
-						<input type="button" class="btn btn-default col-lg-2" onclick="addInput('insertarTelefono');">
 					</div>
 				</div>
 			</div>
-			 <div class="row">
+			<div id="insertarDomicilio">
+				<div class="row">
+				 	<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Domicilio:* </label>
+							<div class="col-lg-4 "> 
+								<input type="text" class="form-control" name="Domicilio" required/>
+							</div>
+							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarDomicilio','Domicilio');">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</button>						
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="insertarCorreo">
+				<div class="row">
 			 	<div class="col-lg-6"> 
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Correo: </label>
 						<div class="col-lg-4 "> 
-							<input type="text" class="form-control" name="correo" required/>
+							<input type="text" class="form-control" name="Correo" required/>
 						</div>
-						<button class="btn btn-default col-lg-2"><span class="glyphicon glyphicon-plus-sign"></span></button>
+						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarCorreo','Correo');">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</button>	
 					</div>
 				</div>
+			 </div>
+			</div>
+			 <div class="row">	
 			 	<div class=" col-lg-6">
 					<input class="col-lg-2" type="checkbox" name="activo"> 
 					<label class="col-lg-8">¿Activo? </label>
