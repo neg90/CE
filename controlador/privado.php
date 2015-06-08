@@ -44,7 +44,11 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorRol::modificar($idrol,$idpermiso);
 					}
 				}elseif($accion == 'baja'){
-					controladorRol::baja();
+					if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
+						$idrol=htmlEntities($_POST['idrol']);
+						$idpermiso=htmlEntities($_POST['idpermiso']);
+						controladorRol::baja($idrol,$idpermiso);
+					}
 				}elseif($accion == 'listar'){
 					controladorRol::listar();
 				}

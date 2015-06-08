@@ -21,6 +21,19 @@ class controladorRol {
 		$template = $twig->loadTemplate('roles/listarRoles.html.twig');
 		echo $template->render(array('Roles'=>$Roles, 'Permisos'=>$Permisos));
 
+	}
+
+	static function listarConCartel($aviso,$tipoAviso){
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		
+		$Roles = PDORol::listarRoles();
+		$Permisos = PDOPermisos::listarPermisos();
+		$template = $twig->loadTemplate('roles/listarRoles.html.twig');
+		echo $template->render(array('tipoAviso'=>$tipoAviso,'aviso'=>$aviso,'Roles'=>$Roles, 'Permisos'=>$Permisos));
+
 		}
 
 	static function modificar($idrol,$idpermiso){
@@ -206,12 +219,21 @@ class controladorRol {
 		}
 		
 	
-	static function baja(){
+	static function baja($idrol,$idpermiso){
 
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-	  	self::listar();
+
+	  	if (empty(PDORol::rolEnUso($idrol))){
+	  		PDORol::borrar($idrol);
+	  		PDOPermisos::borrar($idpermiso);
+	  		$aviso='Perfecto! El rol fue borrado correctamente.';
+			$tipoAviso="exito";
+	  	}
+	  	else {$aviso='Error! Hay usuarios asignados dentro de ese grupo.';
+			  $tipoAviso="error";}
+	  	self::listarConCartel($aviso, $tipoAviso);
 
 	}
 

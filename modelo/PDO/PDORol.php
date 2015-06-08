@@ -80,5 +80,17 @@ class PDORol extends rol{
       return $objeto;
    }
 
+   public static function rolEnUso($idrol){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM usuario WHERE idrol = :idrol');
+      $consulta->bindParam(':idrol', $idrol);
+      $consulta->execute();
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
 }
 ?>
