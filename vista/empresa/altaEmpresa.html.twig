@@ -3,6 +3,30 @@
 {% block title %}Formulario Empresa {% endblock %}
 
 {% block contenedor %}
+	<script type="text/javascript">
+		 counter = 1;
+		 var limit = 5;
+		 var contador = 1;
+		 function addInput(divName){
+			 if (counter == limit){
+			 	alert("No se pueden agregar mas campos!");
+			  }else{
+			    var newdiv = document.createElement('div');
+			    newdiv.innerHTML = "
+			 		<div class='form-group' >
+						<label class='col-lg-2 control-label'>Telefono:* </label>
+						<div class='col-lg-4'> 
+							<input type='text' class='form-control' name='telefono3' required/>
+						</div>
+					</div>";
+			    document.getElementById(divName).appendChild(newdiv);
+			    $("#telefono"+contador).addClass()
+			    counter++;
+			   	contador++;
+			   }
+		 }
+	</script>
+
 	{% if modo == 'alta' %}
 		<form class="form-horizontal" action="privado.php?c=empresa&a=alta" role="form" method="POST">
 	{% elseif modo == 'modificar' %}
@@ -136,7 +160,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" >
 			 	<div class="col-lg-6"> 
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Domicilio:* </label>
@@ -147,12 +171,12 @@
 					</div>
 				</div>
 				<div class="col-lg-6"> 
-			 		<div class="form-group">
+			 		<div class="form-group" id="insertarTelefono" >
 						<label class="col-lg-2 control-label">Telefono:* </label>
 						<div class="col-lg-4 "> 
 							<input type="text" class="form-control" name="telefono" required/>
 						</div>
-						<button class="btn btn-default col-lg-2"><span class="glyphicon glyphicon-plus-sign"></span></button>
+						<input type="button" class="btn btn-default col-lg-2" onclick="addInput('insertarTelefono');">
 					</div>
 				</div>
 			</div>
