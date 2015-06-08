@@ -41,7 +41,7 @@ class PDORol extends rol{
          $consulta = $conexion->prepare('UPDATE rol SET nombre = :nombre, idpermisos = :idpermisos WHERE idrol = :idrol');
          
          $consulta->bindParam(':nombre', $this->getNombre());
-         $consulta->bindParam(':idpermisos', $this->getIdpermisos());
+         $consulta->bindParam(':idpermisos', $this->getIdpermiso());
          $consulta->bindParam(':idrol', $this->getIdrol());
          $consulta->execute();
 
@@ -50,12 +50,34 @@ class PDORol extends rol{
          VALUES(:nombre, :idpermisos)');         
          
          $consulta->bindParam(':nombre', $this->getNombre());
-         $consulta->bindParam(':idpermisos', $this->getIdpermisos());
+         $consulta->bindParam(':idpermisos', $this->getIdpermiso());
          $consulta->execute();
          
       }
 
       $conexion = null;
+   }
+
+   public static function borrar($idrol){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('DELETE FROM rol WHERE idrol = :idrol');
+      $consulta->bindParam(':idrol', $idrol);
+      $consulta->execute();
+   }
+
+   public static function existeRol($nombre){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM rol WHERE nombre = :nombre');
+      $consulta->bindParam(':nombre', $nombre);
+      $resultado=$consulta->execute();
+      if ($resultado)return true;
+      else return false;
    }
 
 }

@@ -33,7 +33,7 @@ class rol {
 
 	//idpermiso
 	public function getIdpermiso(){
-		return $this->idpermisos;
+		return $this->idpermiso;
 	}
 
 	public function setIdpermiso($idpermiso){
