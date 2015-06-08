@@ -84,7 +84,7 @@ class controladorUsuario {
 					$activo = false;
 				}
 			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			if (!PDOusuario::emailExiste($email)){
+			if (empty(PDOusuario::emailExiste($email))){
 				$unUsuario->guardar();
 				$aviso='Perfecto! El usuario fue dado de alta con éxito. ';
 				$tipoAviso= 'exito';
@@ -132,7 +132,7 @@ class controladorUsuario {
 				$tipoAviso= 'exito';
 			}
 			else{
-				if (!PDOusuario::emailExiste($email)){
+				if (empty(PDOusuario::emailExiste($email))){
 					$unUsuario->setActivo($activo);
 					$unUsuario->guardar();
 					$aviso="Perfecto! El usuario fue modificado con éxito!";

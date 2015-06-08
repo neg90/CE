@@ -148,9 +148,9 @@ class PDOusuario extends usuario{
 		}catch (PDOException $e){}
 		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE correo = :email');
 		$consulta->bindParam(':email', $email);
-		$resultado=$consulta->execute();
-		if ($resultado) return true;
-		else return false;
+		$consulta->execute();
+		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      	return $objeto;
 	}
 
 
