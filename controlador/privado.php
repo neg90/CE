@@ -114,10 +114,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorUsuario::eliminaUsuario($idusuario);
 					}
 					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-				}
 				//Modif. Mis datos
-				}elseif($accion == 'misdatos'){ //elimina fisicamente
+				}elseif($accion == 'misdatos'){
 						controladorUsuario::misDatos();
+				}
 				}
 		}else{
 			//Avisar q pifio path

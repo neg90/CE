@@ -151,11 +151,11 @@ class controladorUsuario {
 		}
 	}
 
-		static function misDatos($idusuario){
+		static function misDatos(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		$user=$_SESSION['user'];		
+		$user=$_SESSION['user'];
 		if (isset($_POST['enviarUsuario'])){
 			$nombre = htmlEntities($_POST['nombre']);
 			$apellido = htmlEntities($_POST['apellido']);
@@ -173,14 +173,14 @@ class controladorUsuario {
 			if ($email == $datosAnteriores->correo){
 				$unUsuario->setActivo($activo);
 				$unUsuario->guardar();
-				$aviso="Perfecto! El usuario fue modificado con éxito!";
+				$aviso="Perfecto! Sus datos fueron modificados con éxito!";
 				$tipoAviso= 'exito';
 			}
 			else{
 				if (empty(PDOusuario::emailExiste($email))){
 					$unUsuario->setActivo($activo);
 					$unUsuario->guardar();
-					$aviso="Perfecto! El usuario fue modificado con éxito!";
+					$aviso="Perfecto! Sus datos fueron modificados con éxito!";
 					$tipoAviso= 'exito';		
 				}
 				else {$aviso = 'ERROR! El email ya se encuentra en uso.';
@@ -188,13 +188,14 @@ class controladorUsuario {
 			}
 
 			$ListaRoles=PDORol::listarRoles();
-			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
+			$template = $twig->loadTemplate('usuarios/modificarMisDatos.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
 		}else{
+			$idusuario=PDOusuario::buscarPorUsuario($user)->idusuario;
 			$unUsuario = PDOusuario::detalleUsuario($idusuario);
 			$ListaRoles = PDORol::listarRoles();
 			$aviso=null;
-			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
+			$template = $twig->loadTemplate('usuarios/modificarMisDatos.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
 		}
 	}
