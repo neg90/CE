@@ -40,10 +40,12 @@ class PDOPermisos extends permisos{
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       if($this->getIdpermiso()) /*Si tiene id entonces existe y solo lo modifico*/ {
-         $consulta = $conexion->prepare('UPDATE permisos SET csocio = :csocio, rsocio = :rsocio, 
-         usocio = :usocio, dsocio = :dsocio, cmedidor = :cmedidor, rmedidor = :rmedidor, umedidor = :umedidor
-         , dmedidor = :dmedidor, cci = :cci, rci = :rci, uci = :uci, dci = :dci, crol = :crol, rrol = :rrol,
-         urol = :urol, drol = :drol, , cusuario = :cusuario, rusuario = :rusuario, uusuario = :uusuario, dusuario = :dusuario WHERE idpermiso = :idpermiso');
+         $consulta = $conexion->prepare('UPDATE permisos SET 
+         csocio = :csocio, rsocio = :rsocio, usocio = :usocio, dsocio = :dsocio,
+         cmedidor = :cmedidor, rmedidor = :rmedidor, umedidor = :umedidor, dmedidor = :dmedidor,
+         cci = :cci, rci = :rci, uci = :uci, dci = :dci,
+         crol = :crol, rrol = :rrol,urol = :urol, drol = :drol,
+         cusuario = :cusuario, rusuario = :rusuario, uusuario = :uusuario, dusuario = :dusuario WHERE idpermiso = :idpermiso');
          
          $consulta->bindParam(':csocio', $this->getCsocio());
          $consulta->bindParam(':rsocio', $this->getRsocio());
@@ -62,8 +64,8 @@ class PDOPermisos extends permisos{
          $consulta->bindParam(':urol', $this->getUrol());
          $consulta->bindParam(':drol', $this->getDrol());
          $consulta->bindParam(':cusuario', $this->getCusuario());
-         $consulta->bindParam(':uusuario', $this->getRusuario());
-         $consulta->bindParam(':rusuario', $this->getUusuario());
+         $consulta->bindParam(':rusuario', $this->getRusuario());
+         $consulta->bindParam(':uusuario', $this->getUusuario());
          $consulta->bindParam(':dusuario', $this->getDusuario());
          $consulta->bindParam(':idpermiso', $this->getIdpermiso());
          $consulta->execute();

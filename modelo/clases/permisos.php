@@ -61,6 +61,10 @@ class permisos {
 		return $this->idpermiso;
 	}
 
+	public function setIdpermiso($idpermiso){
+		return $this->idpermiso = $idpermiso;
+	}
+
 	public function getCsocio(){
 		return $this->csocio;
 	}

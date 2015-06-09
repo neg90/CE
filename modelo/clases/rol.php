@@ -4,21 +4,25 @@ class rol {
 	//Atributos
 	private $idrol;
 	private $nombre;
-	private $idpermiso;
+	private $idpermisos;
 	
 	
 
-	public function	__construct ($idrol,$nombre,$idpermiso) {
+	public function	__construct ($idrol,$nombre,$idpermisos) {
 		//Se crea activo el user
 		$this->idrol = $idrol;
 		$this->nombre = $nombre;
-		$this->idpermiso = $idpermiso;
+		$this->idpermisos = $idpermisos;
 	
 	}
 
 	//id
 	public function getIdrol(){
 		return $this->idrol;
+	}
+
+	public function setIdrol($idrol){
+		return $this->idrol = $idrol;
 	}
 
 	//nombre
@@ -31,13 +35,13 @@ class rol {
 		return $this;
 	}
 
-	//idpermiso
-	public function getIdpermiso(){
-		return $this->idpermiso;
+	//idpermisos
+	public function getIdpermisos(){
+		return $this->idpermisos;
 	}
 
-	public function setIdpermiso($idpermiso){
-		$this->idpermiso = $idpermiso;
+	public function setIdpermisos($idpermisos){
+		$this->idpermisos = $idpermisos;
 		return $this;
 	}
 }

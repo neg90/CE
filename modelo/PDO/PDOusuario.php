@@ -20,7 +20,6 @@ class PDOusuario extends usuario{
 		$consulta->bindParam(':password',$unapassword);
 		$consulta->execute();
 		$existe=$consulta->fetch();
-		
 		if($existe==true){
 			return 1;
 		}else{
@@ -148,11 +147,21 @@ class PDOusuario extends usuario{
 		}catch (PDOException $e){}
 		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE correo = :email');
 		$consulta->bindParam(':email', $email);
-		$resultado=$consulta->execute();
-		if ($resultado) return true;
-		else return false;
+		$consulta->execute();
+		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      	return $objeto;
 	}
 
+	public static function buscarPorUsuario($username){
+		try {
+		$conexion = new conexion; //creo instancia de la conexion
+		}catch (PDOException $e){}
+		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE username = :username');
+		$consulta->bindParam(':username', $username);
+		$consulta->execute();
+		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      	return $objeto;
+	}
 
 }
 ?>

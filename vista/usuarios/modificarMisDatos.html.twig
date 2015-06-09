@@ -4,19 +4,6 @@
 {% block contenedor %}
 <script>
 
-$(document).ready(function() {
-      "{%if unUsuario.activo == 1 %}"
-	      	$("#botonActivoSI").addClass("activoSI");
-			$("#botonActivoNO").removeClass("activoSI");
-			$("#botonActivoNO").removeClass("activoNO");
-		"{%else%}"
-			$("#botonActivoSI").removeClass("activoSI");
-			$("#botonActivoSI").removeClass("activoNO");
-			$("#botonActivoNO").addClass("activoNO");
-		"{% endif %}"
-});
-
-
 function cambiarActivo(nuevoActivo){
 	document.getElementById("activo").value=nuevoActivo;
 	if (nuevoActivo == 1){
@@ -34,12 +21,12 @@ function cambiarActivo(nuevoActivo){
 </script>
 
 
-	<form class="form-horizontal" action="privado.php?c=usuarios&a=modificar&id={{unUsuario.idusuario}}" role="form" method="POST">
+	<form class="form-horizontal" action="privado.php?c=usuarios&a=misdatos" role="form" method="POST">
 		<input type="hidden" value="{{unUsuario.idusuario}}" name="idusuario">
 		<div class="contenedor-formulario">
 			<div class="row fila-de-alerta">
-				<div class=" col-lg-4"></div>
-				 <div class=" col-lg-4">
+				<div class=" col-lg-3"></div>
+				 <div class=" col-lg-5">
 				 	{% if aviso is null %}
 				 	{% else %}
 				 		{% if tipoAviso == 'exito' %}
@@ -59,7 +46,7 @@ function cambiarActivo(nuevoActivo){
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
-					<h3> Modificar Usuario</h3>
+					<h3> Modificar mis datos </h3>
 				 </div>
 			</div>
 			<div class="row aviso-completar">
@@ -93,7 +80,8 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Usuario: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="usuario" value="{{unUsuario.username}}" title="No parece un usuario válido" required/>
+						  <input type="hidden" value="{{unUsuario.username}}" name="usuario">
+						  <label class="col-lg-2 control-label gris">{{unUsuario.username}}</label>
 						</div>
 					</div>
 				</div>
@@ -119,18 +107,13 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Rol: </label>
 						<div class="col-lg-6 "> 
-							<select name="rol" class="form-control">
 								{% for rol in ListaRoles %}
 									{% if rol.idrol == unUsuario.idrol %}
-										<option value="{{rol.idrol}}" selected>{{rol.nombre}}</option>
-									{% else %}
-										<option value="{{rol.idrol}}">{{rol.nombre}}</option>
+									<input type="hidden" value="{{rol.idrol}}" name="rol">
+										<label class="col-lg-2 control-label gris">{{rol.nombre}}</label>
 									{% endif %}
 									
 								{% endfor %}
-								
-						  </select>
-						  <!--<input type="text" class="form-control" name="rol">-->
 						</div>
 					</div>
 				</div>
@@ -140,8 +123,11 @@ function cambiarActivo(nuevoActivo){
 				<label class="col-lg-2">Activo: </label>
 				<input type="hidden" name="activo" id="activo" value="{{unUsuario.activo}}">
 					<div class="btn-group btn-group-xs" role="group" aria-label="...">
-	  						<button type="button" id="botonActivoSI" class="btn btn-default" onclick="cambiarActivo(1)"> SI </button>
-	  						<button type="button" id="botonActivoNO" class="btn btn-default" onclick="cambiarActivo(0)"> NO </button>
+						{%if unUsuario.activo == 1 %}
+	  						<button type="button" id="botonActivo" class="btn btn-default activoSI"> SI </button>
+	  					{% else %}
+	  						<button type="button" id="botonActivoNO" class="btn btn-default activoNO"> NO </button>
+	  					{% endif %}
 					</div>
 				</div>
 			 </div>
