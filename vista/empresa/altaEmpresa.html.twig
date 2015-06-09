@@ -6,34 +6,55 @@
 	<script type="text/javascript">
 		 counter = 1;
 		 var limit = 12;
+		 var cantCat = 0;
+		 var cantRubro = 0;
 		 var contador = 1;
-		 function agregarInput(divName,nombre){
+		 function eliminarElemento(id,descontar){
+			input = document.getElementById(id);	
+			if (!input){
+				alert("Estas intentando una accion no permitida.");
+			} else {
+				padre = input.parentNode;
+				padre.removeChild(input);
+				if (descontar == 'rubro') {
+					cantRubro--;
+				};
+				if (descontar == 'genericos') {
+					counter--;
+					contador--;
+				};
+
+				if (descontar == 'categoria') {
+					cantCat--;
+				};
+			}
+		}
+
+		function agregarInput(divName,nombre){
 			 if (counter == limit){
 			 	alert("No se pueden agregar mas campos!");
 			  }else{
 			  	//Creo el elemento
+			  	var nombreConcat = nombre+contador;
 			    var newdiv = document.createElement('div');
-			    newdiv.innerHTML = "<div class='row'><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div></div>";
+			    newdiv.innerHTML = "<div class='col-lg-6' id="+nombre+""+contador+"  ><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+"</label><div class='col-lg-4'><input type='text' name="+nombre+""+contador+" class='form-control'></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+nombreConcat+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div>";
 			    document.getElementById(divName).appendChild(newdiv);
-
 			    counter++;
 			   	contador++;
 			   }
 		 }
-		 var cantRubro = 0;
-
+		 
 		 function cargarRubro(divName,nombre){
 			 if ((cantRubro == 1)){
 			 	alert("No se pueden agregar mas campos!");
 			 }else{
 			  //Creo el elemento
 			  var newdiv = document.createElement('div');
-			  newdiv.innerHTML = "<div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div>";
+			  newdiv.innerHTML = "<div class='col-lg-12' id='rubro1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' name='rubro1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('rubro1','rubro');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
 			  document.getElementById(divName).appendChild(newdiv);
 			  cantRubro++;
 			 }
-		 }
-		 var cantCat = 0;
+		 }	 
 
 		 function cargarCategoria(divName,nombre){
 			 if ((cantCat == 1)){
@@ -41,18 +62,17 @@
 			 }else{
 			  //Creo el elemento
 			  var newdiv = document.createElement('div');
-			  newdiv.innerHTML = "<div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-6'><input type='text' name='dia_+' class='form-control'></div></div></div>";
+			  newdiv.innerHTML = "<div class='col-lg-12' id='categoria1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' name='categoria1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('categoria1','categoria');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
 			  document.getElementById(divName).appendChild(newdiv);
 			  cantCat++;
 			 }
-		 }
-		 
+		 } 
 	</script>
 
 	{% if modo == 'alta' %}
-		<form class="form-horizontal" action="privado.php?c=empresa&a=alta" role="form" method="POST">
+		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=alta" role="form" method="POST">
 	{% elseif modo == 'modificar' %}
-		<form class="form-horizontal" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
+		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
 	{% endif %}
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
@@ -162,21 +182,21 @@
 					</div>
 				</div> 
 			 </div>
-			 <div class="row" id="insertarRubro">
-			 	<div class="col-lg-6" > 
-			 		<div class="form-group">
+			 <div id="insertarRubro">
+				 <div class="col-lg-12"> 
+				 	<div class="form-group">
 						<label class="col-lg-2 control-label">Rubro: </label>
 						<div class="col-lg-4 "> 
-							<select class="form-control" name="rubro"></select>
+							<select class="form-control" name="rubro" id="rubroajax" ></select>
 						</div>
 						<button type="button" class="btn btn-default col-lg-2" onclick="cargarRubro('insertarRubro','Descripcion');">
 							<span class="glyphicon glyphicon-plus-sign"></span>
-						</button>
+						</button>	
 					</div>
 				</div>
 			</div>
-			 <div class="row" id="insertarCategoria">
-				<div class="col-lg-6"> 
+			 <div id="insertarCategoria">
+				<div class="col-lg-12"> 
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Categoria: </label>
 						<div class="col-lg-4 "> 
@@ -189,51 +209,46 @@
 				</div>
 			</div>
 			<div id="insertarTelefono">
-				<div class="row">
-					<div class="col-lg-6" > 
-				 		<div class="form-group"  >
-							<label class="col-lg-2 control-label">Telefono:* </label>
-							<div class="col-lg-4 "> 
-								<input type="text" class="form-control" name="Telefono" required/>
-							</div>
-							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarTelefono','Telefono');">
-								<span class="glyphicon glyphicon-plus-sign"></span>
-							</button>
+				<div class="col-lg-6" > 
+				 	<div class="form-group"  >
+						<label class="col-lg-2 control-label">Telefono:* </label>
+						<div class="col-lg-4 "> 
+							<input type="text" class="form-control" name="Telefono" required/>
 						</div>
+						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarTelefono','Telefono:');">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</button>
 					</div>
 				</div>
 			</div>
+			</div>
 			<div id="insertarDomicilio">
-				<div class="row">
-				 	<div class="col-lg-6"> 
-				 		<div class="form-group">
-							<label class="col-lg-2 control-label">Domicilio:* </label>
-							<div class="col-lg-4 "> 
-								<input type="text" class="form-control" name="Domicilio" required/>
-							</div>
-							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarDomicilio','Domicilio');">
-								<span class="glyphicon glyphicon-plus-sign"></span>
-							</button>						
+				 <div class="col-lg-6"> 
+				 	<div class="form-group">
+						<label class="col-lg-2 control-label">Domicilio:* </label>
+						<div class="col-lg-4 "> 
+							<input type="text" class="form-control" name="Domicilio" required/>
 						</div>
+						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarDomicilio','Domicilio:');">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						</button>						
 					</div>
 				</div>
 			</div>
 			<div id="insertarCorreo">
-				<div class="row">
 			 	<div class="col-lg-6"> 
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Correo: </label>
 						<div class="col-lg-4 "> 
 							<input type="text" class="form-control" name="Correo" required/>
 						</div>
-						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarCorreo','Correo');">
+						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarCorreo','Correo:');">
 							<span class="glyphicon glyphicon-plus-sign"></span>
 						</button>	
 					</div>
 				</div>
-			 </div>
 			</div>
-			 <div class="row">	
+			<div class="row">	
 			 	<div class=" col-lg-6">
 					<input class="col-lg-2" type="checkbox" name="activo"> 
 					<label class="col-lg-8">¿Activo? </label>
@@ -243,7 +258,7 @@
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-2">
 					<a href="privado.php?c=empresa&a=listar">
-						<button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono"s>
+						<button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono">
 							Volver al listado
 						</button>
 					</a>
