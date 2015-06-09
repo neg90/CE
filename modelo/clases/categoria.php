@@ -5,9 +5,9 @@ class categoria {
 	private $idcategoria;
 	private $descripcion;
 	
-	public function	__construct($idcategoria,$descripcion) {
+	public function	__construct($descripcion) {
 	
-		$this->idcategoria = $idcategoria;
+	
 		$this->descripcion = $descripcion;
 		
 	}
