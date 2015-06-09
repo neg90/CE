@@ -8,7 +8,7 @@ class categoria {
 	public function	__construct($idcategoria,$descripcion) {
 	
 		$this->idcategoria = $idcategoria;
-		$this->idmedidor = $idmedidor;
+		$this->descripcion = $descripcion;
 		
 	}
 
