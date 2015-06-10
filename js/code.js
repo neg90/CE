@@ -73,13 +73,15 @@ function inicializa_xhr() {
 function comprobar(valorID) {
 
 	var valor = document.getElementById(valorID).value;
+
 	peticion_http = inicializa_xhr();
 	if(peticion_http) {
 		peticion_http.onreadystatechange = procesaRespuesta;
 		peticion_http.open("POST", "../controlador/controladorAJAX.php", true);
 		peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		
-		peticion_http.send("accion="+valor+"&nocache="+Math.random());
+
+		peticion_http.send('var1=aldorico&var2='+valor+"&nocache="+Math.random());
 	}
 }
 

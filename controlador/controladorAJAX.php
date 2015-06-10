@@ -3,11 +3,18 @@
 	require_once ('../modelo/PDO/PDOcategoria.php');
 	
 	// Alta de categoria
-	if (isset($_POST['accion'])) {
-		$descripcion = $_POST['accion'];
+	
+
+	if (isset($_POST['var1'])) {
+		$descripcion = $_POST['var1'];
+		if ($descripcion == 'aldorico') {
+			# code...
+		
+		$neg = $_POST['var2'];
+
 		//el 1 al cohete
 		if (!empty($descripcion)) {
-			$unaCategoria = new PDOcategoria (0,$descripcion);
+			$unaCategoria = new PDOcategoria (0,$neg);
 			$unaCategoria->guardar();
 			$arreglo = [1=>$unaCategoria->getDescripcion(),2=>$unaCategoria->getIdcategoria()];
 			if($unaCategoria){
@@ -21,6 +28,7 @@
 			print $mensaje; 
 		}
 		
+	}
 	}
 		
 	
