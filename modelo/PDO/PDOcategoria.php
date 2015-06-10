@@ -6,9 +6,9 @@ require_once '../modelo/clases/categoria.php';
 class PDOcategoria extends categoria{
 	
 
-	public function	__construct ($descripcion){
+	public function	__construct ($idcategoria,$descripcion){
 		
-		parent::__construct($descripcion);
+		parent::__construct($idcategoria,$descripcion);
 	
 	}
 
@@ -18,6 +18,7 @@ class PDOcategoria extends categoria{
       if($this->getIdcategoria()) /*Si tiene id entonces existe y solo lo modifico*/ {
          $consulta = $conexion->prepare('UPDATE categoria SET descripcion = :descripcion WHERE id = :id');
          $consulta->bindParam(':descripcion', $this->getDescripcion());
+         $consulta->bindParam(':id', $this->getIdcategoria());
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {

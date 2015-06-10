@@ -11,9 +11,6 @@
 	{% endif %}
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
-			<a id="comprobar123" href="#">Comprobar disponibilidad...</a>
-
-			<div id="disponibilidad"></div>
 
 			<div class="row fila-de-alerta">
 				<div class=" col-lg-2"></div>
@@ -111,29 +108,6 @@
 					</div>
 				</div> 
 			 </div>
-			 <div class="row">	
-			 	<div class=" col-lg-12">
-			 		<div class="form-group">
-			 			<label class="col-lg-4 control-label">Detalle Actividad: </label>
-					 	<div class="col-lg-3">
-							<textarea cols="90" rows="5" name="detactividad" ></textarea>
-						</div>
-					</div>
-				</div> 
-			 </div>
-			 <div id="insertarRubro">
-				 <div class="col-lg-12"> 
-				 	<div class="form-group">
-						<label class="col-lg-2 control-label">Rubro: </label>
-						<div class="col-lg-4 "> 
-							<select class="form-control" name="rubro" id="rubroajax" ></select>
-						</div>
-						<button type="button" class="btn btn-default col-lg-2" onclick="cargarRubro('insertarRubro','Descripcion');">
-							<span class="glyphicon glyphicon-plus-sign"></span>
-						</button>	
-					</div>
-				</div>
-			</div>
 			 <div id="insertarCategoria">
 				<div class="col-lg-12"> 
 			 		<div class="form-group">
@@ -147,43 +121,97 @@
 					</div>
 				</div>
 			</div>
-			<div id="insertarTelefono">
-				<div class="col-lg-6" > 
-				 	<div class="form-group"  >
-						<label class="col-lg-2 control-label">Telefono:* </label>
+			 <div id="insertarRubro">
+				 <div class="col-lg-12"> 
+				 	<div class="form-group">
+						<label class="col-lg-2 control-label">Rubro: </label>
 						<div class="col-lg-4 "> 
-							<input type="text" class="form-control" name="Telefono" required/>
+							<select class="form-control" name="rubro" id="rubroajax" ></select>
 						</div>
-						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarTelefono','Telefono:');">
+						<button type="button" class="btn btn-default col-lg-2" onclick="cargarRubro('insertarRubro','Descripcion');">
 							<span class="glyphicon glyphicon-plus-sign"></span>
-						</button>
+						</button>	
+					</div>
+				</div>
+			</div>
+			 <div class="row">	
+			 	<div class=" col-lg-12">
+			 		<div class="form-group">
+			 			<label class="col-lg-4 control-label">Detalle Actividad: </label>
+					 	<div class="col-lg-3">
+							<textarea cols="90" rows="5" name="detactividad" ></textarea>
+						</div>
+					</div>
+				</div> 
+			 </div>
+			<div id="insertarTelefono">
+				<div class="row">
+					<div class="col-lg-6" > 
+					 	<div class="form-group"  >
+							<label class="col-lg-2 control-label">Telefono:* </label>
+							<div class="col-lg-4 "> 
+								<input type="text" class="form-control" name="Telefono" required/>
+							</div>
+							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarTelefono','Telefono:','telefono','caractel');">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</button>
+						</div>
+					</div>
+					<div class="col-lg-6" > 
+					 	<div class="form-group"  >
+							<label class="col-lg-2 control-label">Descripcion: </label>
+							<div class="col-lg-6 "> 
+								<input type="text" class="form-control" name="Telefono" required/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			</div>
 			<div id="insertarDomicilio">
-				 <div class="col-lg-6"> 
-				 	<div class="form-group">
-						<label class="col-lg-2 control-label">Domicilio:* </label>
-						<div class="col-lg-4 "> 
-							<input type="text" class="form-control" name="Domicilio" required/>
+				<div class="row">
+					 <div class="col-lg-6"> 
+					 	<div class="form-group">
+							<label class="col-lg-2 control-label">Domicilio:* </label>
+							<div class="col-lg-4 "> 
+								<input type="text" class="form-control" name="Domicilio" required/>
+							</div>
+							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarDomicilio','Domicilio:');">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</button>						
 						</div>
-						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarDomicilio','Domicilio:');">
-							<span class="glyphicon glyphicon-plus-sign"></span>
-						</button>						
+					</div>
+					 <div class="col-lg-6"> 
+					 	<div class="form-group">
+							<label class="col-lg-2 control-label">Descripcion: </label>
+							<div class="col-lg-6"> 
+								<input type="text" class="form-control" name="Domicilio" required/>
+							</div>
+												
+						</div>
 					</div>
 				</div>
 			</div>
 			<div id="insertarCorreo">
-			 	<div class="col-lg-6"> 
-			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Correo: </label>
-						<div class="col-lg-4 "> 
-							<input type="text" class="form-control" name="Correo" required/>
+				<div class="row">
+				 	<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Correo: </label>
+							<div class="col-lg-4 "> 
+								<input type="text" class="form-control" name="Correo" required/>
+							</div>
+							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarCorreo','Correo:');">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</button>	
 						</div>
-						<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarCorreo','Correo:');">
-							<span class="glyphicon glyphicon-plus-sign"></span>
-						</button>	
+					</div>
+					<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Descripcion: </label>
+							<div class="col-lg-6"> 
+								<input type="text" class="form-control" name="Correo" required/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -23,14 +23,13 @@ function eliminarElemento(id,descontar){
 	}
 }
 
-function agregarInput(divName,nombre){
+function agregarInput(divName,labelCaption1,id1,id2){
 	if (counter == limit){
 		alert("No se pueden agregar mas campos!");
 	}else{
 		//Creo el elemento
-		var nombreConcat = nombre+contador;
 		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<div class='col-lg-6' id="+nombre+""+contador+"  ><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+"</label><div class='col-lg-4'><input type='text' name="+nombre+""+contador+" class='form-control'></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+nombreConcat+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div>";
+		newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><input type='text' name="+id1+""+contador+" class='form-control'></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Descripcion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+""+contador+" required/></div></div></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		counter++;
 		contador++;
@@ -42,7 +41,7 @@ function cargarRubro(divName,nombre){
 		alert("No se pueden agregar mas campos!");
 	}else{
 		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<div class='col-lg-12' id='rubro1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='rubroAJAX' name='rubro1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('rubro1','rubro');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
+		newdiv.innerHTML = "<div class='col-lg-12' id='rubro1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='rubroAJAX' name='rubro1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('rubro1','rubro');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick=clickBoton('rubroAJAX');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		cantRubro++;
 	}
@@ -53,7 +52,7 @@ function cargarCategoria(divName,nombre){
 		alert("No se pueden agregar mas campos!");
 	}else{
 		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<div class='col-lg-12' id='categoria1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='categoriaAJAX' name='categoria1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('categoria1','categoria');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick='clickBoton();'><span class='glyphicon glyphicon-ok'></span></button></div></div>";
+		newdiv.innerHTML = "<div class='col-lg-12' id='categoria1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='categoriaAJAX' name='categoria1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('categoria1','categoria');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick=clickBoton('categoriaAJAX');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		cantCat++;
 	}
@@ -71,15 +70,16 @@ function inicializa_xhr() {
 	} 
 }
 //aca se envian al controlador
-function comprobar() {
+function comprobar(valorID) {
 
-	var categoriaAJAX = document.getElementById("categoriaAJAX").value;
+	var valor = document.getElementById(valorID).value;
 	peticion_http = inicializa_xhr();
 	if(peticion_http) {
 		peticion_http.onreadystatechange = procesaRespuesta;
-		peticion_http.open("POST", "../controlador/controladorCategoriaAJAX.php", true);
+		peticion_http.open("POST", "../controlador/controladorAJAX.php", true);
 		peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		peticion_http.send("categoriaAJAX="+categoriaAJAX+"&nocache="+Math.random());
+		
+		peticion_http.send("accion="+valor+"&nocache="+Math.random());
 	}
 }
 
@@ -99,20 +99,22 @@ function procesaRespuesta() {
 			var categoriaAJAX = document.getElementById("categoriaAJAX").value;
 			var respuesta_json = peticion_http.responseText;
 			var respuesta = eval("("+respuesta_json+")");	
-			if(respuesta){
-				opcionNueva(respuesta[2]);
+			if(respuesta[1] == 'vacio'){
+				alert('Estas intentando cargar una categoria vacia!');
+				eliminarElemento('categoria1','categoria');
+				
+			}else{
+				opcionNueva(respuesta[1]);
 				eliminarElemento('categoria1','categoria');
 			}	
 		}
 	}
 }
 
-window.onload = function() {
-	document.getElementById("comprobar123").onclick = comprobar;
-}
 
-function clickBoton() {
-	document.getElementById("comprobar").onclick = comprobar;
+
+function clickBoton(valorid) {
+	document.getElementById("comprobar").onclick = comprobar(valorid);
 }
 	
 	
