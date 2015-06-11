@@ -2,7 +2,7 @@
 
 	require_once '../modelo/conexionDB.php';
 	require_once '../modelo/PDO/PDOempresa.php';
-
+	require_once '../modelo/PDO/PDOtelefonoempresa.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
@@ -12,49 +12,57 @@
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
 
-	public static function laCuestionDelTelefono(){
+	private static function laCuestionDelTelefono($idempresa){
 		for ($i=1; $i < 12; $i++) { 
-			$auxStrtel = 'telefono' . $i ;
+			$auxStrtel = 'telefono' . $i;
 			$auxStrdesc = 'caractel' . $i;
-			if(isset($_POST["auxStrtel"])){
-				$auxStrtel = htmlentities($_POST['auxStrtel']);
-				$auxStrdesc = htmlentities($_POST['auxStrdesc']);
-				//cargar telefono en tabla intermedia
+			if (isset($_POST[$auxStrtel])){
+				$varTel = htmlentities($_POST[$auxStrtel]);
+				$varCarac = htmlentities($_POST[$auxStrdesc]);
+				//cargar telefono en tabla intermedia 
+				$unTelefono = new PDOtelefonoempresa (0,$idempresa,$varTel,$varCarac);
+				//validado con ajax
+				$unTelefono->guardar();
+				$unTelefono = null;
 			}
 		}
 	}
 
-	public static function laCuestionDelDomicilio(){
+	private static function laCuestionDelDomicilio($idempresa){
 		for ($i=1; $i < 12; $i++) { 
-			$auxStrtel = 'domicilio' . $i ;
+			$auxStrtel = 'domicilio' . $i;
 			$auxStrdesc = 'caracdom' . $i;
-			if(isset($_POST["auxStrtel"])){
-				$auxStrtel = htmlentities($_POST['auxStrtel']);
-				$auxStrdesc = htmlentities($_POST['auxStrdesc']);
-				//cargar telefono en tabla intermedia
+			if (isset($_POST[$auxStrtel])){
+				$varTel = htmlentities($_POST[$auxStrtel]);
+				$varCarac = htmlentities($_POST[$auxStrdesc]);
+				//cargar telefono en tabla intermedia 
+				$unDomicilio = new PDOdomicilioempresa (0,$idempresa,$varTel,$varCarac);
+				//validado con ajax
+				$unDomicilio->guardar();
+				$unDomicilio = null;
 			}
 		}
 	}
 
-	public static function laCuestionDelCorreo(){
+	private static function laCuestionDelCorreo($idempresa){
 		for ($i=1; $i < 12; $i++) { 
 			$auxStrtel = 'correo' . $i ;
 			$auxStrdesc = 'caraccorreo' . $i;
-			if(isset($_POST["auxStrtel"])){
-				$auxStrtel = htmlentities($_POST['auxStrtel']);
-				$auxStrdesc = htmlentities($_POST['auxStrdesc']);
-				//cargar telefono en tabla intermedia
+			if (isset($_POST[$auxStrtel])){
+				$varTel = htmlentities($_POST[$auxStrtel]);
+				$varCarac = htmlentities($_POST[$auxStrdesc]);
+				//cargar telefono en tabla intermedia 
+				$unCorreo = new PDOdomicilioempresa (0,$idempresa,$varTel,$varCarac);
+				//validado con ajax
+				$unCorreo->guardar();
+				$unCorreo = null;
 			}
 		}
-	}
-
-	public static function ejecutarTablasAux(){
-		controladorEMpresa::laCuestionDelCorreo();
-		controladorEMpresa::laCuestionDelDomicilio();
-		controladorEMpresa::laCuestionDelTelefono();
+	
 	}
 
 	static function alta(){
+
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -74,20 +82,6 @@ class controladorEmpresa {
 			$rubroAJAX = htmlEntities($_POST['rubro']);
 			$categoriaAJAX = htmlEntities($_POST['categoria']);
 			$detactividad = htmlEntities($_POST['detactividad']);
-			
-			//Telefonos
-			$telefono0 = htmlEntities($_POST['telefono0']);
-			$caractel0 = htmlEntities($_POST['caractel0']);
-
-			//domicilio
-			$domicilio0 = htmlEntities($_POST['domicilio0']);
-			$caracdom0 = htmlEntities($_POST['caracdom0']);
-
-			//Correo
-			$correo0 = htmlEntities($_POST['correo0']);
-			$caraccorreo0 = htmlEntities($_POST['caraccorreo0']);
-
-			controladorEMpresa::ejecutarTablasAux();
 
 			if (isset($_POST['activo'])) {
 				$activo = true;
@@ -106,7 +100,43 @@ class controladorEmpresa {
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
 				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+
+
+				//Telefonos 
+				$telefono0 = htmlEntities($_POST['telefono0']);
+				$caractel0 = htmlEntities($_POST['caractel0']);
+			
+				//alta telefono base.
+				$unTelefono = new PDOtelefonoempresa (0,$unaEmpresa->getIdempresa(),$telefono0,$caractel0);
+				//validado con ajax
+				$unTelefono->guardar();
+
+				//Alta telefonos extra
+				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
 				
+
+				//domicilio
+				$domicilio0 = htmlEntities($_POST['domicilio0']);
+				$caracdom0 = htmlEntities($_POST['caracdom0']);
+
+				//alta domicilio base.
+				$unDomicilio = new PDOdomicilioempresa (0,$unaEmpresa->getIdempresa(),$domicilio0,$caracdom0);
+				$unDomicilio->guardar();
+
+				//alta domicilios extra
+				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
+
+				//Correo
+				$correo0 = htmlEntities($_POST['correo0']);
+				$caraccorreo0 = htmlEntities($_POST['caraccorreo0']);
+
+				//alta correo base.
+				$unCorreo = new PDOcorreoempresa (0,$unaEmpresa->getIdempresa(),$correo0,$caraccorreo0);
+				$unCorreo->guardar();
+
+				//alta domicilios extra
+				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
+
 			}else{
 				$aviso=2;
 			}

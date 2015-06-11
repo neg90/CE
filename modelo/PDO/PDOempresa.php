@@ -32,7 +32,7 @@ class PDOempresa extends empresa{
       and activo = :activo and cuit = :cuit and fechafundacion = :fechafundacion and importemensual = :importemensual and nrosocio = :nrosocio 
       and cantempleados = :cantempleados)');
       
-      
+         
       $consulta->bindParam(':denominacion', $this->getDenominacion());
 
       $consulta->bindParam(':web', $this->getWeb());
@@ -150,35 +150,12 @@ class PDOempresa extends empresa{
 
       try {$conexion = new conexion;}catch (PDOException $e){} 
 
-      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (denominacion = :denominacion and 
-      web = :web and idrubro = :idrubro and detactividad = :detactividad and idcategoria = :idcategoria and fechainicioce = :fechainicioce
-      and activo = :activo and cuit = :cuit and fechafundacion = :fechafundacion and importemensual = :importemensual and nrosocio = :nrosocio 
-      and cantempleados = :cantempleados)');
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (denominacion = :denominacion and cuit = :cuit)');
       
       
       $consulta->bindParam(':denominacion', $denominacion);
 
-      $consulta->bindParam(':web',$web);
-
-      $consulta->bindParam(':idrubro',$rubroAJAX);
-
-      $consulta->bindParam(':detactividad',$detactividad);
-
-      $consulta->bindParam(':cantempleados',$cantempleados);
-
-      $consulta->bindParam(':idcategoria',$categoriaAJAX);
-
-      $consulta->bindParam(':fechainicioce',$fechainicioce);
-
-      $consulta->bindParam(':activo',$activo);
-
       $consulta->bindParam(':cuit',$cuit);
-
-      $consulta->bindParam(':fechafundacion',$fechafundacion);
-
-      $consulta->bindParam(':importemensual',$importemensual);
-
-      $consulta->bindParam(':nrosocio',$nrosocio);
 
       $consulta->execute();
 
