@@ -3,28 +3,26 @@
 class medidor {
 	//Atributos
 	private $idmedidor;
-	private $nombre;
-	private $apellido;
+	private $nomyap;
 	private $telefono;
-	private $domicio;
+	private $domicilio;
 	private $importepago;
 	private $numusuario;
 	private $numsuministro;
 	private $activo;
 	
 
-	public function	__construct($id,$idcontacto,$nombre,$apellido,$telefono,$domicio,$importepago,$numusuario,$numsuministro,$activo) {
+	public function	__construct($id,$idcontacto,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo) {
 	
 		$this->idcontacto = $idcontacto;
 		
-		$this->nombre = $nombre;
-		$this->apellido = $apellido;
+		$this->nomyap = $nomyap;
 		$this->telefono = $telefono;
-		$this->domicio = $domicio;
+		$this->domicilio = $domicilio;
 		$this->importepago = $importepago;
 		$this->numusuario = $numusuario;
 		$this->numsuministro = $numsuministro;
-		$this->activo = true;
+		$this->activo = $activo;
 	
 	}
 
@@ -32,20 +30,12 @@ class medidor {
 		return $this->idmedidor;
 	}
 
-	public function getNombre(){
-		return $this->nombre;
+	public function getNomyap(){
+		return $this->nomyap;
 	}
 
-	public function setNombre($nombre){
-		$this->nombre = $nombre;
-	}
-
-	public function getApellido(){
-		return $this->apellido;
-	}
-
-	public function setApellido($apellido){
-		$this->apellido = $apellido;
+	public function setNomyap($nomyap){
+		$this->nomyap = $nomyap;
 	}
 
 	public function getTelefono(){
@@ -56,12 +46,12 @@ class medidor {
 		$this->telefono = $telefono;
 	}
 
-	public function getDomicio(){
-		return $this->domicio;
+	public function getDomicilio(){
+		return $this->domicilio;
 	}
 
-	public function setDomicio($domicio){
-		$this->domicio = $domicio;
+	public function setDomicilio($domicilio){
+		$this->domicilio = $domicilio;
 	}
 
 	public function getImportepago(){

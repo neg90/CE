@@ -5,6 +5,7 @@ require_once 'controladorContacto.php';
 require_once 'controladorEmpresa.php';
 require_once 'usuario.php';
 require_once 'controladorRol.php';
+require_once 'controladorMedidor.php';
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -119,6 +120,18 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorUsuario::misDatos();
 				}
 				}
+				/* -------- MEDIDOR ---------- */
+				elseif($controlador == 'medidor'){
+					if($accion == 'alta'){
+						controladorMedidor::alta();
+					}elseif($accion == 'modificar'){
+						controladorMedidor::modificar();
+					}elseif($accion == 'baja'){
+						controladorMedidor::baja();
+					}elseif($accion == 'listar'){
+						controladorMedidor::listar();
+					}
+			}
 		}else{
 			//Avisar q pifio path
 			//puso Acción o Controlador MAL

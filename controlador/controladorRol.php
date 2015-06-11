@@ -15,11 +15,12 @@ class controladorRol {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
+		$user=$_SESSION['user'];
 		$Roles = PDORol::listarRoles();
 		$Permisos = PDOPermisos::listarPermisos();
 
 		$template = $twig->loadTemplate('roles/listarRoles.html.twig');
-		echo $template->render(array('Roles'=>$Roles, 'Permisos'=>$Permisos));
+		echo $template->render(array('user'=>$user,'Roles'=>$Roles, 'Permisos'=>$Permisos));
 
 	}
 
@@ -32,7 +33,7 @@ class controladorRol {
 		$Roles = PDORol::listarRoles();
 		$Permisos = PDOPermisos::listarPermisos();
 		$template = $twig->loadTemplate('roles/listarRoles.html.twig');
-		echo $template->render(array('tipoAviso'=>$tipoAviso,'aviso'=>$aviso,'Roles'=>$Roles, 'Permisos'=>$Permisos));
+		echo $template->render(array('user'=>$user,'tipoAviso'=>$tipoAviso,'aviso'=>$aviso,'Roles'=>$Roles, 'Permisos'=>$Permisos));
 
 		}
 

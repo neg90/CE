@@ -1,8 +1,8 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %} Crear Usuario {% endblock %}
+{% block title %} Crear titular de medidor {% endblock %}
 {% block contenedor %}
-	<form class="form-horizontal" action="privado.php?c=usuarios&a=alta" role="form" method="POST">
+	<form class="form-horizontal" action="privado.php?c=medidor&a=alta" role="form" method="POST">
 		<div class="contenedor-formulario">
 			<div class="row fila-de-alerta">
 				<div class=" col-lg-4"></div>
@@ -26,7 +26,7 @@
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
-					<h3> Nuevo Usuario</h3>
+					<h3> Nuevo titular de medidor</h3>
 				 </div>
 			</div>
 			<div class="row aviso-completar">
@@ -40,17 +40,9 @@
 			 <div class="row">
 			 	<div class="col-lg-6"> 
 			 		<div class="form-grouv">
-						<label class="col-lg-2 control-label">Nombre: </label>
+						<label class="col-lg-2 control-label">Apellido y Nombre: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" pattern="[a-zA-Z]+" title="No parece un nombre válido" name="nombre" required/>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6"> 
-			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Apellido: </label>
-						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" pattern="[a-zA-Z]+" title="No parece un apellido válido" name="apellido" required/>
+						  <input type="text" class="form-control" pattern="[a-zA-Z ]+" title="No parece un apellido y nombre válido" name="nomyap" required/>
 						</div>
 					</div>
 				</div>
@@ -58,17 +50,17 @@
 			   <div class="row">
 			 	<div class="col-lg-6"> 
 			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Usuario: </label>
+						<label class="col-lg-2 control-label">Teléfono: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="usuario" pattern="[a-zA-Z0-9_-]+" title="No parece un usuario válido" required/>
+						  <input type="text" class="form-control" name="telefono" pattern="[0-9- ]+" title="No parece un teléfono válido" required/>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6"> 
 			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Contraseña: </label>
+						<label class="col-lg-2 control-label">Domicilio: </label>
 						<div class="col-lg-6 "> 
-						  <input type="password" class="form-control" name="password" pattern="[a-zA-Z0-9]+" title="Los caracteres que se aceptan son sólo letras y números" required/>
+						  <input type="text" class="form-control" name="domicilio" pattern="[a-zA-Z0-9 ]+" title="No parece una dirección válida" required/>
 						</div>
 					</div>
 				</div>
@@ -76,23 +68,25 @@
 			 <div class="row">
 			 	<div class="col-lg-6"> 
 			 		<div class="form-group">
-						<label class="col-lg-2 control-label">E-mail: </label>
+						<label class="col-lg-2 control-label">Importe: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="email" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido" required/>
+						  <input type="text" class="form-control" name="importe" pattern="[0-9., ]+" title="No parece un importe válido" required/>
 						</div>
 					</div>
 				</div>
 			 	<div class="col-lg-6"> 
 			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Rol: </label>
+						<label class="col-lg-2 control-label">Número de usuario: </label>
 						<div class="col-lg-6 "> 
-							<select name="rol" class="form-control">
-								{% for rol in ListaRoles %}
-									<option value="{{rol.idrol}}">{{rol.nombre}}</option>
-								{% endfor %}
-								
-						  </select>
-						  <!--<input type="text" class="form-control" name="rol">-->
+						  <input type="text" class="form-control" name="numusuario" pattern="[a-zA-Z0-9 -]+" title="No parece un número de usuario válido" required/>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-2 control-label">Número de suministro: </label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="numsuministro" pattern="[a-zA-Z0-9 -]+" title="No parece un número de suministro válido" required/>
 						</div>
 					</div>
 				</div>
@@ -106,10 +100,10 @@
 			 <div class="row fila-de-boton">
 			 	<div class=" col-lg-1"></div>
 			 	<div class=" col-lg-4">
-			 		<a href="privado.php?c=usuarios&a=listar" class="btn btn-default btn-lg btn-block col-lg-4">Volver al listado</a>
+			 		<a href="privado.php?c=medidor&a=listar" class="btn btn-default btn-lg btn-block col-lg-4">Volver al listado</a>
 			 	</div>
 			 	<div class=" col-lg-4">
-				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarUsuario">Enviar</button>
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarMedidor">Enviar</button>
 				</div>
 				<div class=" col-lg-4"></div>
 			</div>
