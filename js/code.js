@@ -57,6 +57,30 @@ function cargarCategoria(divName,nombre){
 		cantCat++;
 	}
 }
+	function limita(elEvento, maximoCaracteres) {
+	  var elemento = document.getElementById("detactividad");
+
+	  // Obtener la tecla pulsada 
+	  var evento = elEvento || window.event;
+	  var codigoCaracter = evento.charCode || evento.keyCode;
+	  // Permitir utilizar las teclas con flecha horizontal
+	  if(codigoCaracter == 37 || codigoCaracter == 39) {
+	    return true;
+	  }
+
+	  // Permitir borrar con la tecla Backspace y con la tecla Supr.
+	  if(codigoCaracter == 8 || codigoCaracter == 46) {
+	    return true;
+	  }
+	  else if(elemento.value.length >= maximoCaracteres ) {
+	    return false;
+	  }
+	  else {
+	    return true;
+	  }
+	}
+
+
 //AJAX
 //Generico
 var READY_STATE_COMPLETE=4;
@@ -109,7 +133,7 @@ function procesaRespuesta() {
 				}
 			}else if (respuesta[4] == 'rubro') {
 				if(respuesta[3] == 'ok'){
-					opcionNueva(respuesta[1],respuesta[2],'rubroajax');
+					opcionNueva(respuesta[1],respuesta[2],'rubro');
 					eliminarElemento('rubro1','rubro');
 				}else if (respuesta[3] == 'existe'){
 					alert('La categoria ya existe!');
