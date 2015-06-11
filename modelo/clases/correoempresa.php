@@ -32,11 +32,11 @@ class correoempresa {
 		$this->idempresa = $idempresa;
 	}
 
-	public function getTelefono(){
+	public function getCorreo(){
 		return $this->correo;
 	}
 
-	public function setTelefono($correo){
+	public function setCorreo($correo){
 		$this->correo = $correo;
 	}
 

@@ -32,11 +32,11 @@ class domicilioempresa {
 		$this->idempresa = $idempresa;
 	}
 
-	public function getTelefono(){
+	public function getDomicilio(){
 		return $this->domicilio;
 	}
 
-	public function setTelefono($domicilio){
+	public function setDomicilio($domicilio){
 		$this->domicilio = $domicilio;
 	}
 

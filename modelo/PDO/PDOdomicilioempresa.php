@@ -1,7 +1,7 @@
 <?php
 
 require_once '../modelo/conexionDB.php';
-require_once '../modelo/clases/correoempresa.php';
+require_once '../modelo/clases/domicilioempresa.php';
 
 class PDOdomicilioempresa extends domicilioempresa{
 	

@@ -3,6 +3,8 @@
 	require_once '../modelo/conexionDB.php';
 	require_once '../modelo/PDO/PDOempresa.php';
 	require_once '../modelo/PDO/PDOtelefonoempresa.php';
+	require_once '../modelo/PDO/PDOdomicilioempresa.php';
+	require_once '../modelo/PDO/PDOcorreoempresa.php';	
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
