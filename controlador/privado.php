@@ -4,6 +4,7 @@ require_once 'controladorContacto.php';
 require_once 'controladorEmpresa.php';
 require_once 'usuario.php';
 require_once 'controladorRol.php';
+require_once 'controladorAJAX.php';
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -14,6 +15,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		header("Location:index.php?aviso=5");
 	}else{
 		$user = $_SESSION['user'];
+
+		
 
 		$controlador=htmlEntities(@$_GET['c']); 
 		$accion=htmlEntities(@$_GET['a']); 

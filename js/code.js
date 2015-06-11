@@ -41,7 +41,7 @@ function cargarRubro(divName,nombre){
 		alert("No se pueden agregar mas campos!");
 	}else{
 		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<div class='col-lg-12' id='rubro1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='rubroAJAX' name='rubro1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('rubro1','rubro');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick=clickBoton('rubroAJAX');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
+		newdiv.innerHTML = "<div class='col-lg-12' id='rubro1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='rubroAJAX' name='rubro1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('rubro1','rubro');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick=clickBoton('rubroAJAX','rubro','insertar');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		cantRubro++;
 	}
@@ -52,7 +52,7 @@ function cargarCategoria(divName,nombre){
 		alert("No se pueden agregar mas campos!");
 	}else{
 		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<div class='col-lg-12' id='categoria1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='categoriaAJAX' name='categoria1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('categoria1','categoria');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick=clickBoton('categoriaAJAX');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
+		newdiv.innerHTML = "<div class='col-lg-12' id='categoria1'><div class='form-group'><label class='col-lg-2 control-label'>"+nombre+" </label><div class='col-lg-4'><input type='text' id='categoriaAJAX' name='categoria1' class='form-control'></div><button type='button' class='btn btn-default col-lg-1' onclick=eliminarElemento('categoria1','categoria');><span class='glyphicon glyphicon-minus-sign'></span></button><button type='button' class='btn btn-default col-lg-1' id='comprobar' onclick=clickBoton('categoriaAJAX','categoria','insertar');><span class='glyphicon glyphicon-ok'></span></button></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		cantCat++;
 	}
@@ -70,7 +70,7 @@ function inicializa_xhr() {
 	} 
 }
 //aca se envian al controlador
-function comprobar(valorID) {
+function comprobar(valorID,entidad,accion) {
 
 	var valor = document.getElementById(valorID).value;
 
@@ -79,44 +79,52 @@ function comprobar(valorID) {
 		peticion_http.onreadystatechange = procesaRespuesta;
 		peticion_http.open("POST", "../controlador/controladorAJAX.php", true);
 		peticion_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		
-
-		peticion_http.send('var1=aldorico&var2='+valor+"&nocache="+Math.random());
+		peticion_http.send('entidad='+entidad+'&accion='+accion+'&descripcion='+valor+"&nocache="+Math.random());
 	}
 }
 
-function opcionNueva(texto){
+function opcionNueva(texto,id,input){
 	var option = document.createElement("option");
 	option.text = texto;
-	option.value = 111;
-		
-	var select = document.getElementById("categoria");
+	option.value = id;
+	var select = document.getElementById(input);
 	select.appendChild(option);
-
 }
 
 function procesaRespuesta() {
 	if(peticion_http.readyState == READY_STATE_COMPLETE) {
-		if (peticion_http.status == 200) {
-			var categoriaAJAX = document.getElementById("categoriaAJAX").value;
+		if (peticion_http.status == 200) {	
 			var respuesta_json = peticion_http.responseText;
 			var respuesta = eval("("+respuesta_json+")");	
-			if(respuesta[1] == 'vacio'){
-				alert('Estas intentando cargar una categoria vacia!');
-				eliminarElemento('categoria1','categoria');
-				
-			}else{
-				opcionNueva(respuesta[1]);
-				eliminarElemento('categoria1','categoria');
-			}	
+			if (respuesta[4] == 'categoria') {
+				if(respuesta[3] == 'ok'){
+					opcionNueva(respuesta[1],respuesta[2],'categoria');
+					eliminarElemento('categoria1','categoria');
+				}else if (respuesta[3] == 'existe'){
+					alert('La categoria ya existe!');
+					eliminarElemento('categoria1','categoria');
+				}else if (respuesta[3] == 'vacio') {
+					alert('No completaste el campo!');
+					eliminarElemento('categoria1','categoria');
+				}
+			}else if (respuesta[4] == 'rubro') {
+				if(respuesta[3] == 'ok'){
+					opcionNueva(respuesta[1],respuesta[2],'rubroajax');
+					eliminarElemento('rubro1','rubro');
+				}else if (respuesta[3] == 'existe'){
+					alert('La categoria ya existe!');
+					eliminarElemento('rubro1','rubro');
+				}else if (respuesta[3] == 'vacio') {
+					alert('No completaste el campo!');
+					eliminarElemento('rubro1','rubro');
+				}
+			}
 		}
 	}
 }
 
-
-
-function clickBoton(valorid) {
-	document.getElementById("comprobar").onclick = comprobar(valorid);
+function clickBoton(valorid,entidad,accion) {
+	document.getElementById("comprobar").onclick = comprobar(valorid,entidad,accion);
 }
 	
 	

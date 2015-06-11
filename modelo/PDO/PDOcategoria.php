@@ -12,6 +12,23 @@ class PDOcategoria extends categoria{
 	
 	}
 
+   public static function buscarID($descripcion){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM categoria WHERE (descripcion = :descripcion)');
+        
+      $consulta->bindParam(':descripcion', $descripcion);
+
+      $consulta->execute();
+
+      $resultado = $consulta->fetch();
+
+      $objeto = new PDOcategoria($resultado['id'],$resultado['descripcion']);
+      
+      return $objeto;
+
+   }
+
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       
@@ -32,6 +49,25 @@ class PDOcategoria extends categoria{
       }
 
       $conexion = null;
+   }
+
+   public function validarInsertar(){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM categoria WHERE (descripcion = :descripcion)');
+      
+      
+      $consulta->bindParam(':descripcion', $this->getDescripcion());
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      if ($objeto) {
+         //Si el array de obejtos viene cargado
+         return false;
+      }else{
+         return true;
+      }
+
    }
 
 
