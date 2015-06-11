@@ -1,11 +1,14 @@
 <?php
-
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
 require_once 'controladorEmpresa.php';
 require_once 'usuario.php';
 require_once 'controladorRol.php';
+<<<<<<< HEAD
 require_once 'controladorMedidor.php';
+=======
+require_once 'controladorAJAX.php';
+>>>>>>> 1bfb36a262fe0a87675704d6dc48bd92c9356b8e
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');

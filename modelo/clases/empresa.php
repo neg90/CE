@@ -17,7 +17,7 @@ class empresa {
 	private $importemensual;
 
 	public function	__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,
-	$activo,$cuit,$fechafundacion,$importemensual) {
+	$activo,$cuit,$fechafundacion,$importemensual,$nrosocio) {
 	
 		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
@@ -31,6 +31,7 @@ class empresa {
 		$this->cuit = $cuit;
 		$this->fechafundacion = $fechafundacion;
 		$this->importemensual = $importemensual;
+		$this->nrosocio = $nrosocio;
 	
 	}
 
@@ -98,6 +99,10 @@ class empresa {
 		return $this->nrosocio;
 	}
 
+	public function setNrosocio($nrosocio){
+		$this->nrosocio = $nrosocio;
+	}
+	
 	public function setActivo($activo){
 		$this->activo = $activo;
 	}

@@ -8,7 +8,7 @@ class rubro {
 	public function	__construct($idrubro,$descripcion) {
 	
 		$this->idrubro = $idrubro;
-		$this->idmedidor = $idmedidor;
+		$this->descripcion = $descripcion;
 		
 	}
 
