@@ -19,7 +19,6 @@
 					$unaCategoria->guardar();
 					//Busco id
 					$unaCategoria = PDOcategoria::buscarID($descripcion);
-
 					//Guardo en el array
 					$arreglo = [1=>$unaCategoria->getDescripcion(),2=>$unaCategoria->getIdcategoria(),3=>'ok',4=>'categoria'];
 					//json a la vista
@@ -47,7 +46,7 @@
 				if($unRubro->validarInsertar()){
 					$unRubro->guardar();
 					//Busco id
-
+					$unRubro = PDOrubro::buscarID($descripcion);
 					//Guardo en el array
 					$arreglo = [1=>$unRubro->getDescripcion(),2=>$unRubro->getIdrubro(),3=>'ok',4=>'rubro'];
 					//json a la vista

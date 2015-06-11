@@ -103,9 +103,7 @@
 			 		<div class="form-group">
 					 	<label class="col-lg-4 control-label">Fecha Fundacion empresa: </label>
 					 	<div class="col-lg-3">
-					 		{% set fechaHoy = ("now"|date('m/d/Y')) %}
-					 		{{fechaHoy}}
-							<input type="date" class="form-control" value="{{fechaHoy}}"  name="fechafundacion" />
+							<input type="date" class="form-control" name="fechafundacion" />
 					 	
 						</div>
 					</div>
@@ -164,7 +162,7 @@
 					 	<div class="form-group"  >
 							<label class="col-lg-2 control-label">Descripcion: </label>
 							<div class="col-lg-6 "> 
-								<input type="text" class="form-control" name="caractel0" required/>
+								<input type="text" class="form-control" name="caractel0" />
 							</div>
 						</div>
 					</div>
@@ -188,7 +186,7 @@
 					 	<div class="form-group">
 							<label class="col-lg-2 control-label">Descripcion: </label>
 							<div class="col-lg-6"> 
-								<input type="text" class="form-control" name="caracdom0" required/>
+								<input type="text" class="form-control" name="caracdom0" />
 							</div>
 												
 						</div>
@@ -201,7 +199,7 @@
 				 		<div class="form-group">
 							<label class="col-lg-2 control-label">Correo: </label>
 							<div class="col-lg-4 "> 
-								<input type="text" class="form-control" name="correo0" required/>
+								<input type="text" class="form-control" name="correo0" />
 							</div>
 							<button type="button" class="btn btn-default col-lg-2" onclick="agregarInput('insertarCorreo','Correo:','correo','caraccorreo');">
 								<span class="glyphicon glyphicon-plus-sign"></span>
@@ -212,19 +210,21 @@
 				 		<div class="form-group">
 							<label class="col-lg-2 control-label">Descripcion: </label>
 							<div class="col-lg-6"> 
-								<input type="text" class="form-control" name="caraccorreo0" required/>
+								<input type="text" class="form-control" name="caraccorreo0" />
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">	
-			 	<div class=" col-lg-6">
-					<input class="col-lg-2" type="checkbox" name="activo"> 
-					<label class="col-lg-8">¿Activo? </label>
-				</div>
-			 </div>
-			 <div class="row fila-de-boton">
+			{% if modo == 'modificar' %}
+				<div class="row">	
+				 	<div class=" col-lg-6">
+						<input class="col-lg-2" type="checkbox" name="activo"> 
+						<label class="col-lg-8">¿Activo? </label>
+					</div>
+				 </div>
+			{% endif %}
+			<div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-2">
 					<a href="privado.php?c=empresa&a=listar">

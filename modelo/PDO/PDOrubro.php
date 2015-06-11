@@ -12,6 +12,23 @@ class PDOrubro extends rubro{
 	
 	}
 
+   public static function buscarID($descripcion){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM rubro WHERE (descripcion = :descripcion)');
+        
+      $consulta->bindParam(':descripcion', $descripcion);
+
+      $consulta->execute();
+
+      $resultado = $consulta->fetch();
+
+      $objeto = new PDOrubro($resultado['id'],$resultado['descripcion']);
+      
+      return $objeto;
+
+   }
+
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       

@@ -1,6 +1,7 @@
 <?php
 
 	require_once '../modelo/conexionDB.php';
+	require_once '../modelo/PDO/PDOempresa.php';
 
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
@@ -48,9 +49,9 @@ class controladorEmpresa {
 	}
 
 	public static function ejecutarTablasAux(){
-		laCuestionDelCorreo();
-		laCuestionDelDomicilio();
-		laCuestionDelTelefono();
+		controladorEMpresa::laCuestionDelCorreo();
+		controladorEMpresa::laCuestionDelDomicilio();
+		controladorEMpresa::laCuestionDelTelefono();
 	}
 
 	static function alta(){
@@ -86,7 +87,7 @@ class controladorEmpresa {
 			$correo0 = htmlEntities($_POST['correo0']);
 			$caraccorreo0 = htmlEntities($_POST['caraccorreo0']);
 
-			ejecutarTablasAux();
+			controladorEMpresa::ejecutarTablasAux();
 
 			if (isset($_POST['activo'])) {
 				$activo = true;
@@ -102,6 +103,10 @@ class controladorEmpresa {
 			if($unaEmpresa->validarInsertar()){
 				$unaEmpresa->guardar();
 				$aviso=1;
+				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
+				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
+				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+				
 			}else{
 				$aviso=2;
 			}

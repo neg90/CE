@@ -55,7 +55,7 @@ class PDOempresa extends empresa{
 
       $consulta->bindParam(':importemensual', $this->getImportemensual());
 
-      $consulta->bindParam(':nrosocio', $this->getNrosocios());
+      $consulta->bindParam(':nrosocio', $this->getNrosocio());
 
       $consulta->execute();
 
@@ -63,10 +63,8 @@ class PDOempresa extends empresa{
       
       if ($objeto) {
          //Si el array de obejtos viene cargado
-         $conexion = null;
          return false;
       }else{
-         $conexion = null;
          return true;
       }
 
@@ -106,7 +104,7 @@ class PDOempresa extends empresa{
 
          $consulta->bindParam(':importemensual', $this->getImportemensual());
 
-         $consulta->bindParam(':nrosocio', $this->getNrosocios());
+         $consulta->bindParam(':nrosocio', $this->getNrosocio());
        
          $consulta->execute();
 
@@ -138,7 +136,7 @@ class PDOempresa extends empresa{
 
          $consulta->bindParam(':importemensual', $this->getImportemensual());
 
-         $consulta->bindParam(':nrosocio', $this->getNrosocios());
+         $consulta->bindParam(':nrosocio', $this->getNrosocio());
       
          $consulta->execute();
          
@@ -147,7 +145,56 @@ class PDOempresa extends empresa{
       $conexion = null;
    }
 
-   public function buscarContacto ($idcontacto){
+    public function BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
+    $activo,$cuit,$fechafundacion,$importemensual,$nrosocio){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (denominacion = :denominacion and 
+      web = :web and idrubro = :idrubro and detactividad = :detactividad and idcategoria = :idcategoria and fechainicioce = :fechainicioce
+      and activo = :activo and cuit = :cuit and fechafundacion = :fechafundacion and importemensual = :importemensual and nrosocio = :nrosocio 
+      and cantempleados = :cantempleados)');
+      
+      
+      $consulta->bindParam(':denominacion', $denominacion);
+
+      $consulta->bindParam(':web',$web);
+
+      $consulta->bindParam(':idrubro',$rubroAJAX);
+
+      $consulta->bindParam(':detactividad',$detactividad);
+
+      $consulta->bindParam(':cantempleados',$cantempleados);
+
+      $consulta->bindParam(':idcategoria',$categoriaAJAX);
+
+      $consulta->bindParam(':fechainicioce',$fechainicioce);
+
+      $consulta->bindParam(':activo',$activo);
+
+      $consulta->bindParam(':cuit',$cuit);
+
+      $consulta->bindParam(':fechafundacion',$fechafundacion);
+
+      $consulta->bindParam(':importemensual',$importemensual);
+
+      $consulta->bindParam(':nrosocio',$nrosocio);
+
+      $consulta->execute();
+
+      $resultado = $consulta->fetch();
+      
+     
+
+      $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
+      $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],
+      $resultado['activo'],$resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio']);
+
+      return $objeto;
+
+   }
+
+   /*public function buscarContacto ($idcontacto){
       try {$conexion = new conexion;}catch (PDOException $e){} 
       $consulta = $conexion->prepare('SELECT * FROM contacto WHERE (idcontacto = :idcontacto)');
       
@@ -172,7 +219,7 @@ class PDOempresa extends empresa{
     
       $consulta->execute();
       
-   }
+   }*/
 	
 }
 ?>
