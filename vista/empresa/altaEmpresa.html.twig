@@ -230,35 +230,64 @@
 					<h3> Contactos Asociados </h3>
 				 </div>
 			</div>
-
 			<div id="insertarContacto">
-				<div class="row">
-				 	<div class="col-lg-6">
-				 		<div class="form-group">
-							<label class="col-lg-2 control-label">Contacto: </label> 
-							<div class="col-lg-4 "> 
-								<select class="form-control" name="contacto0s" id="contacto0">
-									<option value="-1">Socio</option>
-									{% for item in contactos %}
-										<option value="{{item.idcontacto}}">{{item.nombre}}</option>
-									{% endfor %}	
-								</select>
+					<div class="row">
+					 	<div class="col-lg-6">
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Contacto: </label> 
+								<div class="col-lg-4 "> 
+									<select class="form-control" name="contacto" id="contacto0">
+										<option value="-1">Socio</option>
+										{% for item in contactos %}
+											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+										{% endfor %}	
+									</select>
+								</div>
+								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDiv('sumar');">
+									<span class="glyphicon glyphicon-plus-sign"></span>
+								</button>	
 							</div>
-							<button type="button" class="btn btn-default col-lg-2" onclick="agregarContacto('insertarContacto','Contacto:','contacto','relacion');">
-								<span class="glyphicon glyphicon-plus-sign"></span>
-							</button>	
 						</div>
-					</div>
-					<div class="col-lg-6"> 
-				 		<div class="form-group">
-							<label class="col-lg-2 control-label">Relacion: </label>
-							<div class="col-lg-6"> 
-								<input type="text" class="form-control" name="relacion0" />
+						<div class="col-lg-6"> 
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Relacion: </label>
+								<div class="col-lg-6"> 
+									<input type="text" class="form-control" name="relacion0" />
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			{% for i in 1..20 %}
+				<div id="insertarContacto{{i}}" class="displayNone">
+					<div class="row">
+					 	<div class="col-lg-6">
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Contacto: </label> 
+								<div class="col-lg-4 "> 
+									<select class="form-control" name="contacto{{i}}" id="contacto0{{i}}">
+										<option value="-1">Socio</option>
+										{% for item in contactos %}
+											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+										{% endfor %}	
+									</select>
+								</div>
+								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDiv('restar');">
+									<span class="glyphicon glyphicon-minus-sign"></span>
+								</button>	
+							</div>
+						</div>
+						<div class="col-lg-6"> 
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Relacion: </label>
+								<div class="col-lg-6"> 
+									<input type="text" class="form-control" name="relacion{{i}}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">

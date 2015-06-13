@@ -21,6 +21,10 @@
     float: none;
    
 }
+
+.displayNone{display: none;}
+.displayBlock{display: block;}
+
 th,td {
 	text-align: center;
 }

@@ -112,7 +112,7 @@ class controladorEmpresa {
 
 				//alta medidor
 				$idMedidor = htmlentities($_POST['medidor']);
-				var_dump($idMedidor);
+				
 				if( $idMedidor == '-1'){
 					//ir a crear uno nuevo.
 				}else{

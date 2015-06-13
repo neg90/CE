@@ -6,6 +6,8 @@ var maxSocios = 20;
 var contador = 1;
 var contadorSoc = 1;
 var cantSocios = 1;
+var valorInput = 0; 
+
 function eliminarElemento(id,descontar){
 	input = document.getElementById(id);	
 	if (!input){
@@ -15,6 +17,10 @@ function eliminarElemento(id,descontar){
 		padre.removeChild(input);
 		if (descontar == 'rubro') {
 			cantRubro--;
+		};
+		if(descontar == 'contactos'){
+			cantSocios--;
+			contadorSoc--;
 		};
 		if (descontar == 'genericos') {
 			counter--;
@@ -26,15 +32,33 @@ function eliminarElemento(id,descontar){
 	}
 }
 
+function mostrarDiv(accion){
+	if(valorInput == 20){
+		alert('No es posible agregar mas socios');
+	}
+	if((accion == 'sumar') && (valorInput < 20)){
+		valorInput++;
+		$('#insertarContacto'+valorInput).removeClass('displayNone');
+		$('#insertarContacto'+valorInput).addClass('displayBlock');
 
+
+	}
+	if ((accion == 'restar') && (valorInput != 0)) {
+		$('#insertarContacto'+valorInput).removeClass('displayBlock');
+		$('#insertarContacto'+valorInput).addClass('displayNone');
+		valorInput--;
+	};
+
+	
+}
 
 function agregarContacto(divName,labelCaption1,id1,id2){
 	if (cantSocios == maxSocios){
 		alert("No se pueden agregar mas socios!");
 	}else{
 		//Creo el elemento
-		var newdiv = document.createElement('div');
-			newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><select type='text' name="+id1+""+contador+" class='form-control'/></select></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Relacion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+contador+"/></div></div></div></div>";
+		var newdiv = document.createElement('div'); 
+		newdiv.innerHTML = "<div class='row' id="+contadorSoc+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><select class='form-control' name=><option value='-1'>Socio</option>"+"{% for item in contactos %}"+"<option value='{{item.idcontacto}}'>"+"{{item.nombre}}"+"</option>"+"{% endfor %}"+"</select></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contadorSoc+"','contactos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Relacion:</label><div class='col-lg-6'><input type='text' class='form-control' name="+id2+contadorSoc+"/></div></div></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		cantSocios++;
 		contadorSoc++;
@@ -47,7 +71,7 @@ function agregarInput(divName,labelCaption1,id1,id2){
 	}else{
 		//Creo el elemento
 		var newdiv = document.createElement('div');
-			newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><input type='text' name="+id1+""+contador+" class='form-control'required/></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Descripcion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+contador+"/></div></div></div></div>";
+		newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><input type='text' name="+id1+""+contassdor+" class='form-control'required/></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Descripcion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+contador+"/></div></div></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		counter++;
 		contador++;
@@ -75,28 +99,29 @@ function cargarCategoria(divName,nombre){
 		cantCat++;
 	}
 }
-	function limita(elEvento, maximoCaracteres) {
-	  var elemento = document.getElementById("detactividad");
 
-	  // Obtener la tecla pulsada 
-	  var evento = elEvento || window.event;
-	  var codigoCaracter = evento.charCode || evento.keyCode;
-	  // Permitir utilizar las teclas con flecha horizontal
-	  if(codigoCaracter == 37 || codigoCaracter == 39) {
-	    return true;
-	  }
+function limita(elEvento, maximoCaracteres) {
+	var elemento = document.getElementById("detactividad");
 
-	  // Permitir borrar con la tecla Backspace y con la tecla Supr.
-	  if(codigoCaracter == 8 || codigoCaracter == 46) {
-	    return true;
-	  }
-	  else if(elemento.value.length >= maximoCaracteres ) {
-	    return false;
-	  }
-	  else {
-	    return true;
-	  }
+	// Obtener la tecla pulsada 
+	var evento = elEvento || window.event;
+	var codigoCaracter = evento.charCode || evento.keyCode;
+	// Permitir utilizar las teclas con flecha horizontal
+	if(codigoCaracter == 37 || codigoCaracter == 39) {
+	  return true;
 	}
+
+	// Permitir borrar con la tecla Backspace y con la tecla Supr.
+	if(codigoCaracter == 8 || codigoCaracter == 46) {
+	  return true;
+	}
+	else if(elemento.value.length >= maximoCaracteres ) {
+	  return false;
+	}
+	else {
+	  return true;
+	}
+}
 
 
 //AJAX
