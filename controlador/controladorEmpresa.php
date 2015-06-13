@@ -17,8 +17,8 @@ class controladorEmpresa {
 	private static function laCuestionDelTelefono($idempresa){
 		for ($i=1; $i < 12; $i++) { 
 			$auxStrtel = 'telefono' . $i;
-			$auxStrdesc = 'caractel' . $i;
-			if (isset($_POST[$auxStrtel])){
+			$auxStrdesc = 'caractel' . $i .'/';
+			if(isset($_POST[$auxStrtel]) ){
 				$varTel = htmlentities($_POST[$auxStrtel]);
 				$varCarac = htmlentities($_POST[$auxStrdesc]);
 				//cargar telefono en tabla intermedia 
@@ -32,13 +32,13 @@ class controladorEmpresa {
 
 	private static function laCuestionDelDomicilio($idempresa){
 		for ($i=1; $i < 12; $i++) { 
-			$auxStrtel = 'domicilio' . $i;
-			$auxStrdesc = 'caracdom' . $i;
-			if (isset($_POST[$auxStrtel])){
-				$varTel = htmlentities($_POST[$auxStrtel]);
+			$auxStrDom = 'domicilio' . $i;
+			$auxStrdesc = 'caracdom' . $i .'/';
+			if (isset($_POST[$auxStrDom])){
+				$varDom = htmlentities($_POST[$auxStrDom]);
 				$varCarac = htmlentities($_POST[$auxStrdesc]);
-				//cargar telefono en tabla intermedia 
-				$unDomicilio = new PDOdomicilioempresa (0,$idempresa,$varTel,$varCarac);
+				//cargar domicilios en tabla intermedia 
+				$unDomicilio = new PDOdomicilioempresa (0,$idempresa,$varDom,$varCarac);
 				//validado con ajax
 				$unDomicilio->guardar();
 				$unDomicilio = null;
@@ -48,13 +48,13 @@ class controladorEmpresa {
 
 	private static function laCuestionDelCorreo($idempresa){
 		for ($i=1; $i < 12; $i++) { 
-			$auxStrtel = 'correo' . $i ;
-			$auxStrdesc = 'caraccorreo' . $i;
-			if (isset($_POST[$auxStrtel])){
-				$varTel = htmlentities($_POST[$auxStrtel]);
+			$auxStrCor = 'correo' . $i ;
+			$auxStrdesc = 'caraccorreo' . $i .'/';
+			if (isset($_POST[$auxStrCor])){
+				$varCor = htmlentities($_POST[$auxStrCor]);
 				$varCarac = htmlentities($_POST[$auxStrdesc]);
 				//cargar telefono en tabla intermedia 
-				$unCorreo = new PDOdomicilioempresa (0,$idempresa,$varTel,$varCarac);
+				$unCorreo = new PDOcorreoempresa (0,$idempresa,$varCor,$varCarac);
 				//validado con ajax
 				$unCorreo->guardar();
 				$unCorreo = null;

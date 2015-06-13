@@ -26,7 +26,7 @@ class PDOdomicilioempresa extends domicilioempresa{
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          
-         $consulta = $conexion->prepare('INSERT INTO telefonoempresa (idempresa,domicilio,descripcion) VALUES(:idempresa,:domicilio,
+         $consulta = $conexion->prepare('INSERT INTO domicilioempresa (idempresa,domicilio,descripcion) VALUES(:idempresa,:domicilio,
          :descripcion)');
          
          $consulta->bindParam(':idempresa', $this->getIdempresa());

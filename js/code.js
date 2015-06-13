@@ -29,7 +29,7 @@ function agregarInput(divName,labelCaption1,id1,id2){
 	}else{
 		//Creo el elemento
 		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><input type='text' name="+id1+""+contador+" class='form-control'required/></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Descripcion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+""+contador+"/></div></div></div></div>";
+			newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><input type='text' name="+id1+""+contador+" class='form-control'required/></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Descripcion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+contador+"/></div></div></div></div>";
 		document.getElementById(divName).appendChild(newdiv);
 		counter++;
 		contador++;
