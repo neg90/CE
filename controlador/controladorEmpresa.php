@@ -6,6 +6,7 @@
 	require_once '../modelo/PDO/PDOdomicilioempresa.php';
 	require_once '../modelo/PDO/PDOcorreoempresa.php';	
 	require_once '../modelo/PDO/PDOContacto.php';
+	require_once '../modelo/PDO/PDOmedidorempresa.php';
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
@@ -16,7 +17,7 @@
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
 
-	private static function laCuestionDelTelefono($idempresa){
+	private static function laCuestionDelTelefono ($idempresa){
 		for ($i=1; $i < 12; $i++) { 
 			$auxStrtel = 'telefono' . $i;
 			$auxStrdesc = 'caractel' . $i .'/';
@@ -32,7 +33,7 @@ class controladorEmpresa {
 		}
 	}
 
-	private static function laCuestionDelDomicilio($idempresa){
+	private static function laCuestionDelDomicilio ($idempresa){
 		for ($i=1; $i < 12; $i++) { 
 			$auxStrDom = 'domicilio' . $i;
 			$auxStrdesc = 'caracdom' . $i .'/';
@@ -48,7 +49,7 @@ class controladorEmpresa {
 		}
 	}
 
-	private static function laCuestionDelCorreo($idempresa){
+	private static function laCuestionDelCorreo ($idempresa){
 		for ($i=1; $i < 12; $i++) { 
 			$auxStrCor = 'correo' . $i ;
 			$auxStrdesc = 'caraccorreo' . $i .'/';
@@ -75,7 +76,7 @@ class controladorEmpresa {
 
 	  	//Traigo contactos !! :D
 	  	$unosContactos = PDOcontacto::listar();
-	  	$unMedidores = PDOMedidor::listarMedidores();
+	  	$unosMedidores = PDOMedidor::listarMedidores();
 
 		if (isset($_POST['guardarEmpresa'])){
 			
@@ -109,6 +110,15 @@ class controladorEmpresa {
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
 				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
 
+				//alta medidor
+				$idMedidor = htmlentities($_POST['medidor']);
+				var_dump($idMedidor);
+				if( $idMedidor == '-1'){
+					//ir a crear uno nuevo.
+				}else{
+					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
+					$unMedidor->guardar(); 
+				}
 
 				//Telefonos 
 				$telefono0 = htmlEntities($_POST['telefono0']);
@@ -116,12 +126,12 @@ class controladorEmpresa {
 			
 				//alta telefono base.
 				$unTelefono = new PDOtelefonoempresa (0,$unaEmpresa->getIdempresa(),$telefono0,$caractel0);
+				
 				//validado con ajax
 				$unTelefono->guardar();
 
 				//Alta telefonos extra
 				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
-				
 
 				//domicilio
 				$domicilio0 = htmlEntities($_POST['domicilio0']);
@@ -150,12 +160,12 @@ class controladorEmpresa {
 			}
 			
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unMedidores));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unMedidores));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores));
 		}
 		
 	}
