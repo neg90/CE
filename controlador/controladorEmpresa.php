@@ -5,6 +5,8 @@
 	require_once '../modelo/PDO/PDOtelefonoempresa.php';
 	require_once '../modelo/PDO/PDOdomicilioempresa.php';
 	require_once '../modelo/PDO/PDOcorreoempresa.php';	
+	require_once '../modelo/PDO/PDOContacto.php';
+	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
@@ -70,6 +72,10 @@ class controladorEmpresa {
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 	  	$modo = 'alta';
 	  	$aviso = 0;
+
+	  	//Traigo contactos !! :D
+	  	$unosContactos = PDOcontacto::listar();
+	  	$unMedidores = PDOMedidor::listarMedidores();
 
 		if (isset($_POST['guardarEmpresa'])){
 			
@@ -144,12 +150,12 @@ class controladorEmpresa {
 			}
 			
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unMedidores));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unMedidores));
 		}
 		
 	}
