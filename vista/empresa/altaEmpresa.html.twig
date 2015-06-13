@@ -224,6 +224,65 @@
 					</div>
 				 </div>
 			{% endif %}
+			<div class="row fila-de-titulo">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+					<h3> Contactos Asociados </h3>
+				 </div>
+			</div>
+
+			<div id="insertarContacto">
+				<div class="row">
+				 	<div class="col-lg-6">
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Contacto: </label> 
+							<div class="col-lg-4 "> 
+								<select class="form-control" name="contacto0s" id="contacto0">
+									{% for item in contactos %}
+										<option value="{{item.id}}">{{item.nombre}}</option>
+									{% endfor %}	
+								</select>
+							</div>
+							<button type="button" class="btn btn-default col-lg-2" onclick="agregarContacto('insertarContacto','Contacto:','contacto','relacion');">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</button>	
+						</div>
+					</div>
+					<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Relacion: </label>
+							<div class="col-lg-6"> 
+								<input type="text" class="form-control" name="relacion0" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row fila-de-titulo">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+					<h3> Medidor Asociado </h3>
+				 </div>
+			</div>
+			<div id="insertarMedidor">
+				<div class="row">
+				 	<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Medidor: </label>
+							<div class="col-lg-6 "> 
+								<select class="form-control" name="medidor" id="medidor">
+									<option value="-1">Seleccione un medidor</option>
+								{% for item in medidores %}
+									<option value="{{item.id}}">{{item.nomyap}}</option>
+								{% endfor %}
+								</select>
+							</div>	
+						</div>
+					</div>
+				
+				</div>
+			</div>
+
 			<div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-2">

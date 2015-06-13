@@ -2,7 +2,10 @@ counter = 1;
 var limit = 12;
 var cantCat = 0;
 var cantRubro = 0;
+var maxSocios = 20;
 var contador = 1;
+var contadorSoc = 1;
+var cantSocios = 1;
 function eliminarElemento(id,descontar){
 	input = document.getElementById(id);	
 	if (!input){
@@ -20,6 +23,21 @@ function eliminarElemento(id,descontar){
 		if (descontar == 'categoria') {
 			cantCat--;
 		};
+	}
+}
+
+
+
+function agregarContacto(divName,labelCaption1,id1,id2){
+	if (cantSocios == maxSocios){
+		alert("No se pueden agregar mas socios!");
+	}else{
+		//Creo el elemento
+		var newdiv = document.createElement('div');
+			newdiv.innerHTML = "<div class='row' id="+contador+"><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>"+labelCaption1+"</label><div class='col-lg-4'><select type='text' name="+id1+""+contador+" class='form-control'/></select></div><button type='button' class='btn btn-default col-lg-2' onclick=eliminarElemento('"+contador+"','genericos');><span class='glyphicon glyphicon-minus-sign'></span></button></div></div><div class='col-lg-6'><div class='form-group'><label class='col-lg-2 control-label'>Relacion: </label><div class='col-lg-6'> <input type='text' class='form-control' name="+id2+contador+"/></div></div></div></div>";
+		document.getElementById(divName).appendChild(newdiv);
+		cantSocios++;
+		contadorSoc++;
 	}
 }
 
