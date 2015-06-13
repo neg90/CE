@@ -2,11 +2,14 @@
 
 	require_once '../modelo/conexionDB.php';
 	require_once '../modelo/PDO/PDOempresa.php';
+	require_once '../modelo/PDO/PDOcategoria.php';
+	require_once '../modelo/PDO/PDOrubro.php';
 	require_once '../modelo/PDO/PDOtelefonoempresa.php';
 	require_once '../modelo/PDO/PDOdomicilioempresa.php';
 	require_once '../modelo/PDO/PDOcorreoempresa.php';	
 	require_once '../modelo/PDO/PDOContacto.php';
 	require_once '../modelo/PDO/PDOmedidorempresa.php';
+	require_once '../modelo/PDO/PDOcontactoempresa.php';
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
@@ -66,6 +69,24 @@ class controladorEmpresa {
 	
 	}
 
+	private static function validarMedidores ($idempresa){
+
+		for ($i=0; $i < 21 ; $i++) { 
+			$strContacto = 'contacto' . $i;
+			$strRelacion = 'relacion' . $i;
+				
+			
+				$idCOntacto = htmlentities($_POST[$strContacto]);
+				$relacion = htmlentities($_POST[$strRelacion]);
+			
+				//sale carga del socio en la tabla intermedia
+				$unContactoIntermedio = new PDOcontactoempresa (0,$idCOntacto,$idempresa,$relacion);
+				$unContactoIntermedio->guardar();
+				$unContactoIntermedio = null;
+			
+		}
+	}
+
 	static function alta(){
 
 		Twig_Autoloader::register();
@@ -77,6 +98,8 @@ class controladorEmpresa {
 	  	//Traigo contactos !! :D
 	  	$unosContactos = PDOcontacto::listar();
 	  	$unosMedidores = PDOMedidor::listarMedidores();
+	  	$unasCategorias = PDOcategoria::listar();
+	  	$unosRubros = PDOrubro::listar();
 
 		if (isset($_POST['guardarEmpresa'])){
 			
@@ -97,7 +120,7 @@ class controladorEmpresa {
 			}else{
 				$activo = false;
 			}
-
+		
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
@@ -109,6 +132,9 @@ class controladorEmpresa {
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
 				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+
+				//alta socio
+				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 
 				//alta medidor
 				$idMedidor = htmlentities($_POST['medidor']);
@@ -160,12 +186,14 @@ class controladorEmpresa {
 			}
 			
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores));
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias));
 		}
 		
 	}

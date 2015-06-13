@@ -5,14 +5,16 @@ class contactoempresa {
 	private $id;
 	private $idcontacto;
 	private $idempresa;
+	private $relacion;
 	
 	
 
-	public function	__construct($id,$idcontacto,$idempresa) {
+	public function	__construct($id,$idcontacto,$idempresa,$relacion) {
 	
 		$this->id = $id;
-		$this->idmedidor = $idmedidor;
+		$this->idcontacto = $idcontacto;
 		$this->idempresa = $idempresa;
+		$this->relacion = $relacion;
 		
 	}
 
@@ -34,6 +36,14 @@ class contactoempresa {
 
 	public function setIdempresa($idempresa){
 		$this->idempresa = $idempresa;
+	}
+
+	public function getRelacion(){
+		return $this->relacion;
+	}
+
+	public function setRelacion($relacion){
+		$this->relacion = $relacion;
 	}
 
 }

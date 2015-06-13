@@ -12,6 +12,16 @@ class PDOcategoria extends categoria{
 	
 	}
 
+
+   public static function listar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM categoria');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
    public static function buscarID($descripcion){
 
       try {$conexion = new conexion;}catch (PDOException $e){} 

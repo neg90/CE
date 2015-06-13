@@ -12,6 +12,15 @@ class PDOrubro extends rubro{
 	
 	}
 
+   public static function listar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM rubro');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
    public static function buscarID($descripcion){
 
       try {$conexion = new conexion;}catch (PDOException $e){} 
