@@ -2,10 +2,10 @@
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 09-06-2015 a las 04:27:36
--- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
--- Versión de PHP: 5.5.9-1ubuntu4.9
+-- Host: localhost
+-- Generation Time: Jun 13, 2015 at 02:47 AM
+-- Server version: 5.5.43-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `CE`
+-- Database: `CE`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria`
+-- Table structure for table `categoria`
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `categoria`
+-- Dumping data for table `categoria`
 --
 
 INSERT INTO `categoria` (`id`, `descripcion`) VALUES
@@ -42,7 +42,7 @@ INSERT INTO `categoria` (`id`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `contacto`
+-- Table structure for table `contacto`
 --
 
 CREATE TABLE IF NOT EXISTS `contacto` (
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `contacto` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
 
 --
--- Volcado de datos para la tabla `contacto`
+-- Dumping data for table `contacto`
 --
 
 INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicilio`, `correo`, `asociadosm`, `activo`, `tipodocumento`, `documento`) VALUES
@@ -69,7 +69,7 @@ INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicil
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `contactoempresa`
+-- Table structure for table `contactoempresa`
 --
 
 CREATE TABLE IF NOT EXISTS `contactoempresa` (
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `contactoempresa` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `correoempresa`
+-- Table structure for table `correoempresa`
 --
 
 CREATE TABLE IF NOT EXISTS `correoempresa` (
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `correoempresa` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `domicilioempresa`
+-- Table structure for table `domicilioempresa`
 --
 
 CREATE TABLE IF NOT EXISTS `domicilioempresa` (
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `domicilioempresa` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empresa`
+-- Table structure for table `empresa`
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
@@ -140,26 +140,33 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `medidor`
+-- Table structure for table `medidor`
 --
 
 CREATE TABLE IF NOT EXISTS `medidor` (
   `idmedidor` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) NOT NULL,
-  `apellido` varchar(20) NOT NULL,
+  `nomyap` varchar(20) NOT NULL,
   `telefono` varchar(20) NOT NULL,
-  `docimicilio` varchar(20) NOT NULL,
-  `importepago` double NOT NULL,
-  `numusuario` int(11) NOT NULL,
-  `numsuministro` int(11) NOT NULL,
+  `domicilio` varchar(20) NOT NULL,
+  `importepago` varchar(10) NOT NULL,
+  `numusuario` varchar(11) NOT NULL,
+  `numsuministro` varchar(11) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`idmedidor`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `medidor`
+--
+
+INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importepago`, `numusuario`, `numsuministro`, `activo`) VALUES
+(1, 'Sebastian Martinez', '2983400440', 'Azcuenaga 999', '40.35', '1264339', '009827635', 1),
+(4, 'Perez Juan', '', '', '99,99', '72837', '5653654', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `medidorempresa`
+-- Table structure for table `medidorempresa`
 --
 
 CREATE TABLE IF NOT EXISTS `medidorempresa` (
@@ -174,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `medidorempresa` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `permisos`
+-- Table structure for table `permisos`
 --
 
 CREATE TABLE IF NOT EXISTS `permisos` (
@@ -203,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `permisos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcado de datos para la tabla `permisos`
+-- Dumping data for table `permisos`
 --
 
 INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cmedidor`, `rmedidor`, `umedidor`, `dmedidor`, `cci`, `rci`, `uci`, `dci`, `crol`, `rrol`, `urol`, `drol`, `cusuario`, `rusuario`, `uusuario`, `dusuario`) VALUES
@@ -212,7 +219,7 @@ INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cm
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `rol`
+-- Table structure for table `rol`
 --
 
 CREATE TABLE IF NOT EXISTS `rol` (
@@ -224,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `rol` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
--- Volcado de datos para la tabla `rol`
+-- Dumping data for table `rol`
 --
 
 INSERT INTO `rol` (`idrol`, `nombre`, `idpermisos`) VALUES
@@ -233,7 +240,7 @@ INSERT INTO `rol` (`idrol`, `nombre`, `idpermisos`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `rubro`
+-- Table structure for table `rubro`
 --
 
 CREATE TABLE IF NOT EXISTS `rubro` (
@@ -244,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `rubro` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Volcado de datos para la tabla `rubro`
+-- Dumping data for table `rubro`
 --
 
 INSERT INTO `rubro` (`id`, `descripcion`) VALUES
@@ -253,7 +260,7 @@ INSERT INTO `rubro` (`id`, `descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `telefonoempresa`
+-- Table structure for table `telefonoempresa`
 --
 
 CREATE TABLE IF NOT EXISTS `telefonoempresa` (
@@ -268,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `telefonoempresa` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
@@ -286,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`, `activo`, `correo`, `idrol`) VALUES
@@ -294,56 +301,56 @@ INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`
 (3, 'Nelson', 'Garrido', 'neg90', 'kapanga', 1, 'dsa@dsa.com', 6);
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `contactoempresa`
+-- Constraints for table `contactoempresa`
 --
 ALTER TABLE `contactoempresa`
   ADD CONSTRAINT `contactoempresa_ibfk_1` FOREIGN KEY (`idcontacto`) REFERENCES `contacto` (`idcontacto`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `contactoempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `correoempresa`
+-- Constraints for table `correoempresa`
 --
 ALTER TABLE `correoempresa`
   ADD CONSTRAINT `correoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `domicilioempresa`
+-- Constraints for table `domicilioempresa`
 --
 ALTER TABLE `domicilioempresa`
   ADD CONSTRAINT `domicilioempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `empresa`
+-- Constraints for table `empresa`
 --
 ALTER TABLE `empresa`
   ADD CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `medidorempresa`
+-- Constraints for table `medidorempresa`
 --
 ALTER TABLE `medidorempresa`
   ADD CONSTRAINT `medidorempresa_ibfk_1` FOREIGN KEY (`idmedidor`) REFERENCES `medidor` (`idmedidor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `medidorempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `rol`
+-- Constraints for table `rol`
 --
 ALTER TABLE `rol`
   ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`idpermisos`) REFERENCES `permisos` (`idpermiso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `telefonoempresa`
+-- Constraints for table `telefonoempresa`
 --
 ALTER TABLE `telefonoempresa`
   ADD CONSTRAINT `telefonoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `usuario`
+-- Constraints for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE CASCADE ON UPDATE CASCADE;
