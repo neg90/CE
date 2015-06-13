@@ -2,14 +2,134 @@
  
 {% block title %} Lista de usuarios {% endblock %}
 {% block contenedor %}
+<script>
+
+$(document).ready(function() {
+	/* Filtros */
+     $("#dato").css("display", "none");
+     $("#roles").css("display", "none");
+     $("#EnviarFiltro").css("display", "none");
+});
+
+
+	var status = '2';
+
+	function cambiarActivo(){
+		status ++;
+		if (status == 3){status = 0;}
+		if (status == 2){
+			$('#accionActivo').removeClass('label-success');
+			$('#accionActivo').addClass('label-default');
+			document.getElementById('accionActivo').innerHTML = 'Activos e Inactivos';
+		}
+		else if (status == 1){
+			$('#accionActivo').removeClass('label-danger');
+			$('#accionActivo').addClass('label-success');	
+			document.getElementById('accionActivo').innerHTML = 'Sólo activos';
+		}
+		else if (status == 0){
+			$('#accionActivo').removeClass('label-default');
+			$('#accionActivo').addClass('label-danger');	
+			document.getElementById('accionActivo').innerHTML = 'Sólo inactivos';
+		}
+	}
+
+	function getval(sel) {
+       switch (sel.value) {
+         case "Todos":
+            location.reload();
+            break;
+
+         case "Nombre":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: Jorge");
+         	$("#roles").css("display", "none");
+         	$("#EnviarFiltro").css("display", "inline-block");
+            break;
+
+         case "Apellido":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: Pérez");
+         	$("#roles").css("display", "none");
+         	$("#EnviarFiltro").css("display", "inline-block");
+            break;
+
+         case "Usuario":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: su_usuario");
+         	$("#roles").css("display", "none");
+         	$("#EnviarFiltro").css("display", "inline-block");
+            break;
+
+         case "Email":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: su@email.com");
+         	$("#roles").css("display", "none");
+         	$("#EnviarFiltro").css("display", "inline-block");
+            break;
+
+         case "Rol":
+         	$("#dato").css("display", "none");
+         	$("#roles").css("display", "inline-block");
+         	$("#EnviarFiltro").css("display", "inline-block");
+            break;
+        }
+    }
+</script>
   <h3 id="tituloBloque">Listado de usuarios</h3>
   <div class="clearfix"></div>
+
   {% if eliminado == null %}
   {% elseif eliminado == 1 %}
   	<div class="alert alert-success" role="alert">El usuario fue eliminado correctamente</div>
   {% else %}
   	<div class="alert alert-success" role="alert">El usuario no pudo ser eliminado</div>
   {% endif %}
+  		<div id="herramientasTop" class="inline-block">
+				  <div class="accionActivoparent inline-block">
+				  		<a href="#" onclick="cambiarActivo();" class="left inline-block">
+				  			<span id="accionActivo" class="label label-default">Activos e Inactivos</span>
+				  		</a>
+				  </div>
+				  <div id="filtroPor" class="inline-block">
+				  		<span> 
+				  			<b>Filtrar por:</b>
+				  		</span>
+				  		<form  method="POST" id="formFiltros" class="inline-block">
+				  		<select class="form-control" onchange="getval(this);">
+				  			<option selected>Todos</option>
+				  			<option>Nombre</option>
+				  			<option>Apellido</option>
+				  			<option>Usuario</option>
+				  			<option>Email</option>
+				  			<option>Rol</option>
+				  		</select>
+				  		</form>
+				  </div>
+				  <div id="dato">
+		                        <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
+		          </div>
+
+		          <div id="roles" class="none">
+		          	{% if ListaRoles is null %}
+		          	{% else %}
+		          		<select name="rol" id="datoRol" class="form-control">
+		          			{% for rol in ListaRoles %}
+		          				<option value="{{rol.idrol}}">{{rol.nombre}}</option>
+		          			{% endfor %}
+		          		</select>
+		          	{% endif %}
+		          </div>
+		          <button id="EnviarFiltro" class="btn btn-default">Enviar</button>
+          </div>
+          <div id="botonesTop" class="block right">
+		  		<a href="#" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+		  			Imprimir
+		  		</a>
+		  		<a href="privado.php?c=usuarios&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+		  			Nuevo usuario
+		  		</a>
+  		  </div>
   <table class="table table-hover">
   <thead>
     <tr>

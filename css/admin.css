@@ -117,3 +117,20 @@ hr{border:1px solid #ccc;}
 .enviarRol{margin-top:100px;}
 
 .gris{color:gray;}
+
+#filtroPor{margin-top:30px; padding-bottom: 10px; display:inline-block; margin-left:20px;}
+#filtroPor span{display:inline-block;}
+#filtroPor select{display:inline-block; width:150px; margin-left:10px;}
+#herramientas_botones, #herramientasTop{display:inline-block;}
+
+.inline-block{display:inline-block!important;}
+.block{display:block!important;}
+
+#accionActivo{padding:10px;}
+.accionActivoparent a{text-decoration: none;}
+
+#datoTexto{width:200px; padding-bottom:8px;}
+
+#botonesTop{margin-top:-57px;}
+#botonesTop a{ display:inline-block; width:170px;}
+#botonesTop a:nth-child(2){margin:0px;}
