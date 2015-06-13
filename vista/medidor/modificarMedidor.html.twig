@@ -1,0 +1,146 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Crear titular de medidor {% endblock %}
+{% block contenedor %}
+<script>
+$(document).ready(function() {
+      "{%if unMedidor.activo == 1 %}"
+	      	$("#botonActivoSI").addClass("activoSI");
+			$("#botonActivoNO").removeClass("activoSI");
+			$("#botonActivoNO").removeClass("activoNO");
+		"{%else%}"
+			$("#botonActivoSI").removeClass("activoSI");
+			$("#botonActivoSI").removeClass("activoNO");
+			$("#botonActivoNO").addClass("activoNO");
+		"{% endif %}"
+});
+
+function cambiarActivo(nuevoActivo){
+	document.getElementById("activo").value=nuevoActivo;
+	if (nuevoActivo == 1){
+		$("#botonActivoSI").addClass("activoSI");
+		$("#botonActivoNO").removeClass("activoSI");
+		$("#botonActivoNO").removeClass("activoNO");
+	}
+	else {
+		$("#botonActivoSI").removeClass("activoSI");
+		$("#botonActivoSI").removeClass("activoNO");
+		$("#botonActivoNO").addClass("activoNO");
+	}
+}
+</script>
+	<form class="form-horizontal" action="privado.php?c=medidor&a=modificar" role="form" method="POST">
+		<div class="contenedor-formulario">
+			<div class="row fila-de-alerta">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+				 	{% if aviso is null %}
+				 	{% else %}
+				 		{% if tipoAviso == 'exito' %}
+				 		<div class="alert alert-success alert-dismissable">
+		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
+		    				  {{aviso}}
+	  					</div>
+	  					{% elseif tipoAviso == 'error' %}
+	  						<div class="alert alert-danger alert-dismissable">
+		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
+		    				  {{aviso}}
+	  					</div>
+	  					{% endif %}
+  					{% endif %}
+				 </div>
+			</div>
+			<div class="row fila-de-titulo">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+					<h3> Modificar titular de medidor</h3>
+				 </div>
+			</div>
+			<div class="row aviso-completar">
+				<div class=" col-lg-3"></div>
+				<div class=" col-lg-6 col-md-6 col-sm-6 recuadro-aviso">
+					<div class="alert alert-warning">
+   	 					<center><strong> Los campos marcados con * deben ser completados obligatoriamente </strong></center>
+  					</div>
+				</div>
+			</div>
+			 <div class="row">
+			 	<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-4 control-label">Apellido y Nombre: * </label>
+						<div class="col-lg-6 "> 
+						  <input type="text" value="{{unMedidor.nomyap}}" class="form-control" pattern="[á-éÁ-Éa-zA-Z ]+" title="No parece un apellido y nombre válido" name="nomyap" placeholder="Pérez, Juan" required/>
+						</div>
+					</div>
+				</div>
+			 	<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-4 control-label">Teléfono: </label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="telefono" pattern="[0-9- ]+" title="No parece un teléfono válido" value="{{unMedidor.telefono}}" placeholder="02983 123456" />
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-4 control-label">Domicilio: </label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="domicilio" pattern="[a-zA-Z0-9 ]+" title="No parece una dirección válida" value="{{unMedidor.domicilio}}" placeholder="Av. Moreno 999" />
+						</div>
+					</div>
+				</div>
+			 
+			 	<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-4 control-label">Importe: *</label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="importe" pattern="[0-9., ]+" title="No parece un importe válido" value="{{unMedidor.importepago}}"  placeholder="00,00"  required/>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row">
+			 	<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-4 control-label">Núm. de usuario: * </label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="numusuario" pattern="[a-zA-Z0-9 -]+" title="No parece un número de usuario válido" value="{{unMedidor.numusuario}}"  placeholder="123456"  required/>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6"> 
+			 		<div class="form-group">
+						<label class="col-lg-4 control-label">Núm. de suministro: *</label>
+						<div class="col-lg-6 "> 
+						  <input type="text" class="form-control" name="numsuministro" pattern="[a-zA-Z0-9 -]+" title="No parece un número de suministro válido" value="{{unMedidor.numsuministro}}" placeholder="123456"  required/>
+						</div>
+					</div>
+				</div>
+			 </div>
+			 <div class="row">
+				<div class=" col-lg-6">
+				<label class="col-lg-2">Activo: </label>
+				<input type="hidden" name="activo" id="activo" value="{{unMedidor.activo}}">
+					<div class="btn-group btn-group-xs" role="group" aria-label="...">
+	  						<button type="button" id="botonActivoSI" class="btn btn-default" onclick="cambiarActivo(1)"> SI </button>
+	  						<button type="button" id="botonActivoNO" class="btn btn-default" onclick="cambiarActivo(0)"> NO </button>
+					</div>
+				</div>
+			 </div>
+			 <input type="hidden" value="{{unMedidor.idmedidor}}" name="idmedidor"/>
+			 <div class="row fila-de-boton">
+			 	<div class=" col-lg-1"></div>
+			 	<div class=" col-lg-4">
+			 		<a href="privado.php?c=medidor&a=listar" class="btn btn-default btn-lg btn-block col-lg-4">Volver al listado</a>
+			 	</div>
+			 	<div class=" col-lg-4">
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarMedidor">Guardar</button>
+				</div>
+				<div class=" col-lg-4"></div>
+			</div>
+
+		</div>
+	</form>
+{% endblock %}

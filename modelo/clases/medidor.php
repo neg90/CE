@@ -28,6 +28,10 @@ class medidor {
 		return $this->idmedidor;
 	}
 
+	public function setIdmedidor($id){
+		$this->idmedidor = $id;
+	}
+
 	public function getNomyap(){
 		return $this->nomyap;
 	}

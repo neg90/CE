@@ -2,6 +2,8 @@
  
 {% block title %} Lista de Contactos {% endblock %}
 {% block contenedor %}   
+    <h3 id="tituloBloque">Listado de Contactos</h3>
+    <div class="clearfix"></div>
   <h5 id="referenciasRol"><span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>Referencias <small>[ SM = Swiss Medical ]</small></h5>
   <div class="row fila-de-alerta">
       <div class=" col-lg-2"></div>
@@ -89,7 +91,7 @@
              <!--Eliminar contacto-->
             <form method="post" action="privado.php?c=contacto&a=baja" id="bajaContacto{{item.idcontacto}}">
               <input type="hidden" value="{{item.idcontacto}}" name="idcontacto">
-              <a href="javascript:{}" onclick="if(confirm('¿Estas seguro de enviar este formulario?')){document.getElementById('bajaContacto{{item.idcontacto}}').submit();}">
+              <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaContacto{{item.idcontacto}}').submit();}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </a>
             </form> 

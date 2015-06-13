@@ -224,7 +224,7 @@
 					<form method="post" action="privado.php?c=roles&a=baja&id={{p.idpermiso}}" id="bajaRol{{p.idpermiso}}">
 						<input type="hidden" value="{{rol.idrol}}" name="idrol">
 						<input type="hidden" value="{{p.idpermiso}}" name="idpermiso">
-						<a href="javascript:{}" onclick="document.getElementById('bajaRol{{p.idpermiso}}').submit(); return false;">
+						<a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar este Rol?')){document.getElementById('bajaRol{{p.idpermiso}}').submit();} return false;">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</a>
 					</form>

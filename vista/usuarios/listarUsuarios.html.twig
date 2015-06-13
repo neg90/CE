@@ -69,7 +69,7 @@
 					</form>
 				<!--Eliminar user -->
 					<form method="post" action="privado.php?c=usuarios&a=eliminar&id={{usuario.idusuario}}" id="eliminaUsuario{{usuario.idusuario}}">
-						<a href="javascript:{}" onclick="document.getElementById('eliminaUsuario{{usuario.idusuario}}').submit(); return false;">
+						<a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar este usuario?')){document.getElementById('eliminaUsuario{{usuario.idusuario}}').submit();} return false;">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</a>
 					</form>

@@ -127,7 +127,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					if($accion == 'alta'){
 						controladorMedidor::alta();
 					}elseif($accion == 'modificar'){
-						controladorMedidor::modificar();
+						if (!empty($_POST['idmedidor'])){
+							$idmedidor = htmlEntities($_POST['idmedidor']);
+							controladorMedidor::modificar($idmedidor);
+						}
 					}elseif($accion == 'baja'){
 						controladorMedidor::baja();
 					}elseif($accion == 'listar'){

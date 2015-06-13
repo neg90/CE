@@ -108,42 +108,30 @@ class controladorMedidor {
 			$numusuario = htmlEntities($_POST['numusuario']);
 			$numsuministro = htmlEntities($_POST['numsuministro']);
 			$activo = htmlEntities($_POST['activo']);
+			if ( isset($_POST['activo'])) {
+				$activo = true;
+			}else{
+				$activo = false;
+			}
 
-			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo);
+			$unMedidor = new PDOMedidor($idMedidor,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo);
 			if (empty(PDOMedidor::existeMedidor($numusuario,$numsuministro))){
+				$unMedidor->setIdmedidor($idMedidor);
 				$unMedidor->guardar();
-				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
+				$aviso='Perfecto! El titular fue modificado con éxito. ';
 				$tipoAviso= 'exito';
 			}
 			else {$aviso='ERROR! El número de usuario / número de suministro ya se encuentran en uso.';
 				  $tipoAviso='error';
 			}
-			if ($email == $datosAnteriores->correo){
-				$unUsuario->setActivo($activo);
-				$unUsuario->guardar();
-				$aviso="Perfecto! El usuario fue modificado con éxito!";
-				$tipoAviso= 'exito';
-			}
-			else{
-				if (empty(PDOusuario::emailExiste($email))){
-					$unUsuario->setActivo($activo);
-					$unUsuario->guardar();
-					$aviso="Perfecto! El usuario fue modificado con éxito!";
-					$tipoAviso= 'exito';		
-				}
-				else {$aviso = 'ERROR! El email ya se encuentra en uso.';
-				  	  $tipoAviso= 'error';}
-			}
 
-			$ListaRoles=PDORol::listarRoles();
-			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
+			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'unMedidor'=>$unMedidor,'user'=>$user));
 		}else{
-			$unUsuario = PDOusuario::detalleUsuario($idusuario);
-			$ListaRoles = PDORol::listarRoles();
-			$aviso=null;
-			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
+			$unMedidor=PDOMedidor::medidorPorID($idMedidor);
+			$aviso=false;
+			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'user'=>$user,'unMedidor'=>$unMedidor));
 		}
 	}
 }

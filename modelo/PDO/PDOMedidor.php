@@ -31,17 +31,17 @@ class PDOMedidor extends medidor{
 		$consulta = $conexion->prepare('SELECT * FROM medidor WHERE idmedidor = :idmedidor');
 		$consulta -> bindParam(':idmedidor',$idmedidor);
 		$consulta->execute();
-		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
 		return $objeto;
 	}
 
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       if($this->getIdmedidor()) /*Si tiene id entonces existe y solo lo modifico*/ {
-
          //$id,$idcontacto,$nomyap,$telefono,$domicio,$importepago,$numusuario,$numsuministro,$activo
          $consulta = $conexion->prepare('UPDATE medidor SET nomyap = :nomyap, telefono = :telefono, domicilio = :domicilio, importepago = :importepago, numusuario = :numusuario, numsuministro = :numsuministro, activo = :activo WHERE idmedidor = :idmedidor');
          
+         $consulta->bindParam(':idmedidor', $this->getIdmedidor());
          $consulta->bindParam(':nomyap', $this->getNomyap());
          $consulta->bindParam(':telefono', $this->getTelefono());
          $consulta->bindParam(':domicilio', $this->getDomicilio());
