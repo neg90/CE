@@ -17,7 +17,7 @@ class PDOempresa extends empresa{
 	
 	public static function listar(){
 		try {$conexion = new conexion;}catch (PDOException $e){}
-		$consulta = $conexion->prepare('SELECT * FROM emrpesa');
+		$consulta = $conexion->prepare('SELECT * FROM empresa');
 		$consulta->execute();
 		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
 		
@@ -145,6 +145,16 @@ class PDOempresa extends empresa{
       $conexion = null;
    }
 
+   public function baja($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM empresa WHERE idempresa =  :idempresa');
+
+      $consulta->bindParam(':idempresa', $idempresa);
+    
+      $consulta->execute();
+      
+   }
+
     public function BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
     $activo,$cuit,$fechafundacion,$importemensual,$nrosocio){
 
@@ -171,32 +181,23 @@ class PDOempresa extends empresa{
 
    }
 
-   /*public function buscarContacto ($idcontacto){
+   public function buscarEmpresa ($idempresa){
       try {$conexion = new conexion;}catch (PDOException $e){} 
-      $consulta = $conexion->prepare('SELECT * FROM contacto WHERE (idcontacto = :idcontacto)');
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (idempresa = :idempresa)');
       
-      $consulta->bindParam(':idcontacto', $idcontacto);
+      $consulta->bindParam(':idempresa', $idempresa);
     
       $consulta->execute();
 
       $resultado = $consulta->fetch();
-     
-      $objeto = new PDOcontacto($resultado['idcontacto'],$resultado['nombre'],$resultado['apellido'],$resultado['telefono'],
-      $resultado['domicilio'],$resultado['correo'],$resultado['asociadosm'],$resultado['tipodocumento'],$resultado['documento']);
+
+      $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
+      $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],$resultado['activo'],
+      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio']);
       
       return $objeto;
 
    }
-
-   public function baja($idcontacto){
-      try {$conexion = new conexion;}catch (PDOException $e){} 
-      $consulta = $conexion->prepare('DELETE FROM contacto WHERE idcontacto =  :idcontacto');
-
-      $consulta->bindParam(':idcontacto', $idcontacto);
-    
-      $consulta->execute();
-      
-   }*/
 	
 }
 ?>

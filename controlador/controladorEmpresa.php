@@ -20,6 +20,23 @@
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
 
+	public static function listar(){
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		
+		$empresas = PDOempresa::listar();
+		
+		$rubros = PDOrubro::listar();
+
+		$categorias = PDOcategoria::listar();
+
+
+		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
+		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias));
+
+	}
 	private static function laCuestionDelTelefono ($idempresa){
 		for ($i=1; $i < 12; $i++) { 
 			$auxStrtel = 'telefono' . $i;
@@ -203,15 +220,32 @@ class controladorEmpresa {
 	}
 
 
-	static function listar(){
-
-		
-
-	}
 		
 	public function baja(){
 
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
+	  	$idempresa = htmlentities($_POST['idempresa']);
+		
+		if(PDOempresa::buscarEmpresa($idempresa)){
+			PDOempresa::baja($idempresa);
+			$aviso = 1;
+		}else{
+			$aviso = 2;
+		}
+
+		$empresas = PDOempresa::listar();
+		
+		$rubros = PDOrubro::listar();
+
+		$categorias = PDOcategoria::listar();
+
+
+		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
+		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'aviso'=>$aviso));
+
    }
 
 }
