@@ -171,7 +171,6 @@ class PDOempresa extends empresa{
 
       $resultado = $consulta->fetch();
       
-     
 
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],

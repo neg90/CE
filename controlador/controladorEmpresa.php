@@ -216,8 +216,123 @@ class controladorEmpresa {
 	}
 
 	static function modificar(){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	$modo = 'modificar';
+	  	$aviso = 0;
+
+	  	//Traigo contactos,medidores,categorias y rubros !! :D
+	  	$unosContactos = PDOcontacto::listar();
+	  	$unosMedidores = PDOMedidor::listarMedidores();
+	  	$unasCategorias = PDOcategoria::listar();
+	  	$unosRubros = PDOrubro::listar();
+
+	  	//busco la empresa 
+	  	$idempresa = $_POST['idempresa'];
+	  	
+
+
+		if (isset($_POST['guardarEmpresa'])){
+			
+			$denominacion = htmlEntities($_POST['denominacion']);
+			$cantempleados = htmlEntities($_POST['cantempleados']);
+			$nrosocio = htmlEntities($_POST['nrosocio']);
+			$importemensual = htmlEntities($_POST['importemensual']);
+			$cuit = htmlEntities($_POST['cuit']);
+			$web = htmlEntities($_POST['web']);
+			$fechainicioce = htmlEntities($_POST['fechainicioce']);
+			$fechafundacion = htmlEntities($_POST['fechafundacion']);
+			$rubroAJAX = htmlEntities($_POST['rubro']);
+			$categoriaAJAX = htmlEntities($_POST['categoria']);
+			$detactividad = htmlEntities($_POST['detactividad']);
+
+			if (isset($_POST['activo'])) {
+				$activo = true;
+			}else{
+				$activo = false;
+			}
+		
+			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
+			//id 0 pero se guarda incremental en el PDO
+			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
+			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+
+			if($unaEmpresa->validarInsertar()){
+				$unaEmpresa->guardar();
+				$aviso=1;
+				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
+				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
+				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
+				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+
+				//alta socio
+				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
+
+				//alta medidor
+				$idMedidor = htmlentities($_POST['medidor']);
+				
+				if( $idMedidor == '-1'){
+					//ir a crear uno nuevo.
+				}else{
+					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
+					$unMedidor->guardar(); 
+				}
+
+				//Telefonos 
+				$telefono0 = htmlEntities($_POST['telefono0']);
+				$caractel0 = htmlEntities($_POST['caractel0']);
+			
+				//alta telefono base.
+				$unTelefono = new PDOtelefonoempresa (0,$unaEmpresa->getIdempresa(),$telefono0,$caractel0);
+				
+				//validado con ajax
+				$unTelefono->guardar();
+
+				//Alta telefonos extra
+				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
+
+				//domicilio
+				$domicilio0 = htmlEntities($_POST['domicilio0']);
+				$caracdom0 = htmlEntities($_POST['caracdom0']);
+
+				//alta domicilio base.
+				$unDomicilio = new PDOdomicilioempresa (0,$unaEmpresa->getIdempresa(),$domicilio0,$caracdom0);
+				$unDomicilio->guardar();
+
+				//alta domicilios extra
+				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
+
+				//Correo
+				$correo0 = htmlEntities($_POST['correo0']);
+				$caraccorreo0 = htmlEntities($_POST['caraccorreo0']);
+
+				//alta correo base.
+				$unCorreo = new PDOcorreoempresa (0,$unaEmpresa->getIdempresa(),$correo0,$caraccorreo0);
+				$unCorreo->guardar();
+
+				//alta domicilios extra
+				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
+
+			}else{
+				$aviso=2;
+			}
+			
+			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$	$unaEmpresa));
+
+		}else{
+			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
+			$aviso=0;
+			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa));
+		}
 		
 	}
+		
+	
 
 
 		

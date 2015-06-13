@@ -3,12 +3,7 @@
 {% block title %}Formulario Empresa {% endblock %}
 
 {% block contenedor %}
-	
-	{% if modo == 'alta' %}
-		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=alta" role="form" method="POST">
-	{% elseif modo == 'modificar' %}
 		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
-	{% endif %}
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
 			<div class="row aviso-completar">
@@ -46,7 +41,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-3 control-label">Denominacion:* </label>
 						<div class="col-lg-5 "> 
-							<input type="text" class="form-control" name="denominacion" placeholder="Denominacion" required/>
+							<input type="text" class="form-control" name="denominacion" placeholder="Denominacion" value="{{unaEmpresa.getDenominacion}}" required/>
 						</div>
 					</div>
 				</div>
@@ -54,7 +49,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-6 control-label">Cant. Empleados:</label>
 						<div class="col-lg-2 "> 
-						  <input type="number" class="form-control" name="cantempleados" min='0' value="0" />
+						  <input type="number" class="form-control" name="cantempleados" min='0' value="{{unaEmpresa.getCantempleados}}" />
 						</div>
 					</div>
 				</div>
@@ -64,7 +59,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Nro. Socio: </label>
 						<div class="col-lg-4 "> 
-						  <input type="text" class="form-control" name="nrosocio" placeholder="000000000">
+						  <input type="text" class="form-control" name="nrosocio" value="{{unaEmpresa.getNrosocio}} "placeholder="000000000">
 						</div>					
 					</div>
 				</div>
@@ -72,7 +67,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-6 control-label">Impor. Mensual:* </label>
 						<div class="col-lg-2 "> 
-						  <input type="text" class="form-control" name="importemensual" placeholder="40.56" required/>
+						  <input type="text" class="form-control" name="importemensual" value="{{unaEmpresa.getImportemensual}}"placeholder="40.56" required/>
 						</div>
 					</div>
 				</div>
@@ -82,7 +77,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">CUIT:* </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="cuit" placeholder="00-00000000-0" requiered/>
+						  <input type="text" class="form-control" name="cuit" value="{{unaEmpresa.getCuit}}" placeholder="00-00000000-0" requiered/>
 						</div>
 					</div>
 				</div>
@@ -90,7 +85,7 @@
 				    <div class="form-group">
 						<label class="col-lg-2 control-label">WEB:</label>
 						<div class="col-lg-6 "> 
-							<input type="text" class="form-control" name="web" placeholder="www.ejemplo.com.ar" requiered/>
+							<input type="text" class="form-control" name="web" value="{{unaEmpresa.getWeb}}"placeholder="www.ejemplo.com.ar" requiered/>
 						</div>
 					</div>
 				</div>
@@ -100,7 +95,7 @@
 			 		<div class="form-group">
 					 	<label class="col-lg-4 control-label">Fecha Inicio como socio: *</label>
 					 	<div class="col-lg-3">
-							<input type="date" class="form-control" name="fechainicioce"  required/>
+							<input type="date" class="form-control" name="fechainicioce" value="{{unaEmpresa.getFechainicioce}}"required/>
 						</div>
 					</div>
 				</div> 
@@ -110,20 +105,24 @@
 			 		<div class="form-group">
 					 	<label class="col-lg-4 control-label">Fecha Fundacion empresa: </label>
 					 	<div class="col-lg-3">
-							<input type="date" class="form-control" name="fechafundacion" />
+							<input type="date" class="form-control" name="fechafundacion" value="{{unaEmpresa.getFechafundacion}}" />
 					 	
 						</div>
 					</div>
 				</div> 
 			 </div>
 			 <div id="insertarCategoria">
-				<div class="col-lg-12"> 
+				<div class="col-lg-12">
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Categoria: </label>
 						<div class="col-lg-4 "> 
 							<select class="form-control" name="categoria" id="categoria" required/>
 								{% for item in categorias %}
-									<option value="{{item.id}}">{{item.descripcion}}</option>
+									{% if  item.id == unaEmpresa.getIdcategoria %}
+										<option value="{{item.id}}" selected>{{item.descripcion}}</option>
+									{% else %}
+										<option value="{{item.id}}">{{item.descripcion}}</option>
+									{% endif %}
 								{% endfor %}	
 							</select>
 						</div>
@@ -140,7 +139,12 @@
 						<div class="col-lg-4 "> 
 							<select class="form-control" name="rubro" id="rubro" >
 								{% for item in rubros %}
-									<option value="{{item.id}}">{{item.descripcion}}</option>
+									{% if  item.id == unaEmpresa.getIdrubro %}
+										<option value="{{item.id}}" selected>{{item.descripcion}}</option>
+									{% else %}
+										<option value="{{item.id}}">{{item.descripcion}}</option>
+									{% endif %}
+									
 								{% endfor %}	
 							</select>
 						</div>
@@ -155,7 +159,7 @@
 			 		<div class="form-group">
 			 			<label class="col-lg-4 control-label">Detalle Actividad: </label>
 					 	<div class="col-lg-3">
-					 		<textarea id="detactividad" name="detactividad"onkeypress="return limita(event, 499);"rows="5"cols="90"></textarea>
+					 		<textarea id="detactividad" name="detactividad"onkeypress="return limita(event, 499);"rows="5"cols="90">{{unaEmpresa.getDetactividad}}</textarea>
 						</div>
 					</div>
 				</div> 
@@ -231,14 +235,12 @@
 					</div>
 				</div>
 			</div>
-			{% if modo == 'modificar' %}
-				<div class="row">	
-				 	<div class=" col-lg-6">
-						<input class="col-lg-2" type="checkbox" name="activo"> 
-						<label class="col-lg-8">¿Activo? </label>
-					</div>
-				 </div>
-			{% endif %}
+			<div class="row">	
+				 <div class=" col-lg-6">
+					<input class="col-lg-2" type="checkbox" name="activo"> 
+					<label class="col-lg-8">¿Activo? </label>
+				</div>
+			</div>
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">

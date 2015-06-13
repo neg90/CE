@@ -33,13 +33,14 @@ function eliminarElemento(id,descontar){
 }
 
 function mostrarDiv(accion){
-	if(valorInput == 20){
+	if(valorInput > 19){
 		alert('No es posible agregar mas socios');
 	}
 	if((accion == 'sumar') && (valorInput < 20)){
 		valorInput++;
 		$('#insertarContacto'+valorInput).removeClass('displayNone');
 		$('#insertarContacto'+valorInput).addClass('displayBlock');
+		
 
 
 	}
