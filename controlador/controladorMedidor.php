@@ -30,14 +30,13 @@ class controladorMedidor {
 			'debug' => 'false'
 			));
 
-			$ListaUsuarios=PDOusuario::listarUsuarios();
-			$ListaRoles=PDORol::listarRoles();
+			$ListaMedidores=PDOMedidor::listarMedidores();
 
-			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
-			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'eliminado'=>$eliminado));	
+			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
+			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'eliminado'=>$eliminado));	
 	}
 
-	static function verUsuario($Usuario){
+	static function verMedidor($idmedidor){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
@@ -46,22 +45,22 @@ class controladorMedidor {
 			'debug' => 'false'
 			));
 
-			$ListaRoles=PDORol::listarRoles();
+			$unMedidor=PDOMedidor::medidorPorID($idmedidor);
 
 			$template = $twig->loadTemplate('usuarios/verUsuario.html.twig');
-			echo $template->render(array('user'=>$user,'usuario'=>$Usuario,'ListaRoles'=>$ListaRoles));	
+			echo $template->render(array('user'=>$user,'unMedidor'=>$unMedidor));	
 	}
 
-	static function bajaUsuario($idusuario){
-			PDOusuario::baja($idusuario);
+	/*static function bajaMedidor($idmedidor){
+			PDOMedidor::baja($idusuario);
 			$ultPag = $_SERVER['HTTP_REFERER'];
 			header('Location:'.$ultPag);
-	}
+	}*/
 
-	static function eliminaUsuario($idusuario){
-			if (PDOusuario::eliminar($idusuario)) ($usuarioEliminado=1);
-			else $usuarioEliminado=0;
-			self::listarConCartel($usuarioEliminado);
+	static function eliminaMedidor($idMedidor){
+			if ((PDOMedidor::borrar($idMedidor))==1) ($medidorEliminado=1);
+			else $medidorEliminado=0;
+			self::listarConCartel($medidorEliminado);
 	}
 
 	static function alta(){
@@ -69,57 +68,56 @@ class controladorMedidor {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		$user=$_SESSION['user'];		
-		if (isset($_POST['enviarUsuario'])){
-			$nombre = htmlEntities($_POST['nombre']);
-			$apellido = htmlEntities($_POST['apellido']);
-			$usuario = htmlEntities($_POST['usuario']);
-			$password = htmlEntities($_POST['password']);
-			$email = htmlEntities($_POST['email']);
-			$rol = htmlEntities($_POST['rol']);
-			if ( isset($_POST['activo'])) {
-					$activo = true;
-				}else{
-					$activo = false;
-				}
-			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			if (empty(PDOusuario::emailExiste($email))){
-				$unUsuario->guardar();
-				$aviso='Perfecto! El usuario fue dado de alta con éxito. ';
+		if (isset($_POST['enviarMedidor'])){
+			$nomyap = htmlEntities($_POST['nomyap']);
+			$telefono = htmlEntities($_POST['telefono']);
+			$domicilio = htmlEntities($_POST['domicilio']);
+			$importe = htmlEntities($_POST['importe']);
+			$numusuario = htmlEntities($_POST['numusuario']);
+			$numsuministro = htmlEntities($_POST['numsuministro']);
+			$activo = true;
+
+			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo);
+			if (empty(PDOMedidor::existeMedidor($numusuario,$numsuministro))){
+				$unMedidor->guardar();
+				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
 				$tipoAviso= 'exito';
 			}
-			else {$aviso='ERROR! El email ya se encuentra en uso.';
+			else {$aviso='ERROR! El número de usuario / número de suministro ya se encuentran en uso.';
 				  $tipoAviso='error';
 			}
-			$ListaRoles=PDORol::listarRoles();
-			$template = $twig->loadTemplate('usuarios/altaUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
+			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'unMedidor'=>$unMedidor,'user'=>$user));
 		}else{
-			$ListaRoles=PDORol::listarRoles();
 			$aviso=false;
-			$template = $twig->loadTemplate('usuarios/altaUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user));
+			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'user'=>$user));
 		}
 	}
 
-	static function modificar($idusuario){
+	static function modificar($idMedidor){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		$user=$_SESSION['user'];		
-		if (isset($_POST['enviarUsuario'])){
-			$nombre = htmlEntities($_POST['nombre']);
-			$apellido = htmlEntities($_POST['apellido']);
-			$usuario = htmlEntities($_POST['usuario']);
-			$password = htmlEntities($_POST['password']);
-			$email = htmlEntities($_POST['email']);
-			$rol = htmlEntities($_POST['rol']);
-			//$activo = htmlEntities($_POST['activo']);
-			$activo=htmlEntities($_POST['activo']);
-			$idusuario = htmlEntities($_POST['idusuario']);
+		if (isset($_POST['enviarMedidor'])){
+			$nomyap = htmlEntities($_POST['nomyap']);
+			$telefono = htmlEntities($_POST['telefono']);
+			$domicilio = htmlEntities($_POST['domicilio']);
+			$importe = htmlEntities($_POST['importe']);
+			$numusuario = htmlEntities($_POST['numusuario']);
+			$numsuministro = htmlEntities($_POST['numsuministro']);
+			$activo = htmlEntities($_POST['activo']);
 
-			$datosAnteriores = PDOusuario::detalleUsuario($idusuario);
-			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			$unUsuario->setIdusuario($idusuario);
+			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo);
+			if (empty(PDOMedidor::existeMedidor($numusuario,$numsuministro))){
+				$unMedidor->guardar();
+				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
+				$tipoAviso= 'exito';
+			}
+			else {$aviso='ERROR! El número de usuario / número de suministro ya se encuentran en uso.';
+				  $tipoAviso='error';
+			}
 			if ($email == $datosAnteriores->correo){
 				$unUsuario->setActivo($activo);
 				$unUsuario->guardar();
@@ -145,55 +143,6 @@ class controladorMedidor {
 			$ListaRoles = PDORol::listarRoles();
 			$aviso=null;
 			$template = $twig->loadTemplate('usuarios/modificarUsuario.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
-		}
-	}
-
-		static function misDatos(){
-		Twig_Autoloader::register();
-	  	$loader = new Twig_Loader_Filesystem('../vista');
-	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		$user=$_SESSION['user'];
-		if (isset($_POST['enviarUsuario'])){
-			$nombre = htmlEntities($_POST['nombre']);
-			$apellido = htmlEntities($_POST['apellido']);
-			$usuario = htmlEntities($_POST['usuario']);
-			$password = htmlEntities($_POST['password']);
-			$email = htmlEntities($_POST['email']);
-			$rol = htmlEntities($_POST['rol']);
-			//$activo = htmlEntities($_POST['activo']);
-			$activo=htmlEntities($_POST['activo']);
-			$idusuario = htmlEntities($_POST['idusuario']);
-
-			$datosAnteriores = PDOusuario::detalleUsuario($idusuario);
-			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
-			$unUsuario->setIdusuario($idusuario);
-			if ($email == $datosAnteriores->correo){
-				$unUsuario->setActivo($activo);
-				$unUsuario->guardar();
-				$aviso="Perfecto! Sus datos fueron modificados con éxito!";
-				$tipoAviso= 'exito';
-			}
-			else{
-				if (empty(PDOusuario::emailExiste($email))){
-					$unUsuario->setActivo($activo);
-					$unUsuario->guardar();
-					$aviso="Perfecto! Sus datos fueron modificados con éxito!";
-					$tipoAviso= 'exito';		
-				}
-				else {$aviso = 'ERROR! El email ya se encuentra en uso.';
-				  	  $tipoAviso= 'error';}
-			}
-
-			$ListaRoles=PDORol::listarRoles();
-			$template = $twig->loadTemplate('usuarios/modificarMisDatos.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
-		}else{
-			$idusuario=PDOusuario::buscarPorUsuario($user)->idusuario;
-			$unUsuario = PDOusuario::detalleUsuario($idusuario);
-			$ListaRoles = PDORol::listarRoles();
-			$aviso=null;
-			$template = $twig->loadTemplate('usuarios/modificarMisDatos.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'ListaRoles'=>$ListaRoles,'user'=>$user,'unUsuario'=>$unUsuario));
 		}
 	}

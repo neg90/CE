@@ -39,10 +39,10 @@
 			</div>
 			 <div class="row">
 			 	<div class="col-lg-6"> 
-			 		<div class="form-grouv">
+			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Nombre: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" pattern="[a-zA-Z]+" title="No parece un nombre válido" name="nombre" required/>
+						  <input type="text" class="form-control" pattern="[á-éÁ-Éa-zA-Z ]+" title="No parece un nombre válido" name="nombre" placeholder="Juan" required/>
 						</div>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Apellido: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" pattern="[a-zA-Z]+" title="No parece un apellido válido" name="apellido" required/>
+						  <input type="text" class="form-control" pattern="[á-éÁ-Éa-zA-Z]+" title="No parece un apellido válido" name="apellido" placeholder="Pérez" required/>
 						</div>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Usuario: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="usuario" pattern="[a-zA-Z0-9_-]+" title="No parece un usuario válido" required/>
+						  <input type="text" class="form-control" name="usuario" pattern="[a-zA-Z0-9_-]+" title="No parece un usuario válido" placeholder="nombredeusuario" required/>
 						</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Contraseña: </label>
 						<div class="col-lg-6 "> 
-						  <input type="password" class="form-control" name="password" pattern="[a-zA-Z0-9]+" title="Los caracteres que se aceptan son sólo letras y números" required/>
+						  <input type="password" class="form-control" name="password" pattern="[a-zA-Z0-9]+" title="Los caracteres que se aceptan son sólo letras y números" placeholder="Contraseña" required/>
 						</div>
 					</div>
 				</div>
@@ -78,7 +78,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">E-mail: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="email" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido" required/>
+						  <input type="text" class="form-control" name="email" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido" placeholder="email@email.com" required/>
 						</div>
 					</div>
 				</div>
@@ -97,19 +97,13 @@
 					</div>
 				</div>
 			 </div>
-			  <div class="row">
-				<div class=" col-lg-6">
-					<input class="col-lg-2" type="checkbox" name="activo" checked> 
-					<label class="col-lg-8">¿Activo? </label>
-				</div>
-			 </div>
 			 <div class="row fila-de-boton">
 			 	<div class=" col-lg-1"></div>
 			 	<div class=" col-lg-4">
 			 		<a href="privado.php?c=usuarios&a=listar" class="btn btn-default btn-lg btn-block col-lg-4">Volver al listado</a>
 			 	</div>
 			 	<div class=" col-lg-4">
-				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarUsuario">Enviar</button>
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarUsuario">Guardar</button>
 				</div>
 				<div class=" col-lg-4"></div>
 			</div>

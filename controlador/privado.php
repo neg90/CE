@@ -132,8 +132,15 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorMedidor::baja();
 					}elseif($accion == 'listar'){
 						controladorMedidor::listar();
+					//Eliminar
+					}elseif($accion == 'eliminar'){ //elimina fisicamente
+						if (!empty($_GET['id'])){
+							$idMedidor=htmlEntities($_GET['id']);
+							controladorMedidor::eliminaMedidor($idMedidor);
+						}
+						else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
 					}
-			}
+				}
 		}else{
 			//Avisar q pifio path
 			//puso Acción o Controlador MAL

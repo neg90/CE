@@ -78,11 +78,8 @@ class controladorUsuario {
 			$password = htmlEntities($_POST['password']);
 			$email = htmlEntities($_POST['email']);
 			$rol = htmlEntities($_POST['rol']);
-			if ( isset($_POST['activo'])) {
-					$activo = true;
-				}else{
-					$activo = false;
-				}
+			$activo = true;
+			
 			$unUsuario = new PDOusuario($nombre,$apellido,$usuario,$password,$activo,$email,$rol);
 			if (empty(PDOusuario::emailExiste($email))){
 				$unUsuario->guardar();

@@ -6,9 +6,9 @@ require_once '../modelo/clases/medidor.php';
 class PDOMedidor extends medidor{
 	
 
-	public function	__construct ($id,$idcontacto,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo){
+	public function	__construct ($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo){
 		
-		parent::__construct($id,$idcontacto,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo);
+		parent::__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo);
 	
 	}
 	
@@ -37,7 +37,7 @@ class PDOMedidor extends medidor{
 
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
-      if($this->getIdmedidr()) /*Si tiene id entonces existe y solo lo modifico*/ {
+      if($this->getIdmedidor()) /*Si tiene id entonces existe y solo lo modifico*/ {
 
          //$id,$idcontacto,$nomyap,$telefono,$domicio,$importepago,$numusuario,$numsuministro,$activo
          $consulta = $conexion->prepare('UPDATE medidor SET nomyap = :nomyap, telefono = :telefono, domicilio = :domicilio, importepago = :importepago, numusuario = :numusuario, numsuministro = :numsuministro, activo = :activo WHERE idmedidor = :idmedidor');
@@ -77,7 +77,10 @@ class PDOMedidor extends medidor{
       $consulta = $conexion->prepare('DELETE FROM medidor WHERE idmedidor = :idmedidor');
       $consulta->bindParam(':idmedidor', $idmedidor);
       $consulta->execute();
-
+      if (empty(self::medidorPorID($idmedidor))){ //si no se encuentra el usuario, lo eliminó
+         return 1;
+      }
+      else return 0;
    }
 
    public static function existeMedidor($numusuario, $numsuministro){

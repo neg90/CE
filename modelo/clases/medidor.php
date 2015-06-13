@@ -12,9 +12,7 @@ class medidor {
 	private $activo;
 	
 
-	public function	__construct($id,$idcontacto,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo) {
-	
-		$this->idcontacto = $idcontacto;
+	public function	__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo) {
 		
 		$this->nomyap = $nomyap;
 		$this->telefono = $telefono;
