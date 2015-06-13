@@ -53,7 +53,7 @@
           <td>
             {% autoescape 'html' %}
               {% for c in categorias %}
-                {% if c.id == item.idrubro %}
+                {% if c.id == item.idcategoria %}
                   {{c.descripcion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}  
                 {% endif %}
               {% endfor %}
