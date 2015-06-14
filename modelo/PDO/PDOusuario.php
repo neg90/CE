@@ -62,6 +62,18 @@ class PDOusuario extends usuario{
 		return $objeto;
 	}
 
+	public static function filtroActivo($activo){
+		try{
+			$conexion=new conexion; //creo la instancia de la conexión
+		}
+		catch (PDOException $e){}
+		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE activo = :activo');
+		$consulta->bindParam(':activo',$activo);
+		$consulta->execute();
+		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		return $objeto;
+	}
+
 	public static function detalleUsuario($idusuario){
 		try {
 		$conexion = new conexion; //creo instancia de la conexion

@@ -4,19 +4,24 @@
 {% block contenedor %}
 <script>
 
+var status = '{% if statusActivo is null %}2{% else %}{{statusActivo}}{%endif%}';
+
 $(document).ready(function() {
 	/* Filtros */
      $("#dato").css("display", "none");
      $("#roles").css("display", "none");
      $("#EnviarFiltro").css("display", "none");
+     evaluarActivo(status);
 });
-
-
-	var status = '2';
 
 	function cambiarActivo(){
 		status ++;
 		if (status == 3){status = 0;}
+		evaluarActivo(status);
+		document.getElementById('datoActivo').value=status;
+	}
+
+	function evaluarActivo(status){
 		if (status == 2){
 			$('#accionActivo').removeClass('label-success');
 			$('#accionActivo').addClass('label-default');
@@ -87,9 +92,14 @@ $(document).ready(function() {
   {% endif %}
   		<div id="herramientasTop" class="inline-block">
 				  <div class="accionActivoparent inline-block">
-				  		<a href="#" onclick="cambiarActivo();" class="left inline-block">
-				  			<span id="accionActivo" class="label label-default">Activos e Inactivos</span>
-				  		</a>
+				  		<form method="POST" action="privado.php?c=usuarios&a=listar" id="form_activo">
+				  			<input type="hidden" name="datoActivo" id="datoActivo" value="{{statusActivo}}">
+				  			<input type="hidden" name="datoFiltro" id="datoFiltro" value="activo">
+				  			<input type="hidden" name="tipoFiltro" id="tipoFiltro" value="activo">
+					  		<a href="#" onclick="cambiarActivo();document.getElementById('form_activo').submit();" class="left inline-block">
+					  			<span id="accionActivo" class="label label-default">Activos e Inactivos</span>
+					  		</a>
+				  		</form>
 				  </div>
 				  <div id="filtroPor" class="inline-block">
 				  		<span> 

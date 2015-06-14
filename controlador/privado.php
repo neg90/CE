@@ -99,7 +99,15 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 
 				//Listar
 				}elseif($accion == 'listar'){
-					controladorUsuario::listar();
+					/* FILTROS USUARIOS*/
+					if (isset($_POST['tipoFiltro'])) 
+							$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+					if (isset($_POST['datoFiltro'])) 
+							$datoFiltro=htmlEntities($_POST['datoFiltro']);
+					if (isset($_POST['datoActivo'])) 
+							$statusActivo=htmlEntities($_POST['datoActivo']);
+					if ((isset($tipoFiltro)) and (isset($datoFiltro)) and (isset($statusActivo)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro,$statusActivo);
+					else controladorUsuario::listar();
 
 				//Detalle
 				}elseif($accion == 'detalle'){

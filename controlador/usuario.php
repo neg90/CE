@@ -39,6 +39,22 @@ class controladorUsuario {
 			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'eliminado'=>$eliminado));	
 	}
 
+	static function Filtros($tipoFiltro,$datoFiltro,$statusActivo){
+			$user=$_SESSION['user'];
+			Twig_Autoloader::register();
+			$loader = new Twig_Loader_Filesystem('../vista');
+			$twig = new Twig_Environment($loader, array(
+			//'cache' => '../cache','
+			'debug' => 'false'
+			));
+			if ($statusActivo != 2){$ListaUsuarios=PDOusuario::filtroActivo($statusActivo);}
+			else $ListaUsuarios=PDOusuario::listarUsuarios();
+			$ListaRoles=PDORol::listarRoles();
+
+			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'statusActivo'=>$statusActivo));	
+	}
+
 	static function verUsuario($Usuario){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
