@@ -121,7 +121,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Categoria: </label>
 						<div class="col-lg-4 "> 
-							<select class="form-control" name="categoria" id="categoria" required/>
+							<select class="form-control chosen" name="categoria" id="categoria" required/>
 								{% for item in categorias %}
 									<option value="{{item.id}}">{{item.descripcion}}</option>
 								{% endfor %}	
@@ -138,7 +138,7 @@
 				 	<div class="form-group">
 						<label class="col-lg-2 control-label">Rubro: </label>
 						<div class="col-lg-4 "> 
-							<select class="form-control" name="rubro" id="rubro" >
+							<select class="form-control chosen" name="rubro" id="rubro" >
 								{% for item in rubros %}
 									<option value="{{item.id}}">{{item.descripcion}}</option>
 								{% endfor %}	
@@ -251,7 +251,7 @@
 					 		<div class="form-group">
 								<label class="col-lg-2 control-label">Contacto: </label> 
 								<div class="col-lg-4 "> 
-									<select class="form-control" name="contacto0" id="contacto0">
+									<select class="form-control chosen" name="contacto0" id="contacto0">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
 											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
@@ -280,7 +280,7 @@
 					 		<div class="form-group">
 								<label class="col-lg-2 control-label">Contacto: </label> 
 								<div class="col-lg-4 "> 
-									<select class="form-control" name="contacto{{i}}" id="contacto0{{i}}">
+									<select class="form-control " name="contacto{{i}}" id="contacto0{{i}}">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
 											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
@@ -315,7 +315,7 @@
 				 		<div class="form-group">
 							<label class="col-lg-2 control-label">Medidor: </label>
 							<div class="col-lg-6 "> 
-								<select class="form-control" name="medidor" id="medidor">
+								<select class="form-control chosen" name="medidor" id="medidor">
 									<option value="-1">Medidor</option>
 								{% for item in medidores %}
 									<option value="{{item.idmedidor}}">{{item.nomyap}}</option>

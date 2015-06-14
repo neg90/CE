@@ -32,6 +32,9 @@ function eliminarElemento(id,descontar){
 	}
 }
 
+
+
+
 function mostrarDiv(accion){
 	if(valorInput > 19){
 		alert('No es posible agregar mas socios');
@@ -196,3 +199,5 @@ function clickBoton(valorid,entidad,accion) {
 }
 	
 	
+$(document).ready(function(){
+	$(".chosen").chosen();});
