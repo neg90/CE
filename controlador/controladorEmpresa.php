@@ -222,14 +222,20 @@ class controladorEmpresa {
 	  	$modo = 'modificar';
 	  	$aviso = 0;
 
+		$idempresa = $_POST['idempresa'];
 	  	//Traigo contactos,medidores,categorias y rubros !! :D
 	  	$unosContactos = PDOcontacto::listar();
 	  	$unosMedidores = PDOMedidor::listarMedidores();
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
-
+	  	//Traigo los contactos relacionados.
+	  	$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
+	  	var_dump($unosContactosRelacionados);
+	  	$auxCant = PDOcontactoempresa::contarCOntactosRelacionados($idempresa)[0];
+	  	$valorMax = intval($auxCant);  
+	  	
 	  	//busco la empresa 
-	  	$idempresa = $_POST['idempresa'];
+	  	
 	  	
 
 
@@ -320,14 +326,16 @@ class controladorEmpresa {
 			
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$	$unaEmpresa));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$	$unaEmpresa,
+			'contactosRelacionados'=>$unosContactosRelacionados,'valorMax'=>$valorMax));
 
 		}else{
 			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,
+			'contactosRelacionados'=>$unosContactosRelacionados,'valorMax'=>$valorMax));
 		}
 		
 	}

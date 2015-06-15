@@ -39,5 +39,33 @@ class PDOcontactoempresa extends contactoempresa {
       $conexion = null;
    }
 
+    public static function contarCOntactosRelacionados ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT count(*) FROM contactoempresa WHERE idempresa = :idempresa');
+
+      $consulta->bindParam(':idempresa',$idempresa);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetch();
+      
+      return $objeto;
+   }
+
+    public static function buscarContactosRelacionados ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT * FROM contactoempresa WHERE idempresa = :idempresa');
+
+      $consulta->bindParam(':idempresa',$idempresa);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
 }
 ?>
