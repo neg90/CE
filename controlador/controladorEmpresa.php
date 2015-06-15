@@ -339,6 +339,23 @@ class controladorEmpresa {
 		}
 		
 	}
+
+	public function modificarContactos (){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
+		$idempresa = $_POST['idempresa'];
+
+		//Traigo los contactos relacionados.
+	  	$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
+	  	var_dump($unosContactosRelacionados);
+	  	$auxCant = PDOcontactoempresa::contarCOntactosRelacionados($idempresa)[0];
+	  	$valorMax = intval($auxCant);  
+	  	
+
+		$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
+		echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'valorMax'=>$valorMax));
+	}
 		
 	
 

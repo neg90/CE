@@ -74,6 +74,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorEmpresa::baja();
 				}elseif($accion == 'listar'){
 					controladorEmpresa::listar();
+				}elseif($accion == 'modificarContactos'){
+					controladorEmpresa::modificarContactos();
 				}
 			}
 
