@@ -6,7 +6,8 @@ var maxSocios = 20;
 var contador = 1;
 var contadorSoc = 1;
 var cantSocios = 1;
-var valorInput = 0; 
+var contadorInputs = 0 ;
+var inputAgregar = 0;
 
 function eliminarElemento(id,descontar){
 	input = document.getElementById(id);	
@@ -33,19 +34,21 @@ function eliminarElemento(id,descontar){
 }
 
 
+$(document).ready(function(){
+	$(".chosen").chosen();});
 
 
 function mostrarDiv(accion){
-	if(valorInput > 19){
+	var index = document.getElementById('index').value;
+	
+	var maxInputs = 18 - document.getElementById('max').value;
+	if(valorInput >  maxInputs ){
 		alert('No es posible agregar mas socios');
 	}
 	if((accion == 'sumar') && (valorInput < 20)){
 		valorInput++;
 		$('#insertarContacto'+valorInput).removeClass('displayNone');
 		$('#insertarContacto'+valorInput).addClass('displayBlock');
-		
-
-
 	}
 	if ((accion == 'restar') && (valorInput != 0)) {
 		$('#insertarContacto'+valorInput).removeClass('displayBlock');
@@ -53,7 +56,25 @@ function mostrarDiv(accion){
 		valorInput--;
 	};
 
-	
+}
+
+function mostrarDivModificar(accion){
+	valorInicial = document.getElementById('max').value;
+	alert(valorInicial);
+	if(accion == 'sumar'){
+		contadorInputs++;
+		inputAgregar = (parseInt(contadorInputs) + parseInt(valorInicial));
+		alert(contadorInputs);
+		alert(inputAgregar);
+		$('#insertarContacto'+inputAgregar).removeClass('displayNone');
+		$('#insertarContacto'+inputAgregar).addClass('displayBlock');
+	}if (accion == 'restar'){
+		contadorInputs--;
+		inputRestar = document.getElementById('indexRestar').value;
+		alert(inputRestar);
+		$('#insertarContacto'+inputRestar).removeClass('displayBlock');
+		$('#insertarContacto'+inputRestar).addClass('displayNone');
+	}
 }
 
 function agregarContacto(divName,labelCaption1,id1,id2){
@@ -199,5 +220,3 @@ function clickBoton(valorid,entidad,accion) {
 }
 	
 	
-$(document).ready(function(){
-	$(".chosen").chosen();});

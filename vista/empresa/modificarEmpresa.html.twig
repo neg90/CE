@@ -3,6 +3,7 @@
 {% block title %}Formulario Empresa {% endblock %}
 
 {% block contenedor %}
+		
 		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
@@ -247,20 +248,25 @@
 					<h3> Contactos Asociados </h3>
 				 </div>
 			</div>
+			<input type="hidden" value="{{valorMax}}" id="max">
 			<div id="insertarContacto">
 					<div class="row">
 					 	<div class="col-lg-6">
 					 		<div class="form-group">
 								<label class="col-lg-2 control-label">Contacto: </label> 
 								<div class="col-lg-4 "> 
-									<select class=" chzn-single" name="contacto0" id="contacto0">
+									<select class=" form-control chosen" name="contacto0" id="contacto0">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
-											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+											{% if (contactosRelacionados.0.idcontacto ==  item.idcontacto) %}
+												<option value="{{item.idcontacto}}" selected>{{aux}}{{item.nombre}}</option>
+											{% else %}
+												<option value="{{item.idcontacto}}">{{aux}}{{item.nombre}}</option>
+											{% endif %}		
 										{% endfor %}	
 									</select>
 								</div>
-								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDiv('sumar');">
+								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDivModificar('sumar');">
 									<span class="glyphicon glyphicon-plus-sign"></span>
 								</button>	
 							</div>
@@ -274,22 +280,27 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			{% for i in 1..20 %}
-				<div id="insertarContacto{{i}}" class="displayNone">
+			</div>
+			{% for i in 1..(valorMax - 1) %}
+				<div id="insertarContacto{{i}}" class="displayBlock">
+					<input type="hidden" value="{{i}}" id="indexRestar">
 					<div class="row">
 					 	<div class="col-lg-6">
 					 		<div class="form-group">
 								<label class="col-lg-2 control-label">Contacto: </label> 
 								<div class="col-lg-4 "> 
-									<select class="form-control" name="contacto{{i}}" id="contacto0{{i}}">
+									<select class="form-control" name="contacto{{i}}" id="contacto{{i}}">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
-											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+											{% if (contactosRelacionados[i].idcontacto ==  item.idcontacto) %}
+												<option value="{{item.idcontacto}}" selected>{{item.nombre}}</option>
+											{% else %}
+												<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+											{% endif %}
 										{% endfor %}	
 									</select>
 								</div>
-								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDiv('restar');">
+								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDivModificar('restar');">
 									<span class="glyphicon glyphicon-minus-sign"></span>
 								</button>	
 							</div>
@@ -299,6 +310,39 @@
 								<label class="col-lg-2 control-label">Relacion: </label>
 								<div class="col-lg-6"> 
 									<input type="text" class="form-control" name="relacion{{i}}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			{% set valorInicial = (valorMax - 1) %}
+			{% for valorInicial in valorInicial..20 %}
+				
+				<div id="insertarContacto{{valorInicial}}" class="displayNone">
+					<input type="hidden" value="{{valorInicial}}" id="indexRestar">
+					<div class="row">
+					 	<div class="col-lg-6">
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Contacto: </label> 
+								<div class="col-lg-4 "> 
+									<select class="form-control" name="contacto{{valorInicial}}" id="contacto0{{valorInicial}}">
+										<option value="-1">Contacto</option>
+										{% for item in contactos %}
+											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+										{% endfor %}	
+									</select>
+								</div>
+								<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDivModificar('restar');">
+									<span class="glyphicon glyphicon-minus-sign"></span>
+								</button>	
+							</div>
+						</div>
+						<div class="col-lg-6"> 
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Relacion: </label>
+								<div class="col-lg-6"> 
+									<input type="text" class="form-control" name="relacion{{valorInicial}}" />
 								</div>
 							</div>
 						</div>
