@@ -53,7 +53,18 @@ class PDOcontactoempresa extends contactoempresa {
       return $objeto;
    }
 
-    public static function buscarContactosRelacionados ($idempresa){
+   public static function borrarContactosRelacionados($idempresa){
+       try {$conexion = new conexion;}catch (PDOException $e){}
+
+       $consulta = $conexion->prepare('DELETE  FROM contactoempresa WHERE idempresa = :idempresa');
+
+       $consulta->bindParam(':idempresa',$idempresa);
+
+       $consulta->execute();
+ 
+   }
+
+   public static function buscarContactosRelacionados ($idempresa){
       try {$conexion = new conexion;}catch (PDOException $e){}
       
       $consulta = $conexion->prepare('SELECT * FROM contactoempresa WHERE idempresa = :idempresa');

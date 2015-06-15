@@ -6,8 +6,7 @@ var maxSocios = 20;
 var contador = 1;
 var contadorSoc = 1;
 var cantSocios = 1;
-var contadorInputs = 0 ;
-var inputAgregar = 0;
+var valorInput = 0;
 
 function eliminarElemento(id,descontar){
 	input = document.getElementById(id);	
@@ -39,10 +38,8 @@ $(document).ready(function(){
 
 
 function mostrarDiv(accion){
-	var index = document.getElementById('index').value;
 	
-	var maxInputs = 18 - document.getElementById('max').value;
-	if(valorInput >  maxInputs ){
+	if(valorInput >  19 ){
 		alert('No es posible agregar mas socios');
 	}
 	if((accion == 'sumar') && (valorInput < 20)){
@@ -56,25 +53,6 @@ function mostrarDiv(accion){
 		valorInput--;
 	};
 
-}
-
-function mostrarDivModificar(accion){
-	valorInicial = document.getElementById('max').value;
-	alert(valorInicial);
-	if(accion == 'sumar'){
-		contadorInputs++;
-		inputAgregar = (parseInt(contadorInputs) + parseInt(valorInicial));
-		alert(contadorInputs);
-		alert(inputAgregar);
-		$('#insertarContacto'+inputAgregar).removeClass('displayNone');
-		$('#insertarContacto'+inputAgregar).addClass('displayBlock');
-	}if (accion == 'restar'){
-		contadorInputs--;
-		inputRestar = document.getElementById('indexRestar').value;
-		alert(inputRestar);
-		$('#insertarContacto'+inputRestar).removeClass('displayBlock');
-		$('#insertarContacto'+inputRestar).addClass('displayNone');
-	}
 }
 
 function agregarContacto(divName,labelCaption1,id1,id2){

@@ -4,7 +4,7 @@
 
 {% block contenedor %}
 		
-	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
+	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarContactos" role="form" method="POST">
 	<input type="hidden" name="idempresa" value="{{idempresa}}">
 	<div class="contenedor-formulario">
 		<div class="row aviso-completar">
@@ -37,23 +37,25 @@
 					<h3> Formulario Empresa</h3>
 				 </div>
 		</div>
-		{% for i in 1..20 %}	
+		{% for i in 0..20 %}	
 			<div id="insertarContacto{{i}}">
 				<div class="row">
 					 <div class="col-lg-6">
 					 	<div class="form-group">
 							<label class="col-lg-2 control-label">Contacto: </label> 
-							<div class="col-lg-4 "> 
+							<div class="col-lg-6 "> 
 								<select class="form-control" name="contacto{{i}}" id="contacto0{{i}}">
 									<option value="-1">Contacto</option>
 									{% for item in contactos %}
-										<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+										{% if (contactosRelacionados[i-1].idcontacto ==  item.idcontacto) %}
+											<option value="{{item.idcontacto}}" selected>{{aux}}{{item.nombre}}</option>
+										{% else %}
+											<option value="{{item.idcontacto}}">{{aux}}{{item.nombre}}</option>
+										{% endif %}	
+										
 									{% endfor %}	
 								</select>
 							</div>
-							<button type="button" class="btn btn-default col-lg-2" onclick="mostrarDivModificar('restar');">
-								<span class="glyphicon glyphicon-minus-sign"></span>
-							</button>	
 						</div>
 					</div>
 					<div class="col-lg-6"> 
