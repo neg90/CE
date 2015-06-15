@@ -48,9 +48,9 @@
 									<option value="-1">Contacto</option>
 									{% for item in contactos %}
 										{% if (contactosRelacionados[i-1].idcontacto ==  item.idcontacto) %}
-											<option value="{{item.idcontacto}}" selected>{{aux}}{{item.nombre}}</option>
+											<option value="{{item.idcontacto}}" selected>{{item.nombre}}</option>
 										{% else %}
-											<option value="{{item.idcontacto}}">{{aux}}{{item.nombre}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
 										{% endif %}	
 										
 									{% endfor %}	
@@ -74,7 +74,7 @@
 			 <div class=" col-lg-4"></div>
 			 <div class=" col-lg-2">
 				<a href="privado.php?c=empresa&a=listar">
-					<button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono">
+					<button type="button" class="btn btn-default btn-lg btn-block col-lg-4">
 						Volver al listado
 					</button>
 				</a>

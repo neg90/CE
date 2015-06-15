@@ -95,7 +95,9 @@ class controladorEmpresa {
 				
 			$idCOntacto = htmlentities($_POST[$strContacto]);
 			$relacion = htmlentities($_POST[$strRelacion]);
-			var_dump($idCOntacto);
+
+		
+
 			//sale carga del socio en la tabla intermedia
 			$unContactoIntermedio = new PDOcontactoempresa (0,$idCOntacto,$idempresa,$relacion);
 			$unContactoIntermedio->guardar();
@@ -345,7 +347,6 @@ class controladorEmpresa {
 	  	$unosContactos = PDOcontacto::listar();  
 
 	  	if (isset($_POST['guardarEmpresa'])){
-	  		var_dump("o");
 	  		//Boroo los que hay actualmente
 	  		PDOcontactoempresa::borrarContactosRelacionados($idempresa);
 	  		//Cargo los nuevos
@@ -355,7 +356,8 @@ class controladorEmpresa {
 
 
 		$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
-		echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos));
+		echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
+		'idempresa'=>$idempresa));
 	}
 		
 	

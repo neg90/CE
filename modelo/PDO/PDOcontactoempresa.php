@@ -56,7 +56,7 @@ class PDOcontactoempresa extends contactoempresa {
    public static function borrarContactosRelacionados($idempresa){
        try {$conexion = new conexion;}catch (PDOException $e){}
 
-       $consulta = $conexion->prepare('DELETE  FROM contactoempresa WHERE idempresa = :idempresa');
+       $consulta = $conexion->prepare('DELETE FROM contactoempresa WHERE idempresa = :idempresa');
 
        $consulta->bindParam(':idempresa',$idempresa);
 
