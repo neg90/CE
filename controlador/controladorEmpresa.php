@@ -88,15 +88,12 @@ class controladorEmpresa {
 
 	private static function validarMedidores ($idempresa){
 
-		for ($i=1; $i < 21 ; $i++) { 
+		for ($i=0; $i < 21 ; $i++) { 
 			$strContacto = 'contacto' . $i;
 			$strRelacion = 'relacion' . $i;
-
 				
 			$idCOntacto = htmlentities($_POST[$strContacto]);
 			$relacion = htmlentities($_POST[$strRelacion]);
-
-		
 
 			//sale carga del socio en la tabla intermedia
 			$unContactoIntermedio = new PDOcontactoempresa (0,$idCOntacto,$idempresa,$relacion);
@@ -334,6 +331,24 @@ class controladorEmpresa {
 		
 	}
 
+	public function modificarTelefonos(){
+		
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
+		var_dump("hola");
+		 
+
+	  	if (isset($_POST['guardarEmpresa'])){
+	  	
+			$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
+			echo $template->render(array());
+	  	}else{
+	  		$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
+			echo $template->render(array());
+	  	}
+	}
+
 	public function modificarContactos (){
 
 		Twig_Autoloader::register();
@@ -341,7 +356,6 @@ class controladorEmpresa {
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
 		
 		$idempresa = $_POST['idempresa'];
-		var_dump($idempresa);
 		//Traigo los contactos relacionados.
 	  	$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
 	  	$unosContactos = PDOcontacto::listar();  
@@ -351,13 +365,15 @@ class controladorEmpresa {
 	  		PDOcontactoempresa::borrarContactosRelacionados($idempresa);
 	  		//Cargo los nuevos
 			controladorEmpresa::validarMedidores($idempresa);
-			
+			$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
+			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
+			'idempresa'=>$idempresa));
+	  	}else{
+	  		$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
+			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
+			'idempresa'=>$idempresa));
 	  	}
-
-
-		$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
-		echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
-		'idempresa'=>$idempresa));
+		
 	}
 		
 	

@@ -4,7 +4,7 @@
 
 {% block contenedor %}
 		
-	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarContactos" role="form" method="POST">
+	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarTelefono" role="form" method="POST">
 	<input type="hidden" name="idempresa" value="{{idempresa}}">
 	<div class="contenedor-formulario">
 		<div class="row fila-de-alerta">
@@ -21,7 +21,7 @@
 		    			<strong>No se guardo la empresa!</strong> No re cagues ni utilicez f5 en el formulario. Causa: La empresa ya se encuentra registrada.
 	  				</div>
 	  			{% endif %}
-				</div>
+			</div>
 		</div>
 		<div class="row fila-de-titulo">
 			<div class=" col-lg-4"></div>
@@ -30,31 +30,21 @@
 			</div>
 		</div>
 		{% for i in 0..20 %}	
-			<div id="insertarContacto{{i}}">
+			<div id="insertarTelefono">
 				<div class="row">
-					<div class="col-lg-6">
-					 	<div class="form-group">
-							<label class="col-lg-2 control-label">Contacto: </label> 
-							<div class="col-lg-6 "> 
-								<select class="form-control" name="contacto{{i}}" id="contacto0{{i}}">
-									<option value="-1">Contacto</option>
-									{% for item in contactos %}
-										{% if (contactosRelacionados[i].idcontacto ==  item.idcontacto) %}
-											<option value="{{item.idcontacto}}" selected>{{item.nombre}}</option>
-										{% else %}
-											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
-										{% endif %}	
-										
-									{% endfor %}	
-								</select>
+					<div class="col-lg-6" > 
+					 	<div class="form-group"  >
+							<label class="col-lg-2 control-label">Telefono:* </label>
+							<div class="col-lg-6"> 
+								<input type="text" class="form-control" name="telefono0" required/>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6"> 
-					 	<div class="form-group">
-							<label class="col-lg-2 control-label">Relacion: </label>
-							<div class="col-lg-6"> 
-								<input type="text" class="form-control" name="relacion{{i}}" />
+					<div class="col-lg-6" > 
+					 	<div class="form-group"  >
+							<label class="col-lg-2 control-label">Descripcion: </label>
+							<div class="col-lg-6 "> 
+								<input type="text" class="form-control" name="caractel0" />
 							</div>
 						</div>
 					</div>
