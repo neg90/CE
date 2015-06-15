@@ -74,6 +74,68 @@ class PDOusuario extends usuario{
 		return $objeto;
 	}
 
+	public static function filtroNomyAp($NomyAp){
+		try{
+			$conexion=new conexion; //creo la instancia de la conexión
+		}
+		catch (PDOException $e){}
+		$consulta = $conexion->prepare("SELECT * FROM usuario WHERE ((nombre LIKE concat('%',:nomyap,'%')) OR (apellido LIKE concat('%',:nomyap,'%')))");
+		$consulta->bindParam(':nomyap',$NomyAp);
+		$consulta->execute();
+		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+		if ($objeto == null){ //Si es null, puede ser que esté buscando el nombre completo.
+			$datosSeparados = explode(" ",$NomyAp); //Separo la cadena $NomyAp, me devuelve un string
+			if (!empty($datosSeparados)){
+				for ($i=1; $i< count($datosSeparados); $i++){ //Busco por separado.
+					$consulta = $conexion->prepare("SELECT * FROM usuario WHERE ((nombre LIKE concat('%',:nomyap,'%')) OR (apellido LIKE concat('%',:nomyap,'%')))");
+					$consulta->bindParam(':nomyap',$datosSeparados[$i]);
+					$consulta->execute();
+					$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+					if ($objeto) break;
+				}
+			}
+		}
+
+		return $objeto;
+	}
+
+	public static function filtroUsuario($usuario){
+		try{
+			$conexion=new conexion; //creo la instancia de la conexión
+		}
+		catch (PDOException $e){}
+		$consulta = $conexion->prepare("SELECT * FROM usuario WHERE (username LIKE concat('%',:usuario,'%'))");
+		$consulta->bindParam(':usuario',$usuario);
+		$consulta->execute();
+		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		return $objeto;
+	}
+
+	public static function filtroEmail($email){
+		try{
+			$conexion=new conexion; //creo la instancia de la conexión
+		}
+		catch (PDOException $e){}
+		$consulta = $conexion->prepare("SELECT * FROM usuario WHERE (correo LIKE concat('%',:email,'%'))");
+		$consulta->bindParam(':email',$email);
+		$consulta->execute();
+		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		return $objeto;
+	}
+
+	public static function filtroRol($idrol){
+		try{
+			$conexion=new conexion; //creo la instancia de la conexión
+		}
+		catch (PDOException $e){}
+		$consulta = $conexion->prepare("SELECT * FROM usuario WHERE (idrol LIKE concat('%',:idrol,'%'))");
+		$consulta->bindParam(':idrol',$idrol);
+		$consulta->execute();
+		$objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+		return $objeto;
+	}
+
 	public static function detalleUsuario($idusuario){
 		try {
 		$conexion = new conexion; //creo instancia de la conexion

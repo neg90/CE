@@ -18,9 +18,11 @@ class controladorUsuario {
 
 			$ListaUsuarios=PDOusuario::listarUsuarios();
 			$ListaRoles=PDORol::listarRoles();
+			$filtroActivo = 0; //Si está filtrando la tabla, es 1.
+
 
 			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
-			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles));	
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles, 'filtroActivo' => $filtroActivo));	
 	}
 
 	static function listarConCartel($eliminado){
@@ -34,12 +36,14 @@ class controladorUsuario {
 
 			$ListaUsuarios=PDOusuario::listarUsuarios();
 			$ListaRoles=PDORol::listarRoles();
+			$filtroActivo = 0; //Si está filtrando la tabla, es 1.
+
 
 			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
-			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'eliminado'=>$eliminado));	
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'eliminado'=>$eliminado, 'filtroActivo' => $filtroActivo));	
 	}
 
-	static function Filtros($tipoFiltro,$datoFiltro,$statusActivo){
+	static function Filtros($tipoFiltro,$datoFiltro){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
@@ -47,12 +51,33 @@ class controladorUsuario {
 			//'cache' => '../cache','
 			'debug' => 'false'
 			));
-			if ($statusActivo != 2){$ListaUsuarios=PDOusuario::filtroActivo($statusActivo);}
-			else $ListaUsuarios=PDOusuario::listarUsuarios();
+
+			//statusActivo es 2 si se ven Activos e Inactivos
+			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
+				case 'nomyap':
+					$ListaUsuarios=PDOusuario::filtroNomyAp($datoFiltro);
+					break;
+				case 'usuario':
+					$ListaUsuarios=PDOusuario::filtroUsuario($datoFiltro);
+					break;
+				case 'email':
+					$ListaUsuarios=PDOusuario::filtroEmail($datoFiltro);
+					break;
+				case 'rol':
+					$ListaUsuarios=PDOusuario::filtroRol($datoFiltro);
+					$datoFiltro=PDORol::rolPorID($datoFiltro)[0]->nombre;
+					break;
+				case 'nada':
+					$ListaUsuarios=PDOusuario::listarUsuarios();
+					break;
+			}
 			$ListaRoles=PDORol::listarRoles();
 
+			//Si está filtrando la tabla, es 1.
+			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
+
 			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
-			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles,'statusActivo'=>$statusActivo));	
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles, 'filtroActivo' => $filtroActivo, 'datoFiltro'=>$datoFiltro));	
 	}
 
 	static function verUsuario($Usuario){
