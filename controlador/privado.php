@@ -100,13 +100,18 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				//Listar
 				}elseif($accion == 'listar'){
 					/* FILTROS USUARIOS*/
-					if (isset($_POST['tipoFiltro'])) 
-							$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-					if (isset($_POST['datoFiltro'])) 
-							$datoFiltro=htmlEntities($_POST['datoFiltro']);
-					if (isset($_POST['datoActivo'])) 
-							$statusActivo=htmlEntities($_POST['datoActivo']);
-					if ((isset($tipoFiltro)) and (isset($datoFiltro)) and (isset($statusActivo)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro,$statusActivo);
+					if (isset($_POST['tipoFiltro'])){
+								if (!empty($_POST['tipoFiltro']))
+									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+					}
+					else $tipoFiltro='nada';
+
+					if (isset($_POST['dato'])){
+								if (!empty($_POST['dato']))
+									$datoFiltro=htmlEntities($_POST['dato']);
+					}
+
+					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro);
 					else controladorUsuario::listar();
 
 				//Detalle

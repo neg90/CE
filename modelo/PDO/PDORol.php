@@ -50,7 +50,7 @@ class PDORol extends rol{
          VALUES(:nombre, :idpermisos)');         
          
          $consulta->bindParam(':nombre', $this->getNombre());
-         $consulta->bindParam(':idpermisos', $this->getIdpermiso());
+         $consulta->bindParam(':idpermisos', $this->getIdpermisos());
          $consulta->execute();
          
       }
