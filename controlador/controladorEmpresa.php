@@ -25,18 +25,27 @@ class controladorEmpresa {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		
-		$empresas = PDOempresa::listar();
-		
-		$rubros = PDOrubro::listar();
-
 		$categorias = PDOcategoria::listar();
+		$empresas = PDOempresa::listar();
+		$rubros = PDOrubro::listar();
+		$totalEmpresas = intval(PDOempresa::contarEmpresas());
+		$contactos = PDOContacto::listar();
 
+		$medidores = PDOMedidor::listarMedidores();
 
+		for ($i=0; $i < $totalEmpresas + 1 ; $i++) { 
+			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
+			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
+			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
+			$arrayVista[$i] = $arrayUnario;
+		}
+		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias));
+		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista));
 
 	}
+
 	private static function laCuestionDelTelefono ($idempresa){
 		for ($i=0; $i < 13; $i++) { 
 			$auxStrtel = 'telefono' . $i;

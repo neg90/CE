@@ -37,5 +37,19 @@ class PDOmedidorempresa extends medidorempresa{
       $conexion = null;
    }
 
+   public static function buscarMedidorRelacionados ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT * FROM medidorempresa WHERE idempresa = :idempresa');
+
+      $consulta->bindParam(':idempresa',$idempresa);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
 }
 ?>
