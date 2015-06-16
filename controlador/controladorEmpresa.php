@@ -28,18 +28,18 @@ class controladorEmpresa {
 		$categorias = PDOcategoria::listar();
 		$empresas = PDOempresa::listar();
 		$rubros = PDOrubro::listar();
-		$totalEmpresas = intval(PDOempresa::contarEmpresas());
+		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
 
 		$medidores = PDOMedidor::listarMedidores();
 
-		for ($i=0; $i < $totalEmpresas + 1 ; $i++) { 
+		for ($i=0; $i < $totalEmpresas   ; $i++) { 
 			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
 			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
 			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
 			$arrayVista[$i] = $arrayUnario;
 		}
-		
+	
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista));
@@ -402,15 +402,25 @@ class controladorEmpresa {
 			$aviso = 2;
 		}
 
-		$empresas = PDOempresa::listar();
-		
-		$rubros = PDOrubro::listar();
-
 		$categorias = PDOcategoria::listar();
+		$empresas = PDOempresa::listar();
+		$rubros = PDOrubro::listar();
+		$totalEmpresas = intval(PDOempresa::contarEmpresas());
+		$contactos = PDOContacto::listar();
 
+		$medidores = PDOMedidor::listarMedidores();
 
+		for ($i=0; $i < $totalEmpresas  ; $i++) { 
+			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
+			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
+			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
+			$arrayVista[$i] = $arrayUnario;
+		}
+		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'aviso'=>$aviso));
+		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista));
+
 
    }
 

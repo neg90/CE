@@ -27,8 +27,8 @@ class PDOempresa extends empresa{
    public static function contarEmpresas (){
       try {$conexion = new conexion;}catch (PDOException $e){}
       
-      $consulta = $conexion->prepare('SELECT count(*) FROM empresa');
-
+      $consulta = $conexion->prepare('SELECT count(idempresa) FROM empresa ');
+                 
       $consulta->execute();
 
       $objeto = $consulta->fetch();
