@@ -69,7 +69,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Apellido y Nombre: * </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" value="{{unMedidor.nomyap}}" class="form-control" pattern="[á-éÁ-Éa-zA-Z ]+" title="No parece un apellido y nombre válido" name="nomyap" placeholder="Pérez, Juan" required/>
+						  <input type="text" value="{{unMedidor.nomyap}}" class="form-control" pattern="[a-zA-Z ]+" title="No parece un apellido y nombre válido" name="nomyap" placeholder="Pérez, Juan" required/>
 						</div>
 					</div>
 				</div>
@@ -96,7 +96,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Importe: *</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="importe" pattern="[0-9., ]+" title="No parece un importe válido" value="{{unMedidor.importepago}}"  placeholder="00,00"  required/>
+						  <input type="text" class="form-control" name="importe" pattern="[0-9., ]+" title="No parece un importe válido" value="{{unMedidor.importepago}}"  placeholder="00.00"  required/>
 						</div>
 					</div>
 				</div>

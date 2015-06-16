@@ -49,8 +49,8 @@ function TablaUsuarios($header, $data, $roles)
 	$fill = false;
 	foreach($data as $row)
 	{
-		$this->Cell($w[0],6,$row['nombre'],'LR',0,'L',$fill);
-		$this->Cell($w[1],6,$row['apellido'],'LR',0,'L',$fill);
+		$this->Cell($w[0],6,utf8_decode($row['nombre']),'LR',0,'L',$fill);
+		$this->Cell($w[1],6,utf8_decode($row['apellido']),'LR',0,'L',$fill);
 		$this->Cell($w[2],6,$row['username'],'LR',0,'L',$fill);
 		$this->Cell($w[3],6,$row['correo'],'LR',0,'L',$fill);
 		for ($i=0; $i<count($roles);$i++){
@@ -86,11 +86,11 @@ function TablaContacto($header, $data)
 	$fill = false;
 	foreach($data as $row)
 	{
-		$this->Cell($w[0],6,$row['nombre'],'LR',0,'L',$fill);
-		$this->Cell($w[1],6,$row['apellido'],'LR',0,'L',$fill);
+		$this->Cell($w[0],6,utf8_decode($row['nombre']),'LR',0,'L',$fill);
+		$this->Cell($w[1],6,utf8_decode($row['apellido']),'LR',0,'L',$fill);
 		$this->Cell($w[2],6,$row['tipodocumento'] . ' ' . $row['documento'],'LR',0,'L',$fill);
 		$this->Cell($w[3],6,$row['telefono'],'LR',0,'L',$fill);
-		$this->Cell($w[4],6,$row['domicilio'],'LR',0,'L',$fill);
+		$this->Cell($w[4],6,utf8_decode($row['domicilio']),'LR',0,'L',$fill);
 		$this->Cell($w[5],6,$row['correo'],'LR',0,'L',$fill);
 		if ($row['asociadosm'] == 1) $asociadosm='Si'; else $asociadosm='No';		
 		$this->Cell($w[6],6,$asociadosm,'LR',0,'L',$fill);
@@ -123,9 +123,9 @@ function TablaMedidor($header, $data)
 	$fill = false;
 	foreach($data as $row)
 	{
-		$this->Cell($w[0],6,$row['nomyap'],'LR',0,'L',$fill);
+		$this->Cell($w[0],6,utf8_decode($row['nomyap']),'LR',0,'L',$fill);
 		$this->Cell($w[1],6,$row['telefono'],'LR',0,'L',$fill);
-		$this->Cell($w[2],6,$row['domicilio'],'LR',0,'L',$fill);
+		$this->Cell($w[2],6,utf8_decode($row['domicilio']),'LR',0,'L',$fill);
 		$this->Cell($w[3],6,$row['importepago'],'LR',0,'L',$fill);
 		$this->Cell($w[4],6,$row['numusuario'],'LR',0,'L',$fill);
 		$this->Cell($w[5],6,$row['numsuministro'],'LR',0,'L',$fill);

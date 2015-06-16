@@ -51,7 +51,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Nombre:*</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="nombre" placeholder="Nombre" pattern="[a-zA-Z].{2,}" title="No parece un nombre valido" value="{% if modo == 'modificar' %}{{contacto.getNombre}}{% endif %}" required/>
+						  <input type="text" class="form-control" name="nombre" placeholder="Nombre" pattern="[a-zA-Z ].{2,}" title="No parece un nombre valido" value="{% if modo == 'modificar' %}{{contacto.getNombre}}{% endif %}" required/>
 						</div>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Apellido:*</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="apellido" placeholder="Apellido"pattern="[a-zA-Z].{2,}" title="No parece un apellido valido" value="{% if modo == 'modificar' %}{{contacto.getApellido}}{% endif %}" required/>
+						  <input type="text" class="form-control" name="apellido" placeholder="Apellido"pattern="[a-zA-Z ].{2,}" title="No parece un apellido valido" value="{% if modo == 'modificar' %}{{contacto.getApellido}}{% endif %}" required/>
 						</div>
 					</div>
 				</div>
@@ -80,7 +80,7 @@
 						<label class="col-lg-2 control-label">Domicilio:* </label>
 						<div class="col-lg-6 "> 
 						  <input type="text" class="form-control" name="domicilio" placeholder="Calle Ejemplo 655" 
-						  patter="[a-zA-Z0-9.].{2,}" value="{% if modo == 'modificar' %}{{contacto.getDomicilio}}{% endif %}" required/>
+						  patter="[a-zA-Z0-9. ].{2,}" value="{% if modo == 'modificar' %}{{contacto.getDomicilio}}{% endif %}" required/>
 						</div>
 					</div>
 				</div>
