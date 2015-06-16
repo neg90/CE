@@ -183,7 +183,11 @@
 								<select class="form-control" name="medidor" id="medidor">
 									<option value="-1">Medidor</option>
 								{% for item in medidores %}
-									<option value="{{item.idmedidor}}">{{item.nomyap}}</option>
+									{% if item.idmedidor == medidorRelacionado.idmedidor %}
+										<option value="{{item.idmedidor}}" selected>{{item.nomyap}}</option>
+									{% else %}
+										<option value="{{item.idmedidor}}" >{{item.nomyap}}</option>
+									{% endif %}
 								{% endfor %}
 								</select>
 							</div>	

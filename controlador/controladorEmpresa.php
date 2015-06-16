@@ -201,6 +201,7 @@ class controladorEmpresa {
 	  	$unosMedidores = PDOMedidor::listarMedidores();
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
+	  	$medidorRelacionado = PDOmedidorempresa::buscarMedidorRelacionados($idempresa);
 
 		if (isset($_POST['guardarEmpresa'])){
 
@@ -249,10 +250,11 @@ class controladorEmpresa {
 				}
 				$aviso=1;
 				//Busco de neuvo la empresa actualizada.
+				$medidorRelacionado = PDOmedidorempresa::buscarMedidorRelacionados($idempresa);
 				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 				$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 				echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa));
+				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado));
 
 			}else{
 				//No se encontro la empresa para modificar
@@ -264,7 +266,7 @@ class controladorEmpresa {
 			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 			echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado));
 		}
 		
 	}
