@@ -32,7 +32,7 @@ class controladorEmpresa {
 		$contactos = PDOContacto::listar();
 
 		$medidores = PDOMedidor::listarMedidores();
-
+		$arrayVista[0] = '';
 		for ($i=0; $i < $totalEmpresas   ; $i++) { 
 			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
 			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
@@ -405,11 +405,11 @@ class controladorEmpresa {
 		$categorias = PDOcategoria::listar();
 		$empresas = PDOempresa::listar();
 		$rubros = PDOrubro::listar();
-		$totalEmpresas = intval(PDOempresa::contarEmpresas());
+		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
 
 		$medidores = PDOMedidor::listarMedidores();
-
+		$arrayVista[0] = '';
 		for ($i=0; $i < $totalEmpresas  ; $i++) { 
 			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
 			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
@@ -418,7 +418,7 @@ class controladorEmpresa {
 		}
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		echo $template->render(array('idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista));
 
 
