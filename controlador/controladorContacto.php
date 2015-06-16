@@ -14,8 +14,6 @@ class controladorContacto {
 
 	static function pdfContacto($datosPDF){
 
-		$ListaRoles=PDORol::listarRoles();
-
 		$pdf = new PDF();
 		// Encabezados de tabla
 		$header = array('Nombre', 'Apellido', 'Documento', 'Telefono','Domicilio', 'Correo','SM');

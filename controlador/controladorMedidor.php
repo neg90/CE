@@ -6,6 +6,21 @@ require_once '../modelo/PDO/PDOMedidor.php';
 
 class controladorMedidor {
 
+	static function pdfMedidor($datosPDF){
+
+		$pdf = new PDF();
+		// Encabezados de tabla
+		$header = array('Apellido y Nombre', 'Telefono', 'Domicilio', 'Imp. Pago','Num. Usuario', 'Num. Suministro');
+		// Cargo la info
+		$data = html_entity_decode($datosPDF);
+		$data = json_decode($data, true);
+		$pdf->SetFont('Arial','',14);
+		$pdf->AddPage();
+		$pdf->TablaMedidor($header,$data);
+		$pdf->Output();
+	}
+
+
 	static function listar(){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
