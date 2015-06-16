@@ -53,6 +53,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
 					else controladorContacto::listar();
 				}
+				elseif($accion == 'pdf'){ //PDF Contacto
+					if ($_POST['datosPDF']){
+						$datosPDF=htmlEntities($_POST['datosPDF']);
+						controladorContacto::pdfContacto($datosPDF);
+					}
+					else {header('Location:privado.php?c=contacto&a=listar');} //Si no vienen por post, arafue!
+				}
 
 			/* -------- ROLES ---------- */
 			}elseif($controlador == 'roles'){
