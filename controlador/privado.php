@@ -155,6 +155,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'misdatos'){
 						controladorUsuario::misDatos();
 				}
+				elseif($accion == 'pdf'){ //PDF Usuarios
+					if ($_POST['datosPDF']){
+						$datosPDF=htmlEntities($_POST['datosPDF']);
+						controladorUsuario::pdfUsuario($datosPDF);
+					}
+					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+				}
 				}
 				/* -------- MEDIDOR ---------- */
 				elseif($controlador == 'medidor'){

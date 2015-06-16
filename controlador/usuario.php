@@ -3,9 +3,26 @@
 require_once '../modelo/clases/usuario.php';
 require_once '../modelo/PDO/PDOusuario.php';
 require_once '../modelo/PDO/PDORol.php';
+require('../modelo/PDO/PDF.php');
 
 
 class controladorUsuario {
+
+	static function pdfUsuario($datosPDF){
+
+		$ListaRoles=PDORol::listarRoles();
+
+		$pdf = new PDF();
+		// Encabezados de tabla
+		$header = array('Nombre', 'Apellido', 'Usuario', 'E-mail', 'Rol');
+		// Cargo la info
+		$data = html_entity_decode($datosPDF);
+		$data = json_decode($data, true);
+		$pdf->SetFont('Arial','',14);
+		$pdf->AddPage();
+		$pdf->TablaUsuarios($header,$data,$ListaRoles);
+		$pdf->Output();
+	}
 
 	static function listar(){
 			$user=$_SESSION['user'];

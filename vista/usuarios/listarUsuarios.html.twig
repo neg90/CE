@@ -152,9 +152,15 @@ $(document).ready(function() {
 		  	</div>
         {% endif %}
           <div id="botonesTop" class="block right">
-		  		<a href="#" style="text-decoration:none" class="btn btn-default btn-block inline-block">
-		  			Ver en PDF
-		  		</a>
+          		<form id="enviarPDF" class="inline-block" action="privado.php?c=usuarios&a=pdf" method="POST">
+	          		<input type="hidden" id="datosPDF" name="datosPDF" value="{{ ListaUsuarios|json_encode() }}"/>
+	          		{% if ListaUsuarios is null %}
+	          		{% else %}
+			  		<a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+			  			Ver en PDF
+			  		</a>
+			  		{% endif %}
+		  		</form>
 		  		<a href="privado.php?c=usuarios&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
 		  			Nuevo usuario
 		  		</a>
