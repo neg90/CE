@@ -9,8 +9,18 @@ class PDOcontactoempresa extends contactoempresa {
 	public function __construct ($id,$idcontacto,$idempresa,$relacion){
 		
 		parent::__construct($id,$idcontacto,$idempresa,$relacion);
-	
+
 	}
+
+  public static function listar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM contactoempresa');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
 
    public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
