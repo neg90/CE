@@ -116,6 +116,81 @@ class PDOcontacto extends contacto{
       $consulta->execute();
       
    }
+
+   public static function filtroNomyAp($NomyAp){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM contacto WHERE ((nombre LIKE concat('%',:nomyap,'%')) OR (apellido LIKE concat('%',:nomyap,'%')))");
+      $consulta->bindParam(':nomyap',$NomyAp);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      if ($objeto == null){ //Si es null, puede ser que esté buscando el nombre completo.
+         $datosSeparados = explode(" ",$NomyAp); //Separo la cadena $NomyAp, me devuelve un string
+         if (!empty($datosSeparados)){
+            for ($i=1; $i< count($datosSeparados); $i++){ //Busco por separado.
+               $consulta = $conexion->prepare("SELECT * FROM contacto WHERE ((nombre LIKE concat('%',:nomyap,'%')) OR (apellido LIKE concat('%',:nomyap,'%')))");
+               $consulta->bindParam(':nomyap',$datosSeparados[$i]);
+               $consulta->execute();
+               $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+               if ($objeto) break;
+            }
+         }
+      }
+
+      return $objeto;
+   }
+
+   public static function filtroTelefono($telefono){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM contacto WHERE (telefono LIKE concat('%',:telefono,'%'))");
+      $consulta->bindParam(':telefono',$telefono);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroDocumento($documento){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM contacto WHERE (documento LIKE concat('%',:documento,'%'))");
+      $consulta->bindParam(':documento',$documento);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
 	
+   public static function filtroCorreo($correo){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM contacto WHERE (correo LIKE concat('%',:correo,'%'))");
+      $consulta->bindParam(':correo',$correo);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroAsociadosSM($dato){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      if ($dato == 2) $dato = 0;
+      $consulta = $conexion->prepare("SELECT * FROM contacto WHERE (asociadosm LIKE concat('%',:dato,'%'))");
+      $consulta->bindParam(':dato',$dato);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
 }
 ?>

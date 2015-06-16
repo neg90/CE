@@ -117,7 +117,7 @@ class controladorContacto {
 
 
 	static function listar(){
-
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -125,8 +125,46 @@ class controladorContacto {
 		$contactos = PDOContacto::listar();
 
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('contactos'=>$contactos));
+		echo $template->render(array('user'=>$user,'contactos'=>$contactos));
 
+	}
+
+			static function Filtros($tipoFiltro,$datoFiltro){
+			$user=$_SESSION['user'];
+			Twig_Autoloader::register();
+			$loader = new Twig_Loader_Filesystem('../vista');
+			$twig = new Twig_Environment($loader, array(
+			//'cache' => '../cache','
+			'debug' => 'false'
+			));
+
+			//statusActivo es 2 si se ven Activos e Inactivos
+			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
+				case 'nomyap':
+					$contactos=PDOContacto::filtroNomyAp($datoFiltro);
+					break;
+				case 'telefono':
+					$contactos=PDOContacto::filtroTelefono($datoFiltro);
+					break;
+				case 'documento':
+					$contactos=PDOContacto::filtroDocumento($datoFiltro);
+					break;
+				case 'correo':
+					$contactos=PDOContacto::filtroCorreo($datoFiltro);
+					break;
+				case 'asociadossm':
+					$contactos=PDOContacto::filtroAsociadosSM($datoFiltro);
+					break;
+				case 'nada':
+					$contactos = PDOContacto::listar();
+					break;
+			}
+
+			//Si está filtrando la tabla, es 1.
+			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
+
+			$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
+			echo $template->render(array('user'=>$user,'contactos'=>$contactos, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo));	
 	}
 		
 	public function baja(){

@@ -2,6 +2,70 @@
  
 {% block title %} Lista de Medidores {% endblock %}
 {% block contenedor %}
+<script>
+
+$(document).ready(function() {
+	/* Filtros */
+     $("#dato").css("display", "none");
+     $("#EnviarFiltro").css("display", "none");
+});
+
+
+
+	function getval(sel) {
+       switch (sel.value) {
+         case "Todos":
+            location.reload();
+            break;
+
+         case "Nombre y/o Apellido":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
+         	$("#EnviarFiltro").css("display", "inline-block");
+         	document.getElementById('tipoFiltro').value = 'nomyap';
+            break;
+
+         case "Telefono":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: 2983401234");
+         	$("#EnviarFiltro").css("display", "inline-block");
+         	document.getElementById('tipoFiltro').value = 'telefono';
+            break;
+
+         case "Domicilio":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: Azcuénaga 123");
+         	$("#EnviarFiltro").css("display", "inline-block");
+         	document.getElementById('tipoFiltro').value = 'domicilio';
+            break;
+
+         case "Empresa":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Nombre de empresa");
+         	$("#EnviarFiltro").css("display", "inline-block");
+         	document.getElementById('tipoFiltro').value = 'empresa';
+         	alert('Falta implementarlo!');
+            break;
+
+         case "Num. Usuario":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: 000365");
+         	$("#EnviarFiltro").css("display", "inline-block");
+         	document.getElementById('tipoFiltro').value = 'numusuario';
+            break;
+
+         case "Num. Suministro":
+         	$("#dato").css("display", "inline-block");
+         	$("#datoTexto").attr("placeholder", "Ej.: 000365");
+         	$("#EnviarFiltro").css("display", "inline-block");
+         	document.getElementById('tipoFiltro').value = 'numsuministro';
+            break;
+        }
+    }
+
+</script>
+
+
   <h3 id="tituloBloque">Listado de Medidores</h3>
   <div class="clearfix"></div>
   {% if eliminado == null %}
@@ -10,6 +74,65 @@
   {% else %}
   	<div class="alert alert-success" role="alert">El titular no pudo ser eliminado</div>
   {% endif %}
+
+  {% if filtroActivo == 0 %}
+  		<form method="POST" action="privado.php?c=medidor&a=listar" id="form_herramientas_medidor">
+  		<div id="herramientasTop" class="inline-block">
+				  <div class="accionActivoparent inline-block">
+
+				  			<!--
+				  				<input type="hidden" name="datoActivo" id="datoActivo" value="{{statusActivo}}">
+				  			-->
+				  			<input type="hidden" name="tipoFiltro" id="tipoFiltro">
+
+					  		<!--
+					  			<a href="#" onclick="cambiarActivo();document.getElementById('form_herramientas_usuario').submit();" class="left inline-block">
+					  			<span id="accionActivo" class="label label-default">Activos e Inactivos</span>
+					  		</a>
+					  		-->
+				  </div>
+				  <div id="filtroPor" class="inline-block">
+				  		<span> 
+				  			<b>Filtrar por:</b>
+				  		</span>
+				  		<form  method="POST" id="formFiltros" class="inline-block">
+				  		<select class="form-control" onchange="getval(this);">
+				  			<option selected>Todos</option>
+				  			<option>Nombre y/o Apellido</option>
+				  			<option>Telefono</option>
+				  			<option>Domicilio</option>
+				  			<option>Empresa</option> <!-- Falta implementar -->
+				  			<option>Num. Usuario</option>
+				  			<option>Num. Suministro</option>
+				  		</select>
+				  		</form>
+				  </div>
+				  <div id="dato">
+		                        <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
+		          </div>
+
+		          <button id="EnviarFiltro" class="btn btn-default" onclick="document.getElementById('form_herramientas_medidor').submit();">Enviar</button>
+        </div>
+        </form>
+        {% else %}
+        	<div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
+        		<span>Filtrando resultados para {{tipoFiltxro}} <b>{{datoFiltro}}</b></span>
+        	</div>        		
+        	<div class="col-lg-2">
+	        	<a href="privado.php?c=medidor&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+			  			Quitar filtro
+			  	</a>
+		  	</div>
+        {% endif %}
+          <div id="botonesTop" class="block right">
+		  		<a href="#" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+		  			Imprimir
+		  		</a>
+		  		<a href="privado.php?c=medidor&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+		  			Nuevo titular
+		  		</a>
+  		  </div>
+
   <table class="table table-hover">
   <thead>
     <tr>

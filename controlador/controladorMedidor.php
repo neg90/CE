@@ -21,6 +21,47 @@ class controladorMedidor {
 			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores));	
 	}
 
+		static function Filtros($tipoFiltro,$datoFiltro){
+			$user=$_SESSION['user'];
+			Twig_Autoloader::register();
+			$loader = new Twig_Loader_Filesystem('../vista');
+			$twig = new Twig_Environment($loader, array(
+			//'cache' => '../cache','
+			'debug' => 'false'
+			));
+
+			//statusActivo es 2 si se ven Activos e Inactivos
+			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
+				case 'nomyap':
+					$ListaMedidores=PDOMedidor::filtroNomyAp($datoFiltro);
+					break;
+				case 'telefono':
+					$ListaMedidores=PDOMedidor::filtroTelefono($datoFiltro);
+					break;
+				case 'domicilio':
+					$ListaMedidores=PDOMedidor::filtroDomicilio($datoFiltro);
+					break;
+				case 'empresa':
+					$ListaMedidores=PDOMedidor::filtroEmpresa($datoFiltro);
+					break;
+				case 'numusuario':
+					$ListaMedidores=PDOMedidor::filtroNumusuario($datoFiltro);
+					break;
+				case 'numsuministro':
+					$ListaMedidores=PDOMedidor::filtroNumsuministro($datoFiltro);
+					break;
+				case 'nada':
+					$ListaMedidores=PDOMedidor::listarMedidores();
+					break;
+			}
+
+			//Si está filtrando la tabla, es 1.
+			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
+
+			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
+			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo));	
+	}
+
 	static function listarConCartel($eliminado){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();

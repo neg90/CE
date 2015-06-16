@@ -38,7 +38,20 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'baja'){
 					controladorContacto::baja();
 				}elseif($accion == 'listar'){
-					controladorContacto::listar();
+						/* FILTROS CONTACTOS*/
+					if (isset($_POST['tipoFiltro'])){
+								if (!empty($_POST['tipoFiltro']))
+									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+					}
+					else $tipoFiltro='nada';
+
+					if (isset($_POST['dato'])){
+								if (!empty($_POST['dato']))
+									$datoFiltro=htmlEntities($_POST['dato']);
+					}
+
+					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
+					else controladorContacto::listar();
 				}
 
 			/* -------- ROLES ---------- */
@@ -155,7 +168,20 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					}elseif($accion == 'baja'){
 						controladorMedidor::baja();
 					}elseif($accion == 'listar'){
-						controladorMedidor::listar();
+						/* FILTROS MEDIDOR*/
+					if (isset($_POST['tipoFiltro'])){
+								if (!empty($_POST['tipoFiltro']))
+									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+					}
+					else $tipoFiltro='nada';
+
+					if (isset($_POST['dato'])){
+								if (!empty($_POST['dato']))
+									$datoFiltro=htmlEntities($_POST['dato']);
+					}
+
+					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
+					else controladorMedidor::listar();
 					//Eliminar
 					}elseif($accion == 'eliminar'){ //elimina fisicamente
 						if (!empty($_GET['id'])){

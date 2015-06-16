@@ -11,6 +11,85 @@ class PDOMedidor extends medidor{
 		parent::__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo);
 	
 	}
+   /* FILTROS */
+
+   public static function filtroNomyAp($NomyAp){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM medidor WHERE (nomyap LIKE concat('%',:nomyap,'%'))");
+      $consulta->bindParam(':nomyap',$NomyAp);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      if ($objeto == null){ //Si es null, puede ser que esté buscando el nombre completo.
+         $datosSeparados = explode(" ",$NomyAp); //Separo la cadena $NomyAp, me devuelve un string
+         if (!empty($datosSeparados)){
+            for ($i=1; $i< count($datosSeparados); $i++){ //Busco por separado.
+               $consulta = $conexion->prepare("SELECT * FROM medidor WHERE (nomyap LIKE concat('%',:nomyap,'%'))");
+               $consulta->bindParam(':nomyap',$datosSeparados[$i]);
+               $consulta->execute();
+               $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+               if ($objeto) break;
+            }
+         }
+      }
+
+      return $objeto;
+   }
+
+   public static function filtroTelefono($telefono){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM medidor WHERE (telefono LIKE concat('%',:telefono,'%'))");
+      $consulta->bindParam(':telefono',$telefono);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroDomicilio($domicilio){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM medidor WHERE (domicilio LIKE concat('%',:domicilio,'%'))");
+      $consulta->bindParam(':domicilio',$domicilio);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroNumusuario($numusuario){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM medidor WHERE (numusuario LIKE concat('%',:numusuario,'%'))");
+      $consulta->bindParam(':numusuario',$numusuario);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroNumsuministro($numsuministro){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM medidor WHERE (numsuministro LIKE concat('%',:numsuministro,'%'))");
+      $consulta->bindParam(':numsuministro',$numsuministro);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+
+
+   /* FIN FILTROS */
 	
 	public static function listarMedidores(){
 		try{
