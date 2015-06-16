@@ -3,12 +3,7 @@
 {% block title %}Formulario Empresa {% endblock %}
 
 {% block contenedor %}
-	
-	{% if modo == 'alta' %}
 		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=alta" role="form" method="POST">
-	{% elseif modo == 'modificar' %}
-		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
-	{% endif %}
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
 			<div class="row aviso-completar">

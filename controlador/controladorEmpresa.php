@@ -126,15 +126,12 @@ class controladorEmpresa {
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 	  	$modo = 'alta';
 	  	$aviso = 0;
-
 	  	//Traigo contactos !! :D
 	  	$unosContactos = PDOcontacto::listar();
 	  	$unosMedidores = PDOMedidor::listarMedidores();
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
-
 		if (isset($_POST['guardarEmpresa'])){
-			
 			$denominacion = htmlEntities($_POST['denominacion']);
 			$cantempleados = htmlEntities($_POST['cantempleados']);
 			$nrosocio = 0;
@@ -152,47 +149,35 @@ class controladorEmpresa {
 			}else{
 				$activo = false;
 			}
-		
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
 			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
-
 			if($unaEmpresa->validarInsertar()){
 				$unaEmpresa->guardar();
 				$aviso=1;
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
 				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
-
 				//alta socio
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
-
 				//alta medidor
 				$idMedidor = htmlentities($_POST['medidor']);
-				
 				if( $idMedidor == '-1'){
-					//ir a crear uno nuevo.
+				//ir a crear uno nuevo.
 				}else{
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
-
 				//Alta telefonos extra
 				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
-
-
 				//alta domicilios extra
 				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
-
-
 				//alta domicilios extra
 				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
-
 			}else{
 				$aviso=2;
 			}
-			
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias));
@@ -203,7 +188,6 @@ class controladorEmpresa {
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias));
 		}
-		
 	}
 
 	static function modificar(){
@@ -211,80 +195,75 @@ class controladorEmpresa {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-	  	$modo = 'modificar';
 	  	$aviso = 0;
-
 		$idempresa = $_POST['idempresa'];
-	  	//Traigo contactos,medidores,categorias y rubros !! :D
 	  	$unosContactos = PDOcontacto::listar();
 	  	$unosMedidores = PDOMedidor::listarMedidores();
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
-	   
-	  	//busco la empresa 
-	  	
-	  	
-
 
 		if (isset($_POST['guardarEmpresa'])){
-			
-			$denominacion = htmlEntities($_POST['denominacion']);
-			$cantempleados = htmlEntities($_POST['cantempleados']);
-			$nrosocio = htmlEntities($_POST['nrosocio']);
-			$importemensual = htmlEntities($_POST['importemensual']);
-			$cuit = htmlEntities($_POST['cuit']);
-			$web = htmlEntities($_POST['web']);
-			$fechainicioce = htmlEntities($_POST['fechainicioce']);
-			$fechafundacion = htmlEntities($_POST['fechafundacion']);
-			$rubroAJAX = htmlEntities($_POST['rubro']);
-			$categoriaAJAX = htmlEntities($_POST['categoria']);
-			$detactividad = htmlEntities($_POST['detactividad']);
 
-			if (isset($_POST['activo'])) {
-				$activo = true;
-			}else{
-				$activo = false;
-			}
-		
-			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
-			//id 0 pero se guarda incremental en el PDO
-			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+			if(PDOempresa::buscarEmpresa($idempresa)){
+				$denominacion = htmlEntities($_POST['denominacion']);
+				$cantempleados = htmlEntities($_POST['cantempleados']);
+				$nrosocio = 0;
+				$importemensual = htmlEntities($_POST['importemensual']);
+				$cuit = htmlEntities($_POST['cuit']);
+				$web = htmlEntities($_POST['web']);
+				$fechainicioce = htmlEntities($_POST['fechainicioce']);
+				$fechafundacion = htmlEntities($_POST['fechafundacion']);
+				$rubroAJAX = htmlEntities($_POST['rubro']);
+				$categoriaAJAX = htmlEntities($_POST['categoria']);
+				$detactividad = htmlEntities($_POST['detactividad']);
 
-			if($unaEmpresa->validarInsertar()){
-				$unaEmpresa->guardar();
-				$aviso=1;
+				if (isset($_POST['activo'])) {
+					$activo = true;
+				}else{
+					$activo = false;
+				}
+
 				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
-				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
-				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+				$unaEmpresa->setDenominacion($denominacion);
+				$unaEmpresa->setWeb($web);
+				$unaEmpresa->setIdrubro($rubroAJAX);
+				$unaEmpresa->setDetactividad($detactividad);
+				$unaEmpresa->setCantempleados($cantempleados);
+				$unaEmpresa->setIdcategoria($categoriaAJAX);
+				$unaEmpresa->setFechainicioce($fechainicioce);
+				$unaEmpresa->setNrosocio($nrosocio);
+				$unaEmpresa->setCuit($cuit);
+				$unaEmpresa->setFechafundacion($fechafundacion);
+				$unaEmpresa->setImportemensual($importemensual);
+				$unaEmpresa->guardar();
 
-				//alta socio
-				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
-
-				//alta medidor
 				$idMedidor = htmlentities($_POST['medidor']);
-				
+				//Borro el medidor actual.
+				PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
+				//Agrego el nuevo o el mismo :/
 				if( $idMedidor == '-1'){
 					//ir a crear uno nuevo.
 				}else{
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
+				$aviso=1;
+				//Busco de neuvo la empresa actualizada.
+				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
+				$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
+				echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa));
 
 			}else{
-				$aviso=2;
+				//No se encontro la empresa para modificar
+				$aviso = 3;
 			}
-			
-			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$	$unaEmpresa));
-
 		}else{
 			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$aviso=0;
+			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa));
 		}
 		
