@@ -10,11 +10,12 @@ class controladorMedidor {
 
 		$pdf = new PDF();
 		// Encabezados de tabla
-		$header = array('Apellido y Nombre', 'Telefono', 'Domicilio', 'Imp. Pago','Num. Usuario', 'Num. Suministro');
+		$header = array('Apellido y Nombre', utf8_decode('Teléfono'), 'Domicilio', 'Imp. Pago','Num. Usuario', 'Num. Suministro');
 		// Cargo la info
 		$data = html_entity_decode($datosPDF);
 		$data = json_decode($data, true);
 		$pdf->SetFont('Arial','',14);
+		$_SESSION['tituloPDF']=('Titulares de Medidores'); //título PDF
 		$pdf->AddPage();
 		$pdf->TablaMedidor($header,$data);
 		$pdf->Output();

@@ -4,12 +4,36 @@ require('../modelo/clases/fpdf.php');
 class PDF extends FPDF
 {
 
+function Header()
+{
+    // Logo
+    $this->Image('../img/logo.png',10,2,30);
+    // Arial bold 15
+    $this->SetFont('Arial','B',25);
+    // Move to the right
+    $this->Cell(35);
+    // Title
+    $this->Cell(30,10,$_SESSION['tituloPDF'],0,0,'L');
+    // Line break
+    $this->Ln(20);
+}
+
+function Footer()
+{
+    // 1,5 cm del fin de la página
+    $this->SetY(-15);
+    // La I es de italic, tamaño 8
+    $this->SetFont('Arial','I',8);
+    // Print centered page number
+    $this->Cell(0,10,utf8_decode('Página ').$this->PageNo(),0,0,'R');
+}
+
 function TablaUsuarios($header, $data, $roles)
 {
 	// Colors, line width and bold font
 	$this->SetFillColor(120,120,120);
 	$this->SetTextColor(255);
-	$this->SetDrawColor(0,0,0);
+	$this->SetDrawColor(200,200,200);
 	$this->SetLineWidth(0);
 	$this->SetFont('','B');
 	// Header
@@ -18,8 +42,8 @@ function TablaUsuarios($header, $data, $roles)
 		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
 	$this->Ln();
 	// Color and font restoration
-	$this->SetFillColor(224,235,255);
-	$this->SetTextColor(0);
+	$this->SetFillColor(235,235,235);
+	$this->SetTextColor(100,100,100);
 	$this->SetFont('');
 	// Data
 	$fill = false;
@@ -46,7 +70,7 @@ function TablaContacto($header, $data)
 	// Colors, line width and bold font
 	$this->SetFillColor(120,120,120);
 	$this->SetTextColor(255);
-	$this->SetDrawColor(0,0,0);
+	$this->SetDrawColor(200,200,200);
 	$this->SetLineWidth(0);
 	$this->SetFont('','B');
 	// Header
@@ -55,8 +79,8 @@ function TablaContacto($header, $data)
 		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
 	$this->Ln();
 	// Color and font restoration
-	$this->SetFillColor(224,235,255);
-	$this->SetTextColor(0);
+	$this->SetFillColor(235,235,235);
+	$this->SetTextColor(100,100,100);
 	$this->SetFont('');
 	// Data
 	$fill = false;
@@ -83,7 +107,7 @@ function TablaMedidor($header, $data)
 	// Colors, line width and bold font
 	$this->SetFillColor(120,120,120);
 	$this->SetTextColor(255);
-	$this->SetDrawColor(0,0,0);
+	$this->SetDrawColor(200,200,200);
 	$this->SetLineWidth(0);
 	$this->SetFont('','B');
 	// Header
@@ -92,8 +116,8 @@ function TablaMedidor($header, $data)
 		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
 	$this->Ln();
 	// Color and font restoration
-	$this->SetFillColor(224,235,255);
-	$this->SetTextColor(0);
+	$this->SetFillColor(235,235,235);
+	$this->SetTextColor(100,100,100);
 	$this->SetFont('');
 	// Data
 	$fill = false;

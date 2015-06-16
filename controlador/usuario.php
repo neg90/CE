@@ -19,6 +19,7 @@ class controladorUsuario {
 		$data = html_entity_decode($datosPDF);
 		$data = json_decode($data, true);
 		$pdf->SetFont('Arial','',14);
+		$_SESSION['tituloPDF']=('Usuarios'); //título PDF
 		$pdf->AddPage();
 		$pdf->TablaUsuarios($header,$data,$ListaRoles);
 		$pdf->Output();
