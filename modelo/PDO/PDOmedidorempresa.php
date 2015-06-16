@@ -51,5 +51,18 @@ class PDOmedidorempresa extends medidorempresa{
       return $objeto;
    }
 
+    public function borrarMedidorEmpresa ($idempresa){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      
+      $consulta = $conexion->prepare('DELETE FROM medidorempresa WHERE idempresa =  :idempresa');
+
+      $consulta->bindParam(':idempresa', $idempresa);
+    
+      $consulta->execute();
+      
+   }
+
+
 }
 ?>
