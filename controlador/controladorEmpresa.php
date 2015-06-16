@@ -137,7 +137,7 @@ class controladorEmpresa {
 			
 			$denominacion = htmlEntities($_POST['denominacion']);
 			$cantempleados = htmlEntities($_POST['cantempleados']);
-			$nrosocio = htmlEntities($_POST['nrosocio']);
+			$nrosocio = 0;
 			$importemensual = htmlEntities($_POST['importemensual']);
 			$cuit = htmlEntities($_POST['cuit']);
 			$web = htmlEntities($_POST['web']);
