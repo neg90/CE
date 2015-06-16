@@ -263,41 +263,6 @@ class controladorEmpresa {
 					$unMedidor->guardar(); 
 				}
 
-				//Telefonos 
-				$telefono0 = htmlEntities($_POST['telefono0']);
-				$caractel0 = htmlEntities($_POST['caractel0']);
-			
-				//alta telefono base.
-				$unTelefono = new PDOtelefonoempresa (0,$unaEmpresa->getIdempresa(),$telefono0,$caractel0);
-				
-				//validado con ajax
-				$unTelefono->guardar();
-
-				//Alta telefonos extra
-				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
-
-				//domicilio
-				$domicilio0 = htmlEntities($_POST['domicilio0']);
-				$caracdom0 = htmlEntities($_POST['caracdom0']);
-
-				//alta domicilio base.
-				$unDomicilio = new PDOdomicilioempresa (0,$unaEmpresa->getIdempresa(),$domicilio0,$caracdom0);
-				$unDomicilio->guardar();
-
-				//alta domicilios extra
-				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
-
-				//Correo
-				$correo0 = htmlEntities($_POST['correo0']);
-				$caraccorreo0 = htmlEntities($_POST['caraccorreo0']);
-
-				//alta correo base.
-				$unCorreo = new PDOcorreoempresa (0,$unaEmpresa->getIdempresa(),$correo0,$caraccorreo0);
-				$unCorreo->guardar();
-
-				//alta domicilios extra
-				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
-
 			}else{
 				$aviso=2;
 			}
@@ -317,58 +282,67 @@ class controladorEmpresa {
 	}
 
 	public function modificarTelefonos(){
-		
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
-		
 		$aviso = 0 ;
-
 		$idempresa = $_POST['idempresa'];
 		$telefonosRelacionados = PDOtelefonoempresa::buscarTelefonos($idempresa); 
-		$unoSTelefonos = PDOtelefonoempresa::listar();
-
 	  	if (isset($_POST['guardarEmpresa'])){
 	  		//Borro lo que esta guardado.
 	  		PDOtelefonoempresa::borrarTelefonosRelacionados($idempresa);
 	  		//Cargar los nuevos.
 	  		controladorEmpresa::laCuestionDelTelefono($idempresa);
-
 	  		$aviso = 1 ;
-
+	  		$telefonosRelacionados = PDOtelefonoempresa::buscarTelefonos($idempresa); 
 			$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
-			echo $template->render(array('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados
-			,'unoSTelefonos'=>$unoSTelefonos,'aviso'=>$aviso));
-
+			echo $template->render(array('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados,'aviso'=>$aviso));
 	  	}else{
-
 	  		$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
-			echo $template->render(array ('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados
-			,'unoSTelefonos'=>$unoSTelefonos,'aviso'=>$aviso));
+			echo $template->render(array ('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados,'aviso'=>$aviso));
 
 	  	}
 	}
 
-	public function modificarContactos (){
-
+	public function modificarCorreos(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
-		
 		$aviso = 0 ;
+		$idempresa = $_POST['idempresa'];
+		$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
+	  	if (isset($_POST['guardarEmpresa'])){
+	  		//Borro lo que esta guardado.
+	  		PDOcorreoempresa::borrarCorreosRelacionados($idempresa);
+	  		//Cargar los nuevos.
+	  		controladorEmpresa::laCuestionDelCorreo($idempresa);
+	  		$aviso = 1 ;
+	  		$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
+			$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
+			echo $template->render(array('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso));
+	  	}else{
+	  		$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
+			echo $template->render(array ('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso));
+	  	}
+	}
 
+	public function modificarContactos (){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));		
+		$aviso = 0 ;
 		$idempresa = $_POST['idempresa'];
 		//Traigo los contactos relacionados.
 	  	$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
 	  	$unosContactos = PDOcontacto::listar();  
-
 	  	if (isset($_POST['guardarEmpresa'])){
-
 	  		//Boroo los que hay actualmente
 	  		PDOcontactoempresa::borrarContactosRelacionados($idempresa);
 	  		//Cargo los nuevos
 			controladorEmpresa::validarMedidores($idempresa);
 			$aviso = 1 ;
+			$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
+	  		$unosContactos = PDOcontacto::listar();  
 			$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
 			'idempresa'=>$idempresa));
@@ -377,19 +351,15 @@ class controladorEmpresa {
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
 			'idempresa'=>$idempresa));
 	  	}
-		
 	}
 
 	public function modificarDomicilios(){
-		
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
 		$aviso = 0 ;
 		$idempresa = $_POST['idempresa'];
 		$domiciliosRelacionados = PDOdomicilioempresa::buscarDomicilios($idempresa); 
-		$unosDomicilios = PDOdomicilioempresa::listar();
-
 	  	if (isset($_POST['guardarEmpresa'])){
 	  		//Borro lo que esta guardado.
 	  		PDOdomicilioempresa::borrarDomiciliosRelacionados($idempresa);
@@ -397,23 +367,16 @@ class controladorEmpresa {
 	  		controladorEmpresa::laCuestionDelDomicilio($idempresa);
 	  		//Busco nuevos datos apra llevar a la vista!
 			$domiciliosRelacionados = PDOdomicilioempresa::buscarDomicilios($idempresa); 
-			$unosDomicilios = PDOdomicilioempresa::listar();
 			//Aviso todo correcto
 	  		$aviso = 1 ;
 			$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
-			echo $template->render(array('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados
-			,'unosDomicilios'=>$unosDomicilios,'aviso'=>$aviso));
+			echo $template->render(array('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso));
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
-			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados
-			,'unosDomicilios'=>$unosDomicilios,'aviso'=>$aviso));
+			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso));
 
 	  	}
 	}
-		
-	
-
-
 		
 	public function baja(){
 

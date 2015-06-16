@@ -41,44 +41,30 @@ class PDOcorreoempresa extends correoempresa{
       $conexion = null;
    }
 
+    public static function buscarCorreos ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT * FROM correoempresa WHERE idempresa = :idempresa');
 
-
-   /*public static function buscarID($descripcion){
-
-      try {$conexion = new conexion;}catch (PDOException $e){} 
-      $consulta = $conexion->prepare('SELECT * FROM rubro WHERE (descripcion = :descripcion)');
-        
-      $consulta->bindParam(':descripcion', $descripcion);
+      $consulta->bindParam(':idempresa',$idempresa);
 
       $consulta->execute();
 
-      $resultado = $consulta->fetch();
-
-      $objeto = new PDOrubro($resultado['id'],$resultado['descripcion']);
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
       
       return $objeto;
-
    }
 
+   public static function borrarCorreosRelacionados($idempresa){
+       try {$conexion = new conexion;}catch (PDOException $e){}
 
-   public function validarInsertar(){
-      try {$conexion = new conexion;}catch (PDOException $e){} 
-      $consulta = $conexion->prepare('SELECT * FROM rubro WHERE (descripcion = :descripcion)');
-      
-      $consulta->bindParam(':descripcion', $this->getDescripcion());
+       $consulta = $conexion->prepare('DELETE FROM correoempresa WHERE idempresa = :idempresa');
 
-      $consulta->execute();
+       $consulta->bindParam(':idempresa',$idempresa);
 
-      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
-      if ($objeto) {
-         //Si el array de obejtos viene cargado
-         return false;
-      }else{
-         return true;
-      }
-
-   }*/
-
+       $consulta->execute();
+ 
+   }
 
 }
 
