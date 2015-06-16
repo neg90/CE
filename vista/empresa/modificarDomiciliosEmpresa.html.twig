@@ -4,7 +4,7 @@
 
 {% block contenedor %}
 		
-	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarTelefonos" role="form" method="POST">
+	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarDomicilios" role="form" method="POST">
 	<input type="hidden" name="idempresa" value="{{idempresa}}">
 	<div class="contenedor-formulario">
 		<div class="row fila-de-alerta">
@@ -13,7 +13,7 @@
 				 {% if aviso == 1 %}
 					<div class="alert alert-success alert-dismissable">
 		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
-		    			<strong>Perfecto!</strong> modificaste los telefonos con exito .
+		    			<strong>Perfecto!</strong> modificaste los domicilios con exito .
 	  				</div>
 	  			{% endif %}
 			</div>
@@ -25,16 +25,16 @@
 			</div>
 		</div>
 		{% for i in 0..12 %}	
-			<div id="insertarTelefono{{i}}">
+			<div id="insertarDomicilio{{i}}">
 				<div class="row">
 					<div class="col-lg-6" > 
 					 	<div class="form-group"  >
-							<label class="col-lg-3 control-label">Telefono {{i + 1 }}: </label>
+							<label class="col-lg-3 control-label">Domicilio {{i + 1 }}: </label>
 							<div class="col-lg-5"> 
 								{% if i == 0 %}
-									<input type="text" class="form-control" name="telefono{{i}}" value="{{telefonosRelacionados[i].telefono}}" required/>
+									<input type="text" class="form-control" name="domicilio{{i}}" value="{{domiciliosRelacionados[i].domicilio}}"required/>
 								{% else %}
-									<input type="text" class="form-control" name="telefono{{i}}" value="{{telefonosRelacionados[i].telefono}}" />
+									<input type="text" class="form-control" name="domicilio{{i}}" value="{{domiciliosRelacionados[i].domicilio}}"/>
 								{% endif %}
 							</div>
 						</div>
@@ -43,7 +43,8 @@
 					 	<div class="form-group"  >
 							<label class="col-lg-2 control-label">Descripcion: </label>
 							<div class="col-lg-6 "> 
-								<input type="text" class="form-control" value="{{telefonosRelacionados[i].descripcion}}" name="caractel{{i}}/" />
+								
+								<input type="text" class="form-control"  value="{{domiciliosRelacionados[i].descripcion}}" name="caracdom{{i}}/"  />
 							</div>
 						</div>
 					</div>

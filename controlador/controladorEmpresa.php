@@ -38,49 +38,57 @@ class controladorEmpresa {
 
 	}
 	private static function laCuestionDelTelefono ($idempresa){
-		for ($i=1; $i < 12; $i++) { 
+		for ($i=0; $i < 13; $i++) { 
 			$auxStrtel = 'telefono' . $i;
 			$auxStrdesc = 'caractel' . $i .'/';
 			if(isset($_POST[$auxStrtel]) ){
-				$varTel = htmlentities($_POST[$auxStrtel]);
-				$varCarac = htmlentities($_POST[$auxStrdesc]);
-				//cargar telefono en tabla intermedia 
-				$unTelefono = new PDOtelefonoempresa (0,$idempresa,$varTel,$varCarac);
-				//validado con ajax
-				$unTelefono->guardar();
-				$unTelefono = null;
+				if($_POST[$auxStrtel] != ''){
+					$varTel = htmlentities($_POST[$auxStrtel]);
+					$varCarac = htmlentities($_POST[$auxStrdesc]);
+					//cargar telefono en tabla intermedia 
+					$unTelefono = new PDOtelefonoempresa (0,$idempresa,$varTel,$varCarac);
+					//validado con ajax
+					$unTelefono->guardar();
+					$unTelefono = null;
+				}
+				
 			}
 		}
 	}
 
 	private static function laCuestionDelDomicilio ($idempresa){
-		for ($i=1; $i < 12; $i++) { 
+		for ($i=0; $i < 13; $i++) { 
 			$auxStrDom = 'domicilio' . $i;
 			$auxStrdesc = 'caracdom' . $i .'/';
 			if (isset($_POST[$auxStrDom])){
-				$varDom = htmlentities($_POST[$auxStrDom]);
-				$varCarac = htmlentities($_POST[$auxStrdesc]);
-				//cargar domicilios en tabla intermedia 
-				$unDomicilio = new PDOdomicilioempresa (0,$idempresa,$varDom,$varCarac);
-				//validado con ajax
-				$unDomicilio->guardar();
-				$unDomicilio = null;
+				if($_POST[$auxStrDom] != ''){
+					$varDom = htmlentities($_POST[$auxStrDom]);
+					$varCarac = htmlentities($_POST[$auxStrdesc]);
+					//cargar domicilios en tabla intermedia 
+					$unDomicilio = new PDOdomicilioempresa (0,$idempresa,$varDom,$varCarac);
+					//validado con ajax
+					$unDomicilio->guardar();
+					$unDomicilio = null;
+				}	
 			}
 		}
 	}
 
 	private static function laCuestionDelCorreo ($idempresa){
-		for ($i=1; $i < 12; $i++) { 
+		for ($i=0; $i < 13; $i++) { 
 			$auxStrCor = 'correo' . $i ;
 			$auxStrdesc = 'caraccorreo' . $i .'/';
 			if (isset($_POST[$auxStrCor])){
-				$varCor = htmlentities($_POST[$auxStrCor]);
-				$varCarac = htmlentities($_POST[$auxStrdesc]);
-				//cargar telefono en tabla intermedia 
-				$unCorreo = new PDOcorreoempresa (0,$idempresa,$varCor,$varCarac);
-				//validado con ajax
-				$unCorreo->guardar();
-				$unCorreo = null;
+				if($_POST[$auxStrCor] != ''){
+					$varCor = htmlentities($_POST[$auxStrCor]);
+					$varCarac = htmlentities($_POST[$auxStrdesc]);
+					//cargar telefono en tabla intermedia 
+					$unCorreo = new PDOcorreoempresa (0,$idempresa,$varCor,$varCarac);
+					//validado con ajax
+					$unCorreo->guardar();
+					$unCorreo = null;
+				}
+				
 			}
 		}
 	
@@ -161,37 +169,13 @@ class controladorEmpresa {
 					$unMedidor->guardar(); 
 				}
 
-				//Telefonos 
-				$telefono0 = htmlEntities($_POST['telefono0']);
-				$caractel0 = htmlEntities($_POST['caractel0']);
-			
-				//alta telefono base.
-				$unTelefono = new PDOtelefonoempresa (0,$unaEmpresa->getIdempresa(),$telefono0,$caractel0);
-				
-				//validado con ajax
-				$unTelefono->guardar();
-
 				//Alta telefonos extra
 				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
 
-				//domicilio
-				$domicilio0 = htmlEntities($_POST['domicilio0']);
-				$caracdom0 = htmlEntities($_POST['caracdom0']);
-
-				//alta domicilio base.
-				$unDomicilio = new PDOdomicilioempresa (0,$unaEmpresa->getIdempresa(),$domicilio0,$caracdom0);
-				$unDomicilio->guardar();
 
 				//alta domicilios extra
 				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
 
-				//Correo
-				$correo0 = htmlEntities($_POST['correo0']);
-				$caraccorreo0 = htmlEntities($_POST['caraccorreo0']);
-
-				//alta correo base.
-				$unCorreo = new PDOcorreoempresa (0,$unaEmpresa->getIdempresa(),$correo0,$caraccorreo0);
-				$unCorreo->guardar();
 
 				//alta domicilios extra
 				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
@@ -214,6 +198,7 @@ class controladorEmpresa {
 	}
 
 	static function modificar(){
+
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -336,16 +321,31 @@ class controladorEmpresa {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
-		var_dump("hola");
-		 
+		
+		$aviso = 0 ;
+
+		$idempresa = $_POST['idempresa'];
+		$telefonosRelacionados = PDOtelefonoempresa::buscarTelefonos($idempresa); 
+		$unoSTelefonos = PDOtelefonoempresa::listar();
 
 	  	if (isset($_POST['guardarEmpresa'])){
-	  	
+	  		//Borro lo que esta guardado.
+	  		PDOtelefonoempresa::borrarTelefonosRelacionados($idempresa);
+	  		//Cargar los nuevos.
+	  		controladorEmpresa::laCuestionDelTelefono($idempresa);
+
+	  		$aviso = 1 ;
+
 			$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
-			echo $template->render(array());
+			echo $template->render(array('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados
+			,'unoSTelefonos'=>$unoSTelefonos,'aviso'=>$aviso));
+
 	  	}else{
+
 	  		$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
-			echo $template->render(array());
+			echo $template->render(array ('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados
+			,'unoSTelefonos'=>$unoSTelefonos,'aviso'=>$aviso));
+
 	  	}
 	}
 
@@ -355,16 +355,20 @@ class controladorEmpresa {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
 		
+		$aviso = 0 ;
+
 		$idempresa = $_POST['idempresa'];
 		//Traigo los contactos relacionados.
 	  	$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
 	  	$unosContactos = PDOcontacto::listar();  
 
 	  	if (isset($_POST['guardarEmpresa'])){
+
 	  		//Boroo los que hay actualmente
 	  		PDOcontactoempresa::borrarContactosRelacionados($idempresa);
 	  		//Cargo los nuevos
 			controladorEmpresa::validarMedidores($idempresa);
+			$aviso = 1 ;
 			$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
 			'idempresa'=>$idempresa));
@@ -374,6 +378,37 @@ class controladorEmpresa {
 			'idempresa'=>$idempresa));
 	  	}
 		
+	}
+
+	public function modificarDomicilios(){
+		
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
+		$aviso = 0 ;
+		$idempresa = $_POST['idempresa'];
+		$domiciliosRelacionados = PDOdomicilioempresa::buscarDomicilios($idempresa); 
+		$unosDomicilios = PDOdomicilioempresa::listar();
+
+	  	if (isset($_POST['guardarEmpresa'])){
+	  		//Borro lo que esta guardado.
+	  		PDOdomicilioempresa::borrarDomiciliosRelacionados($idempresa);
+	  		//Cargar los nuevos.
+	  		controladorEmpresa::laCuestionDelDomicilio($idempresa);
+	  		//Busco nuevos datos apra llevar a la vista!
+			$domiciliosRelacionados = PDOdomicilioempresa::buscarDomicilios($idempresa); 
+			$unosDomicilios = PDOdomicilioempresa::listar();
+			//Aviso todo correcto
+	  		$aviso = 1 ;
+			$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
+			echo $template->render(array('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados
+			,'unosDomicilios'=>$unosDomicilios,'aviso'=>$aviso));
+	  	}else{
+	  		$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
+			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados
+			,'unosDomicilios'=>$unosDomicilios,'aviso'=>$aviso));
+
+	  	}
 	}
 		
 	

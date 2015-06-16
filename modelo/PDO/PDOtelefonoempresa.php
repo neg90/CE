@@ -41,6 +41,45 @@ class PDOtelefonoempresa extends telefonoempresa{
       $conexion = null;
    }
 
+   public static function buscarTelefonos ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT * FROM telefonoempresa WHERE idempresa = :idempresa');
+
+      $consulta->bindParam(':idempresa',$idempresa);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetchAll();
+      
+      return $objeto;
+   }
+
+   public static function listar(){
+
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM telefonoempresa');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+
+   }
+
+    public function borrarTelefonosRelacionados ($idempresa){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      
+      $consulta = $conexion->prepare('DELETE FROM telefonoempresa WHERE idempresa =  :idempresa');
+
+      $consulta->bindParam(':idempresa', $idempresa);
+    
+      $consulta->execute();
+      
+   }
+
+
+
 
 
    /*public static function buscarID($descripcion){

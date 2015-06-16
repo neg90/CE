@@ -12,6 +12,15 @@ class PDOdomicilioempresa extends domicilioempresa{
 	
 	}
 
+   public static function listar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM domicilioempresa');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
    public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       
@@ -38,6 +47,32 @@ class PDOdomicilioempresa extends domicilioempresa{
       }
 
       $conexion = null;
+   }
+
+    public static function buscarDomicilios ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT * FROM domicilioempresa WHERE idempresa = :idempresa');
+
+      $consulta->bindParam(':idempresa',$idempresa);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetchAll();
+      
+      return $objeto;
+   }
+
+   public function borrarDomiciliosRelacionados ($idempresa){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      
+      $consulta = $conexion->prepare('DELETE FROM domicilioempresa WHERE idempresa =  :idempresa');
+
+      $consulta->bindParam(':idempresa', $idempresa);
+    
+      $consulta->execute();
+      
    }
 
 

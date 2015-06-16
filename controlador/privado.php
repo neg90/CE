@@ -78,6 +78,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorEmpresa::modificarContactos();
 				}elseif ($accion == 'modificarTelefonos') {
 					controladorEmpresa::modificarTelefonos();
+				}elseif ($accion == 'modificarDomicilios') {
+					controladorEmpresa::modificarDomicilios();	
 				}
 			}
 
