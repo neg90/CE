@@ -61,6 +61,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
 					else controladorContacto::listar();
 				}
+				elseif($accion == 'pdf'){ //PDF Contacto
+					if ($_POST['datosPDF']){
+						$datosPDF=htmlEntities($_POST['datosPDF']);
+						controladorContacto::pdfContacto($datosPDF);
+					}
+					else {header('Location:privado.php?c=contacto&a=listar');} //Si no vienen por post, arafue!
+				}
 
 			/* -------- ROLES ---------- */
 			}elseif($controlador == 'roles'){
@@ -204,6 +211,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 							controladorMedidor::eliminaMedidor($idMedidor);
 						}
 						else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+					}
+					elseif($accion == 'pdf'){ //PDF Medidor
+					if ($_POST['datosPDF']){
+						$datosPDF=htmlEntities($_POST['datosPDF']);
+						controladorMedidor::pdfMedidor($datosPDF);
+					}
+					else {header('Location:privado.php?c=medidor&a=listar');} //Si no vienen por post, arafue!
 					}
 				}
 		}else{

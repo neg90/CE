@@ -12,6 +12,21 @@
 	//0->No mostrar mensaje, es solo carga del formulario.
 class controladorContacto {
 
+	static function pdfContacto($datosPDF){
+
+		$pdf = new PDF();
+		// Encabezados de tabla
+		$header = array('Nombre', 'Apellido', 'Documento', utf8_decode('Teléfono'),'Domicilio', 'Correo','SM');
+		// Cargo la info
+		$data = html_entity_decode($datosPDF);
+		$data = json_decode($data, true);
+		$pdf->SetFont('Arial','',14);
+		$_SESSION['tituloPDF']=('Contactos'); //título PDF
+		$pdf->AddPage();
+		$pdf->TablaContacto($header,$data);
+		$pdf->Output();
+	}
+
 	static function alta(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
