@@ -4,7 +4,7 @@
 
 {% block contenedor %}
 	
-	<form class="form-horizontal" action="privado.php?c=correo&a=enviar" role="form" method="POST">
+<form class="form-horizontal" action="privado.php?c=correo&a=enviar" role="form" method="POST" enctype="multipart/form-data">
 	
 	<div class="contenedor-formulario">
 			
@@ -24,6 +24,14 @@
 	  				{% endif %}
 				 </div>
 			</div>
+			<script>
+				$("#file-3").fileinput({
+				showCaption: false,
+				browseClass: "btn btn-primary btn-lg",
+				fileType: "any"
+				});
+			</script>
+
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
@@ -38,6 +46,8 @@
   					</div>
 				</div>
 			</div>
+			             <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+
 			 <div class="row">
 			 	<div class="col-lg-12"> 
 			 		<div class="form-group">
