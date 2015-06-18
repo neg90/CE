@@ -10,7 +10,7 @@
 class controladorRol {
 
 	static function listar(){
-
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -25,7 +25,7 @@ class controladorRol {
 	}
 
 	static function listarConCartel($aviso,$tipoAviso){
-
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -107,7 +107,7 @@ class controladorRol {
 			  	$unPermiso->guardar();
 
 			  	//Recupero el último permiso creado para tomar el ID
-			  	$ultPermisoCreado=PDOPermisos::ultimoPermisoCreado()->idpermiso;
+			  	$ultPermisoCreado=$unPermiso->getIdpermiso();
 			  	$unRol = new PDORol(null,$nombre_rol,$ultPermisoCreado);
 			  	$unRol->setIdrol($idrol);
 			  	$unRol->guardar();
