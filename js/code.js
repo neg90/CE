@@ -33,10 +33,6 @@ function eliminarElemento(id,descontar){
 }
 
 
-$(document).ready(function(){
-	$(".chosen").chosen();});
-
-
 function mostrarDiv(accion){
 	
 	if(valorInput >  19 ){
