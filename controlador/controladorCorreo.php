@@ -32,27 +32,35 @@ class controladorCorreo {
 		}
 	}
 
-
-	static function enviar(){
-
+	public static function enviar(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-
 	  	if (isset($_POST['enviarCorreo'])){
 	  		//Datos del adjunto
 	  		$adjunto = $_FILES['adjunto'];
-	  		var_dump($adjunto);
-	  		/*$ruta = $adjunto['tmp_name'];
+	  		$asunto = $_POST['asunto'];
+	  		$cuerpo = $_POST['cuerpoMensaje'];
+
+	  		controladorCorreo::enviarCorreo('neg90.ng@gmail.com',$adjunto,$asunto,$cuerpo);
+
+	  		$template = $twig->loadTemplate('correo/correo.html.twig');
+			echo $template->render(array());
+	  	}else{
+	  		$template = $twig->loadTemplate('correo/correo.html.twig');
+			echo $template->render(array());
+	  	}
+	  
+	}
+
+	static function enviarCorreo($unEmail,$adjunto,$asunto,$cuerpo){
+
+	  		$ruta = $adjunto['tmp_name'];
 	  		$nombre = $adjunto['name'];
 	  		$error = $adjunto['error'];
 	  		$tamaño = $adjunto['size'];
 	  		$tipo = $adjunto['type'];
 	  		$encoding = "base64";
-
-	  		$asunto = $_POST['asunto'];
-	  		$cuerpo = $_POST['cuerpoMensaje'];
-
 
 	  		//Creacion de correo.
 	  		$mail = new PHPMailer();
@@ -65,7 +73,7 @@ class controladorCorreo {
 			$mail->Port = 587;
 
 			$mail->FromName = '';
-			$mail->addAddress('sistemas@cresta.edu.ar');    
+			$mail->addAddress($unEmail);    
 			$mail->Subject = $asunto;
 			$mail->AddAttachment($ruta,$nombre,$encoding,$tipo);
 			
@@ -73,19 +81,14 @@ class controladorCorreo {
 		    
 		    $mail->Body = $cuerpo;
 		    $mail->IsHTML(true);
-		    $mail->send();*/
+		    $mail->send();
 
 	  		
-	  	}else{
-	  		$template = $twig->loadTemplate('correo/correo.html.twig');
-			echo $template->render(array());
 	  	}
-	  
 	  	
 		
 		
 		
-	 }
 	 
 
 }
