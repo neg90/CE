@@ -55,6 +55,20 @@ class PDOcorreoempresa extends correoempresa{
       return $objeto;
    }
 
+  public static function buscarCorreosArray ($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      
+      $consulta = $conexion->prepare('SELECT * FROM correoempresa WHERE idempresa = :idempresa');
+
+      $consulta->bindParam(':idempresa',$idempresa);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetchAll();
+      
+      return $objeto;
+   }
+
    public static function borrarCorreosRelacionados($idempresa){
        try {$conexion = new conexion;}catch (PDOException $e){}
 

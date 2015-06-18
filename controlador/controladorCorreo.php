@@ -1,8 +1,8 @@
 <?php
 
-
 	require '../vendor/PHPMailer/PHPMailerAutoload.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
+	require_once '../modelo/PDO/PDOempresa.php';
 
 	
 class controladorCorreo {
@@ -40,21 +40,37 @@ class controladorCorreo {
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 	  	$empresas = $_POST['arrayIdempresa'];
 
+	  	$template = $twig->loadTemplate('correo/correo.html.twig');
+		echo $template->render(array('empresas'=>$empresas));
+
+	}
+
+	public static function enviar(){
+
 	  	if (isset($_POST['enviarCorreo'])){
-	  		//Datos del adjunto
+	  		$empresas = $_POST['arrayIdempresa'];
+	  		$limitEmpresas = count($empresas) + 1;
+
 	  		$adjunto = $_FILES['adjunto'];
 	  		$asunto = $_POST['asunto'];
 	  		$cuerpo = $_POST['cuerpoMensaje'];
 
-	  		controladorCorreo::enviarCorreo('neg90.ng@gmail.com',$adjunto,$asunto,$cuerpo);
+	  		for ($i=0; $i < $limitEmpresas ; $i++) { 
+	  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
+	  			$limitCorreos = count($unosCorreo) + 1;
+	  			for ($c=0; $c < $limitCorreos ; $c++) { 
+	  			
+	  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+	  			}
+	  			
+	  			$unaEmpresa = null;
+	  			
+	  		}
+	  		//Datos del adjunto
+	  		
 
-	  		$template = $twig->loadTemplate('correo/correo.html.twig');
-			echo $template->render(array());
-	  	}else{
-	  		$template = $twig->loadTemplate('correo/correo.html.twig');
-			echo $template->render(array('empresas'=>$empresas));
+	  	
 	  	}
-	  
 	}
 
 	static function enviarCorreo($unEmail,$adjunto,$asunto,$cuerpo){
