@@ -3,14 +3,32 @@
 {% block title %}Formulario Correo {% endblock %}
 
 {% block contenedor %}
+	<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",theme: "modern",width: 680,height: 300,
+    plugins: [
+         "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+         "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+         "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
+   ],
+   toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+   toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
+   image_advtab: true ,
+   
+   external_filemanager_path:"/filemanager/",
+   filemanager_title:"Responsive Filemanager" ,
+   external_plugins: { "filemanager" : "responsivefilemanager/tinymce/plugins/responsivefilemanager/plugin.min.js"}
+
+ });
+</script>
 	
 <form class="form-horizontal" action="privado.php?c=correo&a=enviar" role="form" method="POST" enctype="multipart/form-data">
 	
 	<div class="contenedor-formulario">
 			
-			<div class="row fila-de-alerta">
-				<div class=" col-lg-2"></div>
-				 <div class=" col-lg-8">
+		<div class="row fila-de-alerta">
+			<div class=" col-lg-2"></div>
+				<div class=" col-lg-8">
 				 	{% if aviso == 1 %}
 						<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
@@ -23,63 +41,61 @@
 	  					</div>
 	  				{% endif %}
 				 </div>
-			</div>
-			<script>
-				$("#file-3").fileinput({
-				showCaption: false,
-				browseClass: "btn btn-primary btn-lg",
-				fileType: "any"
-				});
-			</script>
-
-			<div class="row fila-de-titulo">
-				<div class=" col-lg-4"></div>
-				 <div class=" col-lg-4">
+		</div>	
+		<div class="row fila-de-titulo">
+			<div class=" col-lg-4"></div>
+				<div class=" col-lg-4">
 					<h3> Formulario Correo</h3>
-				 </div>
-			</div>
-			<div class="row aviso-completar">
-				<div class=" col-lg-3"></div>
-				<div class=" col-lg-6 col-md-6 col-sm-6 recuadro-aviso">
-					<div class="alert alert-warning">
-   	 					<strong> Los campos marcados con * deben ser completados obligatoriamente </strong>
-  					</div>
 				</div>
+		</div>
+		<div class="row aviso-completar">
+			<div class=" col-lg-3"></div>
+			<div class=" col-lg-6 col-md-6 col-sm-6 recuadro-aviso">
+				<div class="alert alert-warning">
+   	 				<strong> Los campos marcados con * deben ser completados obligatoriamente </strong>
+  				</div>
 			</div>
-			             <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
-
-			 <div class="row">
-			 	<div class="col-lg-12"> 
-			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Asunto: *</label>
-						<div class="col-lg-8 "> 
-						  <input type="text" class="form-control" name="asunto" placeholder="Asunto" required/>
-						</div>
+		</div>	            
+		<div class="row">
+			<div class="col-lg-12"> 
+			 	<div class="form-group">
+					<label class="col-lg-2 control-label">Asunto: *</label>
+					<div class="col-lg-8 "> 
+						<input type="text" class="form-control" name="asunto" placeholder="Asunto" required/>
 					</div>
 				</div>
-			  </div>
-			  <div class="row">
-			 	<div class="col-lg-12"> 
-			 		<div class="form-group">
-						<label class="col-lg-2 control-label">Msj: *</label>
-						<div class="col-lg-8 " > 
-							<div id="wmd-button-bar">
-						 		<textarea 
-						 		id="wmd-input" name="detactividad" onkeypress="return limita(event, 6000);"rows="20"cols="123">
-						 		</textarea>
-					 		</div>
-						</div>
+			</div>
+		</div>
+		<div class="row">
+			 <div class="col-lg-12"> 
+			 	<div class="form-group">
+					<label class="col-lg-2 control-label">Adjuntos: *</label>
+					<div class="col-lg-8 "> 
+						<input id="file-0a" class="file" name="adjunto" type="file" multiple data-min-file-count="1">
 					</div>
 				</div>
-			  </div>
-			 <div class="row fila-de-boton">
-			 	<div class=" col-lg-4"></div>
-			 	<div class=" col-lg-4">
-					<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarCorreo">Enviar</button>
-				</div>
-				<div class=" col-lg-4"></div>
 			</div>
-
+		</div>
+		<div class="row">
+			<div class="col-lg-12"> 
+			 	<div class="form-group">
+					<label class="col-lg-2 control-label">Msj: *</label>
+					<div class="col-lg-8 " > 
+						<div id="wmd-button-bar">
+						 	<textarea name="" onkeypress="return limita(event, 6000);"rows="20"cols="123">
+						 	</textarea>
+					 	</div>
+					</div>
+				</div>
+			</div>
+		 </div>
+		 <div class="row fila-de-boton">
+			 <div class=" col-lg-4"></div>
+			 <div class=" col-lg-4">
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarCorreo">Enviar</button>
+			</div>
+			<div class=" col-lg-4"></div>
+		  </div>
 		</div>
 	</form>
 {% endblock %}

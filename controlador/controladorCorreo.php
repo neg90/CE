@@ -34,13 +34,27 @@ class controladorCorreo {
 
 
 	static function enviar(){
+
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 	  	if (isset($_POST['enviarCorreo'])){
-	  		$path = $_FILES['uploaded_file'];
-	  		var_dump($path);
+	  		//Datos del adjunto
+	  		$adjunto = $_FILES['adjunto'];
+	  		var_dump($adjunto);
+	  		/*$ruta = $adjunto['tmp_name'];
+	  		$nombre = $adjunto['name'];
+	  		$error = $adjunto['error'];
+	  		$tamaño = $adjunto['size'];
+	  		$tipo = $adjunto['type'];
+	  		$encoding = "base64";
+
+	  		$asunto = $_POST['asunto'];
+	  		$cuerpo = $_POST['cuerpoMensaje'];
+
+
+	  		//Creacion de correo.
 	  		$mail = new PHPMailer();
 	  		$mail->isSMTP();                                      
 			$mail->Host = 'smtp.gmail.com';  
@@ -51,14 +65,15 @@ class controladorCorreo {
 			$mail->Port = 587;
 
 			$mail->FromName = '';
-			$mail->addAddress('neg90.ng@gmail.com');    
-			$mail->Subject = 'Pedido de informacion';
-			$mail->AddAttachment($path['tmp_name'], $name = "asd", $encoding = "base64",$type = "application/octet-stream");
+			$mail->addAddress('sistemas@cresta.edu.ar');    
+			$mail->Subject = $asunto;
+			$mail->AddAttachment($ruta,$nombre,$encoding,$tipo);
 			
 			
-		    $mensaje = "Probandooooo \n";
-		    $mail->Body = $mensaje;
-		    $mail->send();
+		    
+		    $mail->Body = $cuerpo;
+		    $mail->IsHTML(true);
+		    $mail->send();*/
 
 	  		
 	  	}else{
@@ -69,15 +84,6 @@ class controladorCorreo {
 	  	
 		
 		
-
-		$mail->FromName = '';
-		$mail->addAddress('neg90.ng@gmail.com');    
-		$mail->Subject = 'Pedido de informacion';
-		$mail->AddAttachment('var/www/CE/las_mejores_fotos_de_marloes_horst_159697754_1000x667.jpg', $name = "las_mejores_fotos_de_marloes_horst_159697754_1000x667", $encoding = "base64",$type = "application/octet-stream");
-		
-		
-	    $mensaje = "Enviado desde www.naveyra.com.ar \n";
-	    $mail->Body = $mensaje;
 		
 	 }
 	 
