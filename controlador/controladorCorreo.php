@@ -32,10 +32,14 @@ class controladorCorreo {
 		}
 	}
 
-	public static function enviar(){
+	public static function renderCorreo(){
+
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
+
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	$empresas = $_POST['arrayIdempresa'];
+
 	  	if (isset($_POST['enviarCorreo'])){
 	  		//Datos del adjunto
 	  		$adjunto = $_FILES['adjunto'];
@@ -48,7 +52,7 @@ class controladorCorreo {
 			echo $template->render(array());
 	  	}else{
 	  		$template = $twig->loadTemplate('correo/correo.html.twig');
-			echo $template->render(array());
+			echo $template->render(array('empresas'=>$empresas));
 	  	}
 	  
 	}
@@ -77,19 +81,11 @@ class controladorCorreo {
 			$mail->Subject = $asunto;
 			$mail->AddAttachment($ruta,$nombre,$encoding,$tipo);
 			
-			
-		    
 		    $mail->Body = $cuerpo;
 		    $mail->IsHTML(true);
 		    $mail->send();
 
-	  		
 	  	}
-	  	
-		
-		
-		
-	 
 
 }
 

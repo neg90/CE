@@ -15,10 +15,9 @@
 		   image_advtab: true ,
 		 });
 	</script>
-	
-
 <form class="form-horizontal" action="privado.php?c=correo&a=enviar" role="form" method="POST" enctype="multipart/form-data">
 	<div class="contenedor-formulario">
+		<input type="hidden" name="arrayIdempresa" value="{{empresas}}" >
 		<div class="row fila-de-alerta">
 			<div class=" col-lg-2"></div>
 				<div class=" col-lg-8">
@@ -68,8 +67,8 @@
 						<script>
 							$("#input-es").fileinput({
 							    language: "es",
-							     allowedFileExtensions: ["jpg", "png", "gif","jar","doc"],
-							     showUpload:false, 
+							    allowedFileExtensions: ["jpg", "png", "gif","jar","doc"],
+							    showUpload:false, 
 							});
 						</script>	
 					</div>
@@ -96,5 +95,5 @@
 			<div class=" col-lg-4"></div>
 		 </div>
 	</div>
-	</form>
+</form>
 {% endblock %}

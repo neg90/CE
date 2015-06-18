@@ -25,9 +25,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		if ((!empty($controlador)) and (!empty($accion))){
 			/* -------- CORREO ---------- */
 			if ($controlador=='correo') {
-				if($accion == 'enviar'){
+				if($accion == 'mostrar'){
+					controladorCorreo::renderCorreo();
+				}elseif ($accion == 'enviar') {
 					controladorCorreo::enviar();
-					
 				}
 
 			/* -------- INICIO ---------- */
