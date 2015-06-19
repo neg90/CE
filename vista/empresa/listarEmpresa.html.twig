@@ -50,9 +50,10 @@
   </thead>
   <tbody>
     {% for item in empresas %}
+     <input type="hidden" name="arrayIdempresa[]" value="{{item.idempresa}}" >
         <tr>
           <td>
-            <input type="hidden" name="arrayIdempresa[]" value="{{item.idempresa}}" >
+           
             {% autoescape 'html' %}
               {{ item.idempresa|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
             {% endautoescape %}

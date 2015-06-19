@@ -49,7 +49,7 @@ class controladorCorreo {
 
 	  	if (isset($_POST['enviarCorreo'])){
 	  		$empresas = $_POST['arrayIdempresa'];
-	  		$limitEmpresas = count($empresas) + 1;
+	  		$limitEmpresas = count($empresas);
 
 	  		$adjunto = $_FILES['adjunto'];
 	  		$asunto = $_POST['asunto'];
@@ -57,14 +57,11 @@ class controladorCorreo {
 
 	  		for ($i=0; $i < $limitEmpresas ; $i++) { 
 	  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
-	  			$limitCorreos = count($unosCorreo) + 1;
+	  			$limitCorreos = count($unosCorreo);
 	  			for ($c=0; $c < $limitCorreos ; $c++) { 
-	  			
 	  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
 	  			}
-	  			
 	  			$unaEmpresa = null;
-	  			
 	  		}
 	  		//Datos del adjunto
 	  		

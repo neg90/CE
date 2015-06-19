@@ -21,22 +21,6 @@
 			<input type="hidden" name="arrayIdempresa[]" value="{{item}}" >
 		{% endfor %}
 		
-		<div class="row fila-de-alerta">
-			<div class=" col-lg-2"></div>
-				<div class=" col-lg-8">
-				 	{% if aviso == 1 %}
-						<div class="alert alert-success alert-dismissable">
-		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>Perfecto!</strong> la operacion fue exitosa
-	  					</div>
-  					{% elseif  aviso == 2 %}
-  						<div class="alert alert-danger alert-dismissable">
-		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>Ocurrio un error!</strong> No logramos realizar la operacion
-	  					</div>
-	  				{% endif %}
-				 </div>
-		</div>	
 		<div class="row fila-de-titulo">
 			<div class=" col-lg-4"></div>
 				<div class=" col-lg-4">
