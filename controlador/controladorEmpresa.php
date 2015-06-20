@@ -207,7 +207,7 @@ class controladorEmpresa {
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 				//alta medidor
 				
-				if(( $idMedidor <>'-1') and ($idabonadoce == '-1')){
+				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}

@@ -43,7 +43,7 @@
       <th>Categoria</th>
       <th>Importe Mensual</th>
       <th>Contactos</th>
-      <th>Medidor</th>
+      <th>Medidor/Abonado</th>
       <th>Activo</th>
       <th>Controles</th>
     </tr>
@@ -106,6 +106,9 @@
           </td>
            <td>
             {% autoescape 'html' %}
+              {% if item.idabonadoce > 0 %}
+                  {{ item.idabonadoce|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+              {% else %}
                {% for i in arrayVista %}
                   {% if i['idempresa'] == item.idempresa %}
                       <li> 
@@ -116,7 +119,8 @@
                         {% endfor %}
                       </li>
                   {% endif %}  
-              {% endfor %} 
+                {% endfor %} 
+             {% endif %}
             {% endautoescape %}
           </td>
           <td class="celda-numero">
