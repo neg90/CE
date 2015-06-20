@@ -7,10 +7,10 @@ class PDOempresa extends empresa{
 	
 
 	public function __construct ($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo,
-   $cuit,$fechafundacion,$importemensual,$nrosocio){
+   $cuit,$fechafundacion,$importemensual,$nrosocio,$idabonadoce){
 
 		parent::__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo,
-      $cuit,$fechafundacion,$importemensual,$nrosocio);
+      $cuit,$fechafundacion,$importemensual,$nrosocio,$idabonadoce);
 
 	}
 
@@ -41,7 +41,7 @@ class PDOempresa extends empresa{
 
       $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (denominacion = :denominacion and 
       web = :web and idrubro = :idrubro and detactividad = :detactividad and idcategoria = :idcategoria and fechainicioce = :fechainicioce
-      and activo = :activo and cuit = :cuit and fechafundacion = :fechafundacion and importemensual = :importemensual and nrosocio = :nrosocio 
+      and activo = :activo and cuit = :cuit and importemensual = :importemensual and nrosocio = :nrosocio 
       and cantempleados = :cantempleados)');
       
          
@@ -62,8 +62,6 @@ class PDOempresa extends empresa{
       $consulta->bindParam(':activo', $this->getActivo());
 
       $consulta->bindParam(':cuit', $this->getCuit());
-
-      $consulta->bindParam(':fechafundacion', $this->getFechafundacion());
 
       $consulta->bindParam(':importemensual', $this->getImportemensual());
 
@@ -89,8 +87,8 @@ class PDOempresa extends empresa{
       if($this->getIdempresa()) /*Si tiene id entonces existe y solo lo modifico*/ {
          $consulta = $conexion->prepare('UPDATE empresa SET denominacion = :denominacion, web = :web, idrubro = :idrubro, 
          detactividad = :detactividad, idcategoria = :idcategoria, fechainicioce = :fechainicioce, activo = :activo,
-         cuit = :cuit, fechafundacion = :fechafundacion, importemensual = :importemensual, nrosocio = :nrosocio, cantempleados = :cantempleados 
-         WHERE idempresa = :idempresa');
+         cuit = :cuit, fechafundacion = :fechafundacion, importemensual = :importemensual, nrosocio = :nrosocio, cantempleados = :cantempleados, 
+         idabonadoce = :idabonadoce WHERE idempresa = :idempresa');
          
          $consulta->bindParam('idempresa',$this->getIdempresa());
 
@@ -117,14 +115,17 @@ class PDOempresa extends empresa{
          $consulta->bindParam(':importemensual', $this->getImportemensual());
 
          $consulta->bindParam(':nrosocio', $this->getNrosocio());
+
+         $consulta->bindParam(':idabonadoce', $this->getIdabonadoce());
+       
        
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          
          $consulta = $conexion->prepare('INSERT INTO empresa (denominacion, web, idrubro, detactividad, cantempleados, idcategoria, fechainicioce,
-         activo, cuit,fechafundacion, importemensual, nrosocio) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
-         :activo,:cuit,:fechafundacion,:importemensual,:nrosocio)');
+         activo, cuit,fechafundacion, importemensual, nrosocio,idabonadoce) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
+         :activo,:cuit,:fechafundacion,:importemensual,:nrosocio,:idabonadoce)');
 
          $consulta->bindParam(':denominacion', $this->getDenominacion());
 
@@ -149,6 +150,8 @@ class PDOempresa extends empresa{
          $consulta->bindParam(':importemensual', $this->getImportemensual());
 
          $consulta->bindParam(':nrosocio', $this->getNrosocio());
+
+         $consulta->bindParam(':idabonadoce', $this->getIdabonadoce());
       
          $consulta->execute();
          
@@ -186,7 +189,7 @@ class PDOempresa extends empresa{
 
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],
-      $resultado['activo'],$resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio']);
+      $resultado['activo'],$resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio'],$resultado['idabonadoce']);
 
       return $objeto;
 
@@ -204,7 +207,7 @@ class PDOempresa extends empresa{
 
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],$resultado['activo'],
-      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio']);
+      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio'],$resultado['idabonadoce']);
       
       return $objeto;
 

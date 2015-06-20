@@ -10,6 +10,7 @@
 	require_once '../modelo/PDO/PDOContacto.php';
 	require_once '../modelo/PDO/PDOmedidorempresa.php';
 	require_once '../modelo/PDO/PDOcontactoempresa.php';
+	require_once '../modelo/PDO/PDOabonado.php';
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
@@ -167,6 +168,7 @@ class controladorEmpresa {
 	  	$unosMedidores = PDOMedidor::listarMedidores();
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
+	  	$unosAbonados = PDOabonado::listar();
 		if (isset($_POST['guardarEmpresa'])){
 			$denominacion = htmlEntities($_POST['denominacion']);
 			$cantempleados = htmlEntities($_POST['cantempleados']);
@@ -179,6 +181,11 @@ class controladorEmpresa {
 			$rubroAJAX = htmlEntities($_POST['rubro']);
 			$categoriaAJAX = htmlEntities($_POST['categoria']);
 			$detactividad = htmlEntities($_POST['detactividad']);
+			$numabonado = htmlEntities($_POST['abonado']);
+			$idMedidor = htmlentities($_POST['medidor']);
+			if(( $numabonado <> '-1') && ( $idMedidor == '-1')){
+				$numabonado = htmlEntities($_POST['abonado']);
+			}
 
 			if (isset($_POST['activo'])) {
 				$activo = true;
@@ -188,23 +195,23 @@ class controladorEmpresa {
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numabonado);
 			if($unaEmpresa->validarInsertar()){
+				
 				$unaEmpresa->guardar();
 				$aviso=1;
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numabonado);
 				//alta socio
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 				//alta medidor
-				$idMedidor = htmlentities($_POST['medidor']);
-				if( $idMedidor == '-1'){
-				//ir a crear uno nuevo.
-				}else{
+				
+				if(( $idMedidor <>'-1') and ($idabonadoce == '-1')){
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
+	
 				//Alta telefonos extra
 				controladorEmpresa::laCuestionDelTelefono($unaEmpresa->getIdempresa());
 				//alta domicilios extra
@@ -216,13 +223,13 @@ class controladorEmpresa {
 			}
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
 		}
 	}
 

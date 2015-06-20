@@ -355,9 +355,11 @@ function esAbonado(valor){
 				 		<div class="form-group">
 							<label class="col-lg-2 control-label">Abonado: </label>
 							<div class="col-lg-6 "> 
-								<select class="form-control" name="medidor" id="selectAbonado">
-									<option value="-1">Seleccione</option>
-								<option value="1">Prueba</option>
+								<select class="form-control" name="abonado" id="selectAbonado">
+									<option value="-1">Abonado CE</option>
+								{% for item in abonados %}
+									<option value="{{item.numabonado}}">{{item.numabonado}}</option>
+								{% endfor %}
 								</select>
 							</div>	
 						</div>
