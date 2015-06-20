@@ -3,6 +3,28 @@
 {% block title %}Formulario Empresa {% endblock %}
 
 {% block contenedor %}
+<script>
+$(document).ready(function() {
+	$("#Medidor").css('display','none');
+	$("#Abonado").css('display','none');
+});
+function esAbonado(valor){
+	if (valor == 1){
+		$("#botonMedidor").removeClass("activoSI");
+		$("#Medidor").css('display','none');
+		$("#botonAbonado").addClass("activoSI");
+		$("#Abonado").css('display','block');
+	}
+	else {
+		$("#botonAbonado").removeClass("activoSI");
+		$("#Abonado").css('display','none');
+		$("#botonMedidor").addClass("activoSI");
+		$("#Medidor").css('display','block');
+	}
+}
+
+</script>
+
 		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=alta" role="form" method="POST">
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
@@ -295,16 +317,28 @@
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
-					<h3> Medidor Asociado </h3>
+					<h3> Contribuyente Asociado </h3>
 				 </div>
 			</div>
-			<div id="insertarMedidor">
+			<div id="esAbonado">
+				<div class="row">
+				 	<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<div class="btn-group btn-group-md" role="group" aria-label="...">
+			  						<button type="button" id="botonAbonado" class="btn btn-default" onclick="esAbonado(1)"> Abonado </button>
+			  						<button type="button" id="botonMedidor" class="btn btn-default" onclick="esAbonado(0)"> Medidor </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="Medidor">
 				<div class="row">
 				 	<div class="col-lg-6"> 
 				 		<div class="form-group">
 							<label class="col-lg-2 control-label">Medidor: </label>
 							<div class="col-lg-6 "> 
-								<select class="form-control" name="medidor" id="medidor">
+								<select class="form-control" name="medidor" id="selectMedidor">
 									<option value="-1">Medidor</option>
 								{% for item in medidores %}
 									<option value="{{item.idmedidor}}">{{item.nomyap}}</option>
@@ -313,7 +347,21 @@
 							</div>	
 						</div>
 					</div>
-				
+				</div>
+			</div>
+			<div id="Abonado">
+				<div class="row">
+				 	<div class="col-lg-6"> 
+				 		<div class="form-group">
+							<label class="col-lg-2 control-label">Abonado: </label>
+							<div class="col-lg-6 "> 
+								<select class="form-control" name="medidor" id="selectAbonado">
+									<option value="-1">Seleccione</option>
+								<option value="1">Prueba</option>
+								</select>
+							</div>	
+						</div>
+					</div>
 				</div>
 			</div>
 

@@ -1,0 +1,24 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Lista de Empresas {% endblock %}
+{% block contenedor %}
+
+  <h3 id="tituloBloque">Detalle de empresa</h3>
+  <div class="clearfix"></div>
+  <div id="bloqueInfo">
+	  <p><b>Nombre: </b> {{empresa.denominacion}} </p>
+	  <!-- <p><b>Rubro: </b> {{empresa.denominacion}} </p>-->
+	  <p><b>Detale actividad: </b> {{empresa.detactividad}} </p>
+	  <p><b>Cantidad de empleados: </b> {{empresa.denominacion}} </p>
+	  <!-- <p><b>Categoría: </b> {{empresa.denominacion}} </p>-->
+	  <p><b>Fecha de inicio C.E.: </b> {{empresa.fechainicioce}} </p>
+	  <p><b>Nro. Socio: </b> {{empresa.nrosocio}} </p>
+	  <p><b>Activo: </b> {{empresa.activo}} </p>
+	  <p><b>Importe mensual: </b> {{empresa.importemensual}} </p>
+	  <p><b>Fecha fundación: </b> {{empresa.fechafundacion}} </p>
+	  <p><b>Importe mensual: </b> {{empresa.importemensual}} </p>
+
+
+
+
+{% endblock %}
