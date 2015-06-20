@@ -39,6 +39,21 @@ class PDOcategoria extends categoria{
 
    }
 
+   public static function buscarDescripcion($id){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM categoria WHERE (id = :id)');
+        
+      $consulta->bindParam(':id', $id);
+
+      $consulta->execute();
+
+      $resultado = $consulta->fetch();
+      
+      return $resultado;
+
+   }
+
 	public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       

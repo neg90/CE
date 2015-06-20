@@ -102,7 +102,7 @@ class PDOcontacto extends contacto{
      
       $objeto = new PDOcontacto($resultado['idcontacto'],$resultado['nombre'],$resultado['apellido'],$resultado['telefono'],
       $resultado['domicilio'],$resultado['correo'],$resultado['asociadosm'],$resultado['tipodocumento'],$resultado['documento']);
-      
+
       return $objeto;
 
    }

@@ -25,21 +25,35 @@ class controladorEmpresa {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		$categorias = PDOcategoria::listar();
 		$empresa = PDOempresa::buscarEmpresa($idempresa);
-		$rubros = PDOrubro::listar();
-		$contactos = PDOContacto::listar();
-		$medidores = PDOMedidor::listarMedidores();
+		$categoria = PDOcategoria::buscarDescripcion($empresa->getIdcategoria());
+		$rubro = PDOrubro::buscarDescripcion($empresa->getIdrubro());
 
-		$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
-		$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresa->getIdempresa());
-		$arrayUnario = array('idempresa'=>$empresa->getIdempresa(),'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
-	
+		$contactoempresa = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
+		$contactosTodos = PDOcontacto::listar();
 
+		for ($ct=0; $ct<count($contactosTodos);$ct++){
+			if (PDOcontactoempresa::buscarContactoId($contactosTodos[$ct]->idcontacto)){
+						$contactos[$ct] = PDOcontacto::buscarContacto($contactosTodos[$ct]->idcontacto);
+			}
+		}
+
+		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
+		$medidoresTodos = PDOMedidor::listarMedidores();
+
+		for ($me=0; $me<count($medidoresempresa);$me++){
+			for ($mt=0; $mt<count($medidoresTodos);$mt++){
+				if ($medidoresTodos[$mt]->idmedidor == $medidoresempresa[$me]->idmedidor){
+					$medidores[$me] = PDOMedidor::medidorPorID($mt);
+				}
+			}
+		}
+
+		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
 
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
-		echo $template->render(array('empresa'=>$empresa,'rubros'=>$rubros,'categorias'=>$categorias,
-			'contactos'=>$contactos,'medidores'=>$medidores, 'arrayUnario'=>$arrayUnario));
+		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
+			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos));
 	}
 
 	public static function listar(){
