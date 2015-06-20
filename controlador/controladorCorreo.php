@@ -58,15 +58,12 @@ class controladorCorreo {
 	  		for ($i=0; $i < $limitEmpresas ; $i++) { 
 	  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
 	  			$limitCorreos = count($unosCorreo);
-	  			for ($c=0; $c < $limitCorreos ; $c++) { 
+	  			for ($c=0; $c < $limitCorreos ; $c++){ 
 	  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
 	  			}
 	  			$unaEmpresa = null;
 	  		}
 	  		//Datos del adjunto
-	  		
-
-	  	
 	  	}
 	}
 

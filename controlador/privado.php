@@ -7,6 +7,7 @@ require_once 'usuario.php';
 require_once 'controladorRol.php';
 require_once 'controladorMedidor.php';
 require_once 'controladorCorreo.php';
+require_once 'controladorAbonado.php';
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -38,6 +39,17 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					echo $template->render(array('user'=>$user));
 				}
 
+			/* -------- ABONADO ---------- */
+			}elseif ($controlador == 'abonado') {
+				if($accion == 'alta'){
+					controladorAbonado::alta();
+				}elseif ($accion == 'modificar') {
+					controladorAbonado::modificar();
+				}elseif ($accion == 'baja') {
+					controladorAbonado::baja();
+				}elseif ($accion == 'listar') {
+					controladorAbonado::listar();
+				}
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
 				if($accion == 'alta'){
