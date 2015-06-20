@@ -20,6 +20,28 @@
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
 
+	public static function detalle($idempresa){
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		$categorias = PDOcategoria::listar();
+		$empresa = PDOempresa::buscarEmpresa($idempresa);
+		$rubros = PDOrubro::listar();
+		$contactos = PDOContacto::listar();
+		$medidores = PDOMedidor::listarMedidores();
+
+		$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
+		$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresa->getIdempresa());
+		$arrayUnario = array('idempresa'=>$empresa->getIdempresa(),'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
+	
+
+
+		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
+		echo $template->render(array('empresa'=>$empresa,'rubros'=>$rubros,'categorias'=>$categorias,
+			'contactos'=>$contactos,'medidores'=>$medidores, 'arrayUnario'=>$arrayUnario));
+	}
+
 	public static function listar(){
 
 		Twig_Autoloader::register();

@@ -103,6 +103,11 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorEmpresa::baja();
 				}elseif($accion == 'listar'){
 					controladorEmpresa::listar();
+				}elseif($accion == 'detalle'){
+					if (!empty($_POST['id'])){
+						$idempresa=htmlEntities($_POST['id']);
+						controladorEmpresa::detalle($idempresa);
+					}
 				}elseif($accion == 'modificarContactos'){
 					controladorEmpresa::modificarContactos();
 				}elseif ($accion == 'modificarTelefonos') {
