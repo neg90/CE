@@ -175,19 +175,22 @@
 			</div>
 			<div class="row">
 				<label class="control-label">Esta empresa tiene como contribuyente actual a:</label>
-			</div>
+			</div>	
 			<div class="row">
 				<div class="col-lg-7"> 
-			 		<div class="form-group">	
-			 			{% if unaEmpresa.idabonadoce > 0 %}
-			 				<label class=" control-label">Abonado CE numero: {{unaEmpresa.idabonadoce}} </label>
-			 			{% else %}
+			 		<div class="form-group">
+			 				{% for item in abonados %}
+				 				{% if item.numabonado == abonadoRelacionado.numabonado %}
+									<label class=" control-label">El de abonado CE numero: {{item.numabonado}}</label>
+									{% set esEsta = 2 %}	
+								{% endif %}
+							{% endfor %}
+			 			
 				 			{% for item in medidores %}
 				 				{% if item.idmedidor == medidorRelacionado.idmedidor %}
 									<label class=" control-label">Titular del medidor : {{item.nomyap}}</label>
 								{% endif %}
 							{% endfor %}
-						{% endif %}
 					</div>
 				</div>
 			</div>

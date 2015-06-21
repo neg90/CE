@@ -69,7 +69,6 @@ class controladorEmpresa {
 		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
-		var_dump($abonados);
 
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
@@ -334,17 +333,21 @@ class controladorEmpresa {
 				
 				//Agrego el nuevo o el mismo :/
 				if( $idMedidor <> '-1'){
+					//en caso de que anteriormente tengamos un abonado lo fleto
+					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
+					//en caso de que anteriormente tengoamos un medidor lo fleto.
 					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
-			
 					$unMedidor->guardar(); 
 				}
 
 				if( $numabonado <> '-1'){
+					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
-					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
-					$unMedidor->guardar(); 
-					
+					//en caso de que anteriormente tengoamos un medidor lo fleto.
+					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
+					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa());
+					$unAbonado->guardar();
 				}
 
 				$unaEmpresa->guardar();
