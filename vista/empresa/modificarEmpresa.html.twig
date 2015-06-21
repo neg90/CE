@@ -167,34 +167,87 @@
 					<label class="col-lg-8">¿Activo? </label>
 				</div>
 			</div>
-		
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
-					<h3> Medidor Asociado </h3>
+					<h3> Contribuyente Asociado </h3>
 				 </div>
 			</div>
-			<div id="insertarMedidor">
-				<div class="row">
-				 	<div class="col-lg-6"> 
-				 		<div class="form-group">
-							<label class="col-lg-2 control-label">Medidor: </label>
-							<div class="col-lg-6 "> 
-								<select class="form-control" name="medidor" id="medidor">
-									<option value="-1">Medidor</option>
-								{% for item in medidores %}
-									{% if item.idmedidor == medidorRelacionado.idmedidor %}
-										<option value="{{item.idmedidor}}" selected>{{item.nomyap}}</option>
-									{% else %}
-										<option value="{{item.idmedidor}}" >{{item.nomyap}}</option>
-									{% endif %}
-								{% endfor %}
-								</select>
-							</div>	
+			<div class="row">
+				<label class="control-label">Esta empresa tiene como contribuyente actual a:</label>
+			</div>
+			<div class="row">
+				<div class="col-lg-7"> 
+			 		<div class="form-group">	
+			 			{% if unaEmpresa.idabonadoce > 0 %}
+			 				<label class=" control-label">Abonado CE numero: {{unaEmpresa.idabonadoce}} </label>
+			 			{% else %}
+				 			{% for item in medidores %}
+				 				{% if item.idmedidor == medidorRelacionado.idmedidor %}
+									<label class=" control-label">Titular del medidor : {{item.nomyap}}</label>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group">
+					<label class="control-label">Modificar contribuyente:</label>
+				</div>
+			</div>
+			<div class="row">
+				<div  id="esAbonado">
+					 <div class="col-lg-6"> 
+					 	<div class="form-group">
+							<div class="btn-group btn-group-md" role="group" aria-label="...">
+				  				<button type="button" id="botonAbonado" class="btn btn-default" onclick="esAbonado(1)"> Abonado </button>
+				  				<button type="button" id="botonMedidor" class="btn btn-default" onclick="esAbonado(0)"> Medidor </button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div id="Medidor">
+					<div class="row">
+					 	<div class="col-lg-6"> 
+					 		<div class="form-group">
+								<label class="col-lg-2 control-label">Medidor: </label>
+								<div class="col-lg-6 "> 
+									<select class="form-control" name="medidor" id="selectMedidor">
+										<option value="-1">Medidor</option>
+									{% for item in medidores %}
+										<option value="{{item.idmedidor}}">{{item.nomyap}}</option>
+									{% endfor %}
+									</select>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div id="Abonado">
+					<div class="row">
+						 <div class="col-lg-6"> 
+						 		<div class="form-group">
+									<label class="col-lg-2 control-label">Abonado: </label>
+								<div class="col-lg-6 "> 
+									<select class="form-control" name="abonado" id="selectAbonado">
+										<option value="-1">Abonado CE</option>
+									{% for item in abonados %}
+										<option value="{{item.numabonado}}">{{item.numabonado}}</option>
+									{% endfor %}
+									</select>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-2">

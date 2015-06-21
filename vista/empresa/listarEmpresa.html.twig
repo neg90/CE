@@ -43,7 +43,8 @@
       <th>Categoria</th>
       <th>Importe Mensual</th>
       <th>Contactos</th>
-      <th>Medidor/Abonado</th>
+      <th>Medidor</th>
+      <th>Abonado</th>
       <th>Activo</th>
       <th>Controles</th>
     </tr>
@@ -105,24 +106,33 @@
             {% endautoescape %}
           </td>
            <td>
-            {% autoescape 'html' %}
-              {% if item.idabonadoce > 0 %}
-                  {{ item.idabonadoce|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-              {% else %}
+            {% autoescape 'html' %} 
+          
                {% for i in arrayVista %}
                   {% if i['idempresa'] == item.idempresa %}
-                      <li> 
                         {% for mNom in medidores %}
                           {% if mNom.idmedidor == i['medidor'].idmedidor %}
-                            {{ mNom.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                              <li> {{ mNom.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</li>
                           {% endif %}
                         {% endfor %}
-                      </li>
                   {% endif %}  
                 {% endfor %} 
-             {% endif %}
+              
             {% endautoescape %}
           </td>
+          <td>
+            {% for i in arrayVista %}
+              {% if i['idempresa'] == item.idempresa %}
+                <li> 
+                  {% for mAbon in abonados %}
+                    {% if mAbon.numabonado == i['abonado'].numabonado %}
+                      {{ mAbon.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                    {% endif %}
+                  {% endfor %}
+                </li>
+              {% endif %}  
+            {% endfor %} 
+           </td>
           <td class="celda-numero">
             
               {% if item.activo == 1 %}

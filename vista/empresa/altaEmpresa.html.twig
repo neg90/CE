@@ -3,27 +3,7 @@
 {% block title %}Formulario Empresa {% endblock %}
 
 {% block contenedor %}
-<script>
-$(document).ready(function() {
-	$("#Medidor").css('display','none');
-	$("#Abonado").css('display','none');
-});
-function esAbonado(valor){
-	if (valor == 1){
-		$("#botonMedidor").removeClass("activoSI");
-		$("#Medidor").css('display','none');
-		$("#botonAbonado").addClass("activoSI");
-		$("#Abonado").css('display','block');
-	}
-	else {
-		$("#botonAbonado").removeClass("activoSI");
-		$("#Abonado").css('display','none');
-		$("#botonMedidor").addClass("activoSI");
-		$("#Medidor").css('display','block');
-	}
-}
 
-</script>
 
 		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=alta" role="form" method="POST">
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
@@ -57,6 +37,8 @@ function esAbonado(valor){
 				 <div class=" col-lg-4">
 					<h3> Formulario Empresa</h3>
 				 </div>
+			</div>
+		
 			</div>
 			<div class="row">
 			 	<div class="col-lg-6"> 
@@ -194,7 +176,7 @@ function esAbonado(valor){
 					</div>
 				</div>
 			</div>
-			</div>
+			
 			<div id="insertarDomicilio">
 				<div class="row">
 					 <div class="col-lg-6"> 
@@ -242,14 +224,6 @@ function esAbonado(valor){
 					</div>
 				</div>
 			</div>
-			{% if modo == 'modificar' %}
-				<div class="row">	
-				 	<div class=" col-lg-6">
-						<input class="col-lg-2" type="checkbox" name="activo"> 
-						<label class="col-lg-8">¿Activo? </label>
-					</div>
-				 </div>
-			{% endif %}
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">

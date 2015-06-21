@@ -12,6 +12,7 @@
 	require_once '../modelo/PDO/PDOcontactoempresa.php';
 	require_once '../modelo/PDO/PDOabonado.php';
 	require_once '../modelo/PDO/PDOMedidor.php';
+	require_once '../modelo/PDO/PDOabonadoempresa.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
@@ -67,21 +68,63 @@ class controladorEmpresa {
 		$rubros = PDOrubro::listar();
 		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
+		$abonados = PDOabonado::listar();
+		var_dump($abonados);
 
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
 		for ($i=0; $i < $totalEmpresas   ; $i++) { 
 			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
 			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
-			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
+			$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresas[$i]->idempresa);
+			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
 			$arrayVista[$i] = $arrayUnario;
 		}
-	
+		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista));
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados));
 
 	}
+
+	public function baja(){
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		
+	  	$idempresa = htmlentities($_POST['idempresa']);
+		
+		if(PDOempresa::buscarEmpresa($idempresa)){
+			PDOempresa::baja($idempresa);
+			$aviso = 1;
+		}else{
+			$aviso = 2;
+		}
+
+		$categorias = PDOcategoria::listar();
+		$empresas = PDOempresa::listar();
+		$rubros = PDOrubro::listar();
+		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
+		$contactos = PDOContacto::listar();
+		$abonados = PDOabonado::listar();
+
+		$medidores = PDOMedidor::listarMedidores();
+		$arrayVista[0] = '';
+		for ($i=0; $i < $totalEmpresas  ; $i++) { 
+			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
+			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
+			$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresas[$i]->idempresa);
+			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
+			$arrayVista[$i] = $arrayUnario;
+		}
+		
+		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
+		echo $template->render(array('idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados));
+
+
+   }
 
 	private static function laCuestionDelTelefono ($idempresa){
 		for ($i=0; $i < 13; $i++) { 
@@ -183,9 +226,7 @@ class controladorEmpresa {
 			$detactividad = htmlEntities($_POST['detactividad']);
 			$numabonado = htmlEntities($_POST['abonado']);
 			$idMedidor = htmlentities($_POST['medidor']);
-			if(( $numabonado <> '-1') && ( $idMedidor == '-1')){
-				$numabonado = htmlEntities($_POST['abonado']);
-			}
+			
 
 			if (isset($_POST['activo'])) {
 				$activo = true;
@@ -195,16 +236,22 @@ class controladorEmpresa {
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numabonado);
+			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
 			if($unaEmpresa->validarInsertar()){
 				
 				$unaEmpresa->guardar();
 				$aviso=1;
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numabonado);
+				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
 				//alta socio
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
+				//alta abonado
+				if(( $numabonado <> '-1') && ( $idMedidor == '-1')){
+					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa()	);
+					$unAbonado->guardar();
+					//$numabonado = htmlEntities($_POST['abonado']);
+				}
 				//alta medidor
 				
 				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
@@ -245,6 +292,8 @@ class controladorEmpresa {
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
 	  	$medidorRelacionado = PDOmedidorempresa::buscarMedidorRelacionados($idempresa);
+	  	$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($idempresa);
+	  	$unosAbonados = PDOabonado::listar();
 
 		if (isset($_POST['guardarEmpresa'])){
 
@@ -260,6 +309,8 @@ class controladorEmpresa {
 				$rubroAJAX = htmlEntities($_POST['rubro']);
 				$categoriaAJAX = htmlEntities($_POST['categoria']);
 				$detactividad = htmlEntities($_POST['detactividad']);
+				$numabonado = htmlEntities($_POST['abonado']);
+				$idMedidor = htmlentities($_POST['medidor']);
 
 				if (isset($_POST['activo'])) {
 					$activo = true;
@@ -279,37 +330,45 @@ class controladorEmpresa {
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);
-				$unaEmpresa->guardar();
 
-				$idMedidor = htmlentities($_POST['medidor']);
-				//Borro el medidor actual.
-				PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
+				
 				//Agrego el nuevo o el mismo :/
-				if( $idMedidor == '-1'){
-					//ir a crear uno nuevo.
-				}else{
+				if( $idMedidor <> '-1'){
+					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
+			
 					$unMedidor->guardar(); 
 				}
+
+				if( $numabonado <> '-1'){
+					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
+					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
+					$unMedidor->guardar(); 
+					
+				}
+
+				$unaEmpresa->guardar();
 				$aviso=1;
-				//Busco de neuvo la empresa actualizada.
+				//Busco de nuevo la empresa actualizada.
 				$medidorRelacionado = PDOmedidorempresa::buscarMedidorRelacionados($idempresa);
+				$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($idempresa);
 				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 				$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 				echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado));
+				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado,
+				'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado));
 
 			}else{
 				//No se encontro la empresa para modificar
 				$aviso = 3;
 			}
 		}else{
-			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$aviso=0;
 			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 			echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado
+			,'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado));
 		}
 		
 	}
@@ -410,43 +469,6 @@ class controladorEmpresa {
 
 	  	}
 	}
-		
-	public function baja(){
-
-		Twig_Autoloader::register();
-	  	$loader = new Twig_Loader_Filesystem('../vista');
-	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		
-	  	$idempresa = htmlentities($_POST['idempresa']);
-		
-		if(PDOempresa::buscarEmpresa($idempresa)){
-			PDOempresa::baja($idempresa);
-			$aviso = 1;
-		}else{
-			$aviso = 2;
-		}
-
-		$categorias = PDOcategoria::listar();
-		$empresas = PDOempresa::listar();
-		$rubros = PDOrubro::listar();
-		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
-		$contactos = PDOContacto::listar();
-
-		$medidores = PDOMedidor::listarMedidores();
-		$arrayVista[0] = '';
-		for ($i=0; $i < $totalEmpresas  ; $i++) { 
-			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
-			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
-			$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa);
-			$arrayVista[$i] = $arrayUnario;
-		}
-		
-		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista));
-
-
-   }
 
 }
 ?>

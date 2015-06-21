@@ -32,6 +32,26 @@ function eliminarElemento(id,descontar){
 	}
 }
 
+$(document).ready(function() {
+	$("#Medidor").css('display','none');
+	$("#Abonado").css('display','none');
+});
+
+function esAbonado(valor){
+	if (valor == 1){
+		$("#botonMedidor").removeClass("activoSI");
+		$("#Medidor").css('display','none');
+		$("#botonAbonado").addClass("activoSI");
+		$("#Abonado").css('display','block');
+	}
+	else {
+		$("#botonAbonado").removeClass("activoSI");
+		$("#Abonado").css('display','none');
+		$("#botonMedidor").addClass("activoSI");
+		$("#Medidor").css('display','block');
+	}
+}
+
 
 function mostrarDiv(accion){
 	

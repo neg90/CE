@@ -15,10 +15,9 @@ class empresa {
 	private $cuit;
 	private $fechafundacion;
 	private $importemensual;
-	private $idabonadoce;
 
 	public function	__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,
-	$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$idabonadoce) {
+	$activo,$cuit,$fechafundacion,$importemensual,$nrosocio) {
 	
 		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
@@ -33,16 +32,7 @@ class empresa {
 		$this->fechafundacion = $fechafundacion;
 		$this->importemensual = $importemensual;
 		$this->nrosocio = $nrosocio;
-		$this->idabonadoce = $idabonadoce;
-	
-	}
-	
-	public function getIdabonadoce(){
-		return $this->idabonadoce;
-	}
 
-	public function setIdabonadoce($idabonadoce){
-		$this->idabonadoce = $idabonadoce;
 	}
 
 	public function getIdempresa(){
