@@ -342,7 +342,18 @@
 			</div>
 
 			<div class="row fila-de-boton">
-			 	<div class=" col-lg-4"></div>
+			 	<div class=" col-lg-2"></div>
+			 	<!--Crear abonado -->
+			 	<div class=" col-lg-2">
+		            <form method="post" action="privado.php?c=empresa&a=alta" id="nuevoAbonado">
+		              <input type="hidden" value="nuevoAbonado" name="redireccion">
+		              <a href="javascript:{}" onclick="if(confirm('¿Desea crear un nuevo abonado?')){document.getElementById('nuevoAbonado').submit();}">
+		               <button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono">
+							Nuevo Abonado
+						</button>
+		              </a>
+		            </form> 
+		        </div>
 			 	<div class=" col-lg-2">
 					<a href="privado.php?c=empresa&a=listar">
 						<button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono">
@@ -353,8 +364,20 @@
 			 	<div class=" col-lg-2">
 					<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="guardarEmpresa">Guardar</button>
 				</div>
+				<!--Crear Medidor-->
+				<div class=" col-lg-2">
+		            <form method="post" action="privado.php?c=contacto&a=baja" id="bajaContacto{{item.idcontacto}}">
+		              <input type="hidden" value="{{item.idcontacto}}" name="idcontacto">
+		              <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaContacto{{item.idcontacto}}').submit();}">
+		               <button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="nuevoTelefono">
+							Nuevo medidor
+						</button>
+		              </a>
+		            </form> 
+		        </div>
+		       
+				<div class=" col-lg-2"></div>
 				
-				<div class=" col-lg-4"></div>
 			</div>
 
 

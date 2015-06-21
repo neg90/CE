@@ -22,7 +22,6 @@ class PDOabonado extends abonado{
          $consulta->bindParam(':fechadeultimopago', $this->getFechadeultimopago());
          $consulta->bindParam(':activo', $this->getActivo());
          $consulta->bindParam(':numabonado', $this->getNumabonado());
-
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
@@ -33,12 +32,12 @@ class PDOabonado extends abonado{
          $consulta->bindParam(':importe', $this->getImporte());
          $consulta->bindParam(':fechadeultimopago', $this->getFechadeultimopago());
          $consulta->bindParam(':activo', $this->getActivo());
-         
+        
 
          $consulta->execute();
+         return $conexion->lastInsertId();
          
       }
-
       $conexion = null;
    }
 

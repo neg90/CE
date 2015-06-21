@@ -142,6 +142,20 @@
               {% endif %}
           </td>
           <td class="controles">
+            <!-- nuevo abonado -->
+            <form method="post" action="privado.php?c=abonado&a=alta" id="altaAbonado{{item.idempresa}}">
+                <input type="hidden" value="{{item.idempresa}}" name="cargarAbonado">
+                <a href="javascript:{}" onclick="document.getElementById('altaAbonado{{item.idempresa}}').submit(); return false;">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </a>
+            </form>
+            <!-- nuevo medidor -->
+            <form method="post" action="privado.php?c=medidor&a=alta" id="altaMedidor{{item.idempresa}}">
+                <input type="hidden" value="{{item.idempresa}}" name="idempresa">
+                <a href="javascript:{}" onclick="document.getElementById('altaMedidor{{item.idempresa}}').submit(); return false;">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </a>
+            </form>
             <!-- Ver empresa -->
             <form method="post" action="privado.php?c=empresa&a=detalle" id="verEmpresa{{item.idempresa}}">
                 <input type="hidden" value="{{item.idempresa}}" name="id">

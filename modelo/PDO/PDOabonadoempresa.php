@@ -30,8 +30,10 @@ class PDOabonadoempresa extends abonadoempresa{
          $consulta->bindParam(':idempresa', $this->getIdempresa());
        
          $consulta->execute();
+
          
       }
+   
 
       $conexion = null;
    }

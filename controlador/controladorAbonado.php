@@ -3,6 +3,7 @@
 	require_once '../modelo/conexionDB.php';
 	require_once '../modelo/PDO/PDOabonado.php';
 	require_once '../modelo/PDO/PDOempresa.php';
+	require_once '../modelo/PDO/PDOabonadoempresa.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
@@ -16,29 +17,34 @@ class controladorAbonado {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-
 		
-		if (isset($_POST['guardarAbonado'])){
+		if (isset($_POST['cargarAbonado'])) {
+			$vieneEmpresa = $_POST['cargarAbonado'];
+		}
+		if (isset($_POST['guardarAbonado'])) {
 			$aviso=2;
+
 			$fechadeultimopago = htmlEntities($_POST['fechadeultimopago']);
 			$importe = htmlEntities($_POST['importe']);
 			$activo = true;
 			$unAbonado = new PDOabonado(0,$importe,$fechadeultimopago,$activo);
 
 			if ($unAbonado->validarInsertar()){
-				$unAbonado->guardar();
+				$untimoID = $unAbonado->guardar();
+				$relacion = new PDOabonadoempresa(0,$untimoID,$vieneEmpresa);
+				$relacion->guardar();
 				$aviso=1;
 			}else{
 				$aviso=2;
 			}
 			
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso));
+			echo $template->render(array('aviso'=>$aviso,'cargarAbonado'=>$vieneEmpresa));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso));
+			echo $template->render(array('aviso'=>$aviso,'cargarAbonado'=>$vieneEmpresa));
 		}
 	}
 
