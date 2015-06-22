@@ -90,7 +90,7 @@ class PDOcontacto extends contacto{
       $conexion = null;
    }
 
-   public function buscarContacto ($idcontacto){
+   public static  function buscarContacto ($idcontacto){
       try {$conexion = new conexion;}catch (PDOException $e){} 
       $consulta = $conexion->prepare('SELECT * FROM contacto WHERE (idcontacto = :idcontacto)');
       

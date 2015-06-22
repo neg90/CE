@@ -43,19 +43,19 @@ class controladorEmpresa {
 		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
 		$medidoresTodos = PDOMedidor::listarMedidores();
 
-		for ($me=0; $me<count($medidoresempresa);$me++){
-			for ($mt=0; $mt<count($medidoresTodos);$mt++){
-				if ($medidoresTodos[$mt]->idmedidor == $medidoresempresa[$me]->idmedidor){
-					$medidores[$me] = PDOMedidor::medidorPorID($mt);
-				}
+		for ($mt=0; $mt<count($medidoresTodos);$mt++){
+			if (PDOmedidorempresa::buscarMedidorId($medidoresTodos[$mt]->idmedidor)){
+						$medidores[$mt] = PDOMedidor::medidorPorID($medidoresTodos[$mt]->idmedidor);
 			}
 		}
 
+		$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());
+		$domicilios = PDOdomicilioempresa::buscarDomicilios($empresa->getIdempresa());
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
 
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
-			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos));
+			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios));
 	}
 
 	public static function listar(){

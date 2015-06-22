@@ -191,7 +191,7 @@ class PDOempresa extends empresa{
 
    }
 
-   public function buscarEmpresa ($idempresa){
+   public static function buscarEmpresa ($idempresa){
       try {$conexion = new conexion;}catch (PDOException $e){} 
       $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (idempresa = :idempresa)');
       
