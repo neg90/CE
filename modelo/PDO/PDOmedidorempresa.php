@@ -12,6 +12,16 @@ class PDOmedidorempresa extends medidorempresa{
 	
 	}
 
+    public static function listar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM medidorempresa');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   
+   }
+
    public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       

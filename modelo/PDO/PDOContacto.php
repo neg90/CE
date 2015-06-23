@@ -84,7 +84,7 @@ class PDOcontacto extends contacto{
          $consulta->bindParam(':documento', $this->getDocumento());
 
          $consulta->execute();
-         
+         return $conexion->lastInsertId();
       }
 
       $conexion = null;

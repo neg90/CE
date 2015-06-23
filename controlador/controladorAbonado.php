@@ -37,13 +37,30 @@ class controladorAbonado {
 			
 			//en un futuro no muy lejano deberia llevarlo al listado mostrando solo este y 
 			//con un aviso de que se cargo correctamente,minimamente que se cargo correctamente
-			header('Location:privado.php?c=abonado&a=listar');
+			header('Location:privado.php?c=abonado&a=eleccion&id='.$idempresa);
 
 		}elseif ($untimoID == null) {
 			$aviso=0;
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'idempresa'=>$idempresa));
 		}
+	}
+
+	public static function eleccion($idempresa){
+		
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+
+	  	if (isset($_POST['nuevoSocio'])) {
+
+	  		header('Location:privado.php?c=contacto&a=altaconid&id='.$idempresa);	
+
+	  	}
+
+	  	$template = $twig->loadTemplate('abonado/eleccion.html.twig');
+		echo $template->render(array('idempresa'=>$idempresa));
 	}
 
 	static function modificar(){
@@ -112,7 +129,7 @@ class controladorAbonado {
 		
 		$empresas = PDOempresa::listar();
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas,'relacion'=>$arayVista));
+		echo $template->render(array('user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas,'relacion'=>$arayVista	));
 
 	}
 	

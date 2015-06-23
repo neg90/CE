@@ -54,6 +54,11 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorAbonado::baja();
 				}elseif ($accion == 'listar') {
 					controladorAbonado::listar();
+				}elseif ($accion == 'eleccion'){
+					if (isset($_GET['id'])) {
+						$id=htmlEntities(@$_GET['id']); 
+						controladorAbonado::eleccion($id);
+					}
 				}
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
@@ -85,6 +90,11 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorContacto::pdfContacto($datosPDF);
 					}
 					else {header('Location:privado.php?c=contacto&a=listar');} //Si no vienen por post, arafue!
+				}elseif ($accion == 'altaconid') {
+					if (isset($_GET['id'])) {
+						$id=htmlEntities(@$_GET['id']); 
+						controladorContacto::altaconid($id);
+					}
 				}
 
 			/* -------- ROLES ---------- */

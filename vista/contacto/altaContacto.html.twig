@@ -7,8 +7,13 @@
 		<form class="form-horizontal" action="privado.php?c=contacto&a=alta" role="form" method="POST">
 	{% elseif modo == 'modificar' %}
 		<form class="form-horizontal" action="privado.php?c=contacto&a=modificar" role="form" method="POST">
+	{% elseif modo == 'altaconid' %}
+		<form class="form-horizontal" action="privado.php?c=contacto&a=altaconid&id={{idempresa}}" role="form" method="POST">
 	{% endif %}
 		<input type="hidden" name="idcontacto" value="{{idcontacto}}">
+		{% if modo == 'altaconid' %}
+			<input type="hidden" name="idempresa" value="{{idempresa}}">
+		{% endif %}
 		<div class="contenedor-formulario">
 			<h5 id="referenciasRol"><span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>Referencias <small>[ SM = Swiss Medical ]</small></h5>
 			<div class="row fila-de-alerta">
@@ -95,14 +100,17 @@
 						</div>
 					</div>
 				</div>
-			 	<div class=" col-lg-6">
-				    <div class="form-group">
-						<label class="col-lg-2 control-label">Empresa:* </label>
-						<div class="col-lg-6 "> 
-							<select class="form-control" name="empresa"></select>
+				{% if modo == 'altaconid' %}
+				 	<div class=" col-lg-6">
+					    <div class="form-group">
+							<label class="col-lg-2 control-label">Relacion: </label>
+							<div class="col-lg-6 "> 
+								<input type="text" class="form-control" name="relacion" placeholder="Empleado" 
+							  patter="[a-zA-Z].{2,}" />
+							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 			 </div>
 			 <div class="row">	
 			 	<div class=" col-lg-6">
@@ -121,15 +129,7 @@
 						 </div>
 					</div>
 				</div>
-				<div class=" col-lg-6">
-				    <div class="form-group">
-						<label class="col-lg-2 control-label">Relacion: </label>
-						<div class="col-lg-6 "> 
-							<input type="text" class="form-control" name="relacion" placeholder="Empleado" 
-						  patter="[a-zA-Z].{2,}" />
-						</div>
-					</div>
-				</div>
+				
 			    
 			 </div>
 			 <div class="row">

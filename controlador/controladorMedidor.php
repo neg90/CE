@@ -27,15 +27,21 @@ class controladorMedidor {
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
-			$twig = new Twig_Environment($loader, array(
-			//'cache' => '../cache','
-			'debug' => 'false'
-			));
+			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 			$ListaMedidores=PDOMedidor::listarMedidores();
 
+			$medidoresempresa = PDOmedidorempresa::listar();
+
+			$arayVista = '';
+			for ($i=0; $i < count($medidoresempresa); $i++) { 
+				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
+				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
+				$arayVista[$i] = $arrayUnario;
+			}
+
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores));	
+			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
 	}
 
 		static function Filtros($tipoFiltro,$datoFiltro){
