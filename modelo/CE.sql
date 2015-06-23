@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 20-06-2015 a las 08:28:13
+-- Tiempo de generación: 23-06-2015 a las 10:14:17
 -- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
 -- Versión de PHP: 5.5.9-1ubuntu4.9
 
@@ -32,14 +32,22 @@ CREATE TABLE IF NOT EXISTS `abonado` (
   `activo` tinyint(1) NOT NULL,
   `numabonado` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`numabonado`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+
+-- --------------------------------------------------------
 
 --
--- Volcado de datos para la tabla `abonado`
+-- Estructura de tabla para la tabla `abonadoempresa`
 --
 
-INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) VALUES
-(2, '2015-06-02', 1, 10);
+CREATE TABLE IF NOT EXISTS `abonadoempresa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idempresa` int(11) NOT NULL,
+  `numabonado` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `numabonado` (`numabonado`),
+  KEY `idempresa` (`idempresa`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 -- --------------------------------------------------------
 
@@ -90,14 +98,15 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   `tipodocumento` varchar(4) NOT NULL,
   `documento` varchar(100) NOT NULL,
   PRIMARY KEY (`idcontacto`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=156 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=164 ;
 
 --
 -- Volcado de datos para la tabla `contacto`
 --
 
 INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicilio`, `correo`, `asociadosm`, `activo`, `tipodocumento`, `documento`) VALUES
-(153, 'Nelson', 'Nisman', '(011) 15-3858-7990', 'Moreno 8567', 'neg90@hotmail.com', 0, 1, 'DU', '3541424');
+(162, 'Fer', 'Nisman', '(011) 15-3858-7990', 'Moreno 8567', 'financiera.naveyra@gmail.com', 0, 1, 'DU', '35414241'),
+(163, 'Nelson', 'Nisman', '(011) 15-3858-7990', 'Moreno 856', 'neg90@hotmail.com', 0, 1, 'DU', '123213132123');
 
 -- --------------------------------------------------------
 
@@ -113,14 +122,15 @@ CREATE TABLE IF NOT EXISTS `contactoempresa` (
   PRIMARY KEY (`id`),
   KEY `idcontacto` (`idcontacto`),
   KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1080 ;
 
 --
 -- Volcado de datos para la tabla `contactoempresa`
 --
 
 INSERT INTO `contactoempresa` (`id`, `idcontacto`, `idempresa`, `relacion`) VALUES
-(22, 153, 67, '');
+(1078, 162, 118, 'Roaming de datos OP'),
+(1079, 163, 118, '54');
 
 -- --------------------------------------------------------
 
@@ -135,14 +145,7 @@ CREATE TABLE IF NOT EXISTS `correoempresa` (
   `descripcion` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Volcado de datos para la tabla `correoempresa`
---
-
-INSERT INTO `correoempresa` (`id`, `idempresa`, `correo`, `descripcion`) VALUES
-(6, 67, 'pichi@asd', '');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -157,14 +160,14 @@ CREATE TABLE IF NOT EXISTS `domicilioempresa` (
   `descripcion` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=243 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=297 ;
 
 --
 -- Volcado de datos para la tabla `domicilioempresa`
 --
 
 INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) VALUES
-(242, 67, 'Moreno 400', '');
+(296, 118, 'Moreno 400', '');
 
 -- --------------------------------------------------------
 
@@ -191,14 +194,14 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   KEY `idrubro` (`idrubro`),
   KEY `idcategoria` (`idcategoria`),
   KEY `idabonadoce` (`idabonadoce`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=119 ;
 
 --
 -- Volcado de datos para la tabla `empresa`
 --
 
 INSERT INTO `empresa` (`idempresa`, `denominacion`, `idrubro`, `detactividad`, `cantempleados`, `idcategoria`, `fechainicioce`, `nrosocio`, `activo`, `importemensual`, `fechafundacion`, `cuit`, `web`, `idabonadoce`) VALUES
-(67, 'Mercantil ', 3, '', 2, 2, '2015-06-06', 0, 1, 65, '0000-00-00', '1', 'www.merecantil.com', 10);
+(118, 'Mercantil ', 3, '', 2, 2, '2015-06-05', 0, 1, 65, '0000-00-00', '1', 'www.merecantil.com', 0);
 
 -- --------------------------------------------------------
 
@@ -216,15 +219,14 @@ CREATE TABLE IF NOT EXISTS `medidor` (
   `numsuministro` varchar(11) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`idmedidor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `medidor`
 --
 
 INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importepago`, `numusuario`, `numsuministro`, `activo`) VALUES
-(5, 'Nelson Garrido', '(011) 15-3858-7990', 'Moreno 8567', '0.0', '5', '123', 1),
-(6, 'From', '(011) 15-3858-7990', 'Moreno 8567', '0.0', '1212', '123', 1);
+(11, 'Nelson Garrido', '(011) 15-3858-7990', 'Moreno 8567', '0.0', '1212', '5456464654', 1);
 
 -- --------------------------------------------------------
 
@@ -239,7 +241,14 @@ CREATE TABLE IF NOT EXISTS `medidorempresa` (
   PRIMARY KEY (`id`),
   KEY `idempresa` (`idempresa`),
   KEY `idmedidor` (`idmedidor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+
+--
+-- Volcado de datos para la tabla `medidorempresa`
+--
+
+INSERT INTO `medidorempresa` (`id`, `idmedidor`, `idempresa`) VALUES
+(26, 11, 118);
 
 -- --------------------------------------------------------
 
@@ -340,14 +349,14 @@ CREATE TABLE IF NOT EXISTS `telefonoempresa` (
   `descripcion` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=140 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=192 ;
 
 --
 -- Volcado de datos para la tabla `telefonoempresa`
 --
 
 INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VALUES
-(139, 67, '2222222', '');
+(191, 118, '2222222', '');
 
 -- --------------------------------------------------------
 
@@ -382,6 +391,13 @@ INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`
 --
 
 --
+-- Filtros para la tabla `abonadoempresa`
+--
+ALTER TABLE `abonadoempresa`
+  ADD CONSTRAINT `abonadoempresa_ibfk_2` FOREIGN KEY (`numabonado`) REFERENCES `abonado` (`numabonado`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `abonadoempresa_ibfk_3` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `contactoempresa`
 --
 ALTER TABLE `contactoempresa`
@@ -405,8 +421,7 @@ ALTER TABLE `domicilioempresa`
 --
 ALTER TABLE `empresa`
   ADD CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `empresa_ibfk_3` FOREIGN KEY (`idabonadoce`) REFERENCES `abonado` (`numabonado`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `medidorempresa`
