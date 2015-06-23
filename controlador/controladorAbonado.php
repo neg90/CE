@@ -29,8 +29,7 @@ class controladorAbonado {
 			$activo = true;
 
 			$unAbonado = new PDOabonado(0,$importe,$fechadeultimopago,$activo);
-			
-			
+
 			$untimoID = $unAbonado->guardar();
 			$relacion = new PDOabonadoempresa(0,$untimoID,$idempresa);
 			$relacion->guardar();
@@ -68,7 +67,7 @@ class controladorAbonado {
 				}
 
 				$unAbonado = PDOabonado::buscarAbonado($numabonado);
-				var_dump($unAbonado);
+
 				$unAbonado->setImporte($importe);
 				$unAbonado->setFechadeultimopago($fechadeultimopago);
 				$unAbonado->setActivo($activo);
