@@ -151,7 +151,7 @@ hr{border:1px solid #ccc;}
 .verEmpresa #detGenerales { float:left; width:600px; margin-top:20px;border-radius:5px;} 
 .verEmpresa #detTelefono, .verEmpresa #detCorreo, 
 .verEmpresa #detDomicilio, .verEmpresa #detContacto{ float:right; display:block; width:100%; margin:20px; border-radius:5px;}
-.verEmpresa #detAdicionales { float:left; display:inline-block; width:450px; margin-left:100px;}
+.verEmpresa #detAdicionales { float:left; display:inline-block; width:400px; margin-left:100px;}
 .verEmpresa #botones{float:right; display:block; margin-right:110px;}
 .verEmpresa #detMedidor{float:left; display:block;border-radius:5px; width:600px; margin-top:-100px;}
 .verEmpresa #detMedidor .medidor{margin-left:20px;}
