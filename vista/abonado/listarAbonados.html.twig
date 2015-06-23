@@ -42,13 +42,15 @@
             {{ item.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
           {% endautoescape %}
         </td>
+        {% set cargarElimianar = true %}
         <td>
           {% autoescape 'html' %}
-            {% for em in empresas %}
-              {% if em.idabonadoce == item.numabonado %}
-                {{em.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-              {% endif %}
-             {% endfor  %}       
+            {% for em in relacion  %}
+                {% if em.numabonado == item.numabonado %}
+                   {% set cargarElimianar = false %}
+                    <li>{{em.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }} </li>
+                {% endif %}
+              {% endfor %}  
           {% endautoescape %}
         </td>
         <td>
@@ -76,13 +78,15 @@
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </a>
           </form>
-             <!--Eliminar abonado-->
-          <form method="post" action="privado.php?c=abonado&a=baja" id="bajaAbonado{{item.numabonado}}">
-            <input type="hidden" value="{{item.numabonado}}" name="numabonado">
-            <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaAbonado{{item.numabonado}}').submit();}">
-              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </a>
-          </form> 
+          {% if cargarElimianar == true %}
+            <!--Eliminar abonado-->
+            <form method="post" action="privado.php?c=abonado&a=baja" id="bajaAbonado{{item.numabonado}}">
+              <input type="hidden" value="{{item.numabonado}}" name="numabonado">
+              <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaAbonado{{item.numabonado}}').submit();}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </a>
+            </form> 
+          {% endif %}
           </td>
         </tr>
     {% endfor %}

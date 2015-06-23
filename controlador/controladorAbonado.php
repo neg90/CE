@@ -102,22 +102,30 @@ class controladorAbonado {
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
 		$abonado = PDOabonado::listar();
-
-		$empresas = PDOempresa::listar();
+		$abonadoempresas = PDOabonadoempresa::listar();
 	
+		$arayVista = '';
+		for ($i=0; $i < count($abonadoempresas); $i++) { 
+			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
+			$arrayUnario = array ('numabonado'=>$abonadoempresas[$i]->numabonado,'denominacion'=>$denominasao->getDenominacion());
+			$arayVista[$i] = $arrayUnario;
+		}
+		
+		$empresas = PDOempresa::listar();
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas));
+		echo $template->render(array('user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas,'relacion'=>$arayVista));
 
 	}
 	
 		
 	public function baja(){
-
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
 	  	$numabonado = htmlentities($_POST['numabonado']);
+
 		
 		if(PDOabonado::buscarAbonado($numabonado)){
 			PDOabonado::baja($numabonado);
@@ -125,12 +133,20 @@ class controladorAbonado {
 		}else{
 			$aviso = 2;
 		}
+		$abonadoempresas = PDOabonadoempresa::listar();
+		$arayVista = '';
+		for ($i=0; $i < count($abonadoempresas); $i++) { 
+			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
+			$arrayUnario = array ('numabonado'=>$abonadoempresas[$i]->numabonado,'denominacion'=>$denominasao->getDenominacion());
+			$arayVista[$i] = $arrayUnario;
+		}
+		
 
 		$abonado = PDOabonado::listar();
 		$empresas = PDOempresa::listar();
 		
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('empresas'=>$empresas,'abonado'=>$abonado,'aviso'=>$aviso));
+		echo $template->render(array('user'=>$user,'empresas'=>$empresas,'abonado'=>$abonado,'aviso'=>$aviso,'relacion'=>$arayVista));
       
    }
 

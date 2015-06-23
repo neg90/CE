@@ -12,6 +12,15 @@ class PDOabonadoempresa extends abonadoempresa{
 	
 	}
 
+     public static function listar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM abonadoempresa');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
    public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       
