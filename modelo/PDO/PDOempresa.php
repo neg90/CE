@@ -150,6 +150,8 @@ class PDOempresa extends empresa{
          $consulta->bindParam(':nrosocio', $this->getNrosocio());
       
          $consulta->execute();
+
+         return $conexion->lastInsertId();
          
       }
 

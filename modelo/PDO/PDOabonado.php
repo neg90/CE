@@ -41,32 +41,7 @@ class PDOabonado extends abonado{
       $conexion = null;
    }
 
-   public function validarInsertar(){
-      
-      try {$conexion = new conexion;}catch (PDOException $e){} 
-
-      $consulta = $conexion->prepare('SELECT * FROM abonado WHERE (importe = :importe and 
-      fechadeultimopago = :fechadeultimopago and activo = :activo)');
-      
-      
-      $consulta->bindParam(':importe', $this->getImporte());
-      $consulta->bindParam(':fechadeultimopago', $this->getFechadeultimopago());
-      $consulta->bindParam(':activo', $this->getActivo());
-
-
-      $consulta->execute();
-
-      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
-      
-      if ($objeto) {
-         //Si el array de obejtos viene cargado
-         return false;
-      }else{
-         return true;
-      }
-
-
-   }
+   
 
    public function buscarAbonado ($numabonado){
       try {$conexion = new conexion;}catch (PDOException $e){} 

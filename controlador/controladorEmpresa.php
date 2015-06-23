@@ -1,5 +1,4 @@
 <?php
-
 	require_once '../modelo/conexionDB.php';
 	require_once '../modelo/PDO/PDOempresa.php';
 	require_once '../modelo/PDO/PDOcategoria.php';
@@ -14,52 +13,41 @@
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../modelo/PDO/PDOabonadoempresa.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
-
 	
 //Valores para la variable aviso :
 //1->Inserto con exito
 //2->Ya existe un contacto igual
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
-
 	public static function detalle($idempresa){
-
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		$empresa = PDOempresa::buscarEmpresa($idempresa);
 		$categoria = PDOcategoria::buscarDescripcion($empresa->getIdcategoria());
 		$rubro = PDOrubro::buscarDescripcion($empresa->getIdrubro());
-
 		$contactoempresa = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
 		$contactosTodos = PDOcontacto::listar();
-
 		for ($ct=0; $ct<count($contactosTodos);$ct++){
 			if (PDOcontactoempresa::buscarContactoId($contactosTodos[$ct]->idcontacto)){
 						$contactos[$ct] = PDOcontacto::buscarContacto($contactosTodos[$ct]->idcontacto);
 			}
 		}
-
 		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
 		$medidoresTodos = PDOMedidor::listarMedidores();
-
 		for ($mt=0; $mt<count($medidoresTodos);$mt++){
 			if (PDOmedidorempresa::buscarMedidorId($medidoresTodos[$mt]->idmedidor)){
 						$medidores[$mt] = PDOMedidor::medidorPorID($medidoresTodos[$mt]->idmedidor);
 			}
 		}
-
 		$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());
 		$domicilios = PDOdomicilioempresa::buscarDomicilios($empresa->getIdempresa());
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
-
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
 			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios));
 	}
-
 	public static function listar(){
-
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -69,7 +57,6 @@ class controladorEmpresa {
 		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
-
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
 		for ($i=0; $i < $totalEmpresas   ; $i++) { 
@@ -83,11 +70,8 @@ class controladorEmpresa {
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados));
-
 	}
-
 	public function baja(){
-
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -100,14 +84,12 @@ class controladorEmpresa {
 		}else{
 			$aviso = 2;
 		}
-
 		$categorias = PDOcategoria::listar();
 		$empresas = PDOempresa::listar();
 		$rubros = PDOrubro::listar();
 		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
-
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
 		for ($i=0; $i < $totalEmpresas  ; $i++) { 
@@ -121,10 +103,13 @@ class controladorEmpresa {
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados));
-
-
    }
 
+   /*
+   ------------------------------------------------------------------------------------------------------------------------
+   la cuestion() lo que hace es recibe una cantidad desconocida de inputs por post los recorre y los carga en las tablas intermedias de empresa (telefono,correo,domicilio) la cantidad deseada, esto cuando el usuario da de alta una empresa ahora cuando el usuario modifica deberias ver el medoto modidicar del controlador, trabaja de forma parecida.
+   ------------------------------------------------------------------------------------------------------------------------
+   */
 	private static function laCuestionDelTelefono ($idempresa){
 		for ($i=0; $i < 13; $i++) { 
 			$auxStrtel = 'telefono' . $i;
@@ -143,7 +128,6 @@ class controladorEmpresa {
 			}
 		}
 	}
-
 	private static function laCuestionDelDomicilio ($idempresa){
 		for ($i=0; $i < 13; $i++) { 
 			$auxStrDom = 'domicilio' . $i;
@@ -181,25 +165,20 @@ class controladorEmpresa {
 		}
 	
 	}
-
 	private static function validarMedidores ($idempresa){
-
 		for ($i=0; $i < 21 ; $i++) { 
 			$strContacto = 'contacto' . $i;
 			$strRelacion = 'relacion' . $i;
 				
 			$idCOntacto = htmlentities($_POST[$strContacto]);
 			$relacion = htmlentities($_POST[$strRelacion]);
-
 			//sale carga del socio en la tabla intermedia
 			$unContactoIntermedio = new PDOcontactoempresa (0,$idCOntacto,$idempresa,$relacion);
 			$unContactoIntermedio->guardar();
 			
 		}
 	}
-
 	static function alta(){
-
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -211,6 +190,7 @@ class controladorEmpresa {
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
 	  	$unosAbonados = PDOabonado::listar();
+	  	$ultimoIdempresaInsertado = null;
 		if (isset($_POST['guardarEmpresa'])){
 			$denominacion = htmlEntities($_POST['denominacion']);
 			$cantempleados = htmlEntities($_POST['cantempleados']);
@@ -226,7 +206,6 @@ class controladorEmpresa {
 			$numabonado = htmlEntities($_POST['abonado']);
 			$idMedidor = htmlentities($_POST['medidor']);
 			
-
 			if (isset($_POST['activo'])) {
 				$activo = true;
 			}else{
@@ -234,11 +213,10 @@ class controladorEmpresa {
 			}
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
-			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-			$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
 			if($unaEmpresa->validarInsertar()){
 				
-				$unaEmpresa->guardar();
+				$ultimoIdempresaInsertado = $unaEmpresa->guardar();
 				$aviso=1;
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
@@ -246,7 +224,9 @@ class controladorEmpresa {
 				//alta socio
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 				//alta abonado
+				$cargoContrubuyente = false;
 				if(( $numabonado <> '-1') && ( $idMedidor == '-1')){
+					$cargoContrubuyente = true;
 					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa()	);
 					$unAbonado->guardar();
 					//$numabonado = htmlEntities($_POST['abonado']);
@@ -254,6 +234,7 @@ class controladorEmpresa {
 				//alta medidor
 				
 				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
+					$cargoContrubuyente = true;
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
@@ -264,28 +245,62 @@ class controladorEmpresa {
 				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
 				//alta domicilios extra
 				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
-			}else{
-				$aviso=2;
-			}
-			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
 
-		}else{
+			}else{
+				//falla la validacion vamos de nuevo.
+				$aviso=2;
+				$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
+				echo $template->render(array('aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
+			}
+
+			//Decide si cargo o no cargo contribuyente
+			if ($cargoContrubuyente) {
+				header('Location:privado.php?c=empresa&a=listar');
+			}else{
+				header('Location:privado.php?c=empresa&a=eleccion&id='.$ultimoIdempresaInsertado);
+				//Todo salio bien se cargo la empresa deberia seguir cargando cosas..	
+			}
+
+		
+		}elseif ($ultimoIdempresaInsertado == null) {
+			//primera vez que entra al formulario.
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			echo $template->render(array('aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
 		}
 	}
 
-	static function modificar(){
+	public static function eleccion($idempresa){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
+	  	if (isset($_POST['nuevoMedidor'])) {
+	  		//alta de medidor
+	  		$idempresa = $idempresa;
+	  		header('Location:privado.php?c=medidor&a=alta&id='.$idempresa);
+	  	}elseif (isset($_POST['nuevoAbonado'])) {
+	  		//alta abonado
+	  		$idempresa = $idempresa;
+	  		var_dump($idempresa);
+	  		header('Location:privado.php?c=abonado&a=alta&id='.$idempresa);
+	  	}else{
+	  		$template = $twig->loadTemplate('empresa/eleccion.html.twig');
+			echo $template->render(array('idempresa'=>$idempresa));
+	  	}
+	}
+
+
+	static function modificar(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 	  	$aviso = 0;
+
 		$idempresa = $_POST['idempresa'];
+
 	  	$unosContactos = PDOcontacto::listar();
 	  	$unosMedidores = PDOMedidor::listarMedidores();
 	  	$unasCategorias = PDOcategoria::listar();
@@ -293,9 +308,7 @@ class controladorEmpresa {
 	  	$medidorRelacionado = PDOmedidorempresa::buscarMedidorRelacionados($idempresa);
 	  	$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($idempresa);
 	  	$unosAbonados = PDOabonado::listar();
-
 		if (isset($_POST['guardarEmpresa'])){
-
 			if(PDOempresa::buscarEmpresa($idempresa)){
 				$denominacion = htmlEntities($_POST['denominacion']);
 				$cantempleados = htmlEntities($_POST['cantempleados']);
@@ -310,13 +323,11 @@ class controladorEmpresa {
 				$detactividad = htmlEntities($_POST['detactividad']);
 				$numabonado = htmlEntities($_POST['abonado']);
 				$idMedidor = htmlentities($_POST['medidor']);
-
 				if (isset($_POST['activo'])) {
 					$activo = true;
 				}else{
 					$activo = false;
 				}
-
 				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 				$unaEmpresa->setDenominacion($denominacion);
 				$unaEmpresa->setWeb($web);
@@ -329,7 +340,6 @@ class controladorEmpresa {
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);
-
 				
 				//Agrego el nuevo o el mismo :/
 				if( $idMedidor <> '-1'){
@@ -340,7 +350,6 @@ class controladorEmpresa {
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
-
 				if( $numabonado <> '-1'){
 					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
@@ -349,7 +358,6 @@ class controladorEmpresa {
 					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa());
 					$unAbonado->guardar();
 				}
-
 				$unaEmpresa->guardar();
 				$aviso=1;
 				//Busco de nuevo la empresa actualizada.
@@ -360,7 +368,6 @@ class controladorEmpresa {
 				echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado,
 				'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado));
-
 			}else{
 				//No se encontro la empresa para modificar
 				$aviso = 3;
@@ -375,7 +382,6 @@ class controladorEmpresa {
 		}
 		
 	}
-
 	public function modificarTelefonos(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -395,10 +401,8 @@ class controladorEmpresa {
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
 			echo $template->render(array ('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados,'aviso'=>$aviso));
-
 	  	}
 	}
-
 	public function modificarCorreos(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -420,13 +424,14 @@ class controladorEmpresa {
 			echo $template->render(array ('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso));
 	  	}
 	}
-
 	public function modificarContactos (){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));		
 		$aviso = 0 ;
+
 		$idempresa = $_POST['idempresa'];
+
 		//Traigo los contactos relacionados.
 	  	$unosContactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($idempresa);
 	  	$unosContactos = PDOcontacto::listar();  
@@ -447,7 +452,6 @@ class controladorEmpresa {
 			'idempresa'=>$idempresa));
 	  	}
 	}
-
 	public function modificarDomicilios(){
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -469,9 +473,7 @@ class controladorEmpresa {
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
 			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso));
-
 	  	}
 	}
-
 }
 ?>
