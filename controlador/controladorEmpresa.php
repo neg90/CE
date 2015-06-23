@@ -20,6 +20,7 @@
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
 	public static function detalle($idempresa){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -45,9 +46,10 @@ class controladorEmpresa {
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
-			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios));
+			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'user'=>$user));
 	}
 	public static function listar(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -69,9 +71,10 @@ class controladorEmpresa {
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados));
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
 	}
 	public function baja(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -102,7 +105,7 @@ class controladorEmpresa {
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados));
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
    }
 
    /*
@@ -179,6 +182,7 @@ class controladorEmpresa {
 		}
 	}
 	static function alta(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -268,11 +272,12 @@ class controladorEmpresa {
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados,'user'=>$user));
 		}
 	}
 
 	public static function eleccion($idempresa){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -288,12 +293,13 @@ class controladorEmpresa {
 	  		header('Location:privado.php?c=abonado&a=alta&id='.$idempresa);
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/eleccion.html.twig');
-			echo $template->render(array('idempresa'=>$idempresa));
+			echo $template->render(array('idempresa'=>$idempresa,'user'=>$user));
 	  	}
 	}
 
 
 	static function modificar(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -367,7 +373,7 @@ class controladorEmpresa {
 				$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 				echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado,
-				'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado));
+				'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado,'user'=>$user));
 			}else{
 				//No se encontro la empresa para modificar
 				$aviso = 3;
@@ -378,11 +384,12 @@ class controladorEmpresa {
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 			echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado
-			,'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado));
+			,'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado,'user'=>$user));
 		}
 		
 	}
 	public function modificarTelefonos(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
@@ -400,10 +407,11 @@ class controladorEmpresa {
 			echo $template->render(array('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados,'aviso'=>$aviso));
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarTelefonosEmpresa.html.twig');
-			echo $template->render(array ('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados,'aviso'=>$aviso));
+			echo $template->render(array ('idempresa'=>$idempresa,'telefonosRelacionados'=>$telefonosRelacionados,'aviso'=>$aviso,'user'=>$user));
 	  	}
 	}
 	public function modificarCorreos(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
@@ -418,13 +426,14 @@ class controladorEmpresa {
 	  		$aviso = 1 ;
 	  		$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
 			$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
-			echo $template->render(array('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso));
+			echo $template->render(array('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso,'user'=>$user));
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
-			echo $template->render(array ('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso));
+			echo $template->render(array ('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso,'user'=>$user));
 	  	}
 	}
 	public function modificarContactos (){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));		
@@ -445,14 +454,15 @@ class controladorEmpresa {
 	  		$unosContactos = PDOcontacto::listar();  
 			$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
-			'idempresa'=>$idempresa));
+			'idempresa'=>$idempresa,'user'=>$user));
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
-			'idempresa'=>$idempresa));
+			'idempresa'=>$idempresa,'user'=>$user));
 	  	}
 	}
 	public function modificarDomicilios(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
@@ -469,10 +479,10 @@ class controladorEmpresa {
 			//Aviso todo correcto
 	  		$aviso = 1 ;
 			$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
-			echo $template->render(array('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso));
+			echo $template->render(array('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso,'user'=>$user));
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
-			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso));
+			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso,'user'=>$user));
 	  	}
 	}
 }
