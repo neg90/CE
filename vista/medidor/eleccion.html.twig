@@ -1,9 +1,9 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %}Formulario Abonado CE {% endblock %}
+{% block title %}Formulario Medidor CE {% endblock %}
 
 {% block contenedor %}
-	<form class="form-horizontal" action="privado.php?c=abonado&a=eleccion&id={{idempresa}}" role="form" method="POST">
+	<form class="form-horizontal" action="privado.php?c=medidor&a=eleccion&id={{idempresa}}" role="form" method="POST">
 		<input type="hidden" value="{{idempresa}}" name="idempresa">
 		
 		<div class="row">

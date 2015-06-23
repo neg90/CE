@@ -3,7 +3,7 @@
 	require_once ('../modelo/conexionDB.php');
 	require_once ('../modelo/PDO/PDOContacto.php');
 	require_once '../modelo/PDO/PDOcontactoempresa.php';
-	
+
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 	
@@ -13,6 +13,7 @@
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorContacto {
 
+	
 	static function pdfContacto($datosPDF){
 
 		$pdf = new PDF();

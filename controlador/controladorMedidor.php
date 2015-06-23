@@ -7,6 +7,21 @@ require_once '../modelo/PDO/PDOmedidorempresa.php';
 
 class controladorMedidor {
 
+	public static function eleccion($idempresa){
+		
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  	if (isset($_POST['nuevoSocio'])) {
+	  		header('Location:privado.php?c=contacto&a=altaconid&id='.$idempresa);	
+	  	}
+
+	  	$template = $twig->loadTemplate('medidor/eleccion.html.twig');
+		echo $template->render(array('idempresa'=>$idempresa));
+	}
+
+
 	static function pdfMedidor($datosPDF){
 
 		$pdf = new PDF();
@@ -151,7 +166,7 @@ class controladorMedidor {
 				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
 				$tipoAviso= 'exito';
 
-			header('Location:privado.php?c=medidor&a=listar');
+			header('Location:privado.php?c=medidor&a=eleccion&id='.$idempresa);
 
 		}else{
 			$aviso=false;

@@ -230,7 +230,12 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						}
 					}elseif($accion == 'baja'){
 						controladorMedidor::baja();
-					}elseif($accion == 'listar'){
+					}elseif ($accion == 'eleccion') {
+					if (isset($_GET['id'])) {
+						$id=htmlEntities(@$_GET['id']); 
+						controladorMedidor::eleccion($id);
+					}
+				}elseif($accion == 'listar'){
 						/* FILTROS MEDIDOR*/
 					if (isset($_POST['tipoFiltro'])){
 								if (!empty($_POST['tipoFiltro']))
