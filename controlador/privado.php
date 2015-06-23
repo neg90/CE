@@ -209,7 +209,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				/* -------- MEDIDOR ---------- */
 				elseif($controlador == 'medidor'){
 					if($accion == 'alta'){
-						controladorMedidor::alta();
+						if (isset($_GET['id'])) {
+							$id=htmlEntities(@$_GET['id']); 
+							controladorMedidor::alta($id);	
+						}
 					}elseif($accion == 'modificar'){
 						if (!empty($_POST['idmedidor'])){
 							$idmedidor = htmlEntities($_POST['idmedidor']);

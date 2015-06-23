@@ -2,6 +2,7 @@
 
 require_once '../modelo/clases/usuario.php';
 require_once '../modelo/PDO/PDOMedidor.php';
+require_once '../modelo/PDO/PDOmedidorempresa.php';
 
 
 class controladorMedidor {
@@ -120,11 +121,13 @@ class controladorMedidor {
 			self::listarConCartel($medidorEliminado);
 	}
 
-	static function alta(){
+	static function alta($idempresa){
+
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		$user=$_SESSION['user'];		
+		$user=$_SESSION['user'];
+	
 		if (isset($_POST['enviarMedidor'])){
 			$nomyap = htmlEntities($_POST['nomyap']);
 			$telefono = htmlEntities($_POST['telefono']);
@@ -135,20 +138,19 @@ class controladorMedidor {
 			$activo = true;
 
 			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo);
-			if (empty(PDOMedidor::existeMedidor($numusuario,$numsuministro))){
-				$unMedidor->guardar();
+			
+				$untimoID = $unMedidor->guardar();
+				$relacion = new PDOmedidorempresa(0,$untimoID,$idempresa);
+				$relacion->guardar();
 				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
 				$tipoAviso= 'exito';
-			}
-			else {$aviso='ERROR! El número de usuario / número de suministro ya se encuentran en uso.';
-				  $tipoAviso='error';
-			}
-			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'unMedidor'=>$unMedidor,'user'=>$user));
+
+			header('Location:privado.php?c=medidor&a=listar');
+
 		}else{
 			$aviso=false;
 			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'user'=>$user));
+			echo $template->render(array('aviso'=>$aviso,'user'=>$user,'idempresa'=>$idempresa));
 		}
 	}
 

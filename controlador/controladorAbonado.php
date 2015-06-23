@@ -19,7 +19,8 @@ class controladorAbonado {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
-	  	
+	  	$untimoID = null;
+
 		if (isset($_POST['guardarAbonado'])) {
 			$aviso=2;
 
@@ -30,16 +31,16 @@ class controladorAbonado {
 			$unAbonado = new PDOabonado(0,$importe,$fechadeultimopago,$activo);
 			
 			
-				$untimoID = $unAbonado->guardar();
-				$relacion = new PDOabonadoempresa(0,$untimoID,$idempresa);
-				$relacion->guardar();
-				$aviso=1;
+			$untimoID = $unAbonado->guardar();
+			$relacion = new PDOabonadoempresa(0,$untimoID,$idempresa);
+			$relacion->guardar();
+			$aviso=1;
 			
-			
-			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'idempresa'=>$idempresa));
+			//en un futuro no muy lejano deberia llevarlo al listado mostrando solo este y 
+			//con un aviso de que se cargo correctamente,minimamente que se cargo correctamente
+			header('Location:privado.php?c=abonado&a=listar');
 
-		}else{
+		}elseif ($untimoID == null) {
 			$aviso=0;
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'idempresa'=>$idempresa));

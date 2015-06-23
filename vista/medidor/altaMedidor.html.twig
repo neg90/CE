@@ -2,7 +2,8 @@
  
 {% block title %} Crear titular de medidor {% endblock %}
 {% block contenedor %}
-	<form class="form-horizontal" action="privado.php?c=medidor&a=alta" role="form" method="POST">
+	<form class="form-horizontal" action="privado.php?c=medidor&a=alta&id={{idempresa}}" role="form" method="POST">
+		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
 			<div class="row fila-de-alerta">
 				<div class=" col-lg-4"></div>

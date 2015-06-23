@@ -142,6 +142,7 @@ class PDOMedidor extends medidor{
          $consulta->bindParam(':numsuministro', $this->getNumsuministro());
          $consulta->bindParam(':activo', $this->getActivo());
          $consulta->execute();
+         return $conexion->lastInsertId();
          
       }
 

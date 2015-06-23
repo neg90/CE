@@ -105,36 +105,36 @@
               {% endfor %} 
             {% endautoescape %}
           </td>
-           <td>
+          {% set tienContribuyente = 2 %}
+          <td>
             {% autoescape 'html' %} 
-          
                {% for i in arrayVista %}
                   {% if i['idempresa'] == item.idempresa %}
                         {% for mNom in medidores %}
                           {% if mNom.idmedidor == i['medidor'].idmedidor %}
                               <li> {{ mNom.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</li>
+                              {% set tienContribuyente = 1 %}
                           {% endif %}
                         {% endfor %}
                   {% endif %}  
                 {% endfor %} 
-              
             {% endautoescape %}
           </td>
           <td>
-            {% for i in arrayVista %}
-              {% if i['idempresa'] == item.idempresa %}
-                <li> 
-                  {% for mAbon in abonados %}
-                    {% if mAbon.numabonado == i['abonado'].numabonado %}
-                      {{ mAbon.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                    {% endif %}
-                  {% endfor %}
-                </li>
-              {% endif %}  
-            {% endfor %} 
-           </td>
+            {% autoescape 'html' %} 
+              {% for i in arrayVista %}
+                {% if i['idempresa'] == item.idempresa %}
+                    {% for mAbon in abonados %}
+                      {% if mAbon.numabonado == i['abonado'].numabonado %}
+                        <li> {{ mAbon.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }} </li>
+                        {% set tienContribuyente = 1 %}
+                      {% endif %}
+                    {% endfor %}
+                {% endif %}  
+              {% endfor %} 
+             {% endautoescape %}
+          </td>
           <td class="celda-numero">
-            
               {% if item.activo == 1 %}
                 Si   
               {% else %}
@@ -142,20 +142,22 @@
               {% endif %}
           </td>
           <td class="controles">
-            <!-- nuevo abonado -->
-            <form method="post" action="privado.php?c=abonado&a=alta" id="altaAbonado{{item.idempresa}}">
-                <input type="hidden" value="{{item.idempresa}}" name="cargarAbonado">
-                <a href="javascript:{}" onclick="document.getElementById('altaAbonado{{item.idempresa}}').submit(); return false;">
-                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                </a>
-            </form>
-            <!-- nuevo medidor -->
-            <form method="post" action="privado.php?c=medidor&a=alta" id="altaMedidor{{item.idempresa}}">
-                <input type="hidden" value="{{item.idempresa}}" name="idempresa">
-                <a href="javascript:{}" onclick="document.getElementById('altaMedidor{{item.idempresa}}').submit(); return false;">
-                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                </a>
-            </form>
+            {% if tienContribuyente == 2 %}
+              <!-- nuevo abonado -->
+              <form method="post" action="privado.php?c=abonado&a=alta&id={{item.idempresa}}" id="altaAbonado{{item.idempresa}}">
+                  <input type="hidden" value="{{item.idempresa}}" name="cargarAbonado">
+                  <a href="javascript:{}" onclick="document.getElementById('altaAbonado{{item.idempresa}}').submit(); return false;">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                  </a>
+              </form>
+              <!-- nuevo medidor -->
+              <form method="post" action="privado.php?c=medidor&a=alta&id={{item.idempresa}}" id="altaMedidor{{item.idempresa}}">
+                  <input type="hidden" value="{{item.idempresa}}" name="idempresa">
+                  <a href="javascript:{}" onclick="document.getElementById('altaMedidor{{item.idempresa}}').submit(); return false;">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                  </a>
+              </form>
+            {% endif %}
             <!-- Ver empresa -->
             <form method="post" action="privado.php?c=empresa&a=detalle" id="verEmpresa{{item.idempresa}}">
                 <input type="hidden" value="{{item.idempresa}}" name="id">

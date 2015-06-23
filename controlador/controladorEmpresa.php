@@ -110,7 +110,9 @@ class controladorEmpresa {
 
    /*
    ------------------------------------------------------------------------------------------------------------------------
-   la cuestion() lo que hace es recibe una cantidad desconocida de inputs por post los recorre y los carga en las tablas intermedias de empresa (telefono,correo,domicilio) la cantidad deseada, esto cuando el usuario da de alta una empresa ahora cuando el usuario modifica deberias ver el medoto modidicar del controlador, trabaja de forma parecida.
+   la cuestion() lo que hace es recibe una cantidad desconocida de inputs por post los recorre y los carga en las tablas 
+   intermedias de empresa (telefono,correo,domicilio) la cantidad deseada, esto cuando el usuario da de alta una empresa ahora 
+   cuando el usuario modifica deberias ver el medoto modidicar del controlador, trabaja de forma parecida.
    ------------------------------------------------------------------------------------------------------------------------
    */
 	private static function laCuestionDelTelefono ($idempresa){
