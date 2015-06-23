@@ -27,18 +27,27 @@ class controladorEmpresa {
 		$empresa = PDOempresa::buscarEmpresa($idempresa);
 		$categoria = PDOcategoria::buscarDescripcion($empresa->getIdcategoria());
 		$rubro = PDOrubro::buscarDescripcion($empresa->getIdrubro());
-		$contactoempresa = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
+//		$contactoempresa = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
 		$contactosTodos = PDOcontacto::listar();
 		for ($ct=0; $ct<count($contactosTodos);$ct++){
 			if (PDOcontactoempresa::buscarContactoId($contactosTodos[$ct]->idcontacto)){
 						$contactos[$ct] = PDOcontacto::buscarContacto($contactosTodos[$ct]->idcontacto);
 			}
 		}
-		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
+//		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
 		$medidoresTodos = PDOMedidor::listarMedidores();
 		for ($mt=0; $mt<count($medidoresTodos);$mt++){
-			if (PDOmedidorempresa::buscarMedidorId($medidoresTodos[$mt]->idmedidor)){
+			$medidorEncontrado = PDOmedidorempresa::buscarMedidorId($medidoresTodos[$mt]->idmedidor);
+			if ($medidorEncontrado->idempresa  == $empresa->getIdempresa()){
 						$medidores[$mt] = PDOMedidor::medidorPorID($medidoresTodos[$mt]->idmedidor);
+			}
+		}
+
+		$abonadosTodos = PDOabonado::listar();
+		for ($at=0; $at<count($abonadosTodos);$at++){
+			$abonadoEncontrado = PDOabonadoempresa::buscarAbonadoId($abonadosTodos[$at]->numabonado);
+			if ($abonadoEncontrado->idempresa == $empresa->getIdempresa()){
+						$abonados[$at] = PDOabonado::buscarAbonado($abonadosTodos[$at]->numabonado);
 			}
 		}
 		$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());
@@ -46,7 +55,7 @@ class controladorEmpresa {
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
-			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'user'=>$user));
+			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user));
 	}
 	public static function listar(){
 		$user=$_SESSION['user'];

@@ -144,21 +144,24 @@ hr{border:1px solid #ccc;}
 
 .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th{  text-align: center;}
 
-.verEmpresa .correo, .verEmpresa .domicilio, .verEmpresa .telefono, .verEmpresa .contacto, .verEmpresa .medidor {list-style: none; margin-left:20px;}
-.verEmpresa #detGenerales, .verEmpresa #detTelefono, .verEmpresa #detMedidor,
-.verEmpresa #detCorreo, .verEmpresa #detDomicilio, .verEmpresa #detContacto{  border:1px solid #555;}
+.verEmpresa .correo, .verEmpresa .domicilio, .verEmpresa .telefono, .verEmpresa .contacto, .verEmpresa .medidor, .verEmpresa .abonado {list-style: none; margin-left:20px;}
+.verEmpresa #detGenerales, .verEmpresa #detTelefono, .verEmpresa #detMedidor, .verEmpresa #detAbonado,
+.verEmpresa #detCorreo, .verEmpresa #detDomicilio, .verEmpresa #detContacto, .verEmpresa #detMedidorAbonadoVacio{  border:1px solid #555;}
 
 .verEmpresa #detGenerales { float:left; width:600px; margin-top:20px;border-radius:5px;} 
 .verEmpresa #detTelefono, .verEmpresa #detCorreo, 
 .verEmpresa #detDomicilio, .verEmpresa #detContacto{ float:right; display:block; width:100%; margin:20px; border-radius:5px;}
 .verEmpresa #detAdicionales { float:left; display:inline-block; width:400px; margin-left:100px;}
 .verEmpresa #botones{float:right; display:block; margin-right:110px;}
-.verEmpresa #detMedidor{float:left; display:block;border-radius:5px; width:600px; margin-top:-100px;}
-.verEmpresa #detMedidor .medidor{margin-left:20px;}
-.medidor .right, .medidor .left{width:50%;}
+.verEmpresa #detMedidor, .verEmpresa #detAbonado, .verEmpresa #detMedidorAbonadoVacio{float:left; display:block;border-radius:5px; width:600px; }
+.verEmpresa #detMedidor .medidor, .verEmpresa #detAbonado .abonado, .verEmpresa #detMedidorAbonadoVacio .medidorAbonado {margin-left:20px;}
+.medidor .right, .medidor .left, .medidorAbonado .left, .medidorAbonado .right{width:50%;}
 .verEmpresa .generales {margin-left:20px; list-style: none;}
-
+.verEmpresa .medidorAbonado {list-style: none}
 .verEmpresa .tituloBloqueDet p:nth-child(1){background-color:#EEE; width:100%; padding: 5px 0px 5px 20px;}
-.medidor .left p:nth-child(1), .medidor .right p:nth-child(1){background-color:#fff; padding:0px;}
+.medidor .left p:nth-child(1), .medidor .right p:nth-child(1),
+.abonado .left p:nth-child(1), .medidorAbonado p:nth-child(1){background-color:#fff!important; padding:0px!important;}
 #botones button{margin-top:20px;}
 .editBlockDet {margin-right:10px; color:#bbb;}
+.botonAsociarLeft{width:200px!important; margin:5px; margin-bottom: 10px!important;float:right!important;}
+.botonAsociarRight{width:200px!important; margin:5px;margin-bottom: 10px!important;float:left!important;}
