@@ -40,9 +40,14 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}
 
 			/* -------- ABONADO ---------- */
+			
 			}elseif ($controlador == 'abonado') {
 				if($accion == 'alta'){
-					controladorAbonado::alta();
+					if (isset($_GET['id'])) {
+						$id=htmlEntities(@$_GET['id']); 
+						controladorAbonado::alta($id);
+					}
+					
 				}elseif ($accion == 'modificar') {
 					controladorAbonado::modificar();
 				}elseif ($accion == 'baja') {
@@ -128,6 +133,11 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorEmpresa::modificarDomicilios();	
 				}elseif ($accion == 'modificarCorreos') {
 					controladorEmpresa::modificarCorreos();
+				}elseif ($accion == 'eleccion') {
+					if (isset($_GET['id'])) {
+						$id=htmlEntities(@$_GET['id']); 
+						controladorEmpresa::eleccion($id);
+					}
 				}
 			}
 

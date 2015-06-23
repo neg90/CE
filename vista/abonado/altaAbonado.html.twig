@@ -3,8 +3,11 @@
 {% block title %}Formulario Abonado CE {% endblock %}
 
 {% block contenedor %}
-	<form class="form-horizontal" action="privado.php?c=abonado&a=alta" role="form" method="POST">
+	<form class="form-horizontal" action="privado.php?c=abonado&a=alta&id={{idempresa}}" role="form" method="POST">
+		
 		<input type="hidden" name="numabonado" value="{{numabonado}}">
+		<input type="hidden" value="{{idempresa}}" name="idempresa">
+
 		<div class="contenedor-formulario">
 		<div class="row fila-de-alerta">
 			<div class=" col-lg-2"></div>
@@ -27,7 +30,7 @@
 	  			{% endif %}
 				</div>
 		</div>
-		<input type="hidden" value="{{cargarAbonado}}" name="cargarAbonado">
+		
 		<div class="row fila-de-titulo">
 			<div class=" col-lg-4"></div>
 			<div class=" col-lg-4">

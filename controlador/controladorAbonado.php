@@ -13,38 +13,36 @@
 	//0->No mostrar mensaje, es solo carga del formulario.
 class controladorAbonado {
 
-	static function alta(){
+	static function alta($idempresa){
+		
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-		
-		if (isset($_POST['cargarAbonado'])) {
-			$vieneEmpresa = $_POST['cargarAbonado'];
-		}
+
+	  	
 		if (isset($_POST['guardarAbonado'])) {
 			$aviso=2;
 
 			$fechadeultimopago = htmlEntities($_POST['fechadeultimopago']);
 			$importe = htmlEntities($_POST['importe']);
 			$activo = true;
-			$unAbonado = new PDOabonado(0,$importe,$fechadeultimopago,$activo);
 
-			if ($unAbonado->validarInsertar()){
+			$unAbonado = new PDOabonado(0,$importe,$fechadeultimopago,$activo);
+			
+			
 				$untimoID = $unAbonado->guardar();
-				$relacion = new PDOabonadoempresa(0,$untimoID,$vieneEmpresa);
+				$relacion = new PDOabonadoempresa(0,$untimoID,$idempresa);
 				$relacion->guardar();
 				$aviso=1;
-			}else{
-				$aviso=2;
-			}
+			
 			
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'cargarAbonado'=>$vieneEmpresa));
+			echo $template->render(array('aviso'=>$aviso,'idempresa'=>$idempresa));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'cargarAbonado'=>$vieneEmpresa));
+			echo $template->render(array('aviso'=>$aviso,'idempresa'=>$idempresa));
 		}
 	}
 
