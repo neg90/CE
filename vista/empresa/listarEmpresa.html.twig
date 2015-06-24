@@ -116,10 +116,12 @@ $(document).ready(function() {
               <form  method="POST" id="formFiltros" class="inline-block">
               <select class="form-control" onchange="getval(this);">
                 <option selected>Todos</option>
-                <option>Nombre y/o Apellido</option>
-                <option>Usuario</option>
-                <option>Email</option>
-                <option>Rol</option>
+                <option>Num. Socio</option>
+                <option>Denominación</option>
+                <option>CUIT</option>
+                <option>Categoría</option>
+                <option>Importe</option>
+                <option>Cant. Empleados</option>
               </select>
               </form>
           </div>
@@ -128,17 +130,15 @@ $(document).ready(function() {
               </div>
 
               <div id="roles" class="none">
-                {% if ListaRoles is null %}
-                {% else %}
-                  <select name="datoTexto" id="datoRol" class="form-control">
-                    {% for rol in ListaRoles %}
-                      {% if loop.index == 1 %} <option value="0" selected></option> {% endif %}
-                      <option value="{{rol.idrol}}">{{rol.nombre}}</option>
-                    {% endfor %}
+                  <select name="datoCriterio" id="datoCriterio" class="form-control">
+                      <option value="0" selected>Seleccione</option>
+                      <option value="1">Mayor a</option>
+                      <option value="2">Igual a</option>
+                      <option value="3">Menor a</option>
                   </select>
-                {% endif %}
+
               </div>
-              <button id="EnviarFiltro" class="btn btn-default" onclick="document.getElementById('form_herramientas_usuario').submit();">Enviar</button>
+              <button id="EnviarFiltro" class="btn btn-default" onclick="document.getElementById('form_herramientas_empresa').submit();">Enviar</button>
         </div>
         </form>
         {% else %}
@@ -222,7 +222,7 @@ $(document).ready(function() {
           </td>
           <td>
             {% autoescape 'html' %}
-              {{ item.importemensual|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              ${{ item.importemensual|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
             {% endautoescape %}
           </td>
           <td>

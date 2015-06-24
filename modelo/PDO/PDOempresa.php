@@ -217,18 +217,19 @@ class PDOempresa extends empresa{
 
    }
 
-   public function buscarMedidor(){
-                try {$conexion = new conexion;}catch (PDOException $e){}
+   public static function buscarMedidor($numsuministro){
+     try {$conexion = new conexion;}catch (PDOException $e){}
                
-                $consulta = $conexion->prepare('SELECT * FROM empresa WHERE numsuministro = :numsuministro');
+     $consulta = $conexion->prepare('SELECT * FROM empresa 
+                                     WHERE numsuministro = :numsuministro');
                
-                $consulta->bindParam(':numsuministro',$this->getNumsuministro());
-                $consulta->execute();
+     $consulta->bindParam(':numsuministro',$numsuministro);
+     $consulta->execute();
                
-                $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+       $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
                
-                return $objeto;
-        }
+     return $objeto;
+   }
 	
 }
 ?>
