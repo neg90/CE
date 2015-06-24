@@ -35,8 +35,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 
 			/* -------- ECEL ---------- */
 			}elseif ($controlador == 'excel') {
-				if($accion == 'cargar'){
-					controladorExcel::cargar();
+				if($accion == 'cargarmedidor'){
+					controladorExcel::cargarmedidor();
 				}
 
 			/* -------- INICIO ---------- */
