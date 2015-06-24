@@ -211,6 +211,7 @@ class controladorEmpresa {
 			$detactividad = htmlEntities($_POST['detactividad']);
 			$numabonado = htmlEntities($_POST['abonado']);
 			$idMedidor = htmlentities($_POST['medidor']);
+			$numsuministro = htmlentities($_POST['numsuministro']);
 			
 			if (isset($_POST['activo'])) {
 				$activo = true;
@@ -219,21 +220,23 @@ class controladorEmpresa {
 			}
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
-			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,
+			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro);
 			if($unaEmpresa->validarInsertar()){
 				
 				$ultimoIdempresaInsertado = $unaEmpresa->guardar();
 				$aviso=1;
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
-				$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-				$activo,$cuit,$fechafundacion,$importemensual,$nrosocio);
+				//$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
+				//$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro);
+				$unaEmpresa = PDOempresa::buscarEmpresa($ultimoIdempresaInsertado);
 				//alta socio
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 				//alta abonado
 				$cargoContrubuyente = false;
 				if(( $numabonado <> '-1') && ( $idMedidor == '-1')){
 					$cargoContrubuyente = true;
-					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa()	);
+					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa());
 					$unAbonado->guardar();
 					//$numabonado = htmlEntities($_POST['abonado']);
 				}
@@ -331,6 +334,7 @@ class controladorEmpresa {
 				$detactividad = htmlEntities($_POST['detactividad']);
 				$numabonado = htmlEntities($_POST['abonado']);
 				$idMedidor = htmlentities($_POST['medidor']);
+				$numsuministro = htmlentities($_POST['numsuministro']);
 				if (isset($_POST['activo'])) {
 					$activo = true;
 				}else{
@@ -348,6 +352,7 @@ class controladorEmpresa {
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);
+				$unaEmpresa->setNumsuministro($numsuministro);
 				
 				//Agrego el nuevo o el mismo :/
 				if( $idMedidor <> '-1'){

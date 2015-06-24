@@ -7,6 +7,7 @@ require_once 'usuario.php';
 require_once 'controladorRol.php';
 require_once 'controladorMedidor.php';
 require_once 'controladorCorreo.php';
+require_once 'controladorExcel.php';
 require_once 'controladorAbonado.php';
 
 Twig_Autoloader::register();
@@ -30,6 +31,12 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorCorreo::renderCorreo();
 				}elseif ($accion == 'enviar') {
 					controladorCorreo::enviar();
+				}
+
+			/* -------- ECEL ---------- */
+			}elseif ($controlador == 'excel') {
+				if($accion == 'cargar'){
+					controladorExcel::cargar();
 				}
 
 			/* -------- INICIO ---------- */
