@@ -6,9 +6,9 @@ require_once '../modelo/clases/medidor.php';
 class PDOMedidor extends medidor{
 	
 
-	public function	__construct ($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo){
+	public function	__construct ($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo,$fechadeultimopago){
 		
-		parent::__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo);
+		parent::__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo,$fechadeultimopago);
 	
 	}
    /* FILTROS */
@@ -118,7 +118,7 @@ class PDOMedidor extends medidor{
       try {$conexion = new conexion;}catch (PDOException $e){}
       if($this->getIdmedidor()) /*Si tiene id entonces existe y solo lo modifico*/ {
          //$id,$idcontacto,$nomyap,$telefono,$domicio,$importepago,$numusuario,$numsuministro,$activo
-         $consulta = $conexion->prepare('UPDATE medidor SET nomyap = :nomyap, telefono = :telefono, domicilio = :domicilio, importepago = :importepago, numusuario = :numusuario, numsuministro = :numsuministro, activo = :activo WHERE idmedidor = :idmedidor');
+         $consulta = $conexion->prepare('UPDATE medidor SET nomyap = :nomyap, telefono = :telefono, domicilio = :domicilio, importepago = :importepago, numusuario = :numusuario, numsuministro = :numsuministro, activo = :activo ,fechadeultimopago = :fechadeultimopago WHERE idmedidor = :idmedidor');
          
          $consulta->bindParam(':idmedidor', $this->getIdmedidor());
          $consulta->bindParam(':nomyap', $this->getNomyap());
@@ -128,11 +128,12 @@ class PDOMedidor extends medidor{
          $consulta->bindParam(':numusuario', $this->getNumusuario());
          $consulta->bindParam(':numsuministro', $this->getNumsuministro());
          $consulta->bindParam(':activo', $this->getActivo());
+         $consulta->bindParam(':fechadeultimopago',$this->getFechadeultimopago());
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
-         $consulta = $conexion->prepare('INSERT INTO medidor (nomyap, telefono, domicilio, importepago, numusuario, numsuministro, activo) 
-         VALUES(:nomyap, :telefono, :domicilio, :importepago, :numusuario, :numsuministro, :activo)');         
+         $consulta = $conexion->prepare('INSERT INTO medidor (nomyap, telefono, domicilio, importepago, numusuario, numsuministro, activo,fechadeultimopago) 
+         VALUES(:nomyap, :telefono, :domicilio, :importepago, :numusuario, :numsuministro, :activo,:fechadeultimopago)');         
          
          $consulta->bindParam(':nomyap', $this->getNomyap());
          $consulta->bindParam(':telefono', $this->getTelefono());
@@ -141,6 +142,7 @@ class PDOMedidor extends medidor{
          $consulta->bindParam(':numusuario', $this->getNumusuario());
          $consulta->bindParam(':numsuministro', $this->getNumsuministro());
          $consulta->bindParam(':activo', $this->getActivo());
+         $consulta->bindParam(':fechadeultimopago',$this->getFechadeultimopago());
          $consulta->execute();
          return $conexion->lastInsertId();
          

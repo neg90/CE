@@ -10,9 +10,10 @@ class medidor {
 	private $numusuario;
 	private $numsuministro;
 	private $activo;
+	private $fechadeultimopago;
 	
 
-	public function	__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo) {
+	public function	__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo,$fechadeultimopago) {
 		
 		$this->nomyap = $nomyap;
 		$this->telefono = $telefono;
@@ -21,7 +22,16 @@ class medidor {
 		$this->numusuario = $numusuario;
 		$this->numsuministro = $numsuministro;
 		$this->activo = $activo;
+		$this->fechadeultimopago = $fechadeultimopago;
 	
+	}
+
+	public function getFechadeultimopago(){
+		return $this->fechadeultimopago;
+	}
+
+	public function setFechadeultimopago($fechadeultimopago){
+		$this->fechadeultimopago = $fechadeultimopago;
 	}
 
 	public function getIdmedidor(){

@@ -198,7 +198,7 @@ $(document).ready(function() {
 					{% endif %}
 				</td>
 				<td class="controles">
-				<!--Modificar medidor-->
+			   	<!--Modificar medidor-->
 					<form method="post" action="privado.php?c=medidor&a=modificar" id="modificarMedidor{{medidor.idmedidor}}">
 						<input type="hidden" value="{{medidor.idmedidor}}" name="idmedidor">
 						<a href="javascript:{}" onclick="document.getElementById('modificarMedidor{{medidor.idmedidor}}').submit(); return false;">

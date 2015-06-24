@@ -31,6 +31,7 @@ function cambiarActivo(nuevoActivo){
 </script>
 	<form class="form-horizontal" action="privado.php?c=medidor&a=modificar" role="form" method="POST">
 		<div class="contenedor-formulario">
+			<input type="hidden" name="idmedidor" value="{{idmedidor}}">
 			<div class="row fila-de-alerta">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">
@@ -119,6 +120,14 @@ function cambiarActivo(nuevoActivo){
 					</div>
 				</div>
 			 </div>
+			 <div class=" col-lg-12">
+			 		<div class="form-group">
+					 	<label class="col-lg-4 control-label">Ultimo pago registrado: *</label>
+					 	<div class="col-lg-3">
+							<input type="date" class="form-control" name="fechadeultimopago"  required/>
+						</div>
+					</div>
+				</div> 
 			 <div class="row">
 				<div class=" col-lg-6">
 				<label class="col-lg-2">Activo: </label>
