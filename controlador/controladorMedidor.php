@@ -160,14 +160,17 @@ class controladorMedidor {
 			$activo = true;
 
 			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo,$fechadeultimopago);
-			
+			if($unMedidor->validarInsertar()){
 				$untimoID = $unMedidor->guardar();
 				$relacion = new PDOmedidorempresa(0,$untimoID,$idempresa);
 				$relacion->guardar();
 				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
 				$tipoAviso= 'exito';
-
-			header('Location:privado.php?c=medidor&a=eleccion&id='.$idempresa);
+				header('Location:privado.php?c=medidor&a=eleccion&id='.$idempresa);
+			}else{
+				//levantar errores
+			}
+			
 
 		}else{
 			$aviso=false;
@@ -181,9 +184,9 @@ class controladorMedidor {
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		$user=$_SESSION['user'];		
 		
-			$idmedidor = $_POST['idmedidor'];
+		$user=$_SESSION['user'];		
+		$idmedidor = $_POST['idmedidor'];
 
 		if (isset($_POST['enviarMedidor'])){
 			$nomyap = htmlEntities($_POST['nomyap']);
@@ -193,32 +196,28 @@ class controladorMedidor {
 			$numusuario = htmlEntities($_POST['numusuario']);
 			$numsuministro = htmlEntities($_POST['numsuministro']);
 			$fechadeultimopago = htmlentities($_POST['fechadeultimopago']);
-			$activo = htmlEntities($_POST['activo']);
 			
-			if ( isset($_POST['activo'])) {
+			if (isset($_POST['activo'])) {
 				$activo = true;
 			}else{
 				$activo = false;
 			}
 
 			$unMedidor = new PDOMedidor($idmedidor,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo,$fechadeultimopago);
-			if (empty(PDOMedidor::existeMedidor($numusuario,$numsuministro))){
-				$unMedidor->setIdmedidor($idmedidor);
-				$unMedidor->guardar();
-				$aviso='Perfecto! El titular fue modificado con éxito. ';
-				$tipoAviso= 'exito';
-			}
-			else {$aviso='ERROR! El número de usuario / número de suministro ya se encuentran en uso.';
-				  $tipoAviso='error';
-			}
+
+			$unMedidor->setIdmedidor($idmedidor);
+			$unMedidor->guardar();
 
 			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'unMedidor'=>$unMedidor,'user'=>$user));
+		
 		}else{
+			
 			$unMedidor=PDOMedidor::medidorPorID($idmedidor);
 			$aviso=false;
 			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');
 			echo $template->render(array('idmedidor'=>$idmedidor,'aviso'=>$aviso,'user'=>$user,'unMedidor'=>$unMedidor));
+		
 		}
 	}
 }

@@ -165,7 +165,29 @@ class PDOMedidor extends medidor{
       else return 0;
    }
 
-   public static function existeMedidor($numusuario, $numsuministro){
+   public function validarInsertar(){
+
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+
+      $consulta = $conexion->prepare('SELECT * FROM medidor WHERE (numsuministro = :numsuministro)');
+      
+      $consulta->bindParam(':numsuministro', $this->getNumsuministro());
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      
+      if ($objeto) {
+         //Si el array de obejtos viene cargado
+         return false;
+      }else{
+         return true;
+      }
+
+
+   }
+
+  /* public static function existeMedidor($numusuario, $numsuministro){
       try{
          $conexion=new conexion; //creo la instancia de la conexión
       }
@@ -176,6 +198,6 @@ class PDOMedidor extends medidor{
       $consulta->execute();
       $objeto = $consulta->fetch(PDO::FETCH_OBJ);
       return $objeto;
-   }
+   }*/
 }
 ?>
