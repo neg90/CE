@@ -1,7 +1,65 @@
 {% extends "basePrivada.html.twig" %}
  
 {% block title %} Lista de Empresas {% endblock %}
-{% block contenedor %}   
+{% block contenedor %}  
+
+<script>
+
+$(document).ready(function() {
+  /* Filtros */
+     $("#dato").css("display", "none");
+     $("#roles").css("display", "none");
+     $("#EnviarFiltro").css("display", "none");
+
+     $('#datoRol').on('change',function(){
+      var valor = $(this).val();
+      document.getElementById('datoTexto').value=valor;
+   });
+     //evaluarActivo(status);
+});
+
+  function getval(sel) {
+       switch (sel.value) {
+         case "Todos":
+            location.reload();
+            break;
+
+         case "Nombre y/o Apellido":
+          $("#dato").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
+          $("#roles").css("display", "none");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'nomyap';
+            break;
+
+         case "Usuario":
+          $("#dato").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: su_usuario");
+          $("#roles").css("display", "none");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'usuario';
+            break;
+
+         case "Email":
+          $("#dato").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: su@email.com");
+          $("#roles").css("display", "none");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'email';
+            break;
+
+         case "Rol":
+          $("#dato").css("display", "none");
+          $("#roles").css("display", "inline-block");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'rol';
+            break;
+        }
+    }
+
+</script>
+
+
     <h3 id="tituloBloque">Listado de Empresas</h3>
     <div class="clearfix"></div>
 
@@ -34,17 +92,91 @@
         <button type="submit" class="btn btn-default btn-block col-lg-4" name="irMail">Crear Correo</button>
       </div>
     </div>
+
+    {% if filtroActivo == 0 %}
+      <form method="POST" action="privado.php?c=usuarios&a=listar" id="form_herramientas_usuario">
+      <div id="herramientasTop" class="inline-block">
+          <div class="accionActivoparent inline-block">
+
+                <!--
+                  <input type="hidden" name="datoActivo" id="datoActivo" value="{{statusActivo}}">
+                -->
+                <input type="hidden" name="tipoFiltro" id="tipoFiltro">
+
+                <!--
+                  <a href="#" onclick="cambiarActivo();document.getElementById('form_herramientas_usuario').submit();" class="left inline-block">
+                  <span id="accionActivo" class="label label-default">Activos e Inactivos</span>
+                </a>
+                -->
+          </div>
+          <div id="filtroPor" class="inline-block">
+              <span> 
+                <b>Filtrar por:</b>
+              </span>
+              <form  method="POST" id="formFiltros" class="inline-block">
+              <select class="form-control" onchange="getval(this);">
+                <option selected>Todos</option>
+                <option>Nombre y/o Apellido</option>
+                <option>Usuario</option>
+                <option>Email</option>
+                <option>Rol</option>
+              </select>
+              </form>
+          </div>
+          <div id="dato">
+                            <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
+              </div>
+
+              <div id="roles" class="none">
+                {% if ListaRoles is null %}
+                {% else %}
+                  <select name="datoTexto" id="datoRol" class="form-control">
+                    {% for rol in ListaRoles %}
+                      {% if loop.index == 1 %} <option value="0" selected></option> {% endif %}
+                      <option value="{{rol.idrol}}">{{rol.nombre}}</option>
+                    {% endfor %}
+                  </select>
+                {% endif %}
+              </div>
+              <button id="EnviarFiltro" class="btn btn-default" onclick="document.getElementById('form_herramientas_usuario').submit();">Enviar</button>
+        </div>
+        </form>
+        {% else %}
+          <div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
+            <span>Filtrando resultados para {{tipoFiltxro}} <b>{{datoFiltro}}</b></span>
+          </div>            
+          <div class="col-lg-2">
+            <a href="privado.php?c=usuarios&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+              Quitar filtro
+          </a>
+        </div>
+        {% endif %}
+          <div id="botonesTop" class="block right">
+              <form id="enviarPDF" class="inline-block" action="privado.php?c=usuarios&a=pdf" method="POST">
+                <input type="hidden" id="datosPDF" name="datosPDF" value="{{ ListaUsuarios|json_encode() }}"/>
+                {% if ListaUsuarios is null %}
+                {% else %}
+            <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+              Ver en PDF
+            </a>
+            {% endif %}
+          </form>
+          <a href="privado.php?c=usuarios&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+            Nuevo usuario
+          </a>
+        </div>
+
+
   <table class="table table-hover">
   <thead>
     <tr>
       <th>Nº Socio</th>
       <th>Denominacion</th>
+      <th>CUIT</th>
       <th>Rubro</th>
       <th>Categoria</th>
       <th>Importe Mensual</th>
-      <th>Contactos</th>
-      <th>Medidor</th>
-      <th>Abonado</th>
+      <th>Cant. Empleados</th>
       <th>Activo</th>
       <th>Controles</th>
     </tr>
@@ -63,6 +195,11 @@
           <td>
             {% autoescape 'html' %}
               {{ item.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+            {% endautoescape %}
+          </td>
+          <td>
+            {% autoescape 'html' %}
+              {{ item.cuit|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
             {% endautoescape %}
           </td>
           <td>
@@ -90,57 +227,16 @@
           </td>
           <td>
             {% autoescape 'html' %}
-               {% for i in arrayVista %}
-                  {% if i['idempresa'] == item.idempresa %}
-                    {% for contacto in i['contactos'] %}
-                      <li> 
-                        {% for cNom in contactos %}
-                          {% if cNom.idcontacto == contacto.idcontacto %}
-                            {{ cNom.apellido|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                          {% endif %}
-                        {% endfor %}
-                      </li>
-                    {% endfor %}
-                  {% endif %}  
-              {% endfor %} 
+              {{ item.cantempleados|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
             {% endautoescape %}
           </td>
-          {% set tienContribuyente = 2 %}
-          <td>
-            {% autoescape 'html' %} 
-               {% for i in arrayVista %}
-                  {% if i['idempresa'] == item.idempresa %}
-                        {% for mNom in medidores %}
-                          {% if mNom.idmedidor == i['medidor'].idmedidor %}
-                              <li> {{ mNom.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</li>
-                              {% set tienContribuyente = 1 %}
-                          {% endif %}
-                        {% endfor %}
-                  {% endif %}  
-                {% endfor %} 
-            {% endautoescape %}
-          </td>
-          <td>
-            {% autoescape 'html' %} 
-              {% for i in arrayVista %}
-                {% if i['idempresa'] == item.idempresa %}
-                    {% for mAbon in abonados %}
-                      {% if mAbon.numabonado == i['abonado'].numabonado %}
-                        <li> {{ mAbon.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }} </li>
-                        {% set tienContribuyente = 1 %}
-                      {% endif %}
-                    {% endfor %}
-                {% endif %}  
-              {% endfor %} 
-             {% endautoescape %}
-          </td>
-          <td class="celda-numero">
-              {% if item.activo == 1 %}
-                Si   
-              {% else %}
-                No
-              {% endif %}
-          </td>
+          <td> 
+          {% if item.activo == 1 %}
+            <span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+          {% else %}
+            <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+          {% endif %}
+        </td>
           <td class="controles">
             {% if tienContribuyente == 2 %}
               <!-- nuevo abonado -->
