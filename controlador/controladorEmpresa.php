@@ -34,6 +34,7 @@ class controladorEmpresa {
 						$contactos[$ct] = PDOcontacto::buscarContacto($contactosTodos[$ct]->idcontacto);
 			}
 		}
+		$medidores=null;
 //		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
 		$medidoresTodos = PDOMedidor::listarMedidores();
 		for ($mt=0; $mt<count($medidoresTodos);$mt++){
@@ -42,7 +43,7 @@ class controladorEmpresa {
 						$medidores[$mt] = PDOMedidor::medidorPorID($medidoresTodos[$mt]->idmedidor);
 			}
 		}
-
+		$abonados = null;
 		$abonadosTodos = PDOabonado::listar();
 		for ($at=0; $at<count($abonadosTodos);$at++){
 			$abonadoEncontrado = PDOabonadoempresa::buscarAbonadoId($abonadosTodos[$at]->numabonado);
@@ -55,7 +56,7 @@ class controladorEmpresa {
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
-			'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user));
+		'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user));
 	}
 	public static function listar(){
 		$user=$_SESSION['user'];
