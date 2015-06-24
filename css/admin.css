@@ -134,6 +134,7 @@ hr{border:1px solid #ccc;}
 .accionActivoparent a{text-decoration: none;}
 
 #datoTexto{width:200px; padding-bottom:8px;}
+#dato{display:inline-block;}
 
 #botonesTop{margin-top:-57px;}
 #botonesTop a{ display:inline-block; width:170px;}

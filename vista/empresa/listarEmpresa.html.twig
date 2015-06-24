@@ -8,11 +8,14 @@
 $(document).ready(function() {
   /* Filtros */
      $("#dato").css("display", "none");
-     $("#roles").css("display", "none");
+     $("#criterio").css("display", "none");
      $("#EnviarFiltro").css("display", "none");
 
-     $('#datoRol').on('change',function(){
+     $('#datoCriterio').on('change',function(){
       var valor = $(this).val();
+      if (valor != '0') {$("#EnviarFiltro").css("display", "inline-block");
+                         $("#dato").css("display", "inline-block");}
+      else {$("#EnviarFiltro").css("display", "none");}
       document.getElementById('datoTexto').value=valor;
    });
      //evaluarActivo(status);
@@ -24,36 +27,55 @@ $(document).ready(function() {
             location.reload();
             break;
 
-         case "Nombre y/o Apellido":
+         case "Num. Socio":
           $("#dato").css("display", "inline-block");
-          $("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
-          $("#roles").css("display", "none");
+          $("#datoTexto").attr("placeholder", "Ej.: 00001");
+          $("#criterio").css("display", "none");
           $("#EnviarFiltro").css("display", "inline-block");
-          document.getElementById('tipoFiltro').value = 'nomyap';
+          document.getElementById('tipoFiltro').value = 'nrosocio';
             break;
 
-         case "Usuario":
+         case "Denominación":
           $("#dato").css("display", "inline-block");
-          $("#datoTexto").attr("placeholder", "Ej.: su_usuario");
-          $("#roles").css("display", "none");
+          $("#datoTexto").attr("placeholder", "Ej.: Empresa");
+          $("#criterio").css("display", "none");
           $("#EnviarFiltro").css("display", "inline-block");
-          document.getElementById('tipoFiltro').value = 'usuario';
+          document.getElementById('tipoFiltro').value = 'denominacion';
             break;
 
-         case "Email":
+         case "CUIT":
           $("#dato").css("display", "inline-block");
-          $("#datoTexto").attr("placeholder", "Ej.: su@email.com");
-          $("#roles").css("display", "none");
+          $("#datoTexto").attr("placeholder", "Ej.: 20-27000111-6");
+          $("#criterio").css("display", "none");
           $("#EnviarFiltro").css("display", "inline-block");
-          document.getElementById('tipoFiltro').value = 'email';
+          document.getElementById('tipoFiltro').value = 'cuit';
             break;
 
-         case "Rol":
+         case "Categoría":
+          $("#dato").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: Categoría");
+          $("#criterio").css("display", "none");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'categoria';
+            break;
+
+          case "Importe":
           $("#dato").css("display", "none");
-          $("#roles").css("display", "inline-block");
+          $("#criterio").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: 87");
+          $("#EnviarFiltro").css("display", "none");
+          document.getElementById('tipoFiltro').value = 'importe';
+            break; 
+
+          case "Cant. Empleados":
+          $("#dato").css("display", "inline-block");
+          $("#criterio").css("display", "none");
           $("#EnviarFiltro").css("display", "inline-block");
-          document.getElementById('tipoFiltro').value = 'rol';
-            break;
+          document.getElementById('tipoFiltro').value = 'cantempleados';
+            break;  
+
+           
+          
         }
     }
 
@@ -125,11 +147,8 @@ $(document).ready(function() {
               </select>
               </form>
           </div>
-          <div id="dato">
-                            <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
-              </div>
 
-              <div id="roles" class="none">
+              <div id="criterio" class="none">
                   <select name="datoCriterio" id="datoCriterio" class="form-control">
                       <option value="0" selected>Seleccione</option>
                       <option value="1">Mayor a</option>
@@ -138,31 +157,35 @@ $(document).ready(function() {
                   </select>
 
               </div>
+
+              <div id="dato">
+                            <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
+              </div>
               <button id="EnviarFiltro" class="btn btn-default" onclick="document.getElementById('form_herramientas_empresa').submit();">Enviar</button>
         </div>
         </form>
         {% else %}
           <div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
-            <span>Filtrando resultados para {{tipoFiltxro}} <b>{{datoFiltro}}</b></span>
+            <span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
           </div>            
           <div class="col-lg-2">
-            <a href="privado.php?c=usuarios&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+            <a href="privado.php?c=empresa&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
               Quitar filtro
           </a>
         </div>
         {% endif %}
           <div id="botonesTop" class="block right">
-              <form id="enviarPDF" class="inline-block" action="privado.php?c=usuarios&a=pdf" method="POST">
-                <input type="hidden" id="datosPDF" name="datosPDF" value="{{ ListaUsuarios|json_encode() }}"/>
-                {% if ListaUsuarios is null %}
+              <form id="enviarPDF" class="inline-block" action="privado.php?c=empresas&a=pdf" method="POST">
+                <input type="hidden" id="datosPDF" name="datosPDF" value="{{ empresas|json_encode() }}"/>
+                {% if empresas is null %}
                 {% else %}
-            <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
-              Ver en PDF
-            </a>
-            {% endif %}
-          </form>
-          <a href="privado.php?c=usuarios&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
-            Nuevo usuario
+                   <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+                       Ver en PDF
+                   </a>
+                {% endif %}
+              </form>
+          <a href="privado.php?c=empresa&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+            Nueva empresa
           </a>
         </div>
 
