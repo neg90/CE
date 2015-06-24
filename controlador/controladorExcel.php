@@ -31,8 +31,10 @@ class controladorExcel {
 		   [x][3]->importepago
 		   [x][4]->telefono
 		   [x][5]->apynom
-		//1->por que la primer fila tiene una boludes.
-		//termina 1 antes pro lo mismo.*/
+			//1->por que la primer fila tiene una boludes.
+			//termina 1 antes pro lo mismo.*/
+
+		   //¿como saber si falla la carga de algun registro?
 		if ($tenemosExcel) {
 			for ($i=1 ; $i < count($arrayExcel) -1  ; $i++) { 
 				// variables generales 
@@ -45,7 +47,8 @@ class controladorExcel {
 					$idultiomomedidor = $unMedidor->guardar();
 					if (PDOempresa::buscarMedidor($unMedidor->getNumsuministro())) {
 						//existe empresa para este medidor entonces creamos la relacion
-						$unaEmpresa = $unMedidor->buscarMedidor();
+						$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumsuministro());
+						var_dump($unaEmpresa[0]->idempresa());
 						$relacion = new PDOmedidorempresa(0,$idultiomomedidor,$unaEmpresa[0]->idempresa());	
 						$relacion->guardar();			
 					}else{

@@ -183,8 +183,16 @@ class PDOMedidor extends medidor{
       }else{
          return true;
       }
+   }
 
-
+   public static function borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin(){
+       try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('DELETE FROM medidor');
+      $consulta->execute();
+      
    }
 
   /* public static function existeMedidor($numusuario, $numsuministro){
