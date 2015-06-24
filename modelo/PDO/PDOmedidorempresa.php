@@ -84,7 +84,7 @@ class PDOmedidorempresa extends medidorempresa{
 
       $consulta->execute();
 
-      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
       
       return $objeto;
    }

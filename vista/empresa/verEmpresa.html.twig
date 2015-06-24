@@ -135,31 +135,76 @@ function cambiarAction(accion){
       </div>
       -->
       <div class="clearfix"></div>
-      <div id="detMedidor">
-                <span class="tituloBloqueDet"><p><b>Medidor: </b></span>
-                <a href="javascript:{}" onclick="cambiarAction('detMedidor');">
-                    <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
-                </a>
-                                {% for medidor in medidores %}
-                                  <li class="medidor"> 
-                                      <div class="left inline-block">
-                                          <p><b>Nombre: </b>{{ medidor.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
-                                          
-                                          <p><b>Num. Usuario: </b>{{ medidor.numusuario|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
-                                          
-                                          <p><b>Num. Suministro: </b>{{ medidor.numsuministro|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
-                                      </div>
-                                      <div class="right inline-block">
-                                          <p><b>Teléfono: </b>{{ medidor.telefono|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
 
-                                          <p><b>Domicilio: </b>{{ medidor.domicilio|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+      {% if (medidores is null) and (abonados is null) %}
+          <div id="detMedidorAbonadoVacio">
+                    <span class="tituloBloqueDet"><p><b>Medidor/Abonado: </b></span>
+                                      <li class="medidorAbonado"> 
+                                                  <p><b> No tiene ningun medidor / abonado asociado </b></p>
+                                                  <p><b> ¿Desea asociar uno? </b></p>
+                              <form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=eleccion&id={{empresa.idempresa}}" role="form" method="POST">
+                                          <input type="hidden" value="{{empresa.idempresa}}" name="idempresa">
+                                          <div class="left inline-block">
+                                                <button type="submit" class="btn btn-default btn-md btn-block col-lg-4 botonAsociarLeft" name="nuevoMedidor">  Asociar Medidor
+                                                </button>
+                                          </div>
+                                          <div class="right inline-block">
+                                                <button type="submit" class="btn btn-default btn-md btn-block col-lg-4 botonAsociarRight" name="nuevoAbonado">  Asociar Abonado
+                                                </button>
+                                          </div>
+                              </form>
+                                      </li>
+                    </p>
+          </div>
 
-                                          <p><b>Importe pago: </b>$ {{ medidor.importepago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
-                                      </div>
-                                  </li>
-                                {% endfor %}
-                </p>
-      </div>
+      {% elseif abonados is null %}
+            <div id="detMedidor">
+                      <span class="tituloBloqueDet"><p><b>Medidor: </b></span>
+                      <a href="javascript:{}" onclick="cambiarAction('detMedidor');">
+                          <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
+                      </a>
+                                      {% for medidor in medidores %}
+                                        <li class="medidor"> 
+                                            <div class="left inline-block">
+                                                <p><b>Nombre: </b>{{ medidor.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                
+                                                <p><b>Num. Usuario: </b>{{ medidor.numusuario|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                
+                                                <p><b>Num. Suministro: </b>{{ medidor.numsuministro|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                            </div>
+                                            <div class="right inline-block">
+                                                <p><b>Teléfono: </b>{{ medidor.telefono|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+
+                                                <p><b>Domicilio: </b>{{ medidor.domicilio|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+
+                                                <p><b>Importe pago: </b>$ {{ medidor.importepago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                            </div>
+                                        </li>
+                                      {% endfor %}
+                      </p>
+            </div>
+    {% else %}
+            <div id="detAbonado">
+                      <span class="tituloBloqueDet"><p><b>Abonado: </b></span>
+                      <a href="javascript:{}" onclick="cambiarAction('detMedidor');">
+                          <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
+                      </a>
+                                      {% for abonado in abonados %}
+                                        <li class="abonado"> 
+                                            <div class="left inline-block">
+                                                <p><b>Importe: </b>{{ abonado.importe|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                
+                                                <p><b>Fecha ultimo pago: </b>{{ abonado.fechadeultimopago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                
+                                                <p><b>Num. Abonado: </b>{{ abonado.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                            </div>
+                                        </li>
+                                      {% endfor %}
+                      </p>
+            </div>
+    {% endif %}
+
+
       <div class="clearfix"></div>
       <div id="botones">
               <a href="privado.php?c=empresa&a=listar">

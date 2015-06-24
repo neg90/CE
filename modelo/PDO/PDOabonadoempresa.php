@@ -87,6 +87,20 @@ class PDOabonadoempresa extends abonadoempresa{
       
    }
 
+   public static function buscarAbonadoId ($numabonado){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+
+      $consulta = $conexion->prepare('SELECT * FROM abonadoempresa WHERE numabonado = :numabonado');
+
+      $consulta->bindParam(':numabonado',$numabonado);
+
+      $consulta->execute();
+
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
 
 }
 ?>
