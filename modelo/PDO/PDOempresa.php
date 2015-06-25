@@ -7,10 +7,10 @@ class PDOempresa extends empresa{
 	
 
 	public function __construct ($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo,
-   $cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro){
+   $cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario){
 
 		parent::__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo,
-      $cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro);
+      $cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario);
 
 	}
 
@@ -42,7 +42,7 @@ class PDOempresa extends empresa{
       $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (denominacion = :denominacion and 
       web = :web and idrubro = :idrubro and detactividad = :detactividad and idcategoria = :idcategoria and fechainicioce = :fechainicioce
       and activo = :activo and cuit = :cuit and importemensual = :importemensual and nrosocio = :nrosocio 
-      and cantempleados = :cantempleados and numsuministro = :numsuministro)');
+      and cantempleados = :cantempleados and numusuario = :numusuario)');
       
          
       $consulta->bindParam(':denominacion', $this->getDenominacion());
@@ -67,7 +67,7 @@ class PDOempresa extends empresa{
 
       $consulta->bindParam(':nrosocio', $this->getNrosocio());
 
-      $consulta->bindParam(':numsuministro', $this->getNumsuministro());
+      $consulta->bindParam(':numusuario', $this->getNumusuario());
 
       $consulta->execute();
 
@@ -90,7 +90,7 @@ class PDOempresa extends empresa{
          $consulta = $conexion->prepare('UPDATE empresa SET denominacion = :denominacion, web = :web, idrubro = :idrubro, 
          detactividad = :detactividad, idcategoria = :idcategoria, fechainicioce = :fechainicioce, activo = :activo,
          cuit = :cuit, fechafundacion = :fechafundacion, importemensual = :importemensual, nrosocio = :nrosocio, cantempleados = :cantempleados,
-         numsuministro = :numsuministro WHERE idempresa = :idempresa');
+         numusuario = :numusuario WHERE idempresa = :idempresa');
          
          $consulta->bindParam('idempresa',$this->getIdempresa());
 
@@ -118,15 +118,15 @@ class PDOempresa extends empresa{
 
          $consulta->bindParam(':nrosocio', $this->getNrosocio());
        
-         $consulta->bindParam(':numsuministro' ,$this->getNumsuministro());
+         $consulta->bindParam(':numusuario' ,$this->getNumusuario());
        
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          
          $consulta = $conexion->prepare('INSERT INTO empresa (denominacion, web, idrubro, detactividad, cantempleados, idcategoria, fechainicioce,
-         activo, cuit,fechafundacion, importemensual, nrosocio,numsuministro) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
-         :activo,:cuit,:fechafundacion,:importemensual,:nrosocio,:numsuministro)');
+         activo, cuit,fechafundacion, importemensual, nrosocio,numusuario) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
+         :activo,:cuit,:fechafundacion,:importemensual,:nrosocio,:numusuario)');
 
          $consulta->bindParam(':denominacion', $this->getDenominacion());
 
@@ -152,7 +152,7 @@ class PDOempresa extends empresa{
 
          $consulta->bindParam(':nrosocio', $this->getNrosocio());
 
-         $consulta->bindParam(':numsuministro' ,$this->getNumsuministro());
+         $consulta->bindParam(':numusuario' ,$this->getNumusuario());
       
          $consulta->execute();
 
@@ -193,7 +193,7 @@ class PDOempresa extends empresa{
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],
       $resultado['activo'],$resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio'],
-      $resultado['numsuministro']);
+      $resultado['numusuario']);
 
       return $objeto;
 
@@ -211,19 +211,18 @@ class PDOempresa extends empresa{
 
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],$resultado['activo'],
-      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio'],$resultado['numsuministro']);
+      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['nrosocio'],$resultado['numusuario']);
       
       return $objeto;
 
    }
 
-   public static function buscarMedidor($numsuministro){
+   public static function buscarMedidor($numusuario){
      try {$conexion = new conexion;}catch (PDOException $e){}
                
-     $consulta = $conexion->prepare('SELECT * FROM empresa 
-                                     WHERE numsuministro = :numsuministro');
+     $consulta = $conexion->prepare('SELECT * FROM empresa WHERE numusuario = :numusuario');
                
-     $consulta->bindParam(':numsuministro',$numsuministro);
+     $consulta->bindParam(':numusuario',$numusuario);
      $consulta->execute();
                
        $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);

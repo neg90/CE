@@ -221,7 +221,7 @@ class controladorEmpresa {
 			$detactividad = htmlEntities($_POST['detactividad']);
 			$numabonado = htmlEntities($_POST['abonado']);
 			$idMedidor = htmlentities($_POST['medidor']);
-			$numsuministro = htmlentities($_POST['numsuministro']);
+			$numusuario = htmlentities($_POST['numusuario']);
 			
 			if (isset($_POST['activo'])) {
 				$activo = true;
@@ -231,14 +231,14 @@ class controladorEmpresa {
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,
-			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro);
+			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario);
 			if($unaEmpresa->validarInsertar()){
 				
 				$ultimoIdempresaInsertado = $unaEmpresa->guardar();
 				$aviso=1;
 				//Todo salio bien y se guardo traigo el objeto y empiezo a llenar tablas relacionadas.
 				//$unaEmpresa = PDOempresa::BuscarID($denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,$fechainicioce,
-				//$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro);
+				//$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario);
 				$unaEmpresa = PDOempresa::buscarEmpresa($ultimoIdempresaInsertado);
 				//alta socio
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
@@ -344,7 +344,7 @@ class controladorEmpresa {
 				$detactividad = htmlEntities($_POST['detactividad']);
 				$numabonado = htmlEntities($_POST['abonado']);
 				$idMedidor = htmlentities($_POST['medidor']);
-				$numsuministro = htmlentities($_POST['numsuministro']);
+				$numusuario = htmlentities($_POST['numusuario']);
 				if (isset($_POST['activo'])) {
 					$activo = true;
 				}else{
@@ -362,7 +362,7 @@ class controladorEmpresa {
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);
-				$unaEmpresa->setNumsuministro($numsuministro);
+				$unaEmpresa->setnumusuario($numusuario);
 				
 				//Agrego el nuevo o el mismo :/
 				if( $idMedidor <> '-1'){

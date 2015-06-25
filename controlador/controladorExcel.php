@@ -6,6 +6,24 @@
 	require_once '../modelo/PDO/PDOempresa.php';
 
 class controladorExcel {
+	/* Recibe el registro actual del arrayexel y verifica todos los campos antes de insertarlo en caso de que el 
+	registro nose pueda insertar devuelve si esta sano o no. */
+	public static function validarRegistro($unRegistro){
+		$esValido = true;
+		if($unRegistro[0] == ''){
+			$esValido = false;
+		}
+		if($unRegistro[1] == ''){
+			$esValido = false;
+		}
+		if ($unRegistro[5] == ''){
+			$esValido = false;
+		}
+		if ($unRegistro[3] == ''){
+			$esValido = false;
+		} 
+		return $esValido; 
+	}
 
 
 	/**/
@@ -24,6 +42,8 @@ class controladorExcel {
 			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
 			$tenemosExcel = true;
 	  	}
+	  	/* Descomentar para borrar todoe n tabla medidor */
+	  	//PDOMedidor::borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin();
 
 		/* [x][0]->numusuario
 		   [x][1]->numsuministro
@@ -36,20 +56,22 @@ class controladorExcel {
 
 		   //¿como saber si falla la carga de algun registro?
 		if ($tenemosExcel) {
-			for ($i=1 ; $i < count($arrayExcel) -1  ; $i++) { 
+			for ($i=1 ; $i < count($arrayExcel) - 1  ; $i++) { 
 				// variables generales 
 				$activo = true;
 				$fechadeultimopago = date('Y-m-d');
+				$rotos[$i] = controladorExcel::validarRegistro($arrayExcel[$i]);
 				$unMedidor = new PDOMedidor(0,$arrayExcel[$i][5],$arrayExcel[$i][4],$arrayExcel[$i][2],$arrayExcel[$i][3],$arrayExcel[$i][0],
 				$arrayExcel[$i][1],$activo,$fechadeultimopago);
+				var_dump($unMedidor->validarInsertar());
 				if ($unMedidor->validarInsertar()){
 					//no existe	
 					$idultiomomedidor = $unMedidor->guardar();
-					if (PDOempresa::buscarMedidor($unMedidor->getNumsuministro())) {
+					var_dump(PDOempresa::buscarMedidor($unMedidor->getNumusuario()));
+					if (PDOempresa::buscarMedidor($unMedidor->getNumusuario())) {
 						//existe empresa para este medidor entonces creamos la relacion
-						$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumsuministro());
-						var_dump($unaEmpresa[0]->idempresa());
-						$relacion = new PDOmedidorempresa(0,$idultiomomedidor,$unaEmpresa[0]->idempresa());	
+						$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumusuario());
+						$relacion = new PDOmedidorempresa(0,$idultiomomedidor,$unaEmpresa[0]->idempresa);	
 						$relacion->guardar();			
 					}else{
 						//luego vemos.

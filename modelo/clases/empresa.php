@@ -15,10 +15,10 @@ class empresa {
 	private $cuit;
 	private $fechafundacion;
 	private $importemensual;
-	private $numsuministro;
+	private $numusuario;
 
 	public function	__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,
-	$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numsuministro) {
+	$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario) {
 	
 		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
@@ -33,16 +33,16 @@ class empresa {
 		$this->fechafundacion = $fechafundacion;
 		$this->importemensual = $importemensual;
 		$this->nrosocio = $nrosocio;
-		$this->numsuministro =$numsuministro;
+		$this->numusuario =$numusuario;
 
 	}
 	
-	public function getNumsuministro(){
-		return $this->numsuministro;
+	public function getNumusuario(){
+		return $this->numusuario;
 	}
 
-	public function setNumsuministro($numsuministro){
-		$this->numsuministro = $numsuministro;
+	public function setNumusuario($numusuario){
+		$this->numusuario = $numusuario;
 	}
 
 	public function getIdempresa(){
