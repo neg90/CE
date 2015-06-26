@@ -137,5 +137,40 @@ function TablaMedidor($header, $data)
 	$this->Cell(array_sum($w),0,'','T');
 }
 
+function TablaEmpresa($data)
+{
+	// Colors, line width and bold font
+	$this->SetFillColor(120,120,120);
+	$this->SetTextColor(255);
+	$this->SetDrawColor(200,200,200);
+	$this->SetLineWidth(0);
+	$this->SetFont('','B');
+	// Header
+	/*$w = array(60, 45, 50, 30, 40, 45);
+	for($i=0;$i<count($header);$i++)
+		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
+	$this->Ln();*/
+	// Color and font restoration
+	$this->SetFillColor(235,235,235);
+	$this->SetTextColor(100,100,100);
+	$this->SetFont('');
+	// Data
+	$fill = false;
+	foreach($data as $row)
+	{
+		$this->Cell($w[0],6,utf8_decode($row['nomyap']),'LR',0,'L',$fill);
+		$this->Cell($w[1],6,$row['telefono'],'LR',0,'L',$fill);
+		$this->Cell($w[2],6,utf8_decode($row['domicilio']),'LR',0,'L',$fill);
+		$this->Cell($w[3],6,$row['importepago'],'LR',0,'L',$fill);
+		$this->Cell($w[4],6,$row['numusuario'],'LR',0,'L',$fill);
+		$this->Cell($w[5],6,$row['numsuministro'],'LR',0,'L',$fill);
+		//$this->Cell($w[3],6,number_format($row[3]),'LR',0,'R',$fill);
+		$this->Ln();
+		$fill = !$fill;
+	}
+	// Closing line
+	$this->Cell(array_sum($w),0,'','T');
+}
+
 }
 ?>

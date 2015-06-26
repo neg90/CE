@@ -73,6 +73,9 @@ function cambiarAction(accion){
                           <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                       </a>
                 </span>
+                        {% if contactos is null %}
+                            <p class="noInfoDetalle">No se encontraron contactos asignados.</p>
+                        {% else %}
                                 {% for contacto in contactos %}
                                   <li class="contacto"> 
                                       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -80,6 +83,7 @@ function cambiarAction(accion){
                                       {{ contacto.getNombre|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
                                   </li>
                                 {% endfor %}
+                        {% endif %}
                 </p>
           </div>
             <div id="detTelefono">
@@ -87,13 +91,21 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detTelefono');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
+                    {% if telefonos is null %}
+                            <p class="noInfoDetalle">No se encontraron telefonos asignados.</p>
+                    {% else %}
                         {% for itemtel in telefonos %}
                                 <li class="telefono"> 
                                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                                     {{ itemtel.telefono |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                                    ( {{ itemtel.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% if itemtel.descripcion is null%}
+
+                                    {% else %}
+                                        ( {{ itemtel.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% endif %}
                                 </li>
-                              {% endfor %}        
+                              {% endfor %}
+                    {% endif %}        
                 </p>
             </div>
             <div id="detCorreo">
@@ -101,13 +113,22 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detCorreo');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
+                    {% if correos is null %}
+                            <p class="noInfoDetalle">No se encontraron correos asignados.</p>
+                    {% else %}
                         {% for itemcorreo in correos %}
                                 <li class="correo"> 
                                     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                     {{ itemcorreo.correo |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                                    ( {{ itemcorreo.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+
+                                    {% if itemcorreo.descripcion is null%}
+
+                                    {% else %}
+                                          ( {{ itemcorreo.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% endif %}
                                 </li>
-                              {% endfor %}        
+                              {% endfor %}
+                    {% endif %}        
                 </p>
             </div>
             <div id="detDomicilio">
@@ -115,13 +136,21 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detDomicilio');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
+                    {% if domicilios is null %}
+                            <p class="noInfoDetalle">No se encontraron domicilios asignados.</p>
+                    {% else %}
                         {% for itemdomicilio in domicilios %}
                                 <li class="domicilio"> 
                                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                     {{ itemdomicilio.domicilio |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                                    ( {{ itemdomicilio.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% if itemdomicilio.descripcion is null%}
+                                    
+                                    {% else %}
+                                        ( {{ itemdomicilio.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% endif %}
                                 </li>
                               {% endfor %}        
+                    {% endif %}
                 </p>
             </div>
       </div>

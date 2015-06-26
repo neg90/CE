@@ -21,6 +21,24 @@
 class controladorEmpresa {
 
 
+	static function pdfEmpresa($datosPDF){
+
+		/***************************\
+		|*	 FALTA IMPLEMENTAR!!!  *|
+	    |*                         *|
+		\***************************/
+
+		$pdf = new PDF();
+		// Cargo la info
+		$data = html_entity_decode($datosPDF);
+		$data = json_decode($data, true);
+		$pdf->SetFont('Arial','',14);
+		$_SESSION['tituloPDF']=('Empresa'); //título PDF
+		$pdf->AddPage();
+		$pdf->TablaEmpresa($data);
+		$pdf->Output();
+	}
+
 	public static function filtros(){
 		$user=$_SESSION['user'];
 
@@ -107,6 +125,7 @@ class controladorEmpresa {
 		$categoria = PDOcategoria::buscarDescripcion($empresa->getIdcategoria());
 		$rubro = PDOrubro::buscarDescripcion($empresa->getIdrubro());
 //		$contactoempresa = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
+		$contactos=null;
 		$contactosTodos = PDOcontacto::listar();
 		for ($ct=0; $ct<count($contactosTodos);$ct++){
 			if (PDOcontactoempresa::buscarContactoId($contactosTodos[$ct]->idcontacto)){
