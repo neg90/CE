@@ -70,6 +70,11 @@ class controladorEmpresa {
 				$empresas=PDOempresa::filtroImporte($criterio,$datoFiltro);
 				break;
 
+			case 'rubro':
+				$rubros=PDOrubro::filtroRubro($datoFiltro);
+				$empresas=PDOempresa::filtroRubro($rubros);
+				break;
+
 			case 'categoria':
 				$cats=PDOcategoria::filtroCategoria($datoFiltro);
 				$empresas=PDOempresa::filtroCategoria($cats);

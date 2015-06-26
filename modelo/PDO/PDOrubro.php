@@ -12,6 +12,23 @@ class PDOrubro extends rubro{
 	
 	}
 
+
+   /* FILTROS */
+
+   public static function filtroRubro($descripcion){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM rubro WHERE (descripcion LIKE concat('%',:descripcion,'%'))");
+      $consulta->bindParam(':descripcion',$descripcion);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   /* FIN FILTROS */
+
    public static function listar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       $consulta = $conexion->prepare('SELECT * FROM rubro');

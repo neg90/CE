@@ -97,7 +97,7 @@ class controladorMedidor {
 			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
 
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo));	
+			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro));	
 	}
 
 	static function listarConCartel($eliminado){

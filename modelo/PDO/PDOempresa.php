@@ -52,6 +52,34 @@ class PDOempresa extends empresa{
       return $objeto;
    }
 
+   public static function filtroRubro($arrayRubros){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $rubros='';
+      $cant= count($arrayRubros);
+
+      foreach ($arrayRubros as $unRubro){
+         $rubros .= $unRubro->id; //Armo un string con los id, de la forma: '12345678'
+      }
+      if ($cant != 0){
+            if ($cant==1){
+                        //$consulta = $conexion->prepare("SELECT * FROM empresa WHERE (idempresa LIKE concat('%',:idempresa,'%'))");
+                  $consulta = $conexion->prepare("SELECT * FROM empresa WHERE idrubro = :idrubro");
+                  $consulta->bindParam(':idrubro',$rubros);
+            }
+            else {
+                  $consulta = $conexion->prepare("SELECT * FROM empresa WHERE idrubro IN :rubros");
+                  $consulta->bindParam(':rubros',$rubros);
+            }
+            $consulta->execute();
+            $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+            return $objeto;
+      }
+      else return null;
+   }
+
    public static function filtroCategoria($arrayCategorias){
       try{
          $conexion=new conexion; //creo la instancia de la conexión

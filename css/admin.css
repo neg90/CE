@@ -137,7 +137,7 @@ hr{border:1px solid #ccc;}
 #dato{display:inline-block;}
 
 #botonesTop{margin-top:-57px;}
-#botonesTop a{ display:inline-block; width:170px;}
+#botonesTop a{display:inline-block; width:170px; margin-top:0px;}
 #botonesTop a:nth-child(2){margin:0px;}
 
 .filtrandoresultados{height:20px; background:#eee; color:#666; border:0px}
@@ -166,3 +166,5 @@ hr{border:1px solid #ccc;}
 .editBlockDet {margin-right:10px; color:#bbb;}
 .botonAsociarLeft{width:200px!important; margin:5px; margin-bottom: 10px!important;float:right!important;}
 .botonAsociarRight{width:200px!important; margin:5px;margin-bottom: 10px!important;float:left!important;}
+
+#bottonEnviarCorreo{display:inline-block!important; width:170px;}

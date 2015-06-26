@@ -95,7 +95,7 @@ class controladorUsuario {
 			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
 
 			$template = $twig->loadTemplate('usuarios/listarUsuarios.html.twig');
-			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles, 'filtroActivo' => $filtroActivo, 'datoFiltro'=>$datoFiltro));	
+			echo $template->render(array('user'=>$user,'ListaUsuarios'=>$ListaUsuarios,'ListaRoles'=>$ListaRoles, 'filtroActivo' => $filtroActivo, 'datoFiltro'=>$datoFiltro, 'tipoFiltro'=>$tipoFiltro));	
 	}
 
 	static function verUsuario($Usuario){

@@ -227,7 +227,7 @@ class controladorContacto {
 			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
 
 			$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-			echo $template->render(array('user'=>$user,'contactos'=>$contactos, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo));	
+			echo $template->render(array('user'=>$user,'contactos'=>$contactos, 'tipoFiltro'=>$tipoFiltro ,'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo));	
 	}
 		
 	public function baja(){
