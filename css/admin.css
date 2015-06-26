@@ -122,10 +122,14 @@ hr{border:1px solid #ccc;}
 
 .gris{color:gray;}
 
-#filtroPor{margin-top:30px; padding-bottom: 10px; display:inline-block; margin-left:20px;}
+#filtroPor{padding-bottom: 10px; display:inline-block; margin-left:20px;}
 #filtroPor span{display:inline-block;}
 #filtroPor select{display:inline-block; width:180px; margin-left:10px;}
 #herramientas_botones, #herramientasTop{display:inline-block;}
+
+#formBotonesTop{display: inline-block;}
+#form_herramientas_empresa, #form_herramientas_usuario, #form_herramientas_contacto,
+#form_herramientas_medidor {width: 650px; margin: 0px; display: inline-block; float: left;}
 
 .inline-block{display:inline-block!important;}
 .block{display:block!important;}
@@ -136,7 +140,7 @@ hr{border:1px solid #ccc;}
 #datoTexto{width:200px; padding-bottom:8px;}
 #dato{display:inline-block;}
 
-#botonesTop{margin-top:-57px;}
+#botonesTop{float: right;}
 #botonesTop a{display:inline-block; width:170px; margin-top:0px;}
 #botonesTop a:nth-child(2){margin:0px;}
 
