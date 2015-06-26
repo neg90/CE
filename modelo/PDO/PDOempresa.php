@@ -14,7 +14,106 @@ class PDOempresa extends empresa{
 
 	}
 
-	
+	/* FILTROS */
+
+   public static function filtroDenominacion($denominacion){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM empresa WHERE (denominacion LIKE concat('%',:denominacion,'%'))");
+      $consulta->bindParam(':denominacion',$denominacion);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroNrosocio($nrosocio){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM empresa WHERE nrosocio = :nrosocio");
+      $consulta->bindParam(':nrosocio',$nrosocio);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroCUIT($cuit){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM empresa WHERE (cuit LIKE concat('%',:cuit,'%'))");
+      $consulta->bindParam(':cuit',$cuit);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroCategoria($arrayCategorias){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $cats='';
+      $cant= count($arrayCategorias);
+
+      foreach ($arrayCategorias as $unaCategoria){
+         $cats .= $unaCategoria->id; //Armo un string con los id, de la forma: '12345678'
+      }
+      if ($cant != 0){
+            if ($cant==1){
+                        //$consulta = $conexion->prepare("SELECT * FROM empresa WHERE (idempresa LIKE concat('%',:idempresa,'%'))");
+                  $consulta = $conexion->prepare("SELECT * FROM empresa WHERE idcategoria = :idcategoria");
+                  $consulta->bindParam(':idcategoria',$cats);
+            }
+            else {
+                  $consulta = $conexion->prepare("SELECT * FROM empresa WHERE idcategoria IN :cats");
+                  $consulta->bindParam(':cats',$cats);
+            }
+            $consulta->execute();
+            $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+            return $objeto;
+      }
+      else return null;
+   }
+
+   public static function filtroCantempleados($cantempleados){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM empresa WHERE cantempleados = :cantempleados");
+      $consulta->bindParam(':cantempleados',$cantempleados);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }   
+
+
+   public static function filtroImporte($crit,$importe){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+
+      if ($crit == 1) $criterio = '>';
+      elseif ($crit == 2) $criterio = '=';
+      else $criterio = '<';
+
+      $consulta = $conexion->prepare("SELECT * FROM empresa WHERE importemensual ".$criterio. ":importemensual");
+      $consulta->bindParam(':importemensual',$importe);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }   
+
+
+   /* Fin FILTROS */
+
+
 	public static function listar(){
 		try {$conexion = new conexion;}catch (PDOException $e){}
 		$consulta = $conexion->prepare('SELECT * FROM empresa');

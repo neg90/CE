@@ -19,6 +19,84 @@
 //2->Ya existe un contacto igual
 //0->No mostrar mensaje, es solo carga del formulario.
 class controladorEmpresa {
+
+
+	public static function filtros(){
+		$user=$_SESSION['user'];
+
+		/* FILTROS USUARIOS*/
+		if (isset($_POST['tipoFiltro'])){
+				if (!empty($_POST['tipoFiltro']))
+					$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+		}
+
+		if (isset($_POST['dato'])){
+			if (!empty($_POST['dato']))
+				$datoFiltro=htmlEntities($_POST['dato']);
+		}
+
+		if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
+		else header('Location:privado.php?c=empresa&a=listar');
+
+		if (isset($_POST['datoCriterio'])){
+			$criterio=htmlEntities($_POST['datoCriterio']);
+		}
+
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		$categorias = PDOcategoria::listar();
+		//$empresas = PDOempresa::listar();
+
+		switch($tipoFiltro){
+			case 'denominacion':
+				$empresas=PDOempresa::filtroDenominacion($datoFiltro);
+				break;
+
+			case 'nrosocio':
+				$empresas=PDOempresa::filtroNrosocio($datoFiltro);
+				break;
+
+			case 'cuit':
+				$empresas=PDOempresa::filtroCUIT($datoFiltro);
+				break;
+
+			case 'cantempleados':
+				$empresas=PDOempresa::filtroCantempleados($datoFiltro);
+				break;	
+
+			case 'importe':
+				$empresas=PDOempresa::filtroImporte($criterio,$datoFiltro);
+				break;
+
+			case 'categoria':
+				$cats=PDOcategoria::filtroCategoria($datoFiltro);
+				$empresas=PDOempresa::filtroCategoria($cats);
+				break;
+		}
+
+		$rubros = PDOrubro::listar();
+		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
+		$contactos = PDOContacto::listar();
+		$abonados = PDOabonado::listar();
+		$medidores = PDOMedidor::listarMedidores();
+		$arrayVista[0] = '';
+		if (count($empresas)>0){
+				for ($i=0; $i < $totalEmpresas   ; $i++) { 
+					$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
+					$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
+					$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresas[$i]->idempresa);
+					$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
+					$arrayVista[$i] = $arrayUnario;
+				}
+		}
+		$filtroActivo=1;
+		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
+		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro,'datoFiltro'=>$datoFiltro));
+	}
+
 	public static function detalle($idempresa){
 		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
@@ -79,9 +157,11 @@ class controladorEmpresa {
 			$arrayVista[$i] = $arrayUnario;
 		}
 		
+		$filtroActivo = 0; //Si está filtrando la tabla, es 1.
+
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
 		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo' => $filtroActivo));
 	}
 	public function baja(){
 		$user=$_SESSION['user'];

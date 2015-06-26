@@ -155,6 +155,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$id=htmlEntities(@$_GET['id']); 
 						controladorEmpresa::eleccion($id);
 					}
+				}elseif ($accion == 'filtro') {
+					controladorEmpresa::Filtros();
 				}
 			}
 
