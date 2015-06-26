@@ -14,7 +14,7 @@ class medidor {
 	
 
 	public function	__construct($id,$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo,$fechadeultimopago) {
-		
+		$this->idmedidor = $id;
 		$this->nomyap = $nomyap;
 		$this->telefono = $telefono;
 		$this->domicilio = $domicilio;

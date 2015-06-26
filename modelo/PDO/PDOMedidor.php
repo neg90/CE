@@ -169,9 +169,9 @@ class PDOMedidor extends medidor{
 
       try {$conexion = new conexion;}catch (PDOException $e){} 
 
-      $consulta = $conexion->prepare('SELECT * FROM medidor WHERE (numsuministro = :numsuministro)');
+      $consulta = $conexion->prepare('SELECT * FROM medidor WHERE (numusuario = :numusuario)');
       
-      $consulta->bindParam(':numsuministro', $this->getNumsuministro());
+      $consulta->bindParam(':numusuario', $this->getNumusuario());
 
       $consulta->execute();
 
@@ -193,6 +193,23 @@ class PDOMedidor extends medidor{
       $consulta = $conexion->prepare('DELETE FROM medidor');
       $consulta->execute();
       
+   }
+
+   public static function medidorporNumusuario($numusuario){
+      try{$conexion=new conexion;}catch (PDOException $e){}
+     
+      $consulta = $conexion->prepare('SELECT * FROM medidor WHERE numusuario = :numusuario');
+
+      $consulta->bindParam(':numusuario', $numusuario);
+
+      $consulta->execute();
+      $resultado = $consulta->fetch();
+      
+      $objeto = new PDOMedidor ($resultado['idmedidor'],$resultado['nomyap'],$resultado['telefono'],
+      $resultado['domicilio'],$resultado['importepago'],$resultado['numusuario'],$resultado['numsuministro'],
+      $resultado['activo'],$resultado['fechadeultimopago']);
+     
+      return $objeto;
    }
 
   /* public static function existeMedidor($numusuario, $numsuministro){

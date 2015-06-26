@@ -147,6 +147,7 @@ $(document).ready(function() {
       <th>Imp. Pago</th>
       <th>Num. Usuario</th>
       <th>Num. Suministro</th>
+      <th>Ultimo Pago</th>
       <th>Activo</th>
       <th>Controles</th>
     </tr>
@@ -190,6 +191,7 @@ $(document).ready(function() {
 				<td> <small>$</small> {{ medidor.importepago }}</td>
 				<td> {{ medidor.numusuario }}</td>
 				<td> {{ medidor.numsuministro }}</td>
+        <td> {{ medidor.fechadeultimopago }}</td>
 				<td> 
 					{% if medidor.activo == 1 %}
 						<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>

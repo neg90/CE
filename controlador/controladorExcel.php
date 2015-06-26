@@ -61,13 +61,12 @@ class controladorExcel {
 				$activo = true;
 				$fechadeultimopago = date('Y-m-d');
 				$rotos[$i] = controladorExcel::validarRegistro($arrayExcel[$i]);
+				/* en lo posible usar $unMedidor */
 				$unMedidor = new PDOMedidor(0,$arrayExcel[$i][5],$arrayExcel[$i][4],$arrayExcel[$i][2],$arrayExcel[$i][3],$arrayExcel[$i][0],
 				$arrayExcel[$i][1],$activo,$fechadeultimopago);
-				var_dump($unMedidor->validarInsertar());
 				if ($unMedidor->validarInsertar()){
 					//no existe	
 					$idultiomomedidor = $unMedidor->guardar();
-					var_dump(PDOempresa::buscarMedidor($unMedidor->getNumusuario()));
 					if (PDOempresa::buscarMedidor($unMedidor->getNumusuario())) {
 						//existe empresa para este medidor entonces creamos la relacion
 						$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumusuario());
@@ -78,14 +77,15 @@ class controladorExcel {
 					}
 				}else{
 					//si existe
-
+					//busco el medidor
+					$unMedidorActualizable = PDOMedidor::medidorporNumusuario($unMedidor->getNumusuario());
+					$unMedidorActualizable->setFechadeultimopago($fechadeultimopago);
+					//cambiar importe de empresa aca si vir da el OK
+					$unMedidorActualizable->guardar();
 				}
-	
 			}
-	  	
 		}
 	
-
 		$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
 		echo $template->render(array());
 

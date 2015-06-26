@@ -1,5 +1,5 @@
 <?php
-error_reporting(-1);
+
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
 require_once 'controladorEmpresa.php';

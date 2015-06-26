@@ -70,7 +70,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Apellido y Nombre: * </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" value="{{unMedidor.nomyap}}" class="form-control" pattern="[a-zA-Z ]+" title="No parece un apellido y nombre válido" name="nomyap" placeholder="Pérez, Juan" required/>
+						  <input type="text" value="{{unMedidor.nomyap}}" class="form-control" name="nomyap" placeholder="Pérez, Juan" required/>
 						</div>
 					</div>
 				</div>
@@ -78,7 +78,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Teléfono: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="telefono" pattern="[0-9- ()]+" title="No parece un teléfono válido" value="{{unMedidor.telefono}}" placeholder="02983 123456" />
+						  <input type="text" class="form-control" name="telefono" value="{{unMedidor.telefono}}" placeholder="02983 123456" />
 						</div>
 					</div>
 				</div>
@@ -88,7 +88,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Domicilio: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="domicilio" pattern="[a-zA-Z0-9 ]+" title="No parece una dirección válida" value="{{unMedidor.domicilio}}" placeholder="Av. Moreno 999" />
+						  <input type="text" class="form-control" name="domicilio" value="{{unMedidor.domicilio}}" placeholder="Av. Moreno 999" />
 						</div>
 					</div>
 				</div>
@@ -97,7 +97,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Importe: *</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="importe" pattern="[0-9., ]+" title="No parece un importe válido" value="{{unMedidor.importepago}}"  placeholder="00.00"  required/>
+						  <input type="text" class="form-control" name="importe" value="{{unMedidor.importepago}}"  placeholder="00.00"  required/>
 						</div>
 					</div>
 				</div>
@@ -107,7 +107,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Núm. de usuario: * </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="numusuario" pattern="[a-zA-Z0-9 -]+" title="No parece un número de usuario válido" value="{{unMedidor.numusuario}}"  placeholder="123456"  required/>
+						  <input type="text" class="form-control" name="numusuario" value="{{unMedidor.numusuario}}"  placeholder="123456"  required/>
 						</div>
 					</div>
 				</div>
@@ -115,7 +115,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-4 control-label">Núm. de suministro: *</label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="numsuministro" pattern="[a-zA-Z0-9 -]+" title="No parece un número de suministro válido" value="{{unMedidor.numsuministro}}" placeholder="123456"  required/>
+						  <input type="text" class="form-control" name="numsuministro"  value="{{unMedidor.numsuministro}}" placeholder="123456"  required/>
 						</div>
 					</div>
 				</div>
