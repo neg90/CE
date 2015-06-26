@@ -54,10 +54,6 @@ class controladorEmpresa {
 				$empresas=PDOempresa::filtroDenominacion($datoFiltro);
 				break;
 
-			case 'nrosocio':
-				$empresas=PDOempresa::filtroNrosocio($datoFiltro);
-				break;
-
 			case 'cuit':
 				$empresas=PDOempresa::filtroCUIT($datoFiltro);
 				break;

@@ -28,18 +28,6 @@ class PDOempresa extends empresa{
       return $objeto;
    }
 
-   public static function filtroNrosocio($nrosocio){
-      try{
-         $conexion=new conexion; //creo la instancia de la conexión
-      }
-      catch (PDOException $e){}
-      $consulta = $conexion->prepare("SELECT * FROM empresa WHERE nrosocio = :nrosocio");
-      $consulta->bindParam(':nrosocio',$nrosocio);
-      $consulta->execute();
-      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
-      return $objeto;
-   }
-
    public static function filtroCUIT($cuit){
       try{
          $conexion=new conexion; //creo la instancia de la conexión
