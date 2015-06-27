@@ -21,19 +21,14 @@
 class controladorEmpresa {
 
 
-	static function pdfEmpresa($datosPDF){
-
-		/***************************\
-		|*	 FALTA IMPLEMENTAR!!!  *|
-	    |*                         *|
-		\***************************/
+	public static function pdfEmpresa($datosPDF){
 
 		$pdf = new PDF();
 		// Cargo la info
 		$data = html_entity_decode($datosPDF);
 		$data = json_decode($data, true);
 		$pdf->SetFont('Arial','',14);
-		$_SESSION['tituloPDF']=('Empresa'); //título PDF
+		$_SESSION['tituloPDF']=($data[0]['denominacion']); //título PDF
 		$pdf->AddPage();
 		$pdf->TablaEmpresa($data);
 		$pdf->Output();

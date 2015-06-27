@@ -158,6 +158,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'filtro') {
 					controladorEmpresa::Filtros();
 				}
+				elseif($accion == 'pdf'){ //PDF Usuarios
+					if ($_POST['datosPDF']){
+						$datosPDF=htmlEntities($_POST['datosPDF']);
+						controladorEmpresa::pdfEmpresa($datosPDF);
+					}
+					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+				}
 			}
 
 			/* -------- USUARIOS ---------- */

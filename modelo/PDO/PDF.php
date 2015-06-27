@@ -1,5 +1,7 @@
 <?php
 require('../modelo/clases/fpdf.php');
+require_once '../modelo/PDO/PDOcategoria.php';
+require_once '../modelo/PDO/PDOrubro.php';
 
 class PDF extends FPDF
 {
@@ -139,6 +141,10 @@ function TablaMedidor($header, $data)
 
 function TablaEmpresa($data)
 {
+	$data = $data[0];
+	$categorias = PDOcategoria::listar();
+	$rubros = PDOrubro::listar();
+
 	// Colors, line width and bold font
 	$this->SetFillColor(120,120,120);
 	$this->SetTextColor(255);
@@ -152,11 +158,45 @@ function TablaEmpresa($data)
 	$this->Ln();*/
 	// Color and font restoration
 	$this->SetFillColor(235,235,235);
-	$this->SetTextColor(100,100,100);
+	$this->SetTextColor(0,0,0);
 	$this->SetFont('');
 	// Data
 	$fill = false;
-	foreach($data as $row)
+	$this->Cell(0,8,utf8_decode('Nº de Socio : '),0,1,'L');
+	$this->Cell(0,8,$data['idempresa'],0,1,'L');
+	$this->Cell(0,8,'Cantidad de empleados: ',0,1,'L');
+	$this->Cell(0,8,$data['cantempleados'],0,1,'L');
+	$this->Cell(0,8,'Importe mensual: $',0,1,'L');
+	$this->Cell(0,8,$data['importemensual'],0,1,'L');
+	$this->Cell(0,8,'Web: ',0,1,'L');
+	$this->Cell(0,8,$data['web'],0,1,'L');
+	$this->Cell(0,8,'CUIT: ',0,1,'L');
+	$this->Cell(0,8,$data['cuit'],0,1,'L');
+	$this->Cell(0,8,'Fecha de inicio en C.E.: ',0,1,'L');
+	$this->Cell(0,8,$data['fechainicioce'],0,1,'L');
+
+	foreach ($categorias as $c){
+		if ($c->id ==$data['idcategoria']){
+			$this->Cell(0,8,utf8_decode('Categoría: ').$c->descripcion,0,1,'L');
+		}
+	}
+
+	foreach ($rubros as $r){
+		if ($r->id ==$data['idrubro']){
+			$this->Cell(0,8,utf8_decode('Rubro: ').$r->descripcion,0,1,'L');
+		}
+	}
+	$this->Ln();
+	$this->Cell(0,8,'Detalle de actividad: ',0,1,'L');
+	$this->MultiCell(0,8,utf8_decode($data['detactividad']),0,1,'J');
+	$this->Ln();
+	$this->Cell(0,8,'Fecha de inicio de actividades: '.$data['fechafundacion'],0,1,'L');
+	//$this->Line(10,10,200,10);
+	$this->Cell(0,8,'Tel 1: ',0,1,'L');
+
+
+	//$this->Cell(0,10,'Nº de Usuario: '.$data['numusuario'],0,1,'L');
+	/* foreach($data as $row)
 	{
 		$this->Cell($w[0],6,utf8_decode($row['nomyap']),'LR',0,'L',$fill);
 		$this->Cell($w[1],6,$row['telefono'],'LR',0,'L',$fill);
@@ -167,9 +207,9 @@ function TablaEmpresa($data)
 		//$this->Cell($w[3],6,number_format($row[3]),'LR',0,'R',$fill);
 		$this->Ln();
 		$fill = !$fill;
-	}
+	}*/
 	// Closing line
-	$this->Cell(array_sum($w),0,'','T');
+//	$this->Cell(array_sum($w),0,'','T');
 }
 
 }
