@@ -168,19 +168,18 @@ $(document).ready(function() {
           </a>
         </div>
     {% endif %}
+    <form id="enviarPDF" class="inline-block" action="privado.php?c=empresas&a=pdf" method="POST">
+                <input type="hidden" id="datosPDF" name="datosPDF" value="{{ empresas|json_encode() }}"/>
+              </form>   
   <form class="form-horizontal" action="privado.php?c=correo&a=mostrar" role="form" method="POST" id="formBotonesTop">
           <div id="botonesTop" class="block right">
               <button type="submit" class="btn btn-default btn-block" id="bottonEnviarCorreo" name="irMail">Crear Correo</button>
-              <form id="enviarPDF" class="inline-block" action="privado.php?c=empresa&a=pdf" method="POST">
-                <input type="hidden" id="datosPDF" name="datosPDF" value="{{ empresas|json_encode() }}"/>
-                {% if empresas is null %}
-
+              {% if empresas is null %}
                 {% else %}
                    <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
                        Ver en PDF
                    </a>
-                {% endif %}
-              </form>              
+                {% endif %}        
           <a href="privado.php?c=empresa&a=alta" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
             Nueva empresa
           </a>
@@ -203,8 +202,8 @@ $(document).ready(function() {
   <tbody>
     {% for item in empresas %}
      <input type="hidden" name="arrayIdempresa[]" value="{{item.idempresa}}" >
-       </form>
         <tr>
+  </form>
           <td>
             {% autoescape 'html' %}
               {{ item.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
