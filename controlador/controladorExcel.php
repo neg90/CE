@@ -122,24 +122,56 @@ class controladorExcel {
 	  }
 	  	/* Descomentar para borrar todoe n tabla medidor */
 	  	//PDOMedidor::borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin();
-	  	
-	
-	
 
 	}
 
-	public function informeMedidor(){
+	public function listarinfmedidores(){
 		Twig_Autoloader::register();
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 	  $unInforme = PDOinfmedidorexcel::listar();
 
-	  $template = $twig->loadTemplate('excel/informe.html.twig');
-		echo $template->render(array());
+	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
+		echo $template->render(array('informes'=>$unInforme));
 
 	
 	}
+
+	public function bajainformesexel(){
+		Twig_Autoloader::register();
+	  $loader = new Twig_Loader_Filesystem('../vista');
+	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  //borro todo
+	  PDOinfmedidorexcel::borrarTodo();
+	  //nueva info (todo blanco)
+	  $unInforme = PDOinfmedidorexcel::listar();
+
+	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
+		echo $template->render(array('informes'=>$unInforme));
+
+	
+	}
+
+	public function bajainformemedidor(){
+		Twig_Autoloader::register();
+	  $loader = new Twig_Loader_Filesystem('../vista');
+	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+		$id = $_POST['id'];
+		PDOinfmedidorexcel::borrarID($id);
+	  //nueva info (todo blanco)
+	  $unInforme = PDOinfmedidorexcel::listar();
+
+	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
+		echo $template->render(array('informes'=>$unInforme));
+
+	
+	}
+	
+
+	
 	
 
 

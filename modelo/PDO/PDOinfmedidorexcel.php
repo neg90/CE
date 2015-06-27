@@ -55,6 +55,23 @@ class PDOinfmedidorexcel extends infmedidorexcel {
       $conexion = null;
    }
 
+   public static function borrarTodo (){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('DELETE FROM infmedidorexcel');
+      $consulta->execute();
+ 
+   }
+
+    public static function borrarID ($id){
+
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('DELETE FROM infmedidorexcel WHERE id = :id');
+      $consulta->bindParam(':id',$id);
+      $consulta->execute();
+ 
+   }
+
+
 
 
 }
