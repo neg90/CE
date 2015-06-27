@@ -7,15 +7,24 @@ class infmedidorexcel {
 	private $actualizados;
 	private $totalregistros;
 	private $cantinsertados;
+	private $fecha;
 
-	public function	__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados) {
+	public function	__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha) {
 	
 		$this->id = $id;
 		$this->informe = $informe;
 		$this->actualizados = $actualizados;
 		$this->totalregistros = $totalregistros;
 		$this->cantinsertados = $cantinsertados;
+		$this->fecha = $fecha;
 		
+	}
+	public function getFecha(){
+		return $this->fecha;
+	}
+
+	public function setFecha($fecha){
+		$this->fecha = $fecha;
 	}
 
 	public function getId(){

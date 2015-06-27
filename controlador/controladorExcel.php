@@ -1,9 +1,10 @@
 <?php
 
 	require_once '../modelo/conexionDB.php';	 
-	include_once '../vendor/PHPepeExcel/PHPepeExcel.php';
+	require_once '../vendor/PHPepeExcel/PHPepeExcel.php';
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../modelo/PDO/PDOempresa.php';
+	require_once '../modelo/PDO/PDOinfmedidorexcel.php';
 
 class controladorExcel {
 	/* Recibe el registro actual del arrayexel y verifica todos los campos antes de insertarlo en caso de que el 
@@ -39,7 +40,7 @@ class controladorExcel {
 	/**/
 	public function cargarmedidor(){
 
-		Twig_Autoloader::register();
+			Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
@@ -101,31 +102,43 @@ class controladorExcel {
 						$unMedidorActualizable->guardar();
 						$actualizados[$i] = array('nomyape' => $unMedidorActualizable->getNomyap(),
 						'numusuario'=>$unMedidorActualizable->getNumusuario(),'fechadeultimopago'=>$unMedidorActualizable->getFechadeultimopago(),
-						 'importe'=>$unMedidorActualizable->getImportepago());
+						'importe'=>$unMedidorActualizable->getImportepago());
 						$cantActualizados++;
 					}
 				}else{
 					$cantErrores++;
 				}
+				$fechaActual = date('Y-m-d h:m:s');
 				$jsoninforme = json_encode($informeErrores);
 				$jsonactualizados = json_encode($actualizados);
-
+				$unInforme = new PDOinfmedidorexcel(0,$jsoninforme,$jsonactualizados,$totalRegistros,$cantInsertados,$fechaActual);
+				$unInforme->guardar();
 			}
-			$template = $twig->loadTemplate('excel/aviso.html.twig');
-			echo $template->render(array('informe'=>$informeErrores,'cantErrores'=>$cantErrores,'actualizados' => $actualizados,
-			'cantInsertados'=>$cantInsertados,'cantActualizados'=>$cantActualizados));
+	  }else{
 
-	  	}else{
+	  	$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
+			echo $template->render(array());
 
-	  		$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
-				echo $template->render(array());
-	  	}
+	  }
 	  	/* Descomentar para borrar todoe n tabla medidor */
 	  	//PDOMedidor::borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin();
-	  
+	  	
 	
 	
 
+	}
+
+	public function informeMedidor(){
+		Twig_Autoloader::register();
+	  $loader = new Twig_Loader_Filesystem('../vista');
+	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  $unInforme = PDOinfmedidorexcel::listar();
+
+	  $template = $twig->loadTemplate('excel/informe.html.twig');
+		echo $template->render(array());
+
+	
 	}
 	
 
