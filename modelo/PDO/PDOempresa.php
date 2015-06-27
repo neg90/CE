@@ -115,6 +115,8 @@ class PDOempresa extends empresa{
       }
       catch (PDOException $e){}
 
+      $crit = htmlentities($crit);
+
       if ($crit == 1) $criterio = '>';
       elseif ($crit == 2) $criterio = '=';
       else $criterio = '<';
