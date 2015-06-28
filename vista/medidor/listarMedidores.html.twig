@@ -210,6 +210,7 @@ $(document).ready(function() {
           {% if cargarElimianar == true %}
   				    <!--Eliminar medidor  -->
     					<form method="post" action="privado.php?c=medidor&a=eliminar&id={{medidor.idmedidor}}" id="eliminaMedidor{{medidor.idmedidor}}">
+                <input type="hidden" value="{{medidor.idmedidor}}" name="idmedidor">
     						<a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el titular?')){document.getElementById('eliminaMedidor{{medidor.idmedidor}}').submit();} return false;">
   							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
   						</a>
