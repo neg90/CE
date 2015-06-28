@@ -1,5 +1,7 @@
 <?php
 
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
 require_once 'controladorEmpresa.php';
@@ -43,6 +45,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorExcel::bajainformemedidor();
 				}elseif ($accion == 'bajainformesexel') {
 					controladorExcel::bajainformesexel();
+				}elseif ($accion == 'verdetalleinformemedidor') {
+					controladorExcel::verdetalleinformemedidor();
 				}
 
 			/* -------- INICIO ---------- */

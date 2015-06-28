@@ -71,6 +71,17 @@ class PDOinfmedidorexcel extends infmedidorexcel {
  
    }
 
+    public static function buscarID ($id){
+
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM infmedidorexcel WHERE id = :id');
+      $consulta->bindParam(':id',$id);
+      $consulta->execute();
+      $objeto = $consulta->fetch();
+
+      return $objeto;
+   }
+
 
 
 

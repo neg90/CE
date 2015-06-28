@@ -120,7 +120,7 @@ class controladorExcel {
 			echo $template->render(array());
 
 	  }
-	  	/* Descomentar para borrar todoe n tabla medidor */
+	  	/* Descomentar para borrar todo en tabla medidor */
 	  	//PDOMedidor::borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin();
 
 	}
@@ -166,8 +166,30 @@ class controladorExcel {
 
 	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
 		echo $template->render(array('informes'=>$unInforme));
+	}
 
-	
+	public function verdetalleinformemedidor(){
+		Twig_Autoloader::register();
+	  $loader = new Twig_Loader_Filesystem('../vista');
+	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  $id = $_POST['id'];
+		$unInforme = PDOinfmedidorexcel::buscarID($id);
+
+		$registros = json_decode($unInforme['informe']);
+		//$registrosActualizados = json_decode($unInforme['actualizados']);
+		$asd=(html_entity_decode($unInforme['informe']));
+		$dsa=json_decode($asd,true);
+		var_dump($dsa[1]);
+
+	//	$totalRegistros = $unInforme['totalregistros'];
+	//	$totalInsertados = $unInforme['cantinsertados'];
+	//	$fecha = $unInforme['fecha'];
+
+	  $template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
+		echo $template->render(array('registros'=>$registros,'registrosActualizados'=>$registrosActualizados,
+		'totalRegistros'=>$totalRegistros,'totalInsertados'=>$totalInsertados,'fecha'=>$fecha));
+
 	}
 	
 
