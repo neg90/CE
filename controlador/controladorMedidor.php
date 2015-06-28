@@ -109,10 +109,21 @@ class controladorMedidor {
 			'debug' => 'false'
 			));
 
+
 			$ListaMedidores=PDOMedidor::listarMedidores();
 
+			$medidoresempresa = PDOmedidorempresa::listar();
+
+			$arayVista = '';
+			for ($i=0; $i < count($medidoresempresa); $i++) { 
+				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
+				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
+				$arayVista[$i] = $arrayUnario;
+			}
+
+			
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'eliminado'=>$eliminado));	
+			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'eliminado'=>$eliminado,'relacion'=>$arayVista));	
 	}
 
 	static function verMedidor($idmedidor){
