@@ -10,7 +10,57 @@
   </div>
   <div class="clearfix"></div>
   <div>
-    {{registros}}
+  <div class="row">
+     <h4> Total de registros leidos: {{totalRegistros}} </h4> 
+  </div>
+  <div class="row">
+    <h4> Total de registros insertados: {{totalInsertados}}</h4>
+  </div>
+  <div class="row">
+    <h4> Fecha en la que se genero el informe: {{fecha}}</h4>
+  </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th></th>
+          <th>asd</th>
+          <th>asd</th>
+          <th>asd</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in registros %}
+            <tr>
+              <td>
+                {% autoescape 'html' %}
+                  {{ item.esValido|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+                {% endautoescape %}
+              </td>
+              <td>
+                {% autoescape 'html' %}
+                  {{item.numusuario|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+                {% endautoescape %}
+              </td>
+              <td>
+                {% autoescape 'html' %}
+                  {{item.numsuministros}}    
+                {% endautoescape %}
+              </td>
+              <td>
+                {% autoescape 'html' %}
+                  {{ item.apeynom|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+                {% endautoescape %}
+              </td>
+              <td>
+                {% autoescape 'html' %}
+                  {{ item.importe|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+                {% endautoescape %}
+              </td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <div class="clearfix"></div>
 {% endblock %}

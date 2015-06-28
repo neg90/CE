@@ -77,7 +77,7 @@ class PDOinfmedidorexcel extends infmedidorexcel {
       $consulta = $conexion->prepare('SELECT * FROM infmedidorexcel WHERE id = :id');
       $consulta->bindParam(':id',$id);
       $consulta->execute();
-      $objeto = $consulta->fetch();
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
 
       return $objeto;
    }

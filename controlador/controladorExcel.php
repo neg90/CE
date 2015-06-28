@@ -40,7 +40,7 @@ class controladorExcel {
 	/**/
 	public function cargarmedidor(){
 
-			Twig_Autoloader::register();
+		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
@@ -48,7 +48,7 @@ class controladorExcel {
 	  		$archivoExcel = $_FILES['adjunto']; 
 	  		$ruta = $archivoExcel['tmp_name'];
 	  		$options = array ('start' => 1, 'limit'=>6);
-				$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
+			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
 
 		/* [x][0]->numusuario
 		   [x][1]->numsuministro
@@ -173,23 +173,23 @@ class controladorExcel {
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
-	  $id = $_POST['id'];
+	  	$id = $_POST['id'];
 		$unInforme = PDOinfmedidorexcel::buscarID($id);
 
-		$regAux = html_entity_decode($unInforme['informe']);
+		$regAux = html_entity_decode($unInforme->informe);
 		$registros = json_decode($regAux,true);
-		//$registrosActualizados = json_decode($unInforme['actualizados']);
-		//$asd=(html_entity_decode($unInforme['informe']));
-		//$dsa=json_decode($asd,true);
-		var_dump($registros[1]['esValido']);
+		
+		$acuAux = html_entity_decode($unInforme->actualizados);
+		$registrosActualizados = json_decode($acuAux);
+		var_dump($registrosActualizados);
+		$totalActualizados = count($registrosActualizados);
+		$totalRegistros = $unInforme->totalregistros;
+		$totalInsertados = $unInforme->cantinsertados;
+		$fecha = $unInforme->fecha;
 
-	//	$totalRegistros = $unInforme['totalregistros'];
-	//	$totalInsertados = $unInforme['cantinsertados'];
-	//	$fecha = $unInforme['fecha'];
-
-	  $template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
-		echo $template->render(array('registros'=>$registros,'registrosActualizados'=>$registrosActualizados,
-		'totalRegistros'=>$totalRegistros,'totalInsertados'=>$totalInsertados,'fecha'=>$fecha));
+	$template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
+	echo $template->render(array('registros'=>$registros,'registrosActualizados'=>$registrosActualizados,
+	'totalRegistros'=>$totalRegistros,'totalInsertados'=>$totalInsertados,'fecha'=>$fecha,'totalActualizados'=>$totalActualizados));
 
 	}
 	
