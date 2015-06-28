@@ -176,11 +176,12 @@ class controladorExcel {
 	  $id = $_POST['id'];
 		$unInforme = PDOinfmedidorexcel::buscarID($id);
 
-		$registros = json_decode($unInforme['informe']);
+		$regAux = html_entity_decode($unInforme['informe']);
+		$registros = json_decode($regAux,true);
 		//$registrosActualizados = json_decode($unInforme['actualizados']);
-		$asd=(html_entity_decode($unInforme['informe']));
-		$dsa=json_decode($asd,true);
-		var_dump($dsa[1]);
+		//$asd=(html_entity_decode($unInforme['informe']));
+		//$dsa=json_decode($asd,true);
+		var_dump($registros[1]['esValido']);
 
 	//	$totalRegistros = $unInforme['totalregistros'];
 	//	$totalInsertados = $unInforme['cantinsertados'];
