@@ -6,9 +6,9 @@ require_once '../modelo/clases/infmedidorexcel.php';
 class PDOinfmedidorexcel extends infmedidorexcel {
 	
 
-	public function __construct ($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha){
+	public function __construct ($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha,$fallados){
 
-		parent::__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha);
+		parent::__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha,$fallados);
 	}
 
 	
@@ -26,27 +26,30 @@ class PDOinfmedidorexcel extends infmedidorexcel {
       
       if($this->getId()) /*Si tiene id entonces existe y solo lo modifico*/ {
          $consulta = $conexion->prepare('UPDATE infmedidorexcel SET informe = :informe and actualizados = :actualizados
-         and totalregistros = :totalregistros and  cantinsertados = :cantinsertados and fecha = :fecha WHERE id = :id');
+         and totalregistros = :totalregistros and  cantinsertados = :cantinsertados and fecha = :fecha and 
+         fallados = :fallados WHERE id = :id');
          $consulta->bindParam(':informe', $this->getInforme());
          $consulta->bindParam(':actualizados', $this->getActualizados());
          $consulta->bindParam(':totalregistros', $this->getTotalregistros());
          $consulta->bindParam(':cantinsertados', $this->getCantinsertados());
          $consulta->bindParam(':id',$this->getId());
          $consulta->bindParam(':fecha',$this->getFecha());
+         $consulta->bindParam(':fallados',$this->getFallados());
 
 
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          
-         $consulta = $conexion->prepare('INSERT INTO infmedidorexcel (informe,actualizados,totalregistros,cantinsertados,fecha)
-         VALUES(:informe,:actualizados,:totalregistros,:cantinsertados,:fecha)');
+         $consulta = $conexion->prepare('INSERT INTO infmedidorexcel (informe,actualizados,totalregistros,cantinsertados,fecha,fallados)
+         VALUES(:informe,:actualizados,:totalregistros,:cantinsertados,:fecha,:fallados)');
      
          $consulta->bindParam(':informe', $this->getInforme());
          $consulta->bindParam(':actualizados', $this->getActualizados());
          $consulta->bindParam(':totalregistros', $this->getTotalregistros());
          $consulta->bindParam(':cantinsertados', $this->getCantinsertados());
          $consulta->bindParam(':fecha',$this->getFecha());
+         $consulta->bindParam(':fallados',$this->getFallados());
       
          $consulta->execute();
          

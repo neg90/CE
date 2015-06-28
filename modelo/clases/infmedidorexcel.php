@@ -8,8 +8,9 @@ class infmedidorexcel {
 	private $totalregistros;
 	private $cantinsertados;
 	private $fecha;
+	private $fallados;
 
-	public function	__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha) {
+	public function	__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha,$fallados) {
 	
 		$this->id = $id;
 		$this->informe = $informe;
@@ -17,8 +18,18 @@ class infmedidorexcel {
 		$this->totalregistros = $totalregistros;
 		$this->cantinsertados = $cantinsertados;
 		$this->fecha = $fecha;
+		$this->fallados = $fallados;
 		
 	}
+	public function getFallados(){
+		return $this->fallados;
+	}
+
+	public function setFallados($fallados){
+		$this->fallados = $fallados;
+	}
+
+
 	public function getFecha(){
 		return $this->fecha;
 	}

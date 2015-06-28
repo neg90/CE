@@ -39,8 +39,8 @@ class PDOmedidorempresa extends medidorempresa{
          $consulta->bindParam(':idempresa', $this->getIdempresa());
          $consulta->bindParam(':idmedidor', $this->getIdmedidor());
        
-      
          $consulta->execute();
+         return $conexion->lastInsertId();
          
       }
 

@@ -1,7 +1,5 @@
 <?php
 
-	error_reporting(E_ALL);
-	ini_set('display_errors', '1');
 require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once 'controladorContacto.php';
 require_once 'controladorEmpresa.php';
@@ -21,8 +19,6 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		header("Location:index.php?aviso=5");
 	}else{
 		$user = $_SESSION['user'];
-
-		
 
 		$controlador=htmlEntities(@$_GET['c']); 
 		$accion=htmlEntities(@$_GET['a']); 
@@ -48,14 +44,12 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'verdetalleinformemedidor') {
 					controladorExcel::verdetalleinformemedidor();
 				}
-
 			/* -------- INICIO ---------- */
 			}elseif ($controlador=='inicio') {
 				if($accion == 'inicio'){
 					$template = $twig->loadTemplate('home.html.twig');
 					echo $template->render(array('user'=>$user));
 				}
-
 			/* -------- ABONADO ---------- */
 			
 			}elseif ($controlador == 'abonado') {
@@ -64,7 +58,6 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$id=htmlEntities(@$_GET['id']); 
 						controladorAbonado::alta($id);
 					}
-					
 				}elseif ($accion == 'modificar') {
 					controladorAbonado::modificar();
 				}elseif ($accion == 'baja') {

@@ -11,55 +11,62 @@
   <div class="clearfix"></div>
   <div>
   <div class="row">
-     <h4> Total de registros leidos: {{totalRegistros}} </h4> 
+     <h5> Total de registros leidos: {{totalRegistros}} </h5> 
   </div>
   <div class="row">
-    <h4> Total de registros insertados: {{totalInsertados}}</h4>
+     <h5> Total de registros no insertados: {{totalFallados}} </h5> 
   </div>
   <div class="row">
-    <h4> Total registros actualizados: {{totalActualizados}}</h4>
+    <h5> Total de registros insertados: {{totalInsertados}}</h5>
   </div>
   <div class="row">
-    <h4> Fecha en la que se genero el informe: {{fecha}}</h4>
+    <h5> Total registros actualizados: {{totalActualizados}}</h5>
+  </div>
+  <div class="row">
+    <h5> Informe generado: {{fecha}}</h5>
+  </div>
+  <div class="row fila-de-titulo">
+    <div class=" col-lg-4"></div>
+    <div class=" col-lg-4">
+      <h4> Informe detallado de las fallas</h4>
+    </div>
   </div>
     <table class="table table-hover">
       <thead>
         <tr>
           <th>Estado</th>
-          <th></th>
-          <th>asd</th>
-          <th>asd</th>
-          <th>asd</th>
+          <th>Nro Usuario</th>
+          <th>Nro Suministro</th>
+          <th>Titular Medidor</th>
+          <th>Importe</th>
+          <th>Numero de fila</th>
         </tr>
       </thead>
       <tbody>
         {% for item in registros %}
             <tr>
+              {% if item.esValido == 0 %}
               <td>
                 {% autoescape 'html' %}
-                  {{ item.esValido|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+                   No se cargo el registro
                 {% endautoescape %}
               </td>
               <td>
-                {% autoescape 'html' %}
-                  {{item.numusuario|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
-                {% endautoescape %}
+                {{item.numusuario}}
               </td>
               <td>
-                {% autoescape 'html' %}
-                  {{item.numsuministros}}    
-                {% endautoescape %}
+                {{item.numsuministros}}
               </td>
               <td>
-                {% autoescape 'html' %}
-                  {{ item.apeynom|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
-                {% endautoescape %}
+                {{item.apeynom}}
               </td>
               <td>
-                {% autoescape 'html' %}
-                  {{ item.importe|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
-                {% endautoescape %}
+                {{item.importe}}
               </td>
+              <td>
+                {{item.numerodefila}}
+              </td>
+              {% endif %} 
             </tr>
         {% endfor %}
       </tbody>

@@ -9,30 +9,30 @@
 class controladorExcel {
 	/* Recibe el registro actual del arrayexel y verifica todos los campos antes de insertarlo en caso de que el 
 	registro nose pueda insertar devuelve si esta sano o no. */
-	public static function validarRegistro($unRegistro){
-		$erroNumusuario = '0';
-		$errorNumSuminsitros = '0';
-		$errorApeynom = '0';
-		$errorImporte = '0';
+	public static function validarRegistro($unRegistro,$fila){
+		$erroNumusuario = 'Correcto';
+		$errorNumSuminsitros = 'Correcto' ;
+		$errorApeynom = 'Correcto';
+		$errorImporte = 'Correcto' ;
 		$esValido = true;
-		if($unRegistro[0] == ''){
-			$erroNumusuario = 'El numero de usuario esta en blanco';
+		if(empty($unRegistro[0])){
+			$erroNumusuario = 'Revisar';
 			$esValido = false;
 		}
-		if($unRegistro[1] == ''){
-			$errorNumSuminsitros = 'El numero de suministro esta en blanco';
+		if(empty($unRegistro[1])){
+			$errorNumSuminsitros = 'Revisar';
 			$esValido = false;
 		}
-		if ($unRegistro[5] == ''){
-			$errorApeynom = 'El nombre del titular del medidor se encuentra en blanco';
+		if (empty($unRegistro[5])){
+			$errorApeynom = 'Revisar';
 			$esValido = false;
 		}
-		if ($unRegistro[3] == ''){
-			$errorImporte = 'El importe se encuentra en blanco';
+		if (empty($unRegistro[3])){
+			$errorImporte = 'Revisar';
 			$esValido = false;
 		} 
 		$informeErrores = array('esValido' =>$esValido , 'numusuario' =>$erroNumusuario, 'numsuministros' =>$errorNumSuminsitros, 
-		'apeynom' =>$errorApeynom, 'importe' =>$errorImporte );
+		'apeynom' =>$errorApeynom, 'importe' =>$errorImporte,'numerodefila'=>$fila );
 		return $informeErrores; 
 	}
 
@@ -48,7 +48,7 @@ class controladorExcel {
 	  		$archivoExcel = $_FILES['adjunto']; 
 	  		$ruta = $archivoExcel['tmp_name'];
 	  		$options = array ('start' => 1, 'limit'=>6);
-			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
+				$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
 
 		/* [x][0]->numusuario
 		   [x][1]->numsuministro
@@ -70,20 +70,34 @@ class controladorExcel {
 				// variables generales 
 				$activo = true;
 				$fechadeultimopago = date('Y-m-d');
-				$informeErrores[$i] = controladorExcel::validarRegistro($arrayExcel[$i]);
+				$informeErrores[$i] = controladorExcel::validarRegistro($arrayExcel[$i],$i);
 				/* en lo posible usar $unMedidor */
 				if ($informeErrores[$i]['esValido'] == true ) {
-					$unMedidor = new PDOMedidor(0,$arrayExcel[$i][5],$arrayExcel[$i][4],$arrayExcel[$i][2],$arrayExcel[$i][3],$arrayExcel[$i][0],
+					if (empty($arrayExcel[$i][2])) {
+						$domicilio = 0;
+					}else{
+						$domicilio = $arrayExcel[$i][2];
+					}
+					if (empty($arrayExcel[$i][4])) {
+						$telefono = 0;
+					}else{
+						$telefono = $arrayExcel[$i][4];
+					}
+					$unMedidor = new PDOMedidor(0,$arrayExcel[$i][5],$telefono,$domicilio,$arrayExcel[$i][3],$arrayExcel[$i][0],
 					$arrayExcel[$i][1],$activo,$fechadeultimopago);
 					if ($unMedidor->validarInsertar()){
 						//no existe	
 						$idultiomomedidor = $unMedidor->guardar();
+						$cantInsertados++;
 						if (PDOempresa::buscarMedidor($unMedidor->getNumusuario())) {
 							//existe empresa para este medidor entonces creamos la relacion
 							$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumusuario());
+							//aca como el medidor que fue recin creado tenia una empresa esperandolo , actualizo la empresa.
 							$relacion = new PDOmedidorempresa(0,$idultiomomedidor,$unaEmpresa[0]->idempresa);	
-							$relacion->guardar();	
-							$cantInsertados++;		
+							$ultimoID = $relacion->guardar();
+							$unaEmpresaActualizable = PDOempresa::buscarEmpresa($relacion->getIdmedidor());	
+							$unaEmpresaActualizable->setImportemensual($unMedidor->getImportepago());
+							$unaEmpresaActualizable->guardar();	
 						}else{
 							//luego vemos.
 						}
@@ -108,12 +122,14 @@ class controladorExcel {
 				}else{
 					$cantErrores++;
 				}
-				$fechaActual = date('Y-m-d h:m:s');
-				$jsoninforme = json_encode($informeErrores);
-				$jsonactualizados = json_encode($actualizados);
-				$unInforme = new PDOinfmedidorexcel(0,$jsoninforme,$jsonactualizados,$totalRegistros,$cantInsertados,$fechaActual);
-				$unInforme->guardar();
+		
 			}
+			$fechaActual = date('Y-m-d h:m:s');
+			$jsoninforme = json_encode($informeErrores);
+			$jsonactualizados = json_encode($actualizados);
+			$unInforme = new PDOinfmedidorexcel(0,$jsoninforme,$jsonactualizados,$totalRegistros,
+			$cantInsertados,$fechaActual,$cantErrores);
+			$unInforme->guardar();
 	  }else{
 
 	  	$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
@@ -173,24 +189,25 @@ class controladorExcel {
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
-	  	$id = $_POST['id'];
+	  $id = $_POST['id'];
 		$unInforme = PDOinfmedidorexcel::buscarID($id);
 
 		$regAux = html_entity_decode($unInforme->informe);
 		$registros = json_decode($regAux,true);
 		
 		$acuAux = html_entity_decode($unInforme->actualizados);
-		$registrosActualizados = json_decode($acuAux);
+		$registrosActualizados = json_decode($acuAux,true);
 
 		$totalActualizados = count($registrosActualizados);
 		$totalRegistros = $unInforme->totalregistros;
 		$totalInsertados = $unInforme->cantinsertados;
+		$totalFallados = $unInforme->fallados;
 		$fecha = $unInforme->fecha;
 
 	$template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
 	echo $template->render(array('registros'=>$registros,'registrosActualizados'=>$registrosActualizados,
-	'totalRegistros'=>$totalRegistros,'totalInsertados'=>$totalInsertados,'fecha'=>$fecha,'totalActualizados'=>$totalActualizados));
-
+	'totalRegistros'=>$totalRegistros,'totalInsertados'=>$totalInsertados,'fecha'=>$fecha
+	,'totalActualizados'=>$totalActualizados,'totalFallados'=>$totalFallados));
 	}
 	
 
