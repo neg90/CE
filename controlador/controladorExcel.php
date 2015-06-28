@@ -169,7 +169,7 @@ class controladorExcel {
 	}
 
 	public function verdetalleinformemedidor(){
-		Twig_Autoloader::register();
+	  Twig_Autoloader::register();
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
@@ -181,7 +181,7 @@ class controladorExcel {
 		
 		$acuAux = html_entity_decode($unInforme->actualizados);
 		$registrosActualizados = json_decode($acuAux);
-		var_dump($registrosActualizados);
+
 		$totalActualizados = count($registrosActualizados);
 		$totalRegistros = $unInforme->totalregistros;
 		$totalInsertados = $unInforme->cantinsertados;
