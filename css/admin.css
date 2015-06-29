@@ -33,6 +33,7 @@ th,td {
 	text-align: center;
 }
 
+
 .fila-de-boton{
 	margin-top: 3%;
 }
@@ -179,3 +180,5 @@ hr{border:1px solid #ccc;}
 #bottonEnviarCorreo{display:inline-block!important; width:150px;}
 
 .noInfoDetalle{padding-left:20px;}
+
+.inf{margin-left:1%!important;}
