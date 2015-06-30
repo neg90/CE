@@ -9,7 +9,7 @@
 class controladorExcel {
 	/* Recibe el registro actual del arrayexel y verifica todos los campos antes de insertarlo en caso de que el 
 	registro nose pueda insertar devuelve si esta sano o no. */
-	public static function validarRegistro($unRegistro,$fila){
+	private static function validarRegistro($unRegistro,$fila){
 		$erroNumusuario = 'Correcto';
 		$errorNumSuminsitros = 'Correcto' ;
 		$errorApeynom = 'Correcto';
@@ -108,9 +108,10 @@ class controladorExcel {
 						$unMedidorActualizable->setFechadeultimopago($fechadeultimopago);
 						$unMedidorActualizable->setImportepago($unMedidor->getImportepago());
 						//busco la tabla que relaciona
-						$relacion = PDOmedidorempresa::buscarMedidorId($unMedidorActualizable->getIdmedidor());
+						$relacion = PDOmedidorempresa::buscarMedidorIdArray($unMedidorActualizable->getIdmedidor());
 						//traigo empresa y actualizo importe
-						$unaEmpresaActualizable = PDOempresa::buscarEmpresa($relacion->idempresa);
+						
+						$unaEmpresaActualizable = PDOempresa::buscarEmpresa($relacion['idempresa']);
 						$unaEmpresaActualizable->setImportemensual($unMedidor->getImportepago());
 						$unaEmpresaActualizable->guardar();
 						$unMedidorActualizable->guardar();
