@@ -118,6 +118,7 @@ class controladorExcel {
 		} 
 		$informeErrores = array('numusuario' =>$erroNumusuario, 'numsuministros' =>$errorNumSuminsitros, 
 		'apeynom' =>$errorApeynom, 'importe' =>$errorImporte,'numerodefila'=>$nroFila );
+		return $informeErrores;
 	}
 	/**/
 	public function cargarmedidor(){
@@ -295,7 +296,8 @@ class controladorExcel {
 	  	$fecha = $unInforme->fecha;
 
 	$template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
-	echo $template->render(array('fallados'=>$fallados,
+	echo $template->render(array(
+	'fallados'=>$fallados,
 	'actualizados'=>$actualizados,
 	'totalRegistros'=>$totalRegistros,
 	'fecha'=>$fecha,
