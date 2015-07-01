@@ -177,14 +177,17 @@ class controladorExcel {
 		  					$UltIdR = $unaRelacion->guardar();
 		  					$relacionInsertada++;
 		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->idempresa);
-		  					$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
-		  					if($actImp)$empresaActualizada++;
-		  					
+		  					if($actImp){
+		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
+		  						$empresaActualizada++;
+		  					}
 		  				}else{
 		  					$unaRelacion = PDOmedidorempresa::buscarMedidorId($unMedidorAct->getIdmedidor());
 		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->$idempresa);
-		  					$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
-		  					if($actImp)$empresaActualizada++;
+		  					if($actImp){
+		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
+		  						$empresaActualizada++;
+		  					}
 		  				}
 		  			}else{
 		  				$medidorSinEmpresaActualizado++;
