@@ -20,14 +20,26 @@
              <div class="row inf" >
                 <h5> Total de registros leidos: {{totalRegistros}} </h5> 
               </div>
+              <div class="row inf" >
+                <h5> Total de registros que fallados: {{registroNoInsertado}} </h5> 
+              </div>
               <div class="row inf">
-                <h5> Total de registros no insertados: {{totalFallados}} </h5> 
+                <h5> Total de Abonados en CELTA insertados: {{medidorInsertado}} </h5> 
+              </div>
+              <div class="row inf">
+                <h5> Total de Abonados en CELTA actualizados: {{medidorActualizado}} </h5> 
               </div>
               <div class="row inf ">
-                <h5> Total de registros insertados: {{totalInsertados}}</h5>
+                <h5> Total de empresas actualizadas: {{empresaActualizada}}</h5>
              </div>
              <div class="row inf ">
-                <h5> Total registros actualizados: {{totalActualizados}}</h5>
+                <h5> La cantida de relaciones creadas entre abonado CELTA y empresa es: {{relacionInsertada}}</h5>
+              </div>
+              <div class="row inf ">
+                <h5> Abonados CELTA sin empresa insertados: {{medidorSinEmpresaInsertado}}</h5>
+              </div>
+              <div class="row inf ">
+                <h5> Abonados CELTA sin empresa actualizados: {{medidorSinEmpresaActualizado}}</h5>
               </div>
              <div class="row inf">
                 <h5> Informe generado: {{fecha}}</h5>
@@ -57,7 +69,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in registros %}
+        {% for item in fallados %}
             <tr>
               {% if item.esValido == 0 %}
               <td>
@@ -106,7 +118,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in registrosActualizados %}
+        {% for item in actualizados %}
             <tr>
               
               <td>

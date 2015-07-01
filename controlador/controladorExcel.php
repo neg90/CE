@@ -205,7 +205,6 @@ class controladorExcel {
 		  $registroNoInsertado,$medidorActualizado,$empresaActualizada,$relacionInsertada,$medidorSinEmpresaInsertado,$medidorSinEmpresaActualizado);
 		  $unInforme->guardar();
 	  	}else{
-
 	  		$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
 			echo $template->render(array());
 	  }
@@ -258,29 +257,42 @@ class controladorExcel {
 	}
 
 	public function verdetalleinformemedidor(){
-	  Twig_Autoloader::register();
-	  $loader = new Twig_Loader_Filesystem('../vista');
-	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	Twig_Autoloader::register();
+	 	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
-	  $id = $_POST['id'];
-		$unInforme = PDOinfmedidorexcel::buscarID($id);
+	  	$id = $_POST['id'];
+	  	$unInforme = PDOinfmedidorexcel::buscarID($id);
 
-		$regAux = html_entity_decode($unInforme->informe);
-		$registros = json_decode($regAux,true);
+	  	$fallaAux = html_entity_decode($unInforme->fallados);
+	  	$fallados = json_decode($fallaAux,true);
 		
-		$acuAux = html_entity_decode($unInforme->actualizados);
-		$registrosActualizados = json_decode($acuAux,true);
+	  	$acuAux = html_entity_decode($unInforme->actualizados);
+	   $actualizados = json_decode($acuAux,true);
 
-		$totalActualizados = count($registrosActualizados);
-		$totalRegistros = $unInforme->totalregistros;
-		$totalInsertados = $unInforme->cantinsertados;
-		$totalFallados = $unInforme->fallados;
-		$fecha = $unInforme->fecha;
+
+	 	$totalRegistros = $unInforme->totalregistros;
+		$medidorInsertado = $unInforme->medidorInsertado;
+		$registroNoInsertado = $unInforme->registroNoInsertado;
+		$medidorActualizado = $unInforme->medidorActualizado;
+		$empresaActualizada = $unInforme->empresaActualizada;
+		$relacionInsertada = $unInforme->relacionInsertada;
+		$medidorSinEmpresaInsertado = $unInforme->medidorSinEmpresaInsertado;
+		$medidorSinEmpresaActualizado = $unInforme->medidorSinEmpresaActualizado;
+	  	$fecha = $unInforme->fecha;
 
 	$template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
-	echo $template->render(array('registros'=>$registros,'registrosActualizados'=>$registrosActualizados,
-	'totalRegistros'=>$totalRegistros,'totalInsertados'=>$totalInsertados,'fecha'=>$fecha
-	,'totalActualizados'=>$totalActualizados,'totalFallados'=>$totalFallados));
+	echo $template->render(array('fallados'=>$fallados,
+	'actualizados'=>$actualizados,
+	'totalRegistros'=>$totalRegistros,
+	'fecha'=>$fecha,
+	'medidorInsertado'=>$medidorInsertado,
+	'registroNoInsertado'=>$registroNoInsertado,
+	'medidorActualizado'=>$medidorActualizado,
+	'empresaActualizada'=>$empresaActualizada,
+	'relacionInsertada'=>$relacionInsertada,
+	'medidorSinEmpresaInsertado'=>$medidorSinEmpresaInsertado,
+	'medidorSinEmpresaActualizado'=>$medidorSinEmpresaActualizado));
 	}
 	
 
