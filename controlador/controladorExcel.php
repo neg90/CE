@@ -7,9 +7,10 @@
 	require_once '../modelo/PDO/PDOinfmedidorexcel.php';
 
 class controladorExcel {
+
 	/* Recibe el registro actual del arrayexel y verifica todos los campos antes de insertarlo en caso de que el 
 	registro nose pueda insertar devuelve si esta sano o no. */
-	private static function validarRegistro($unRegistro,$fila){
+	private static function validarFila ($unRegistro,$nroFila){
 		$erroNumusuario = 'Correcto';
 		$errorNumSuminsitros = 'Correcto' ;
 		$errorApeynom = 'Correcto';
@@ -31,12 +32,83 @@ class controladorExcel {
 			$errorImporte = 'Revisar';
 			$esValido = false;
 		} 
-		$informeErrores = array('esValido' =>$esValido , 'numusuario' =>$erroNumusuario, 'numsuministros' =>$errorNumSuminsitros, 
-		'apeynom' =>$errorApeynom, 'importe' =>$errorImporte,'numerodefila'=>$fila );
-		return $informeErrores; 
+		return $esValido; 
+	}
+	private function crearInstanciaMedidro($arrayExcel,$i){
+		if (empty($arrayExcel[$i][2])) {
+			$domicilio = 0;
+		}else{
+			$domicilio = $arrayExcel[$i][2];
+		}
+		if (empty($arrayExcel[$i][4])) {
+			$telefono = 0;
+		}else{
+			$telefono = $arrayExcel[$i][4];
+		}
+		$activo = true;
+		$fechadeultimopago = date('Y-m-d');
+		$unMedidor = new PDOMedidor(0,$arrayExcel[$i][5],$telefono,$domicilio,$arrayExcel[$i][3],
+		$arrayExcel[$i][0],$arrayExcel[$i][1],$activo,$fechadeultimopago);
+
+		return $unMedidor;
 	}
 
+	private function insertarRelacion($unMedidor,$ulIdM){
+		$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumusuario());
+		$relacion = new PDOmedidorempresa(0,$ulIdM,$unaEmpresa[0]->idempresa);
+		return $relacion;
+	}
 
+	private function actualizarEmpresa($unMedidor,$idemrpesa){
+		$unaEmpresaAct = PDOempresa::buscarEmpresa($idemrpesa);	
+		if ($unaEmpresaAct->getImportemensual() != $unMedidor->getImportepago()) {
+			$unaEmpresaAct->setImportemensual($unMedidor->getImportepago());
+			$unaEmpresaAct->guardar();	
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+
+	private function informeActualizacion($actImp,$unMedidor){
+		if($actImp ){
+			$aux = array('ModImpo' => 'Si','Empresa'=>'Actualizada','imp' => $unMedidor->getImportepago(),
+			'Medidor' => 'Insertado');
+			return $aux;
+		}
+		
+	}
+
+	private function actualizarMedidor($unMedidor){
+		$fechadeultimopago = date('Y-m-d');
+		$unMedidorActualizable = PDOMedidor::medidorporNumusuario($unMedidor->getNumusuario());
+		$unMedidorActualizable->setFechadeultimopago($fechadeultimopago);
+		$unMedidorActualizable->setImportepago($unMedidor->getImportepago());
+		return $unMedidorActualizable;
+
+	}
+
+	private function informeErrores($unRegistro,$nroFila){
+		$erroNumusuario = 'Correcto';
+		$errorNumSuminsitros = 'Correcto' ;
+		$errorApeynom = 'Correcto';
+		$errorImporte = 'Correcto' ;
+		if(empty($unRegistro[0])){
+			$erroNumusuario = 'Revisar';
+		}
+		if(empty($unRegistro[1])){
+			$errorNumSuminsitros = 'Revisar';
+		}
+		if (empty($unRegistro[5])){
+			$errorApeynom = 'Revisar';
+		}
+		if (empty($unRegistro[3])){
+			$errorImporte = 'Revisar';
+		} 
+		$informeErrores = array('numusuario' =>$erroNumusuario, 'numsuministros' =>$errorNumSuminsitros, 
+		'apeynom' =>$errorApeynom, 'importe' =>$errorImporte,'numerodefila'=>$nroFila );
+	}
 	/**/
 	public function cargarmedidor(){
 
@@ -59,83 +131,80 @@ class controladorExcel {
 		   //1->por que la primer fila tiene una boludes.
 		   //termina 1 antes por lo mismo.*/
 
-		   //¿como saber si falla la carga de algun registro?
-		 	$cantErrores = 0;
-		 	$cantInsertados = 0;
-		 	$cantActualizados = 0;
-		 	$actualizados = '' ;
-		 	$informeErrores = '' ;
-		 	$totalRegistros = count($arrayExcel) - 2;
-			for ($i=1 ; $i < count($arrayExcel) - 1  ; $i++) { 
-				// variables generales 
-				$activo = true;
-				$fechadeultimopago = date('Y-m-d');
-				$informeErrores[$i] = controladorExcel::validarRegistro($arrayExcel[$i],$i);
-				/* en lo posible usar $unMedidor */
-				if ($informeErrores[$i]['esValido'] == true ) {
-					if (empty($arrayExcel[$i][2])) {
-						$domicilio = 0;
-					}else{
-						$domicilio = $arrayExcel[$i][2];
-					}
-					if (empty($arrayExcel[$i][4])) {
-						$telefono = 0;
-					}else{
-						$telefono = $arrayExcel[$i][4];
-					}
-					$unMedidor = new PDOMedidor(0,$arrayExcel[$i][5],$telefono,$domicilio,$arrayExcel[$i][3],$arrayExcel[$i][0],
-					$arrayExcel[$i][1],$activo,$fechadeultimopago);
-					if ($unMedidor->validarInsertar()){
-						//no existe	
-						$idultiomomedidor = $unMedidor->guardar();
-						$cantInsertados++;
-						if (PDOempresa::buscarMedidor($unMedidor->getNumusuario())) {
-							//existe empresa para este medidor entonces creamos la relacion
-							$unaEmpresa = PDOempresa::buscarMedidor($unMedidor->getNumusuario());
-							//aca como el medidor que fue recin creado tenia una empresa esperandolo , actualizo la empresa.
-							$relacion = new PDOmedidorempresa(0,$idultiomomedidor,$unaEmpresa[0]->idempresa);	
-							$ultimoID = $relacion->guardar();
-							$unaEmpresaActualizable = PDOempresa::buscarEmpresa($relacion->getIdmedidor());	
-							$unaEmpresaActualizable->setImportemensual($unMedidor->getImportepago());
-							$unaEmpresaActualizable->guardar();	
-						}else{
-							//luego vemos.
-						}
-					}else{
-						//si existe
-						//busco el medidor y lo actualizo
-						$unMedidorActualizable = PDOMedidor::medidorporNumusuario($unMedidor->getNumusuario());
-						$unMedidorActualizable->setFechadeultimopago($fechadeultimopago);
-						$unMedidorActualizable->setImportepago($unMedidor->getImportepago());
-						//busco la tabla que relaciona
-						$relacion = PDOmedidorempresa::buscarMedidorIdArray($unMedidorActualizable->getIdmedidor());
-						//traigo empresa y actualizo importe
-						
-						$unaEmpresaActualizable = PDOempresa::buscarEmpresa($relacion['idempresa']);
-						$unaEmpresaActualizable->setImportemensual($unMedidor->getImportepago());
-						$unaEmpresaActualizable->guardar();
-						$unMedidorActualizable->guardar();
-						$actualizados[$i] = array('nomyape' => $unMedidorActualizable->getNomyap(),
-						'numusuario'=>$unMedidorActualizable->getNumusuario(),'fechadeultimopago'=>$unMedidorActualizable->getFechadeultimopago(),
-						'importe'=>$unMedidorActualizable->getImportepago());
-						$cantActualizados++;
-					}
-				}else{
-					$cantErrores++;
-				}
-		
-			}
-			$fechaActual = date('Y-m-d h:m:s');
-			$jsoninforme = json_encode($informeErrores);
-			$jsonactualizados = json_encode($actualizados);
-			$unInforme = new PDOinfmedidorexcel(0,$jsoninforme,$jsonactualizados,$totalRegistros,
-			$cantInsertados,$fechaActual,$cantErrores);
-			$unInforme->guardar();
-	  }else{
+		  //¿como saber si falla la carga de algun registro?
+		  //Inicio variables.
+		  $registroNoInsertado = 0;
+		  $medidorInsertado = 0;
+		  $medidorActualizado = 0;
+		  $empresaActualizada = 0;
+		  $relacionInsertada = 0;
+		  $medidorSinEmpresaInsertado = 0;
+		  $medidorSinEmpresaActualizado = 0;
+		  $actualizados = '' ;
+		  $fallados = '' ;
+		  $totalRegistros = count($arrayExcel) - 2;
+		  //Fin de inicio de variables
+		  for ($i=1 ; $i < count($arrayExcel) - 1  ; $i++) {
+		  	if (self::validarFila($arrayExcel[$i],$i)){
+		  		//Genero una instancia de medidor valida.
+		  		$unMedidor = self::crearInstanciaMedidro($arrayExcel,$i);
+		  		//Averiguo si existe el medidor .
+		  		//En este caso el medidor no existe.
+		  		if ($unMedidor->validarInsertar()){
+		  			$medidorInsertado++;
+		  			$ulIdM = $unMedidor->guardar();
+		  			//Consulto si existe la empresa para este medidor.
+		  			if(PDOempresa::buscarMedidor($unMedidor->getNumusuario())){
+		  				$unaRelacion = self::insertarRelacion($unMedidor,$ulIdM);
+		  				$UltIdR = $unaRelacion->guardar();
+		  				$actImp = self::actualizarEmpresa($unMedidor,$unaRelacion->getIdempresa());
+		  				if($actImp)$empresaActualizada++;
+		  				$actualizados[$i] = self::informeActualizacion($actImp,$unMedidor);
+		  				$relacionInsertada++;
+		  			}else{
+		  				$medidorSinEmpresaInsertado++;
+		  			}
+		  		//Aca existe medidor
+		  		}else{
+		  			//Traer medidor
+		  			$unMedidorAct = self::actualizarMedidor($unMedidor);
+		  			$medidorActualizado++;
+		  			//pregunto si existe la empresa
+		  			if(PDOempresa::buscarMedidor($unMedidorAct->getNumusuario())){
+		  				if (empty(PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor()))) {
+		  					//si esta vacio
+		  					$unaRelacion = self::insertarRelacion($unMedidor,$ulIdM);
+		  					$UltIdR = $unaRelacion->guardar();
+		  					$relacionInsertada++;
+		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->idempresa);
+		  					$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
+		  					if($actImp)$empresaActualizada++;
+		  					
+		  				}else{
+		  					$unaRelacion = PDOmedidorempresa::buscarMedidorId($unMedidorAct->getIdmedidor());
+		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->$idempresa);
+		  					$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
+		  					if($actImp)$empresaActualizada++;
+		  				}
+		  			}else{
+		  				$medidorSinEmpresaActualizado++;
+		  			}
+		  		}
+		  	}else{
+		  		$registroNoInsertado++;
+		  		$fallados[$i]=self::informeErrores($arrayExcel[$i],$i);
+		  	}
+		  }
+		  $fechaActual = date('Y-m-d h:m:s');
+		  $jsonfallados = json_encode($fallados);
+		  $jsonactualizados = json_encode($actualizados);
+		  $unInforme = new PDOinfmedidorexcel(0,$jsonfallados,$jsonactualizados,$totalRegistros,$fechaActual,$medidorInsertado,
+		  $registroNoInsertado,$medidorActualizado,$empresaActualizada,$relacionInsertada,$medidorSinEmpresaInsertado,$medidorSinEmpresaActualizado);
+		  $unInforme->guardar();
+	  	}else{
 
-	  	$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
+	  		$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
 			echo $template->render(array());
-
 	  }
 	  	/* Descomentar para borrar todo en tabla medidor */
 	  	//PDOMedidor::borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin();

@@ -6,9 +6,11 @@ require_once '../modelo/clases/infmedidorexcel.php';
 class PDOinfmedidorexcel extends infmedidorexcel {
 	
 
-	public function __construct ($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha,$fallados){
+	public function __construct ($id,$fallados,$actualizados,$totalregistros,$fecha,$medidorInsertado,$registroNoInsertado,
+   $medidorActualizado,$empresaActualizada,$relacionInsertada,$medidorSinEmpresaInsertado,$medidorSinEmpresaActualizado){
 
-		parent::__construct($id,$informe,$actualizados,$totalregistros,$cantinsertados,$fecha,$fallados);
+		parent::__construct($id,$fallados,$actualizados,$totalregistros,$fecha,$medidorInsertado,$registroNoInsertado,
+   $medidorActualizado,$empresaActualizada,$relacionInsertada,$medidorSinEmpresaInsertado,$medidorSinEmpresaActualizado);
 	}
 
 	
@@ -25,32 +27,45 @@ class PDOinfmedidorexcel extends infmedidorexcel {
       try {$conexion = new conexion;}catch (PDOException $e){}
       
       if($this->getId()) /*Si tiene id entonces existe y solo lo modifico*/ {
-         $consulta = $conexion->prepare('UPDATE infmedidorexcel SET informe = :informe and actualizados = :actualizados
-         and totalregistros = :totalregistros and  cantinsertados = :cantinsertados and fecha = :fecha and 
-         fallados = :fallados WHERE id = :id');
-         $consulta->bindParam(':informe', $this->getInforme());
-         $consulta->bindParam(':actualizados', $this->getActualizados());
-         $consulta->bindParam(':totalregistros', $this->getTotalregistros());
-         $consulta->bindParam(':cantinsertados', $this->getCantinsertados());
-         $consulta->bindParam(':id',$this->getId());
+         $consulta = $conexion->prepare('UPDATE infmedidorexcel SET actualizados = :actualizados
+         and totalregistros = :totalregistros and fecha = :fecha and fallados = :fallados 
+         and medidorInsertado = :medidorInsertado and registroNoInsertado = :registroNoInsertado
+         and medidorActualizado = :medidorActualizado and empresaActualizada = :empresaActualizada and
+         relacionInsertada = :relacionInsertada and  medidorSinEmpresaInsertado = :medidorSinEmpresaInsertado 
+         and medidorSinEmpresaActualizado = :medidorSinEmpresaActualizado  WHERE id = :id'); 
+         
          $consulta->bindParam(':fecha',$this->getFecha());
+         $consulta->bindParam(':totalregistros', $this->getTotalregistros());
+         $consulta->bindParam(':actualizados', $this->getActualizados());
+         $consulta->bindParam(':id',$this->getId());
          $consulta->bindParam(':fallados',$this->getFallados());
-
-
+         $consulta->bindParam(':medidorInsertado',$this->getMedidorInsertado());
+         $consulta->bindParam(':registroNoInsertado',$this->getRegistroNoInsertado());
+         $consulta->bindParam(':medidorActualizado',$this->getMedidorActualizado());
+         $consulta->bindParam(':empresaActualizada',$this->getEmpresaActualizada());
+         $consulta->bindParam(':relacionInsertada',$this->getRelacionInsertada());
+         $consulta->bindParam(':medidorSinEmpresaInsertado',$this->getMedidorSinEmpresaInsertado());
+         $consulta->bindParam(':medidorSinEmpresaActualizado',$this->getMedidorSinEmpresaActualizado());
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          
-         $consulta = $conexion->prepare('INSERT INTO infmedidorexcel (informe,actualizados,totalregistros,cantinsertados,fecha,fallados)
-         VALUES(:informe,:actualizados,:totalregistros,:cantinsertados,:fecha,:fallados)');
+         $consulta = $conexion->prepare('INSERT INTO infmedidorexcel (actualizados,totalregistros,fecha,fallados,medidorInsertado,registroNoInsertado,
+         medidorActualizado,empresaActualizada,relacionInsertada,medidorSinEmpresaInsertado,medidorSinEmpresaActualizado)
+         VALUES(:actualizados,:totalregistros,:fecha,:fallados,:medidorInsertado,:registroNoInsertado,:medidorActualizado,:empresaActualizada,:relacionInsertada,
+         :medidorSinEmpresaInsertado,:medidorSinEmpresaActualizado)');
      
-         $consulta->bindParam(':informe', $this->getInforme());
-         $consulta->bindParam(':actualizados', $this->getActualizados());
-         $consulta->bindParam(':totalregistros', $this->getTotalregistros());
-         $consulta->bindParam(':cantinsertados', $this->getCantinsertados());
          $consulta->bindParam(':fecha',$this->getFecha());
+         $consulta->bindParam(':totalregistros', $this->getTotalregistros());
+         $consulta->bindParam(':actualizados', $this->getActualizados());
          $consulta->bindParam(':fallados',$this->getFallados());
-      
+         $consulta->bindParam(':medidorInsertado',$this->getMedidorInsertado());
+         $consulta->bindParam(':registroNoInsertado',$this->getRegistroNoInsertado());
+         $consulta->bindParam(':medidorActualizado',$this->getMedidorActualizado());
+         $consulta->bindParam(':empresaActualizada',$this->getEmpresaActualizada());
+         $consulta->bindParam(':relacionInsertada',$this->getRelacionInsertada());
+         $consulta->bindParam(':medidorSinEmpresaInsertado',$this->getMedidorSinEmpresaInsertado());
+         $consulta->bindParam(':medidorSinEmpresaActualizado',$this->getMedidorSinEmpresaActualizado());
          $consulta->execute();
          
       }
