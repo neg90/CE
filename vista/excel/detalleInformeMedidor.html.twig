@@ -2,6 +2,7 @@
  
 {% block title %} Detalle de carga de medidor {% endblock %}
 {% block contenedor %}
+  <input  type="hidden"name="id" value="">
   <div class="row fila-de-titulo">
     <div class=" col-lg-4"></div>
     <div class=" col-lg-4">
@@ -69,32 +70,33 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in fallados %}
-            <tr>
-              {% if item.esValido == 0 %}
-              <td>
-                {% autoescape 'html' %}
-                   No se cargo el registro
-                {% endautoescape %}
-              </td>
-              <td>
-                {{item.numusuario}}
-              </td>
-              <td>
-                {{item.numsuministros}}
-              </td>
-              <td>
-                {{item.apeynom}}
-              </td>
-              <td>
-                {{item.importe}}
-              </td>
-              <td>
-                {{item.numerodefila}}
-              </td>
-              {% endif %} 
-            </tr>
-        {% endfor %}
+        {% if fallados == null %}
+          <tr>
+            <td colspan="6">
+              Todos los registros del archivo exel fueron procesados 
+            </td>
+          </tr>
+        {% else %}
+          {% for item in fallados %}
+              <tr>
+                <td>
+                  {{item.numusuario}}
+                </td>
+                <td>
+                  {{item.numsuministros}}
+                </td>
+                <td>
+                  {{item.apeynom}}
+                </td>
+                <td>
+                  {{item.importe}}
+                </td>
+                <td>
+                  {{item.numerodefila}}
+                </td>
+              </tr>
+          {% endfor %}
+         {% endif %}
       </tbody>
     </table>
   </div>
@@ -109,39 +111,50 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
+          <th>¿Se modifico el importe?</th>
+          <th>Denominacion</th>
+          <th>CUIT</th>
+          <th>Empresa</th>
+          <th>Nuevo importe</th>
+          <th>Medidor</th>
+          <th>Titular Medidor</th>
         </tr>
       </thead>
       <tbody>
-        {% for item in actualizados %}
-            <tr>
-              
-              <td>
-                Actualizacion
-              </td>
-              <td>
-                {{item.nomyape}}
-              </td>
-              <td>
-               
-              </td>
-              <td>
-                {{item.numusuario}}
-              </td>
-              <td>
-                
-              </td>
-              <td>
-                
-              </td>
+        {% if actualizados == null %}
+          <tr>
+            <td colspan="7">
+              No se cambiaron importes 
+            </td>
+          </tr>
+        {% else %}
+          {% for item in actualizados %}
+              <tr>
+                <td>
+                  {{item.ModImpo}}
+                </td>
+                <td>
+                  {{item.denominacion}}
+                </td>
+                 <td>
+                  {{item.cuit}}
+                </td>
+                <td>
+                  {{item.Empresa}}
+                </td>
+                <td>
+                  {{item.imp}}
+                </td>
+                <td>
+                  {{item.Medidor}}
+                </td>
+                <td>
+                  {{item.titular}}
+                </td>
+              </tr>
              
-            </tr>
-        {% endfor %}
+          {% endfor %}
+       {% endif %}
       </tbody>
     </table>
   </div>

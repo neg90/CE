@@ -70,12 +70,22 @@ class controladorExcel {
 		}
 		
 	}
-
-	private function informeActualizacion($actImp,$unMedidor){
+	/*Si el parametro tip vale 2 es por que el medidor se actualizo si es 1 entonces fue insertar*/
+	private function informeActualizacion($actImp,$unMedidor,$tipo,$idempresa){
 		if($actImp ){
-			$aux = array('ModImpo' => 'Si','Empresa'=>'Actualizada','imp' => $unMedidor->getImportepago(),
-			'Medidor' => 'Insertado');
-			return $aux;
+			$unaEmpresaAct = PDOempresa::buscarEmpresa($idempresa);	
+			if ($tipo == 1) {
+				$aux = array('ModImpo' => 'Si','Empresa'=>'Actualizada','imp' => $unMedidor->getImportepago(),
+				'Medidor' => 'Insertado','denominacion'=>$unaEmpresaAct->getDenominacion(),'cuit'=>$unaEmpresaAct->getCuit(),
+				'titular'=>$unMedidor->getNomyap());
+				return $aux;
+			}elseif ($tipo == 2) {
+				$aux = array('ModImpo' => 'Si','Empresa'=>'Actualizada','imp' => $unMedidor->getImportepago(),
+				'Medidor' => 'Actualizado','denominacion'=>$unaEmpresaAct->getDenominacion(),'cuit'=>$unaEmpresaAct->getCuit(),
+				'titular'=>$unMedidor->getNomyap());
+				return $aux;
+			}
+			
 		}
 		
 	}
@@ -159,7 +169,7 @@ class controladorExcel {
 		  				$UltIdR = $unaRelacion->guardar();
 		  				$actImp = self::actualizarEmpresa($unMedidor,$unaRelacion->getIdempresa());
 		  				if($actImp)$empresaActualizada++;
-		  				$actualizados[$i] = self::informeActualizacion($actImp,$unMedidor);
+		  				$actualizados[$i] = self::informeActualizacion($actImp,$unMedidor,1,$unaRelacion->getIdempresa());
 		  				$relacionInsertada++;
 		  			}else{
 		  				$medidorSinEmpresaInsertado++;
@@ -178,14 +188,14 @@ class controladorExcel {
 		  					$relacionInsertada++;
 		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->idempresa);
 		  					if($actImp){
-		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
+		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct,2,$unaRelacion->idempresa);
 		  						$empresaActualizada++;
 		  					}
 		  				}else{
 		  					$unaRelacion = PDOmedidorempresa::buscarMedidorId($unMedidorAct->getIdmedidor());
-		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->$idempresa);
+		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->idempresa);
 		  					if($actImp){
-		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct);
+		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct,2,$unaRelacion->idempresa);
 		  						$empresaActualizada++;
 		  					}
 		  				}
@@ -204,6 +214,9 @@ class controladorExcel {
 		  $unInforme = new PDOinfmedidorexcel(0,$jsonfallados,$jsonactualizados,$totalRegistros,$fechaActual,$medidorInsertado,
 		  $registroNoInsertado,$medidorActualizado,$empresaActualizada,$relacionInsertada,$medidorSinEmpresaInsertado,$medidorSinEmpresaActualizado);
 		  $unInforme->guardar();
+
+		  self::listarinfmedidores();
+		 
 	  	}else{
 	  		$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
 			echo $template->render(array());
@@ -221,7 +234,7 @@ class controladorExcel {
 	  $unInforme = PDOinfmedidorexcel::listar();
 
 	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
-		echo $template->render(array('informes'=>$unInforme));
+	  echo $template->render(array('informes'=>$unInforme));
 
 	
 	}
