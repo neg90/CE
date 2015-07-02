@@ -175,19 +175,14 @@ class controladorExcel {
 		  			//pregunto si existe la empresa
 		  			if(PDOempresa::buscarMedidor($unMedidorAct->getNumusuario())){
 		  				if (PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor())) {
-		  						//probar esta parte.
-		  					
+		  					//probar esta parte.
 		  					$unaRelacion = PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor());
-		  					var_dump($unMedidorAct->getIdmedidor());
-		  					var_dump($unaRelacion);
-		  					
 		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion['idempresa']);
 		  					if($actImp){
 		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct,2,$unaRelacion['idempresa']);
 		  						$empresaActualizada++;
 		  					}
 		  				}else{
-		  				
 		  					$unaRelacion = self::insertarRelacion($unMedidor,$ulIdM);
 		  					$UltIdR = $unaRelacion->guardar();
 		  					$relacionInsertada++;

@@ -439,7 +439,6 @@ class controladorEmpresa {
 				$detactividad = htmlEntities($_POST['detactividad']);
 				$numabonado = htmlEntities($_POST['abonado']);
 				$idMedidor = htmlentities($_POST['medidor']);
-				$numusuario = htmlentities($_POST['numusuario']);
 				if (isset($_POST['activo'])) {
 					$activo = true;
 				}else{
