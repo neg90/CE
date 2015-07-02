@@ -212,6 +212,19 @@ class PDOMedidor extends medidor{
       return $objeto;
    }
 
+   public static function buscarNumerodeUsuario($idmedidor){
+      try{$conexion=new conexion;}catch (PDOException $e){}
+     
+      $consulta = $conexion->prepare('SELECT * FROM medidor WHERE idmedidor = :idmedidor');
+
+      $consulta->bindParam(':idmedidor', $idmedidor);
+
+      $consulta->execute();
+      $resultado = $consulta->fetch();
+      
+      return $resultado['numusuario'];
+   }
+
   /* public static function existeMedidor($numusuario, $numsuministro){
       try{
          $conexion=new conexion; //creo la instancia de la conexión

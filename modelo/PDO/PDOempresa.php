@@ -315,6 +315,17 @@ class PDOempresa extends empresa{
       return $objeto;
 
    }
+   public static function buscarEmpresaNumeroUsuario($numusuario){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (numusuario = :numusuario)');
+      
+      $consulta->bindParam(':numusuario',$numusuario);
+      $consulta->execute();
+      
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+               
+      return $objeto;
+   }
 
    public static function buscarEmpresa ($idempresa){
       try {$conexion = new conexion;}catch (PDOException $e){} 
@@ -342,7 +353,7 @@ class PDOempresa extends empresa{
      $consulta->bindParam(':numusuario',$numusuario);
      $consulta->execute();
                
-       $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+     $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
                
      return $objeto;
    }

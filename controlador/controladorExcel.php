@@ -10,26 +10,18 @@ class controladorExcel {
 
 	/* Recibe el registro actual del arrayexel y verifica todos los campos antes de insertarlo en caso de que el 
 	registro nose pueda insertar devuelve si esta sano o no. */
-	private static function validarFila ($unRegistro,$nroFila){
-		$erroNumusuario = 'Correcto';
-		$errorNumSuminsitros = 'Correcto' ;
-		$errorApeynom = 'Correcto';
-		$errorImporte = 'Correcto' ;
+	private static function validarFila ($unRegistro){
 		$esValido = true;
 		if(empty($unRegistro[0])){
-			$erroNumusuario = 'Revisar';
 			$esValido = false;
 		}
 		if(empty($unRegistro[1])){
-			$errorNumSuminsitros = 'Revisar';
 			$esValido = false;
 		}
 		if (empty($unRegistro[5])){
-			$errorApeynom = 'Revisar';
 			$esValido = false;
 		}
 		if (empty($unRegistro[3])){
-			$errorImporte = 'Revisar';
 			$esValido = false;
 		} 
 		return $esValido; 
@@ -182,18 +174,23 @@ class controladorExcel {
 		  			$medidorActualizado++;
 		  			//pregunto si existe la empresa
 		  			if(PDOempresa::buscarMedidor($unMedidorAct->getNumusuario())){
-		  				if (empty(PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor()))) {
-		  					//si esta vacio
-		  					$unaRelacion = self::insertarRelacion($unMedidor,$ulIdM);
-		  					$UltIdR = $unaRelacion->guardar();
-		  					$relacionInsertada++;
-		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->idempresa);
+		  				if (PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor())) {
+		  						//probar esta parte.
+		  					
+		  					$unaRelacion = PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor());
+		  					var_dump($unMedidorAct->getIdmedidor());
+		  					var_dump($unaRelacion);
+		  					
+		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion['idempresa']);
 		  					if($actImp){
-		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct,2,$unaRelacion->idempresa);
+		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct,2,$unaRelacion['idempresa']);
 		  						$empresaActualizada++;
 		  					}
 		  				}else{
-		  					$unaRelacion = PDOmedidorempresa::buscarMedidorId($unMedidorAct->getIdmedidor());
+		  				
+		  					$unaRelacion = self::insertarRelacion($unMedidor,$ulIdM);
+		  					$UltIdR = $unaRelacion->guardar();
+		  					$relacionInsertada++;
 		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion->idempresa);
 		  					if($actImp){
 		  						$actualizados[$i] = self::informeActualizacion($actImp,$unMedidorAct,2,$unaRelacion->idempresa);
@@ -318,16 +315,63 @@ class controladorExcel {
 	  	if (isset($_POST['enviarExcel'])) {
 	  		$archivoExcel = $_FILES['adjunto']; 
 	  		$ruta = $archivoExcel['tmp_name'];
-	  		$options = array ('start' => 1, 'limit'=>12);
+	  		$options = array ('start' => 1, 'limit'=>11);
 			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "empresas", $options );
-			
 
+		/* 
+		   [x][0]->Aociado//denominacion
+		   [x][1]->Nombre del medidor (No lo voy a usar)
+		   [x][2]->Mail
+		   [x][3]->Rubro
+		   [x][4]->Detalle Actividad
+		   [x][5]->Cantidad de empleados
+		   [x][6]->Numero de usuario
+		   [x][7]->Numero de suministro
+		   [x][8]->Domicilio
+		   [x][9]->Importe
+		   [x][10]->Telefono
+		   [x][11]->Web
+		   													*/
+
+			$totalregistros = count($arrayExcel);
+			var_dump($totalregistros);
+			for ($i=0; $i < $totalregistros; $i++) { 
+				if(self::filaEmpresaValida($arrayExcel[$i])){
+					if (PDOempresa::buscarEmpresaNumeroUsuario()) {
+						
+					}
+					$unaEmpresa = self::crearInstanciaEmpresa();
+				}else{
+					$empresaNoInsertada++;
+					$fallados[$i]=self::infromeFallados(); 		
+				}
+			}
 		}else{
 			$template = $twig->loadTemplate('excel/cargarExcelEmpresa.html.twig');
 			echo $template->render(array());
+		} 	
+	}
+	private function filaEmpresaValida($registro){
+		$esValido = true;
+		if(empty($unRegistro[0])){
+			$esValido = false;
 		}
+		if(empty($unRegistro[6])){
+			$esValido = false;
+		}
+		if (empty($unRegistro[9])){
+			$esValido = false;
+		}
+		return $esValido; 
 
-	  	
+	}
+
+	private function crearInstanciaEmpresa(){
+		
+	}
+
+	private function infromeFallados(){
+
 	}
 	
 

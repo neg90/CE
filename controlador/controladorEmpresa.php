@@ -457,7 +457,6 @@ class controladorEmpresa {
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);
-				$unaEmpresa->setnumusuario($numusuario);
 				
 				//Agrego el nuevo o el mismo :/
 				if( $idMedidor <> '-1'){
@@ -465,12 +464,16 @@ class controladorEmpresa {
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
 					//en caso de que anteriormente tengoamos un medidor lo fleto.
 					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
+					//busco el numero de usuario para modificarlo.
+					$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
 				if( $numabonado <> '-1'){
 					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
+					//y borra el numero de usuario
+					$unaEmpresa->setnumusuario(00000000);
 					//en caso de que anteriormente tengoamos un medidor lo fleto.
 					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
 					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa());
