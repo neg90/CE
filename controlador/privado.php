@@ -43,6 +43,16 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorExcel::bajainformesexel();
 				}elseif ($accion == 'verdetalleinformemedidor') {
 					controladorExcel::verdetalleinformemedidor();
+				}elseif ($accion == 'cargarempresa') {
+					controladorExcel::cargarempresa();
+				}elseif ($accion == 'listarinfempresa') {
+					controladorExcel::listarinfempresa();
+				}elseif ($accion == 'bajainformeempresa') {
+					controladorExcel::bajainformeempresa();
+				}elseif ($accion == 'bajainfempresaall') {
+					controladorExcel::bajainfempresaall();
+				}elseif ($accion == 'verdetalleinfromeempresa') {
+					controladorExcel::verdetalleinfromeempresa();
 				}
 			/* -------- INICIO ---------- */
 			}elseif ($controlador=='inicio') {

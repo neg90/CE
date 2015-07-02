@@ -131,7 +131,7 @@ class controladorExcel {
 	  		$archivoExcel = $_FILES['adjunto']; 
 	  		$ruta = $archivoExcel['tmp_name'];
 	  		$options = array ('start' => 1, 'limit'=>6);
-				$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
+			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "medidores", $options );
 
 		/* [x][0]->numusuario
 		   [x][1]->numsuministro
@@ -308,6 +308,26 @@ class controladorExcel {
 	'relacionInsertada'=>$relacionInsertada,
 	'medidorSinEmpresaInsertado'=>$medidorSinEmpresaInsertado,
 	'medidorSinEmpresaActualizado'=>$medidorSinEmpresaActualizado));
+	}
+
+	public static function cargarempresa(){
+		Twig_Autoloader::register();
+	 	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  	if (isset($_POST['enviarExcel'])) {
+	  		$archivoExcel = $_FILES['adjunto']; 
+	  		$ruta = $archivoExcel['tmp_name'];
+	  		$options = array ('start' => 1, 'limit'=>12);
+			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "empresas", $options );
+			
+
+		}else{
+			$template = $twig->loadTemplate('excel/cargarExcelEmpresa.html.twig');
+			echo $template->render(array());
+		}
+
+	  	
 	}
 	
 
