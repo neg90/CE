@@ -327,15 +327,17 @@ class controladorExcel {
 		   [x][10]->Telefono
 		   [x][11]->Web
 		   													*/
-
+		    $empresaExiste = 0;
 			$totalregistros = count($arrayExcel);
 			var_dump($totalregistros);
 			for ($i=0; $i < $totalregistros; $i++) { 
 				if(self::filaEmpresaValida($arrayExcel[$i])){
-					if (PDOempresa::buscarEmpresaNumeroUsuario()) {
-						
+					if (PDOempresa::buscarMedidor($arrayExcel[$i][6])) {
+						//ya existe
+						$empresaExiste++;
+					}else{
+						$unaEmpresa = self::crearInstanciaEmpresa($arrayExcel[$i]);
 					}
-					$unaEmpresa = self::crearInstanciaEmpresa();
 				}else{
 					$empresaNoInsertada++;
 					$fallados[$i]=self::infromeFallados(); 		
@@ -346,6 +348,26 @@ class controladorExcel {
 			echo $template->render(array());
 		} 	
 	}
+
+	private function crearInstanciaEmpresa($unRegistro){
+		if(empty($unRegistro[2])){
+			$mail = '';
+		}
+		if(empty($unRegistro[3])){
+			$rubro = '';
+		}
+		if (empty($unRegistro[4])){
+			$detalleActividad = '';
+		}
+		if (empty($unRegistro[5])){
+			$cantidadEmpleados = 0;
+		}
+		if (empty($unRegistro[])){
+			$ = '';
+		}
+	}
+
+
 	private function filaEmpresaValida($registro){
 		$esValido = true;
 		if(empty($unRegistro[0])){
@@ -359,10 +381,6 @@ class controladorExcel {
 		}
 		return $esValido; 
 
-	}
-
-	private function crearInstanciaEmpresa(){
-		
 	}
 
 	private function infromeFallados(){
