@@ -316,7 +316,7 @@ class PDOempresa extends empresa{
       $consulta->bindParam(':numusuario',$numusuario);
       $consulta->execute();
       
-      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
                
       return $objeto;
    }
@@ -341,6 +341,7 @@ class PDOempresa extends empresa{
 
    public static function buscarMedidor($numusuario){
      try {$conexion = new conexion;}catch (PDOException $e){}
+ 
                
      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE numusuario = :numusuario');
                
@@ -348,8 +349,24 @@ class PDOempresa extends empresa{
      $consulta->execute();
                
      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
-               
+           
      return $objeto;
+
+   }
+
+   public static function buscarMedidorUno($numusuario){
+     try {$conexion = new conexion;}catch (PDOException $e){}
+  
+               
+     $consulta = $conexion->prepare('SELECT * FROM empresa WHERE numusuario = :numusuario');
+               
+     $consulta->bindParam(':numusuario',$numusuario);
+     $consulta->execute();
+               
+     $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+              
+     return $objeto;
+
    }
 
   

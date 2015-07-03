@@ -157,7 +157,7 @@ class controladorExcel {
 		  			$medidorInsertado++;
 		  			$ulIdM = $unMedidor->guardar();
 		  			//Consulto si existe la empresa para este medidor.
-		  			if(PDOempresa::buscarMedidor($unMedidor->getNumusuario())){
+		  			if(PDOempresa::buscarMedidorUno($unMedidor->getNumusuario())){
 		  				$unaRelacion = self::insertarRelacion($unMedidor,$ulIdM);
 		  				$UltIdR = $unaRelacion->guardar();
 		  				$actImp = self::actualizarEmpresa($unMedidor,$unaRelacion->getIdempresa());
@@ -173,9 +173,8 @@ class controladorExcel {
 		  			$unMedidorAct = self::actualizarMedidor($unMedidor);
 		  			$medidorActualizado++;
 		  			//pregunto si existe la empresa
-		  			if(PDOempresa::buscarMedidor($unMedidorAct->getNumusuario())){
+		  			if(PDOempresa::buscarMedidorUno($unMedidorAct->getNumusuario())){
 		  				if (PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor())) {
-		  					//probar esta parte.
 		  					$unaRelacion = PDOmedidorempresa::buscarMedidorIdArray($unMedidorAct->getIdmedidor());
 		  					$actImp = self::actualizarEmpresa($unMedidorAct,$unaRelacion['idempresa']);
 		  					if($actImp){
@@ -193,6 +192,7 @@ class controladorExcel {
 		  					}
 		  				}
 		  			}else{
+		  				var_dump($unMedidor->getNumusuario());
 		  				$medidorSinEmpresaActualizado++;
 		  			}
 		  		}
@@ -302,6 +302,12 @@ class controladorExcel {
 	'medidorSinEmpresaActualizado'=>$medidorSinEmpresaActualizado));
 	}
 
+	private function insertarRelacionE($nu,$idempresa){
+		$medidor = PDOmedidor::medidorporNumusuario($nu);
+		$unaRelacion = new  PDOmedidorempresa(0,$medidor->getIdmedidor(),$idempresa);
+		return $unaRelacion;
+	}
+
 	public static function cargarempresa(){
 		Twig_Autoloader::register();
 	 	$loader = new Twig_Loader_Filesystem('../vista');
@@ -318,20 +324,30 @@ class controladorExcel {
 		   [x][1]->Numero de usuario
 		   [x][2]->Web
 		   													*/
-	
-		    $empresaExiste = 0;
+			$empresaExiste = 0;
 		    $empresaNoInsertada = 0;
 			$totalregistros = count($arrayExcel);
+			$rotas = '';
 
 			for ($i=0; $i < $totalregistros; $i++) { 
-				var_dump(self::filaEmpresaValida($arrayExcel[$i]));
 				if(self::filaEmpresaValida($arrayExcel[$i])){
 					$unaEmpresa = self::crearInstanciaEmpresa($arrayExcel[$i]);
-					$unaEmpresa->guardar();					
+					$id = $unaEmpresa->guardar();	
+					if ($arrayExcel[$i][1] != 999999) {
+						if(PDOempresa::buscarEmpresaNumeroUsuario($arrayExcel[$i][1])){
+							//relacion
+							$unaRelacion = self::insertarRelacionE($arrayExcel[$i][1],$id);
+							$unaRelacion->guardar();
+						}else{
+							
+							$rotas[$i] = array(1=>$arrayExcel[$i][0]);
+						}
+					}			
 				}else{
 					$empresaNoInsertada++;
 				}
 			}
+			var_dump($rotas);
 		}else{
 			$template = $twig->loadTemplate('excel/cargarExcelEmpresa.html.twig');
 			echo $template->render(array());
@@ -339,7 +355,6 @@ class controladorExcel {
 	}
 
 	private function crearInstanciaEmpresa($unRegistro){
-		
    		if (empty($unRegistro[2])) {
    			$web = '';
    		}else{
@@ -349,7 +364,7 @@ class controladorExcel {
    		$activo = false;
    		
 		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,11,'Sin completar',0,15,$fechainicioce,$activo,0
-		,$fechainicioce,0,0,$unRegistro[1]);
+		,$fechainicioce,0,$unRegistro[1]);
 		return $unaEmpresa;
 
 	}
