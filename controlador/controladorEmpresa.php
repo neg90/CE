@@ -305,7 +305,6 @@ class controladorEmpresa {
 		if (isset($_POST['guardarEmpresa'])){
 			$denominacion = htmlEntities($_POST['denominacion']);
 			$cantempleados = htmlEntities($_POST['cantempleados']);
-			$nrosocio = 0;
 			$importemensual = htmlEntities($_POST['importemensual']);
 			$cuit = htmlEntities($_POST['cuit']);
 			$web = htmlEntities($_POST['web']);
@@ -317,16 +316,12 @@ class controladorEmpresa {
 			$numabonado = htmlEntities($_POST['abonado']);
 			$idMedidor = htmlentities($_POST['medidor']);
 			$numusuario = htmlentities($_POST['numusuario']);
+			$activo = true;
 			
-			if (isset($_POST['activo'])) {
-				$activo = true;
-			}else{
-				$activo = false;
-			}
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,
-			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario);
+			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$numusuario);
 			if($unaEmpresa->validarInsertar()){
 				
 				$ultimoIdempresaInsertado = $unaEmpresa->guardar();
@@ -428,7 +423,6 @@ class controladorEmpresa {
 			if(PDOempresa::buscarEmpresa($idempresa)){
 				$denominacion = htmlEntities($_POST['denominacion']);
 				$cantempleados = htmlEntities($_POST['cantempleados']);
-				$nrosocio = 0;
 				$importemensual = htmlEntities($_POST['importemensual']);
 				$cuit = htmlEntities($_POST['cuit']);
 				$web = htmlEntities($_POST['web']);

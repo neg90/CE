@@ -310,37 +310,29 @@ class controladorExcel {
 	  	if (isset($_POST['enviarExcel'])) {
 	  		$archivoExcel = $_FILES['adjunto']; 
 	  		$ruta = $archivoExcel['tmp_name'];
-	  		$options = array ('start' => 1, 'limit'=>11);
+	  		$options = array ('start' => 1, 'limit'=>3);
 			$arrayExcel =  PHPepeExcel::xls2array($ruta, array ( ), "empresas", $options );
 
 		/* 
 		   [x][0]->Aociado//denominacion
-		   [x][1]->Nombre del medidor (No lo voy a usar)
-		   [x][2]->Mail
-		   [x][3]->Rubro
-		   [x][4]->Detalle Actividad
-		   [x][5]->Cantidad de empleados
-		   [x][6]->Numero de usuario
-		   [x][7]->Numero de suministro
-		   [x][8]->Domicilio
-		   [x][9]->Importe
-		   [x][10]->Telefono
-		   [x][11]->Web
+		   [x][1]->Numero de usuario
+		   [x][2]->Web
 		   													*/
+	
 		    $empresaExiste = 0;
+		    $empresaNoInsertada = 0;
 			$totalregistros = count($arrayExcel);
-			var_dump($totalregistros);
+
 			for ($i=0; $i < $totalregistros; $i++) { 
+				var_dump(self::filaEmpresaValida($arrayExcel[$i]));
 				if(self::filaEmpresaValida($arrayExcel[$i])){
-					if (PDOempresa::buscarMedidor($arrayExcel[$i][6])) {
-						//ya existe
-						$empresaExiste++;
-					}else{
+					
 						$unaEmpresa = self::crearInstanciaEmpresa($arrayExcel[$i]);
-					}
+						$unaEmpresa->guardar();
+
+					
 				}else{
 					$empresaNoInsertada++;
-					$fallados[$i]=self::infromeFallados(); 		
 				}
 			}
 		}else{
@@ -350,43 +342,33 @@ class controladorExcel {
 	}
 
 	private function crearInstanciaEmpresa($unRegistro){
-		if(empty($unRegistro[2])){
-			$mail = '';
-		}
-		if(empty($unRegistro[3])){
-			$rubro = '';
-		}
-		if (empty($unRegistro[4])){
-			$detalleActividad = '';
-		}
-		if (empty($unRegistro[5])){
-			$cantidadEmpleados = 0;
-		}
-		if (empty($unRegistro[])){
-			$ = '';
-		}
+		
+   		if (empty($unRegistro[2])) {
+   			$web = '';
+   		}else{
+   			$web = $unRegistro[2];
+   		}
+   		$fechainicioce = date('Y-m-d');
+   		$activo = false;
+   		
+		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,11,'Sin completar',0,15,$fechainicioce,$activo,0
+		,$fechainicioce,0,0,$unRegistro[1]);
+		return $unaEmpresa;
+
 	}
 
 
 	private function filaEmpresaValida($registro){
 		$esValido = true;
-		if(empty($unRegistro[0])){
+		if(empty($registro[0])){
 			$esValido = false;
 		}
-		if(empty($unRegistro[6])){
-			$esValido = false;
-		}
-		if (empty($unRegistro[9])){
+		if(empty($registro[1])){
 			$esValido = false;
 		}
 		return $esValido; 
 
 	}
-
-	private function infromeFallados(){
-
-	}
-	
 
 }
 ?>

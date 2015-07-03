@@ -10,7 +10,6 @@ class empresa {
 	private $cantempleados;
 	private $idcategoria;
 	private $fechainicioce;
-	private $nrosocio;  //de momento autoincremental. no tiene set!!
 	private $activo;
 	private $cuit;
 	private $fechafundacion;
@@ -18,7 +17,7 @@ class empresa {
 	private $numusuario;
 
 	public function	__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,
-	$activo,$cuit,$fechafundacion,$importemensual,$nrosocio,$numusuario) {
+	$activo,$cuit,$fechafundacion,$importemensual,$numusuario) {
 	
 		$this->idempresa = $idempresa;
 		$this->denominacion = $denominacion;
@@ -28,11 +27,10 @@ class empresa {
 		$this->cantempleados = $cantempleados;
 		$this->idcategoria = $idcategoria;
 		$this->fechainicioce = $fechainicioce;
-		$this->activo = true;
+		$this->activo = $activo;
 		$this->cuit = $cuit;
 		$this->fechafundacion = $fechafundacion;
 		$this->importemensual = $importemensual;
-		$this->nrosocio = $nrosocio;
 		$this->numusuario =$numusuario;
 
 	}
@@ -103,14 +101,6 @@ class empresa {
 
 	public function setFechainicioce($fechainicioce){
 		$this->fechainicioce = $fechainicioce;
-	}
-
-	public function getNrosocio(){
-		return $this->nrosocio;
-	}
-
-	public function setNrosocio($nrosocio){
-		$this->nrosocio = $nrosocio;
 	}
 	
 	public function setActivo($activo){
