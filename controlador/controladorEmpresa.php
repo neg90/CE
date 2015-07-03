@@ -446,7 +446,7 @@ class controladorEmpresa {
 				$unaEmpresa->setCantempleados($cantempleados);
 				$unaEmpresa->setIdcategoria($categoriaAJAX);
 				$unaEmpresa->setFechainicioce($fechainicioce);
-				$unaEmpresa->setNrosocio($nrosocio);
+				$unaEmpresa->setActivo($activo);
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);

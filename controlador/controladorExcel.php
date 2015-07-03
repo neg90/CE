@@ -192,7 +192,6 @@ class controladorExcel {
 		  					}
 		  				}
 		  			}else{
-		  				var_dump($unMedidor->getNumusuario());
 		  				$medidorSinEmpresaActualizado++;
 		  			}
 		  		}
@@ -340,14 +339,14 @@ class controladorExcel {
 							$unaRelacion->guardar();
 						}else{
 							
-							$rotas[$i] = array(1=>$arrayExcel[$i][0]);
+							var_dump($arrayExcel[$i][0]);
 						}
 					}			
 				}else{
 					$empresaNoInsertada++;
 				}
 			}
-			var_dump($rotas);
+			
 		}else{
 			$template = $twig->loadTemplate('excel/cargarExcelEmpresa.html.twig');
 			echo $template->render(array());
