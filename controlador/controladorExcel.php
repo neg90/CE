@@ -326,11 +326,8 @@ class controladorExcel {
 			for ($i=0; $i < $totalregistros; $i++) { 
 				var_dump(self::filaEmpresaValida($arrayExcel[$i]));
 				if(self::filaEmpresaValida($arrayExcel[$i])){
-					
-						$unaEmpresa = self::crearInstanciaEmpresa($arrayExcel[$i]);
-						$unaEmpresa->guardar();
-
-					
+					$unaEmpresa = self::crearInstanciaEmpresa($arrayExcel[$i]);
+					$unaEmpresa->guardar();					
 				}else{
 					$empresaNoInsertada++;
 				}
