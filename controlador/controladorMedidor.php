@@ -38,7 +38,7 @@ class controladorMedidor {
 	}
 
 
-	static function listar(){
+	static function listar($pag){
 			
 			var_dump($pag);
 			$user=$_SESSION['user'];
@@ -61,7 +61,7 @@ class controladorMedidor {
 			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
 	}
 
-		static function Filtros($tipoFiltro,$datoFiltro){
+		static function Filtros(){
 			$user=$_SESSION['user'];
 
 			Twig_Autoloader::register();
@@ -70,6 +70,21 @@ class controladorMedidor {
 			//'cache' => '../cache','
 			'debug' => 'false'
 			));
+
+			if (isset($_POST['tipoFiltro'])){
+				if (!empty($_POST['tipoFiltro']))
+					$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+			}
+
+			if (isset($_POST['dato'])){
+				if (!empty($_POST['dato']))
+					$datoFiltro=htmlEntities($_POST['dato']);
+			}
+
+			if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
+			elseif ((isset($tipoFiltro))!='sinempresa') {
+				header('Location:privado.php?c=medidor&a=listar');
+			}
 
 			//statusActivo es 2 si se ven Activos e Inactivos
 			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
@@ -93,6 +108,7 @@ class controladorMedidor {
 					break;
 				case 'sinempresa':
 					$ListaMedidores=PDOMedidor::filtroSinEmpresa();
+					$datoFiltro=null;
 					break;
 				case 'nada':
 					$ListaMedidores=PDOMedidor::listarMedidores();

@@ -103,7 +103,7 @@ $(document).ready(function() {
  
  
   {% if filtroActivo == 0 %}
-  		<form method="POST" action="privado.php?c=medidor&a=listar" id="form_herramientas_medidor">
+  		<form method="POST" action="privado.php?c=medidor&a=filtro" id="form_herramientas_medidor">
   		<div id="herramientasTop" class="inline-block">
 				  <div class="accionActivoparent inline-block">
 
@@ -152,7 +152,7 @@ $(document).ready(function() {
           {% endif %}
             {% if tipoFiltro == 'sinempresa' %}
                 {% set tipoFiltro = 'Medidores' %}
-                {% set datoFiltro = ' sin empresa asignada'%}
+                {% set datoFiltro = ' sin empresa'%}
             {% elseif tipoFiltro == 'nomyap' %}
                 {% set tipoFiltro = 'Nombre/Apellido' %}
             {% elseif tipoFiltro == 'numusuario' %}
