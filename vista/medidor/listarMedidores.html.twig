@@ -143,10 +143,22 @@ $(document).ready(function() {
         </div>
         </form>
         {% else %}
-        	<div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
+          {% if datoFiltro | length <= 10 %}
+        	     <div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
+          {% elseif datoFiltro | length > 10 and datoFiltro | length <=20 %}
+               <div class="alert alert-info col-lg-5 filtrandoresultados" role="alert">
+          {% elseif datoFiltro | length >20 %}
+               <div class="alert alert-info col-lg-6 filtrandoresultados" role="alert">
+          {% endif %}
             {% if tipoFiltro == 'sinempresa' %}
                 {% set tipoFiltro = 'Medidores' %}
                 {% set datoFiltro = ' sin empresa asignada'%}
+            {% elseif tipoFiltro == 'nomyap' %}
+                {% set tipoFiltro = 'Nombre/Apellido' %}
+            {% elseif tipoFiltro == 'numusuario' %}
+                {% set tipoFiltro = 'número de usuario' %}
+            {% elseif tipoFiltro == 'numsuministro' %}
+                {% set tipoFiltro = 'número de suministro' %}
             {% endif %}
         		<span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
         	</div>        		
