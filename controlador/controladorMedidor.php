@@ -54,7 +54,6 @@ class controladorMedidor {
 				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
 				$arayVista[$i] = $arrayUnario;
 			}
-
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
 			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
 	}
@@ -96,11 +95,20 @@ class controladorMedidor {
 					break;
 			}
 
+			$medidoresempresa = PDOmedidorempresa::listar();
+
+			$arayVista = '';
+			for ($i=0; $i < count($medidoresempresa); $i++) { 
+				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
+				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
+				$arayVista[$i] = $arrayUnario;
+			}
+
 			//Si está filtrando la tabla, es 1.
 			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 
 
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro));	
+			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro, 'relacion'=>$arayVista));	
 	}
 
 	static function listarConCartel($eliminado){
