@@ -180,6 +180,21 @@ $(document).ready(function() {
           </form>
 		  		
   		  </div>
+        <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="disabled"><a href="privado.php?c=medidor&a=listar&pagina={{item-1}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+            {% for item in 1..cantidadPaginas %} 
+              <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+            {% endfor %}
+            <li><a href="privado.php?c=medidor&a=listar&pagina={{item+1}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+         </ul>
+       </nav>
+    </div>
+    </div>
 
   <table class="table table-hover">
   <thead>

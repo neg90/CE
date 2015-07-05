@@ -279,7 +279,11 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					//die('tipo '.$tipoFiltro.'. dato '.$datoFiltro);
 
 					if ((isset($tipoFiltro)) and (isset($datoFiltro))) controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
-					else controladorMedidor::listar();
+					else{
+						
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorMedidor::listar($pag);
+					} 
 					//Eliminar
 					}elseif($accion == 'eliminar'){ //elimina fisicamente
 						if (!empty($_GET['id'])){

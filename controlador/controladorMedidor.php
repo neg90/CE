@@ -39,11 +39,14 @@ class controladorMedidor {
 
 
 	static function listar(){
+			
+			var_dump($pag);
 			$user=$_SESSION['user'];
+			$cantResultados = 25;
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
 			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-
+			
 			$ListaMedidores=PDOMedidor::listarMedidores();
 
 			$medidoresempresa = PDOmedidorempresa::listar();
@@ -60,6 +63,7 @@ class controladorMedidor {
 
 		static function Filtros($tipoFiltro,$datoFiltro){
 			$user=$_SESSION['user'];
+
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
 			$twig = new Twig_Environment($loader, array(
