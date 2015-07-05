@@ -60,6 +60,14 @@ $(document).ready(function() {
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'numsuministro';
             break;
+
+          case "Sin empresa asignada":
+          $("#dato").css("display", "none");
+          $("#datoTexto").attr("placeholder", " ");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'sinempresa';
+            break;            
+
         }
     }
 
@@ -123,6 +131,7 @@ $(document).ready(function() {
 				  			<option>Empresa</option> <!-- Falta implementar -->
 				  			<option>Num. Usuario</option>
 				  			<option>Num. Suministro</option>
+                <option>Sin empresa asignada</option>
 				  		</select>
 				  		</form>
 				  </div>
@@ -135,6 +144,10 @@ $(document).ready(function() {
         </form>
         {% else %}
         	<div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
+            {% if tipoFiltro == 'sinempresa' %}
+                {% set tipoFiltro = 'Medidores' %}
+                {% set datoFiltro = ' sin empresa asignada'%}
+            {% endif %}
         		<span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
         	</div>        		
         	<div class="col-lg-2">

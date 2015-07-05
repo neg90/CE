@@ -263,18 +263,21 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					}
 				}elseif($accion == 'listar'){
 						/* FILTROS MEDIDOR*/
-					if (isset($_POST['tipoFiltro'])){
-								if (!empty($_POST['tipoFiltro']))
-									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-					}
-					else $tipoFiltro='nada';
+						if (isset($_POST['tipoFiltro'])){
+									if (!empty($_POST['tipoFiltro']))
+										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+						}
+						else $tipoFiltro='nada';
 
-					if (isset($_POST['dato'])){
+					if ((isset($_POST['dato'])) and ($_POST['dato'] != '')) {
 								if (!empty($_POST['dato']))
 									$datoFiltro=htmlEntities($_POST['dato']);
 					}
+					else ($datoFiltro='nada');
 
-					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
+					//die('tipo '.$tipoFiltro.'. dato '.$datoFiltro);
+
+					if ((isset($tipoFiltro)) and (isset($datoFiltro))) controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
 					else controladorMedidor::listar();
 					//Eliminar
 					}elseif($accion == 'eliminar'){ //elimina fisicamente

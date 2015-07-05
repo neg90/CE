@@ -87,6 +87,28 @@ class PDOMedidor extends medidor{
       return $objeto;
    }
 
+      public static function filtroSinEmpresa(){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $arrayMedidorEmpresa=PDOmedidorempresa::listar();
+      $cant = count($arrayMedidorEmpresa);
+      $me = ''; //ids medidores con empresa
+
+      foreach ($arrayMedidorEmpresa as $unMedidorEmpresa){
+         $me .= $unMedidorEmpresa->idmedidor . ','; //Armo un string con los id, de la forma: '12345678'
+      }
+      if ($me == '')
+         $consulta = $conexion->prepare('SELECT * FROM medidor');
+      else{
+         $consulta = $conexion->prepare("SELECT * FROM medidor WHERE idmedidor NOT IN :me");
+         $consulta->bindParam(':me',$me);
+      }
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
 
 
    /* FIN FILTROS */

@@ -88,6 +88,9 @@ class controladorMedidor {
 				case 'numsuministro':
 					$ListaMedidores=PDOMedidor::filtroNumsuministro($datoFiltro);
 					break;
+				case 'sinempresa':
+					$ListaMedidores=PDOMedidor::filtroSinEmpresa();
+					break;
 				case 'nada':
 					$ListaMedidores=PDOMedidor::listarMedidores();
 					break;
