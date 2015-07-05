@@ -120,7 +120,6 @@ $(document).ready(function() {
             <li class="disabled"><a href="privado.php?c=empresa&a=listar&pagina={{item-1}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
             {% for item in 1..cantidadPaginas %} 
               <li><a href="privado.php?c=empresa&a=listar&pagina={{item}}">{{item}}</a></li>
-             
             {% endfor %}
             <li><a href="privado.php?c=empresa&a=listar&pagina={{item+1}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
          </ul>
@@ -267,6 +266,38 @@ $(document).ready(function() {
             <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
           {% endif %}
         </td>
+     <!--   <td>
+          {% set tienContribuyente = 2 %}
+          {% for i in arrayVista %}
+            {% if i['idempresa'] == item.idempresa %}
+        
+                {% for mNom in medidores %}
+                  {% if mNom.idmedidor == i['medidor'].idmedidor %}
+                   
+                      <li> {{ mNom.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</li>
+                       {% set tienContribuyente = 1 %}
+                  {% endif %}
+                {% endfor %}
+                      
+               {% endif %}  
+            {% endfor %} 
+         
+              
+           </td>
+           <td>
+            {% for i in arrayVista %}
+              {% if i['idempresa'] == item.idempresa %}
+                <li> 
+                  {% for mAbon in abonados %}
+                    {% if mAbon.numabonado == i['abonado'].numabonado %}
+                     {{ mAbon.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                      {% set tienContribuyente = 1 %}
+                    {% endif %}
+                  {% endfor %}
+                </li>
+              {% endif %}  
+           {% endfor %} 
+          </td>-->
           <td class="controles">
             {% if tienContribuyente == 2 %}
               <!-- nuevo abonado -->
