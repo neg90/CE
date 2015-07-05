@@ -154,7 +154,7 @@ class controladorEmpresa {
 	public static function listar($pag){
 		
 		$user=$_SESSION['user'];
-		$cantResultados = 15;
+		$cantResultados = 25;
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
