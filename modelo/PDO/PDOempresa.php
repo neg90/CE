@@ -141,6 +141,19 @@ class PDOempresa extends empresa{
 		return $objeto;
 	}
 
+   public static function listarPaginacion($valor,$cantResultados){
+     
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM empresa LIMIT :valor,:cantResultados');
+      $consulta->bindParam(':valor', $valor,PDO::PARAM_INT);
+      $consulta->bindParam(':cantResultados', $cantResultados,PDO::PARAM_INT);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
+
    public static function contarEmpresas (){
       try {$conexion = new conexion;}catch (PDOException $e){}
       

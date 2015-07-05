@@ -151,20 +151,29 @@ class controladorEmpresa {
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
 		'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user));
 	}
-	public static function listar(){
+	public static function listar($pag){
+		
 		$user=$_SESSION['user'];
+		$cantResultados = 15;
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		$categorias = PDOcategoria::listar();
-		$empresas = PDOempresa::listar();
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag) * $cantResultados ;
+		}
+		$cantPaginas = floor(count(PDOempresa::listar()) / $cantResultados);
+	
+		$empresas = PDOempresa::listarPaginacion($valor,$cantResultados);
 		$rubros = PDOrubro::listar();
-		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
+	
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
-		for ($i=0; $i < $totalEmpresas   ; $i++) { 
+		for ($i=0; $i < count($empresas) ; $i++) { 
 			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
 			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
 			$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresas[$i]->idempresa);
@@ -175,7 +184,7 @@ class controladorEmpresa {
 		$filtroActivo = 0; //Si está filtrando la tabla, es 1.
 
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		echo $template->render(array('cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo' => $filtroActivo));
 	}
 	public function baja(){

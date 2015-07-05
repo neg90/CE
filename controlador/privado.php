@@ -149,7 +149,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'baja'){
 					controladorEmpresa::baja();
 				}elseif($accion == 'listar'){
-					controladorEmpresa::listar();
+					$pag=htmlEntities(@$_GET['pagina']);
+					controladorEmpresa::listar($pag);
 				}elseif($accion == 'detalle'){
 					if (!empty($_POST['id'])){
 						$idempresa=htmlEntities($_POST['id']);
