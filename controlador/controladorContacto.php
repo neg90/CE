@@ -180,6 +180,7 @@ class controladorContacto {
 
 
 	static function listar(){
+		
 		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');

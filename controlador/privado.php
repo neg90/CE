@@ -102,7 +102,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					}
 
 					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
-					else controladorContacto::listar();
+					else {
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorContacto::listar($pag);
+					}
 				}
 				elseif($accion == 'pdf'){ //PDF Contacto
 					if ($_POST['datosPDF']){
@@ -280,7 +283,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 
 					if ((isset($tipoFiltro)) and (isset($datoFiltro))) controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
 					else{
-						
+
 						$pag=htmlEntities(@$_GET['pagina']);
 						controladorMedidor::listar($pag);
 					} 
