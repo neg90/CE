@@ -142,9 +142,9 @@ class PDOempresa extends empresa{
 	}
 
    public static function listarPaginacion($valor,$cantResultados){
-     
+   
       try {$conexion = new conexion;}catch (PDOException $e){}
-      $consulta = $conexion->prepare('SELECT * FROM empresa LIMIT :valor,:cantResultados');
+      $consulta = $conexion->prepare('SELECT * FROM empresa LIMIT :valor,:cantResultados; ORDER BY denominacion');
       $consulta->bindParam(':valor', $valor,PDO::PARAM_INT);
       $consulta->bindParam(':cantResultados', $cantResultados,PDO::PARAM_INT);
       $consulta->execute();

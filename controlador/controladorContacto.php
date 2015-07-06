@@ -190,9 +190,9 @@ class controladorContacto {
 		if (intval($pag) == 1) {
 			$valor = 0;
 		}else{
-			$valor = intval($pag) * $cantResultados ;
+			$valor = intval($pag-1) * $cantResultados ;
 		}
-		$cantPaginas = floor(count(PDOContacto::listar()) / $cantResultados);	
+		$cantPaginas = ceil(count(PDOContacto::listar()) / $cantResultados);	
 		//Sig
 		if ($pag == $cantPaginas ) {
 			$sig = $cantPaginas;

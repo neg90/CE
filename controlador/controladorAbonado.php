@@ -122,9 +122,9 @@ class controladorAbonado {
 		if (intval($pag) == 1) {
 			$valor = 0;
 		}else{
-			$valor = intval($pag) * $cantResultados ;
+			$valor = intval($pag-1) * $cantResultados ;
 		}
-		$cantPaginas = floor(count(PDOabonado::listar()) / $cantResultados);	
+		$cantPaginas = ceil(count(PDOabonado::listar()) / $cantResultados);	
 		//Sig
 		if ($pag == $cantPaginas ) {
 			$sig = $cantPaginas;

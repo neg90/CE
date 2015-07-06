@@ -49,11 +49,11 @@ class controladorMedidor {
 			
 			$medidoresempresa = PDOmedidorempresa::listar();
 			if (intval($pag) == 1) {
-			$valor = 0;
+				$valor = 0;
 			}else{
-				$valor = intval($pag) * $cantResultados ;
+				$valor = intval($pag-1) * $cantResultados ;
 			}
-			$cantPaginas = floor(count(PDOMedidor::listarMedidores()) / $cantResultados);	
+			$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);	
 			//Sig
 			if ($pag == $cantPaginas ) {
 				$sig = $cantPaginas;

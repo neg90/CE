@@ -162,11 +162,24 @@ class controladorEmpresa {
 		if (intval($pag) == 1) {
 			$valor = 0;
 		}else{
-			$valor = intval($pag) * $cantResultados ;
+			$valor = intval($pag-1) * $cantResultados ;
 		}
-		$cantPaginas = floor(count(PDOempresa::listar()) / $cantResultados);
-	
+
+		$cantPaginas = ceil(count(PDOempresa::listar()) / $cantResultados);
+		
 		$empresas = PDOempresa::listarPaginacion($valor,$cantResultados);
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
 		$rubros = PDOrubro::listar();
 	
 		$contactos = PDOContacto::listar();
@@ -184,7 +197,7 @@ class controladorEmpresa {
 		$filtroActivo = 0; //Si está filtrando la tabla, es 1.
 
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo' => $filtroActivo));
 	}
 	public function baja(){

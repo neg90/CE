@@ -240,7 +240,7 @@ class PDOMedidor extends medidor{
    }
 
    public static function listarPaginacion($valor,$cantResultados){
-     
+    
       try {$conexion = new conexion;}catch (PDOException $e){}
       $consulta = $conexion->prepare('SELECT * FROM medidor LIMIT :valor,:cantResultados');
       $consulta->bindParam(':valor', $valor,PDO::PARAM_INT);
