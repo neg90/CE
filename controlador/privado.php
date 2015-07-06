@@ -153,7 +153,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'modificar'){
 					controladorEmpresa::modificar();
 				}elseif($accion == 'baja'){
-					controladorEmpresa::baja();
+					$pag=htmlEntities(@$_GET['pagina']);
+					controladorEmpresa::baja($pag);
 				}elseif($accion == 'listar'){
 					$pag=htmlEntities(@$_GET['pagina']);
 					controladorEmpresa::listar($pag);

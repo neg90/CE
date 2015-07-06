@@ -191,7 +191,7 @@ class controladorEmpresa {
 			$ant = $pag - 1;
 		}
 		$rubros = PDOrubro::listar();
-	
+		$paginaBaja = $pag;
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
 		$medidores = PDOMedidor::listarMedidores();
@@ -207,12 +207,13 @@ class controladorEmpresa {
 		$filtroActivo = 0; //Si está filtrando la tabla, es 1.
 
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
-		'cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,
-		'contactos'=>$contactos,'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,
-		'user'=>$user, 'filtroActivo' => $filtroActivo));
+		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,
+		'categorias'=>$categorias,'contactos'=>$contactos,'medidores'=>$medidores,'arrayVista'=>$arrayVista,
+		'abonados'=>$abonados,'user'=>$user, 'filtroActivo' => $filtroActivo));
 	}
-	public function baja(){
+	public function baja($pag){
+		$cantResultados = 25;
 		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -227,14 +228,45 @@ class controladorEmpresa {
 			$aviso = 2;
 		}
 		$categorias = PDOcategoria::listar();
-		$empresas = PDOempresa::listar();
+		//$empresas = PDOempresa::listar();
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$cantPaginas = ceil(count(PDOempresa::listar()) / $cantResultados);
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if(($pag + 5) > $cantPaginas ){
+			$actual = $cantPaginas-5;
+			$cantMostrar = $cantPaginas;
+		}else{
+			$cantMostrar = intval($pag) + 5; 
+		}
+		$empresas = PDOempresa::listarPaginacion($valor,$cantResultados);
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
 		$rubros = PDOrubro::listar();
-		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
+		$paginaBaja = $pag;
+		//$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
-		for ($i=0; $i < $totalEmpresas  ; $i++) { 
+		for ($i=0; $i < count($empresas)  ; $i++) { 
 			$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
 			$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
 			$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresas[$i]->idempresa);
@@ -243,7 +275,8 @@ class controladorEmpresa {
 		}
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
+		'cantidadPaginas'=>$cantPaginas,'idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
    }
 
