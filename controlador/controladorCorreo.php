@@ -3,6 +3,7 @@
 	require '../vendor/PHPMailer/PHPMailerAutoload.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 	require_once '../modelo/PDO/PDOempresa.php';
+	require_once '../modelo/PDO/PDOinfcorreo.php';
 
 	
 class controladorCorreo {
@@ -76,14 +77,18 @@ class controladorCorreo {
 	  			}
 	  			$unaEmpresa = null;
 	  		}
+	  		$fechaActual = date('Y-m-d h:m:s');
+	  		$empresasJSON = json_encode($empresas);
+	  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual);
+	  		$unInforme->guardar();
 	  			
 	  	}
 	}
 
 	public static function mostrarInforme(){
-		
+
 	}
-	
+
 	private static function enviarCorreo($unEmail,$adjunto,$asunto,$cuerpo){
 		//controlar errores del adjunto
 	  		$ruta = $adjunto['tmp_name'];
