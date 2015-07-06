@@ -269,6 +269,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'listar'){
 					$pag=htmlEntities(@$_GET['pagina']);
 					controladorMedidor::listar($pag);
+					// esto ta invisidivle??' a carajo'
 						/* FILTROS MEDIDOR*/
 				/*		if (isset($_POST['tipoFiltro'])){
 									if (!empty($_POST['tipoFiltro']))

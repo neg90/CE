@@ -40,16 +40,35 @@ class controladorMedidor {
 
 	static function listar($pag){
 			
-			var_dump($pag);
 			$user=$_SESSION['user'];
 			$cantResultados = 25;
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
 			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-			
-			$ListaMedidores=PDOMedidor::listarMedidores();
 
+			
 			$medidoresempresa = PDOmedidorempresa::listar();
+			if (intval($pag) == 1) {
+			$valor = 0;
+			}else{
+				$valor = intval($pag) * $cantResultados ;
+			}
+			$cantPaginas = floor(count(PDOMedidor::listarMedidores()) / $cantResultados);	
+			//Sig
+			if ($pag == $cantPaginas ) {
+				$sig = $cantPaginas;
+			}else{
+				$sig = $pag + 1;
+			}
+			//ant
+			if($pag == 1){
+				$ant = 1 ;
+			}else{
+				$ant = $pag - 1;
+			}
+			//cant paginas
+			
+			$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
 
 			$arayVista = '';
 			for ($i=0; $i < count($medidoresempresa); $i++) { 
@@ -58,7 +77,8 @@ class controladorMedidor {
 				$arayVista[$i] = $arrayUnario;
 			}
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
+			echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
+			'user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
 	}
 
 		static function Filtros(){

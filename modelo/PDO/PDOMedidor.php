@@ -239,17 +239,17 @@ class PDOMedidor extends medidor{
       return $resultado['numusuario'];
    }
 
-  /* public static function existeMedidor($numusuario, $numsuministro){
-      try{
-         $conexion=new conexion; //creo la instancia de la conexión
-      }
-      catch (PDOException $e){}
-      $consulta = $conexion->prepare('SELECT * FROM medidor WHERE numusuario = :numusuario AND numsuministro = :numsuministro');
-      $consulta->bindParam(':numusuario', $numusuario);
-      $consulta->bindParam(':numsuministro', $numsuministro);
+   public static function listarPaginacion($valor,$cantResultados){
+     
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM medidor LIMIT :valor,:cantResultados');
+      $consulta->bindParam(':valor', $valor,PDO::PARAM_INT);
+      $consulta->bindParam(':cantResultados', $cantResultados,PDO::PARAM_INT);
       $consulta->execute();
-      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
       return $objeto;
-   }*/
+   }
+
 }
 ?>
