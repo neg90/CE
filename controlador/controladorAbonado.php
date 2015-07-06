@@ -46,6 +46,32 @@ class controladorAbonado {
 		}
 	}
 
+	static function altaNormal(){
+		
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+		$aviso=0;
+		$modo = 'altaNormal';
+		if (isset($_POST['guardarAbonado'])) {
+			$aviso=2;
+
+			$fechadeultimopago = htmlEntities($_POST['fechadeultimopago']);
+			$importe = htmlEntities($_POST['importe']);
+			$activo = true;
+			$unAbonado = new PDOabonado(0,$importe,$fechadeultimopago,$activo);
+			$unAbonado->guardar();
+			$aviso=1;
+			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+
+		}else{
+			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+		}
+		
+	}
+
 	public static function eleccion($idempresa){
 		
 		Twig_Autoloader::register();

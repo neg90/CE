@@ -80,6 +80,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$id=htmlEntities(@$_GET['id']); 
 						controladorAbonado::eleccion($id);
 					}
+				}elseif ($accion=='altaNormal') {
+					controladorAbonado::altaNormal();
 				}
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
