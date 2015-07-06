@@ -48,6 +48,7 @@ class controladorCorreo {
 	public static function enviar(){
 
 	  	if (isset($_POST['enviarCorreo'])){
+	  		var_dump($empresas);
 	  		$empresas = $_POST['arrayIdempresa'];
 	  		$limitEmpresas = count($empresas);
 
@@ -59,7 +60,7 @@ class controladorCorreo {
 	  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
 	  			$limitCorreos = count($unosCorreo);
 	  			for ($c=0; $c < $limitCorreos ; $c++){ 
-	  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+	  				self::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
 	  			}
 	  			$unaEmpresa = null;
 	  		}

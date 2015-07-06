@@ -166,16 +166,22 @@ class controladorEmpresa {
 			$valor = intval($pag-1) * $cantResultados ;
 		}
 		$cantPaginas = ceil(count(PDOempresa::listar()) / $cantResultados);
+
 		if ($pag == 1 ) {
 			$actual = 1;
 		}else{
 			$actual = $pag -1;
 		}
-		if(($pag + 5) > $cantPaginas ){
-			$actual = $cantPaginas-5;
-			$cantMostrar = $cantPaginas;
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				var_dump($cantPaginas);
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
 		}else{
-			$cantMostrar = intval($pag) + 5; 
+			$cantMostrar = $cantPaginas;
 		}
 		$empresas = PDOempresa::listarPaginacion($valor,$cantResultados);
 		//Sig
