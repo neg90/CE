@@ -236,8 +236,22 @@ function cambiarAction(accion){
 
       <div class="clearfix"></div>
       <div id="botones">
+              <form id="enviarPDF" class="inline-block" action="privado.php?c=empresa&a=pdf" method="POST">
+                  <input type="hidden" id="datosPDFempresa" name="datosPDFempresa" value="{{ empresa|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFrubro" name="datosPDFrubro" value="{{ rubro|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFcategoria" name="datosPDFcategoria" value="{{ categoria|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFcontactos" name="datosPDFcontactos" value="{{ contactos|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFmedidores" name="datosPDFmedidores" value="{{ medidores|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFtelefonos" name="datosPDFtelefonos" value="{{ telefonos|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFcorreos" name="datosPDFcorreos" value="{{ correos|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFdomcilios" name="datosPDFdomcilios" value="{{ domicilios|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFabonados" name="datosPDFabonados" value="{{ abonados|json_encode() }}"/>
+              <button style="text-decoration:none" class="btn btn-default btn-lg btn-block col-lg-4">
+                  Ver en PDF
+              </button>
+              </form>
               <a href="privado.php?c=empresa&a=listar">
-                <button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="volver">
+                <button type="button" class="btn btn-default btn-lg btn-block col-lg-4 inline-block" name="volver">
                   Volver al listado
                 </button>
               </a>

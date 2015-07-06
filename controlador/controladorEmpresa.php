@@ -21,7 +21,48 @@
 class controladorEmpresa {
 
 
-	public static function pdfEmpresa($datosPDF){
+	public static function pdfEmpresa(){
+		die('holi');
+		if (isset($_POST['datosPDFempresa']))
+			$empresa=htmlEntities($_POST['datosPDFempresa']);
+
+		if (isset($_POST['datosPDFrubro']))
+			$rubro=htmlEntities($_POST['datosPDFrubro']);
+
+		if (isset($_POST['datosPDFcategoria']))
+			$categoria=htmlEntities($_POST['datosPDFcategoria']);
+
+		if (isset($_POST['datosPDFcontactos']))
+			$contactos=htmlEntities($_POST['datosPDFcontactos']);
+
+		if (isset($_POST['datosPDFmedidores']))
+			$medidores=htmlEntities($_POST['datosPDFmedidores']);
+
+		if (isset($_POST['datosPDFtelefonos']))
+			$telefonos=htmlEntities($_POST['datosPDFtelefonos']);
+
+		if (isset($_POST['datosPDFcorreos']))
+			$correos=htmlEntities($_POST['datosPDFcorreos']);
+
+		if (isset($_POST['datosPDFdomicilios']))
+			$domicilios=htmlEntities($_POST['datosPDFdomicilios']);
+
+		if (isset($_POST['datosPDFabonados']))
+			$abonados=htmlEntities($_POST['datosPDFabonados']);
+
+		$pdf = new PDF();
+		// Cargo la info
+		//$data = html_entity_decode($datosPDF);
+		//$data = json_decode($data, true);
+		$pdf->SetFont('Arial','',14);
+		$_SESSION['tituloPDF']=($data[0]['denominacion']); //título PDF
+		$pdf->AddPage('P','A4');
+		$pdf->TablaEmpresa($empresa, $rubro, $categoria,$contactos,$medidores,
+				 $telefonos, $correos,$domicilios,$abonados);
+		$pdf->Output();
+	}
+
+	public static function pdfEmpresaListado($datosPDF){
 
 		$pdf = new PDF();
 		// Cargo la info
@@ -29,7 +70,7 @@ class controladorEmpresa {
 		$data = json_decode($data, true);
 		$pdf->SetFont('Arial','',14);
 		$_SESSION['tituloPDF']=($data[0]['denominacion']); //título PDF
-		$pdf->AddPage();
+		$pdf->AddPage('P','A4');
 		$pdf->TablaEmpresa($data);
 		$pdf->Output();
 	}
@@ -147,6 +188,7 @@ class controladorEmpresa {
 		$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());
 		$domicilios = PDOdomicilioempresa::buscarDomicilios($empresa->getIdempresa());
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
+
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
 		'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user));
