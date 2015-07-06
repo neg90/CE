@@ -112,8 +112,8 @@ $(document).ready(function() {
       </small>
   </h5>
   <div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
     {% if cantidadPaginas  > 0 %}
       <div class="bs-example" data-example-id="disabled-active-pagination">
         <nav>
@@ -122,9 +122,13 @@ $(document).ready(function() {
               <a href="privado.php?c=empresa&a=listar&pagina={{ant}}" aria-label="Previous">
               <span aria-hidden="true">«</span></a>
             </li>
-              {% for item in 1..cantidadPaginas %} 
+            <li><a href="privado.php?c=empresa&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
                 <li><a href="privado.php?c=empresa&a=listar&pagina={{item}}">{{item}}</a></li>
               {% endfor %}
+            <li><a href="privado.php?c=empresa&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=empresa&a=listar&pagina={{sig}}" aria-label="Next">
               <span aria-hidden="true">»</span></a>

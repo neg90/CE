@@ -2,7 +2,11 @@
  
 {% block title %} Crear titular de medidor {% endblock %}
 {% block contenedor %}
-	<form class="form-horizontal" action="privado.php?c=medidor&a=alta&id={{idempresa}}" role="form" method="POST">
+	{% if modo == 'altaNormal' %}
+		<form class="form-horizontal" action="privado.php?c=medidor&a=altaNormal" role="form" method="POST">
+	{% else %}
+		<form class="form-horizontal" action="privado.php?c=medidor&a=alta&id={{idempresa}}" role="form" method="POST">
+	{% endif %}
 		<input type="hidden" name="idempresa" value="{{idempresa}}">
 		<div class="contenedor-formulario">
 			<div class="row fila-de-alerta">
@@ -10,15 +14,15 @@
 				 <div class=" col-lg-4">
 				 	{% if aviso is null %}
 				 	{% else %}
-				 		{% if tipoAviso == 'exito' %}
+				 		{% if aviso == 1 %}
 				 		<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				  {{aviso}}
+		    				  Perfecto! El titular de medidor se cargo correctamente
 	  					</div>
-	  					{% elseif tipoAviso == 'error' %}
+	  					{% elseif aviso == 2 %}
 	  						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				  {{aviso}}
+		    					No se pudo cargar el titular de medidor compruebe los datos e intente nuevamente.
 	  					</div>
 	  					{% endif %}
   					{% endif %}

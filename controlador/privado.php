@@ -259,6 +259,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 							$id=htmlEntities(@$_GET['id']); 
 							controladorMedidor::alta($id);	
 						}
+					}elseif ($accion == 'altaNormal') {
+						controladorMedidor::altaNormal();	
 					}elseif($accion == 'modificar'){
 						controladorMedidor::modificar();
 					}elseif($accion == 'baja'){

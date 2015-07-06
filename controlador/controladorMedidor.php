@@ -81,7 +81,7 @@ class controladorMedidor {
 			'user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
 	}
 
-		static function Filtros(){
+	public static function Filtros(){
 			$user=$_SESSION['user'];
 
 			Twig_Autoloader::register();
@@ -160,7 +160,6 @@ class controladorMedidor {
 			'debug' => 'false'
 			));
 
-
 			$ListaMedidores=PDOMedidor::listarMedidores();
 
 			$medidoresempresa = PDOmedidorempresa::listar();
@@ -172,7 +171,6 @@ class controladorMedidor {
 				$arayVista[$i] = $arrayUnario;
 			}
 
-			
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
 			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'eliminado'=>$eliminado,'relacion'=>$arayVista));	
 	}
@@ -204,7 +202,7 @@ class controladorMedidor {
 			self::listarConCartel($medidorEliminado);
 	}
 
-	static function alta($idempresa){
+	public static function alta($idempresa){
 
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -238,6 +236,46 @@ class controladorMedidor {
 			$aviso=false;
 			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'user'=>$user,'idempresa'=>$idempresa));
+		}
+	}
+
+
+	public static function altaNormal(){
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		$user=$_SESSION['user'];
+		$modo = 'altaNormal';
+		if (isset($_POST['enviarMedidor'])){
+			$aviso=2;
+			$nomyap = htmlEntities($_POST['nomyap']);
+			$telefono = htmlEntities($_POST['telefono']);
+			$domicilio = htmlEntities($_POST['domicilio']);
+			$importe = htmlEntities($_POST['importe']);
+			$numusuario = htmlEntities($_POST['numusuario']);
+			$numsuministro = htmlEntities($_POST['numsuministro']);
+			$fechadeultimopago = htmlentities($_POST['fechadeultimopago']);
+			$activo = true;
+
+			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo,$fechadeultimopago);
+			if($unMedidor->validarInsertar()){
+				$unMedidor->guardar();
+				
+				$aviso=1;
+				$tipoAviso= 'exito';
+				$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+				echo $template->render(array('aviso'=>$aviso,'user'=>$user,'modo'=>$modo));
+			}else{
+				$tipoAviso= 2;
+				$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+				echo $template->render(array('aviso'=>$aviso,'user'=>$user,'modo'=>$modo));
+			}
+
+		}else{
+			$aviso=0;
+			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+			echo $template->render(array('aviso'=>$aviso,'user'=>$user,'modo'=>$modo));
 		}
 	}
 

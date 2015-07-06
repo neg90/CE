@@ -159,14 +159,24 @@ class controladorEmpresa {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		$categorias = PDOcategoria::listar();
+
 		if (intval($pag) == 1) {
 			$valor = 0;
 		}else{
 			$valor = intval($pag-1) * $cantResultados ;
 		}
-
 		$cantPaginas = ceil(count(PDOempresa::listar()) / $cantResultados);
-		
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if(($pag + 5) > $cantPaginas ){
+			$actual = $cantPaginas-5;
+			$cantMostrar = $cantPaginas;
+		}else{
+			$cantMostrar = intval($pag) + 5; 
+		}
 		$empresas = PDOempresa::listarPaginacion($valor,$cantResultados);
 		//Sig
 		if ($pag == $cantPaginas ) {
@@ -197,8 +207,10 @@ class controladorEmpresa {
 		$filtroActivo = 0; //Si está filtrando la tabla, es 1.
 
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo' => $filtroActivo));
+		echo $template->render(array('actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
+		'cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,
+		'contactos'=>$contactos,'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,
+		'user'=>$user, 'filtroActivo' => $filtroActivo));
 	}
 	public function baja(){
 		$user=$_SESSION['user'];
