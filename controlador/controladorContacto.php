@@ -179,21 +179,44 @@ class controladorContacto {
 	}
 
 
-	static function listar(){
-		
+	static function listar($pag){
+
 		$user=$_SESSION['user'];
+		$cantResultados = 25;
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 		
-		$contactos = PDOContacto::listar();
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$cantPaginas = ceil(count(PDOContacto::listar()) / $cantResultados);	
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
+		//cant paginas
+		$cantPaginas = floor(count(PDOContacto::listar()) / $cantResultados);
+		
+		$contactos = PDOContacto::listarPaginacion($valor,$cantResultados);
 
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('user'=>$user,'contactos'=>$contactos));
+		echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'contactos'=>$contactos));
 
 	}
 
-			static function Filtros($tipoFiltro,$datoFiltro){
+	static function Filtros($tipoFiltro,$datoFiltro){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');

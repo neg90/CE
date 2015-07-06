@@ -79,7 +79,7 @@ $(document).ready(function() {
   
   {% if eliminado == null %}
   
-    {% elseif eliminado == 1 %}
+  {% elseif eliminado == 1 %}
    <div class="row fila-de-alerta">
       <div class=" col-lg-2"></div>
          <div class=" col-lg-8">
@@ -101,7 +101,30 @@ $(document).ready(function() {
      </div> 
     {% endif %}
  
- 
+    <div class="row">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+          {% if cantidadPaginas  > 0 %}
+            <div class="bs-example" data-example-id="disabled-active-pagination">
+              <nav>
+                <ul class="pagination">
+                  <li class="">
+                    <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
+                    <span aria-hidden="true">«</span></a>
+                  </li>
+                    {% for item in 1..cantidadPaginas %} 
+                      <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+                    {% endfor %}
+                  <li>
+                    <a href="privado.php?c=medidor&a=listar&pagina={{sig}}" aria-label="Next">
+                    <span aria-hidden="true">»</span></a>
+                  </li>
+               </ul>
+             </nav>
+            </div>
+          {% endif %}
+          </div>
+        </div>
   {% if filtroActivo == 0 %}
   		<form method="POST" action="privado.php?c=medidor&a=filtro" id="form_herramientas_medidor">
   		<div id="herramientasTop" class="inline-block">
@@ -180,21 +203,7 @@ $(document).ready(function() {
           </form>
 		  		
   		  </div>
-        <div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
-      <div class="bs-example" data-example-id="disabled-active-pagination">
-        <nav>
-          <ul class="pagination">
-            <li class="disabled"><a href="privado.php?c=medidor&a=listar&pagina={{item-1}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-            {% for item in 1..cantidadPaginas %} 
-              <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
-            {% endfor %}
-            <li><a href="privado.php?c=medidor&a=listar&pagina={{item+1}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-         </ul>
-       </nav>
-    </div>
-    </div>
+        
 
   <table class="table table-hover">
   <thead>

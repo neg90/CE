@@ -20,6 +20,18 @@ class PDOcontacto extends contacto{
 		
 		return $objeto;
 	}
+   
+   public static function listarPaginacion($valor,$cantResultados){
+     
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM contacto LIMIT :valor,:cantResultados');
+      $consulta->bindParam(':valor', $valor,PDO::PARAM_INT);
+      $consulta->bindParam(':cantResultados', $cantResultados,PDO::PARAM_INT);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
 
    public function validarInsertar(){
       try {$conexion = new conexion;}catch (PDOException $e){} 

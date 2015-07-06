@@ -64,8 +64,8 @@ $(document).ready(function() {
 
 </script>
 
-    <h3 id="tituloBloque">Listado de Contactos</h3>
-    <div class="clearfix"></div>
+  <h3 id="tituloBloque">Listado de Contactos</h3>
+  <div class="clearfix"></div>
   <h5 id="referenciasRol"><span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>Referencias <small>[ SM = Swiss Medical ]</small></h5>
   <div class="row fila-de-alerta">
       <div class=" col-lg-2"></div>
@@ -83,6 +83,31 @@ $(document).ready(function() {
             {% endif %}
          </div>
       </div>
+
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=contacto&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li>
+              {% for item in 1..cantidadPaginas %} 
+                <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li>
+              <a href="privado.php?c=contacto&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    </div>
+  </div>
 
 
   {% if filtroActivo == 0 %}

@@ -73,12 +73,15 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'baja') {
 					controladorAbonado::baja();
 				}elseif ($accion == 'listar') {
-					controladorAbonado::listar();
+					$pag =htmlEntities(@$_GET['pagina']); 
+					controladorAbonado::listar($pag);
 				}elseif ($accion == 'eleccion'){
 					if (isset($_GET['id'])) {
 						$id=htmlEntities(@$_GET['id']); 
 						controladorAbonado::eleccion($id);
 					}
+				}elseif ($accion=='altaNormal') {
+					controladorAbonado::altaNormal();
 				}
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
@@ -150,7 +153,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'modificar'){
 					controladorEmpresa::modificar();
 				}elseif($accion == 'baja'){
-					controladorEmpresa::baja();
+					$pag=htmlEntities(@$_GET['pagina']);
+					controladorEmpresa::baja($pag);
 				}elseif($accion == 'listar'){
 					$pag=htmlEntities(@$_GET['pagina']);
 					controladorEmpresa::listar($pag);
@@ -256,6 +260,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 							$id=htmlEntities(@$_GET['id']); 
 							controladorMedidor::alta($id);	
 						}
+					}elseif ($accion == 'altaNormal') {
+						controladorMedidor::altaNormal();	
 					}elseif($accion == 'modificar'){
 						controladorMedidor::modificar();
 					}elseif($accion == 'baja'){
@@ -268,6 +274,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'listar'){
 					$pag=htmlEntities(@$_GET['pagina']);
 					controladorMedidor::listar($pag);
+					// esto ta invisidivle??' a carajo'
 						/* FILTROS MEDIDOR*/
 				/*		if (isset($_POST['tipoFiltro'])){
 									if (!empty($_POST['tipoFiltro']))

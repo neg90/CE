@@ -68,6 +68,18 @@ class PDOabonado extends abonado{
       return $objeto;
    }
 
+   public static function listarPaginacion($valor,$cantResultados){
+     
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM abonado LIMIT :valor,:cantResultados');
+      $consulta->bindParam(':valor', $valor,PDO::PARAM_INT);
+      $consulta->bindParam(':cantResultados', $cantResultados,PDO::PARAM_INT);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
+
    public function baja($numabonado){
       try {$conexion = new conexion;}catch (PDOException $e){} 
       $consulta = $conexion->prepare('DELETE FROM abonado WHERE numabonado =  :numabonado');

@@ -84,7 +84,6 @@ $(document).ready(function() {
 
 </script>
 
-
     <h3 id="tituloBloque">Listado de Empresas</h3>
     <div class="clearfix"></div>
 
@@ -108,23 +107,37 @@ $(document).ready(function() {
     <span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>
       Referencias
       <small>
-        [<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>=Modificar Correos, <span class="glyphicon glyphicon-home" aria-hidden="true"></span>=Modificar domicilios,<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>=Modificar telefonos, <span class="glyphicon glyphicon-user" aria-hidden="true"></span>=Modificar contactos, <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>= Modificar datos generales de empresa]
+        [<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>=Modificar Correos, <span class="glyphicon glyphicon-home" aria-hidden="true"></span>=Modificar domicilios,<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>=Modificar telefonos, <span class="glyphicon glyphicon-user" aria-hidden="true"></span>=Modificar contactos, <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>= Modificar datos generales de empresa, M = Asociar titular de medidor, A = Asociar un abonado]
       </small>
   </h5>
   <div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    {% if cantidadPaginas  > 0 %}
       <div class="bs-example" data-example-id="disabled-active-pagination">
         <nav>
           <ul class="pagination">
-            <li class="disabled"><a href="privado.php?c=empresa&a=listar&pagina={{item-1}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-            {% for item in 1..cantidadPaginas %} 
-              <li><a href="privado.php?c=empresa&a=listar&pagina={{item}}">{{item}}</a></li>
-            {% endfor %}
-            <li><a href="privado.php?c=empresa&a=listar&pagina={{item+1}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+            <li class="">
+              <a href="privado.php?c=empresa&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li> 
+            
+            <li><a href="privado.php?c=empresa&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
+                <li><a href="privado.php?c=empresa&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li><a href="privado.php?c=empresa&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
+            <li>
+              <a href="privado.php?c=empresa&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
          </ul>
        </nav>
-    </div>
+      </div>
+    {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
     </div>
   </div>
    <div class="clearfix"></div>
@@ -304,14 +317,14 @@ $(document).ready(function() {
               <form method="post" action="privado.php?c=abonado&a=alta&id={{item.idempresa}}" id="altaAbonado{{item.idempresa}}">
                   <input type="hidden" value="{{item.idempresa}}" name="cargarAbonado">
                   <a href="javascript:{}" onclick="document.getElementById('altaAbonado{{item.idempresa}}').submit(); return false;">
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    <span aria-hidden="true">A</span>
                   </a>
               </form>
               <!-- nuevo medidor -->
               <form method="post" action="privado.php?c=medidor&a=alta&id={{item.idempresa}}" id="altaMedidor{{item.idempresa}}">
                   <input type="hidden" value="{{item.idempresa}}" name="idempresa">
                   <a href="javascript:{}" onclick="document.getElementById('altaMedidor{{item.idempresa}}').submit(); return false;">
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    <span aria-hidden="true">M</span>
                   </a>
               </form>
             {% endif %}
@@ -357,8 +370,13 @@ $(document).ready(function() {
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
               </a>
             </form>
+           
              <!--Eliminar empresa-->
-            <form method="post" action="privado.php?c=empresa&a=baja" id="bajaEmpresa{{item.idempresa}}">
+            {% if actual == 1 %}
+              {% set paginaBaja = 1 %}
+            {% endif %}
+
+            <form method="post" action="privado.php?c=empresa&a=baja&pagina={{paginaBaja}}" id="bajaEmpresa{{item.idempresa}}">
               <input type="hidden" value="{{item.idempresa}}" name="idempresa">
               <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar la empresa?')){document.getElementById('bajaEmpresa{{item.idempresa}}').submit();}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -371,5 +389,33 @@ $(document).ready(function() {
 
   </tbody>
   </table>
+
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=empresa&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li> 
+            <li><a href="privado.php?c=empresa&a=listar&pagina=1">Primera</a></li>
+              {% for item in actual..cantMostrar %}
+                <li><a href="privado.php?c=empresa&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li><a href="privado.php?c=empresa&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
+            <li>
+              <a href="privado.php?c=empresa&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
+    </div>
+  </div>
 
 {% endblock %}
