@@ -199,8 +199,6 @@ class controladorContacto {
 		}else{
 			$sig = $pag + 1;
 		}
-			
-		
 		
 		//ant
 		if($pag == 1){

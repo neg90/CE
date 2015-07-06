@@ -110,16 +110,36 @@ class controladorAbonado {
 	}
 
 
-	static function listar(){
+	static function listar($pag){
 		$user=$_SESSION['user'];
-
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		$cantResultados = 25;
 		
-		$abonado = PDOabonado::listar();
 		$abonadoempresas = PDOabonadoempresa::listar();
-	
+
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag) * $cantResultados ;
+		}
+		$cantPaginas = floor(count(PDOabonado::listar()) / $cantResultados);	
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
+		//cant paginas
+		
+		$abonado = PDOabonado::listarPaginacion($valor,$cantResultados);
 		$arayVista = '';
 		for ($i=0; $i < count($abonadoempresas); $i++) { 
 			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
@@ -129,7 +149,8 @@ class controladorAbonado {
 		
 		$empresas = PDOempresa::listar();
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas,'relacion'=>$arayVista	));
+		echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
+		'user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas,'relacion'=>$arayVista	));
 
 	}
 	

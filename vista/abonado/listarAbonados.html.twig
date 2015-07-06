@@ -22,6 +22,30 @@
       {% endif %}
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=abonado&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li>
+              {% for item in 1..cantidadPaginas %} 
+                <li><a href="privado.php?c=abonado&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li>
+              <a href="privado.php?c=abonado&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    </div>
+  </div>
 
   <table class="table table-hover">
   <thead>
