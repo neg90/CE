@@ -46,7 +46,10 @@ class controladorCorreo {
 
 	public static function enviar(){
 
+
 	  	if (isset($_POST['enviarCorreo'])){
+	  		$cantContactos=0;
+	  		$cantEmpresas = 0;
 	  		$empresas = $_POST['arrayIdempresa'];
 	  		$limitEmpresas = count($empresas);
 
@@ -61,21 +64,26 @@ class controladorCorreo {
 	  			$limitCorreos = count($unosCorreo);
 	  			for ($c=0; $c < $limitCorreos ; $c++){ 
 	  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+	  				$cantEmpresas++;
 	  			}
 	  			//busco el contacto con la idempresa.
 	  			$relaciones = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]);
 	  			for ($c=0; $c < count($relaciones) ; $c++){ 
 	  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
 	  				$unCorreo = $unContacto->getCorreo();
+	  				$cantContactos++;
 	  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
 	  			}
 	  			$unaEmpresa = null;
-
 	  		}
-	  		
+	  			
 	  	}
 	}
 
+	public static function mostrarInforme(){
+		
+	}
+	
 	private static function enviarCorreo($unEmail,$adjunto,$asunto,$cuerpo){
 		//controlar errores del adjunto
 	  		$ruta = $adjunto['tmp_name'];

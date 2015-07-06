@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-07-2015 a las 06:03:57
+-- Tiempo de generación: 06-07-2015 a las 16:18:05
 -- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
 -- Versión de PHP: 5.5.9-1ubuntu4.9
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `abonadoempresa` (
   PRIMARY KEY (`id`),
   KEY `numabonado` (`numabonado`),
   KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   `tipodocumento` varchar(4) NOT NULL,
   `documento` varchar(100) NOT NULL,
   PRIMARY KEY (`idcontacto`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=217 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=218 ;
 
 --
 -- Volcado de datos para la tabla `contacto`
@@ -189,7 +189,8 @@ INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicil
 (213, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
 (214, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
 (215, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(216, 'asd', 'asdads', '', '', '', 0, 0, '', '');
+(216, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
+(217, 'Nelson', 'Garrido', '112312', 'asd', 'financiera.naveyra@gmail.com', 0, 1, 'DU', '3541424');
 
 -- --------------------------------------------------------
 
@@ -205,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `contactoempresa` (
   PRIMARY KEY (`id`),
   KEY `idcontacto` (`idcontacto`),
   KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=85 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
 
 --
 -- Volcado de datos para la tabla `contactoempresa`
@@ -297,6 +298,21 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 INSERT INTO `empresa` (`idempresa`, `denominacion`, `idrubro`, `detactividad`, `cantempleados`, `idcategoria`, `fechainicioce`, `activo`, `importemensual`, `fechafundacion`, `cuit`, `web`, `numusuario`) VALUES
 (8652, 'Mercantil ', 12, '', 1, 16, '2015-07-22', 1, 65, '2015-07-03', '20354140447', 'www.merecantil.com.ar', 0),
 (8653, 'Suchar', 12, '', 3, 16, '2015-07-17', 1, 50, '0000-00-00', '124', 'www.merecantil.com', 484901);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `infcorreo`
+--
+
+CREATE TABLE IF NOT EXISTS `infcorreo` (
+  `id` int(11) NOT NULL,
+  `cantempresas` int(11) NOT NULL,
+  `cantcontactos` int(11) NOT NULL,
+  `arrayempresas` longtext NOT NULL,
+  `fecha` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -839,7 +855,7 @@ CREATE TABLE IF NOT EXISTS `medidorempresa` (
   PRIMARY KEY (`id`),
   KEY `idempresa` (`idempresa`),
   KEY `idmedidor` (`idmedidor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2886 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -962,7 +978,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `idrol` (`idrol`),
   KEY `idrol_2` (`idrol`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -970,8 +986,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`, `activo`, `correo`, `idrol`) VALUES
 (2, 'Alejandro', 'Cabane', 'qw3r7y', 'kapanga', 1, 'asd@asd.com', 6),
-(3, 'Nelson', 'Garrido', 'neg90', 'kapanga', 1, 'dsa@dsa.com', 6),
-(4, 'Nelson', 'Nisman', 'asd', 'asdasd', 1, 'adsasd@asd.com', 6);
+(3, 'sdfsdfsdf', 'Garrido', 'neg90', 'kapanga', 1, 'dsa@dsa.com', 6);
 
 --
 -- Restricciones para tablas volcadas
