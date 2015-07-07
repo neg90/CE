@@ -47,7 +47,7 @@ class controladorAbonado {
 		}
 	}
 
-	static function altaNormal(){
+	/*static function altaNormal(){
 		$user=$_SESSION['user'];
 		
 		Twig_Autoloader::register();
@@ -72,7 +72,7 @@ class controladorAbonado {
 			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo));
 		}
 		
-	}
+	}*/
 
 	public static function eleccion($idempresa){
 		
@@ -115,6 +115,11 @@ class controladorAbonado {
 				$unAbonado = PDOabonado::buscarAbonado($numabonado);
 
 				$unAbonado->setImporte($importe);
+				///modifico importe de la empresa cuando cambia el importe del abonado.
+				$buscarIDEMPRESA = PDOabonadoempresa::buscarAbonadoId($numabonado);
+				$unaEmpresa = PDOempresa::buscarEmpresa($buscarIDEMPRESA->idempresa);
+				$unaEmpresa->setImportemensual($importe);
+				$unaEmpresa->guardar();
 				$unAbonado->setFechadeultimopago($fechadeultimopago);
 				$unAbonado->setActivo($activo);
 				$unAbonado->guardar();
