@@ -43,6 +43,12 @@ class PDOinfcorreo extends infcorreo{
       $conexion = null;
    }
 
+   public static function eliminar(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('DELETE FROM infcorreo');
+      $consulta->execute();
+ 
+   }
    
 
    public static function traerInforme(){

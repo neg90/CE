@@ -53,6 +53,7 @@ class controladorCorreo {
 	  		$cantEmpresas = 0;
 	  		$empresas = $_POST['arrayIdempresa'];
 	  		$limitEmpresas = count($empresas);
+	  	
 
 	  		$adjunto = $_FILES['adjunto'];
 	  		$asunto = $_POST['asunto'];
@@ -76,18 +77,55 @@ class controladorCorreo {
 	  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
 	  			}
 	  			$unaEmpresa = null;
+	  			
 	  		}
+
+	  		//delete del anterior.
+	  		PDOinfcorreo::eliminar();
+	  		//cargo nuevo :D
 	  		$fechaActual = date('Y-m-d h:m:s');
 	  		$empresasJSON = json_encode($empresas);
 	  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual);
 	  		$unInforme->guardar();
+	  		self::mostrarInforme();
+
 	  			
 	  	}
 	}
 
 	public static function mostrarInforme(){
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	
+	  	$unInforme = PDOinfcorreo::traerInforme();
 
+	  	$idsEmpresas = html_entity_decode($unInforme->arrayempresas);
+	  	$empresas = json_decode($idsEmpresas,true);
+
+	  	$empresasVista1 = '';
+	  	$empresasVista2 = '';
+
+	  	$total1 = floor(count($empresas)/2);
+
+	  	for ($i=0; $i < $total1 ; $i++) { 
+	  		$emrpesaAct = PDOempresa::buscarEmpresa($empresas[$i]);
+	  		$empresasVista1[$i] = $emrpesaAct->getDenominacion();
+	  	}
+
+	  	for ($i= $total1; $i < count($empresas) ; $i++) { 
+	  		$emrpesaAct = PDOempresa::buscarEmpresa($empresas[$i]);
+	  		$empresasVista2[$i] = $emrpesaAct->getDenominacion();
+	  	}
+	  	
+	  	$template = $twig->loadTemplate('correo/detalleCorreo.html.twig');
+		echo $template->render(array(
+			'empresasVista1'=>$empresasVista1,
+			'empresasVista2'=>$empresasVista2,
+			'cantEmpresas'=>$unInforme->cantempresas,
+			'cantContactos'=>$unInforme->cantcontactos));
 	}
+
 
 	private static function enviarCorreo($unEmail,$adjunto,$asunto,$cuerpo){
 		//controlar errores del adjunto

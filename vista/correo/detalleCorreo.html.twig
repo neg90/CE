@@ -20,13 +20,13 @@
           </div>
           <div class="panel-body">
              <div class="row inf" >
-                <h5> Total de correos enviados: {{totalCorreos}} </h5> 
+                <h5> Total de correos enviados: {{cantEmpresas + cantContactos}} </h5> 
               </div>
               <div class="row inf" >
-                <h5> Total de empresas: {{totalEmpresas}} </h5> 
+                <h5> Total correos de empresas: {{cantEmpresas}} </h5> 
               </div>
               <div class="row inf">
-                <h5> Total de contactos: {{totalContactos}} </h5> 
+                <h5> Total correos de contactos: {{cantContactos}} </h5> 
               </div>            
           </div>
         </div>
@@ -36,109 +36,47 @@
     <div class="row fila-de-titulo">
       <div class=" col-lg-1"></div>
       <div class=" col-lg-10">
-        <h4> Informe detallado de empresa y contacto</h4>
+        <h4> Se enviaron correos a las siguentes empresas y sus contactos asociados</h4>
       </div>
     </div>
   </div>
   <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Nro Suministro</th>
-          <th>Titular Medidor</th>
-          <th>Importe</th>
-          <th>Numero de fila</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if fallados == null %}
+    <div class="col-lg-6">
+      <table class="table table-hover">
+        <thead>
           <tr>
-            <td colspan="6">
-              Todos los registros del archivo exel fueron procesados 
-            </td>
+            <th>Empresas</th>
           </tr>
-        {% else %}
-          {% for item in fallados %}
-              <tr>
-                <td>
-                  {{item.numusuario}}
-                </td>
-                <td>
-                  {{item.numsuministros}}
-                </td>
-                <td>
-                  {{item.apeynom}}
-                </td>
-                <td>
-                  {{item.importe}}
-                </td>
-                <td>
-                  {{item.numerodefila}}
-                </td>
-              </tr>
+        </thead>
+        <tbody>
+          {% for item in empresasVista1 %}
+            <tr>
+              <td>
+               {{item}}
+              </td>
+            </tr>
           {% endfor %}
-         {% endif %}
-      </tbody>
-    </table>
-  </div>
-  <div class="row">
-    <div class="row fila-de-titulo">
-      <div class=" col-lg-1"></div>
-      <div class=" col-lg-10">
-        <h4> Informe detallado de los registros actualizados</h4>
-      </div>
-    </div>
-  </div>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>¿Se modifico el importe?</th>
-          <th>Denominacion</th>
-          <th>CUIT</th>
-          <th>Empresa</th>
-          <th>Nuevo importe</th>
-          <th>Medidor</th>
-          <th>Titular Medidor</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if actualizados == null %}
+        </tbody>
+      </table>
+     </div>
+       <div class="col-lg-6">
+      <table class="table table-hover">
+        <thead>
           <tr>
-            <td colspan="7">
-              No se cambiaron importes 
-            </td>
+            <th>Empresas</th>
           </tr>
-        {% else %}
-          {% for item in actualizados %}
-              <tr>
-                <td>
-                  {{item.ModImpo}}
-                </td>
-                <td>
-                  {{item.denominacion}}
-                </td>
-                 <td>
-                  {{item.cuit}}
-                </td>
-                <td>
-                  {{item.Empresa}}
-                </td>
-                <td>
-                  {{item.imp}}
-                </td>
-                <td>
-                  {{item.Medidor}}
-                </td>
-                <td>
-                  {{item.titular}}
-                </td>
-              </tr>
-             
+        </thead>
+        <tbody>
+          {% for item in empresasVista2 %}
+            <tr>
+              <td>
+               {{item}}
+              </td>
+            </tr>
           {% endfor %}
-       {% endif %}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+     </div>
   </div>
   <div class="clearfix"></div>
 {% endblock %}
