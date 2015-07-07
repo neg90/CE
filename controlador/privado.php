@@ -273,41 +273,16 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$id=htmlEntities(@$_GET['id']); 
 						controladorMedidor::eleccion($id);
 					}
-				}elseif($accion == 'listar'){
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorMedidor::listar($pag);
-					// esto ta invisidivle??' a carajo'
-						/* FILTROS MEDIDOR*/
-				/*		if (isset($_POST['tipoFiltro'])){
-									if (!empty($_POST['tipoFiltro']))
-										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-						}
-						else $tipoFiltro='nada';
-
-					if ((isset($_POST['dato'])) and ($_POST['dato'] != '')) {
-								if (!empty($_POST['dato']))
-									$datoFiltro=htmlEntities($_POST['dato']);
-					}
-					else ($datoFiltro='nada');
-
-					//die('tipo '.$tipoFiltro.'. dato '.$datoFiltro);
-
-					if ((isset($tipoFiltro)) and (isset($datoFiltro))) controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
-					else{
-
+					}elseif($accion == 'listar'){
 						$pag=htmlEntities(@$_GET['pagina']);
 						controladorMedidor::listar($pag);
-				*/
-					//FILTROS
+				
 					}elseif ($accion == 'filtro') {
 						controladorMedidor::Filtros();
 					//Eliminar
-					}elseif($accion == 'eliminar'){ //elimina fisicamente
-						if (!empty($_GET['id'])){
-							$idMedidor=htmlEntities($_GET['id']);
-							controladorMedidor::eliminaMedidor($idMedidor);
-						}
-						else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+					}elseif($accion == 'eliminar'){ 
+						$pag=htmlEntities($_GET['pagina']);
+						controladorMedidor::eliminaMedidor($pag);
 					}
 					elseif($accion == 'pdf'){ //PDF Medidor
 					if ($_POST['datosPDF']){
@@ -315,8 +290,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorMedidor::pdfMedidor($datosPDF);
 					}
 					else {header('Location:privado.php?c=medidor&a=listar');} //Si no vienen por post, arafue!
-					}
 				}
+			}
 		}else{
 			//Avisar q pifio path
 			//puso Acción o Controlador MAL

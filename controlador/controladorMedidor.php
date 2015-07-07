@@ -70,18 +70,6 @@ class controladorMedidor {
 				$cantMostrar = $cantPaginas;
 			}
 			$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
-			//Sig
-			if ($pag == $cantPaginas ) {
-				$sig = $cantPaginas;
-			}else{
-				$sig = $pag + 1;
-			}
-			//ant
-			if($pag == 1){
-				$ant = 1 ;
-			}else{
-				$ant = $pag - 1;
-			}
 				
 			if (intval($pag) == 1) {
 				$valor = 0;
@@ -185,30 +173,6 @@ class controladorMedidor {
 			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro, 'relacion'=>$arayVista));	
 	}
 
-	static function listarConCartel($eliminado){
-			$user=$_SESSION['user'];
-			Twig_Autoloader::register();
-			$loader = new Twig_Loader_Filesystem('../vista');
-			$twig = new Twig_Environment($loader, array(
-			//'cache' => '../cache','
-			'debug' => 'false'
-			));
-
-			$ListaMedidores=PDOMedidor::listarMedidores();
-
-			$medidoresempresa = PDOmedidorempresa::listar();
-
-			$arayVista = '';
-			for ($i=0; $i < count($medidoresempresa); $i++) { 
-				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
-				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
-				$arayVista[$i] = $arrayUnario;
-			}
-
-			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'eliminado'=>$eliminado,'relacion'=>$arayVista));	
-	}
-
 	static function verMedidor($idmedidor){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
@@ -224,16 +188,77 @@ class controladorMedidor {
 			echo $template->render(array('user'=>$user,'unMedidor'=>$unMedidor));	
 	}
 
-	/*static function bajaMedidor($idmedidor){
-			PDOMedidor::baja($idusuario);
-			$ultPag = $_SERVER['HTTP_REFERER'];
-			header('Location:'.$ultPag);
-	}*/
+	
+	public static function eliminaMedidor($pag){
+		$cantResultados = 25;
 
-	static function eliminaMedidor($idMedidor){
-			if ((PDOMedidor::borrar($idMedidor))==1) ($medidorEliminado=1);
-			else $medidorEliminado=0;
-			self::listarConCartel($medidorEliminado);
+		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+		$loader = new Twig_Loader_Filesystem('../vista');
+		$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+		
+		$idMedidor = htmlentities($_POST['idmedidor']);
+		if (PDOMedidor::borrar($idMedidor) == 1) {
+			$eliminado = 1;
+		}else{
+			$eliminado = 2;
+		}
+
+		$medidoresempresa = PDOmedidorempresa::listar();
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);
+
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
+		}else{
+			$cantMostrar = $cantPaginas;
+		}
+		$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
+				
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$paginaBaja = $pag;
+		$arayVista = '';		
+
+		for ($i=0; $i < count($medidoresempresa); $i++) { 
+			$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
+			$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
+			$arayVista[$i] = $arrayUnario;
+		}
+		
+		$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
+		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'ListaMedidores'=>$ListaMedidores,
+		'eliminado'=>$eliminado,'relacion'=>$arayVista));	
 	}
 
 	public static function alta($idempresa){
