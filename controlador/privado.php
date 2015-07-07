@@ -93,7 +93,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif($accion == 'modificar'){
 					controladorContacto::modificar();
 				}elseif($accion == 'baja'){
-					controladorContacto::baja();
+					$pag =htmlEntities(@$_GET['pagina']); 
+					controladorContacto::baja($pag);
 				}elseif($accion == 'listar'){
 						/* FILTROS CONTACTOS*/
 					if (isset($_POST['tipoFiltro'])){

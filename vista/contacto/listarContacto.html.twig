@@ -84,9 +84,9 @@ $(document).ready(function() {
          </div>
       </div>
 
-  <div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
+ <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
     {% if cantidadPaginas  > 0 %}
       <div class="bs-example" data-example-id="disabled-active-pagination">
         <nav>
@@ -94,10 +94,15 @@ $(document).ready(function() {
             <li class="">
               <a href="privado.php?c=contacto&a=listar&pagina={{ant}}" aria-label="Previous">
               <span aria-hidden="true">«</span></a>
-            </li>
-              {% for item in 1..cantidadPaginas %} 
+            </li> 
+            
+            <li><a href="privado.php?c=contacto&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
                 <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
               {% endfor %}
+            <li><a href="privado.php?c=contacto&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=contacto&a=listar&pagina={{sig}}" aria-label="Next">
               <span aria-hidden="true">»</span></a>
@@ -106,9 +111,9 @@ $(document).ready(function() {
        </nav>
       </div>
     {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
     </div>
   </div>
-
 
   {% if filtroActivo == 0 %}
       <form method="POST" action="privado.php?c=contacto&a=listar" id="form_herramientas_contacto">
@@ -268,7 +273,10 @@ $(document).ready(function() {
               </a>
             </form>
              <!--Eliminar contacto-->
-            <form method="post" action="privado.php?c=contacto&a=baja" id="bajaContacto{{item.idcontacto}}">
+             {% if actual == 1 %}
+              {% set paginaBaja = 1 %}
+            {% endif %}
+            <form method="post" action="privado.php?c=contacto&a=baja&pagina={{paginaBaja}}" id="bajaContacto{{item.idcontacto}}">
               <input type="hidden" value="{{item.idcontacto}}" name="idcontacto">
               <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaContacto{{item.idcontacto}}').submit();}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -279,5 +287,36 @@ $(document).ready(function() {
     {% endfor %}
   </tbody>
   </table>
+   <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=contacto&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li> 
+            
+            <li><a href="privado.php?c=contacto&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
+                <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li><a href="privado.php?c=contacto&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
+            <li>
+              <a href="privado.php?c=contacto&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
+    </div>
+  </div>
+
 
 {% endblock %}
