@@ -29,7 +29,6 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		$idRol = $usuario['idrol'];
 		$rol = PDOrol::rolPorID($idRol);
 		$permiso = PDOPermisos::traerPermiso($rol[0]->idpermisos);
-		var_dump($permiso);
 		/*-------------------------------------------------------------------------------------------------
 
 		Arranca el controlador como siempre.
@@ -298,38 +297,46 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			elseif($controlador == 'usuarios'){
 				//ALTA
 				if($accion == 'alta'){
-					controladorUsuario::alta();
+					if ($permiso->cusuario == 1) {
+						controladorUsuario::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'modificar'){
-					if (!empty($_POST['idusuario'])){
-						$idusuario=htmlEntities($_POST['idusuario']);
-						controladorUsuario::modificar($idusuario);
+					if ($permiso->uusuario == 1) {
+						if (!empty($_POST['idusuario'])){
+							$idusuario=htmlEntities($_POST['idusuario']);
+							controladorUsuario::modificar($idusuario);
+						}
+						else {header('Location:privado.php?c=usuarios&a=listar');} 
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-
-				//BAJA
-				}elseif($accion == 'baja'){ //invierte activos
-					if (!empty($_GET['id'])){
-						$idusuario=htmlEntities($_GET['id']);
-						controladorUsuario::bajaUsuario($idusuario);
-					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-
+				
 				//Listar
 				}elseif($accion == 'listar'){
-					/* FILTROS USUARIOS*/
-					if (isset($_POST['tipoFiltro'])){
-								if (!empty($_POST['tipoFiltro']))
-									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-					}
-					else $tipoFiltro='nada';
+					if ($permiso->rusuario == 1) {
+						/* FILTROS USUARIOS*/
+						if (isset($_POST['tipoFiltro'])){
+									if (!empty($_POST['tipoFiltro']))
+										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+						}
+						else $tipoFiltro='nada';
 
-					if (isset($_POST['dato'])){
-								if (!empty($_POST['dato']))
-									$datoFiltro=htmlEntities($_POST['dato']);
-					}
+						if (isset($_POST['dato'])){
+									if (!empty($_POST['dato']))
+										$datoFiltro=htmlEntities($_POST['dato']);
+						}
 
-					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro);
-					else controladorUsuario::listar();
+						if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro);
+						else controladorUsuario::listar();
+
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 
 				//Detalle
 				}elseif($accion == 'detalle'){
@@ -341,12 +348,17 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
 
 				//Eliminar
-				}elseif($accion == 'eliminar'){ //elimina fisicamente
-					if (!empty($_GET['id'])){
-						$idusuario=htmlEntities($_GET['id']);
-						controladorUsuario::eliminaUsuario($idusuario);
+				}elseif($accion == 'eliminar'){ 
+					if ($permiso->dusuario == 1) {
+						if (!empty($_GET['id'])){
+							$idusuario=htmlEntities($_GET['id']);
+							controladorUsuario::eliminaUsuario($idusuario);
+						}
+						else {header('Location:privado.php?c=usuarios&a=listar');} 
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
 				//Modif. Mis datos
 				}elseif($accion == 'misdatos'){
 						controladorUsuario::misDatos();
