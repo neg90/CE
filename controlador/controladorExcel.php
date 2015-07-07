@@ -273,7 +273,7 @@ class controladorExcel {
 	  	$fallados = json_decode($fallaAux,true);
 		
 	  	$acuAux = html_entity_decode($unInforme->actualizados);
-	   $actualizados = json_decode($acuAux,true);
+	  	$actualizados = json_decode($acuAux,true);
 
 
 	 	$totalRegistros = $unInforme->totalregistros;

@@ -22,9 +22,8 @@ class controladorEmpresa {
 
 
 	public static function pdfEmpresa(){
-		die('holi');
-		if (isset($_POST['datosPDFempresa']))
-			$empresa=htmlEntities($_POST['datosPDFempresa']);
+		if (isset($_POST['idempresa']))
+			$idempresa=htmlEntities($_POST['idempresa']);
 
 		if (isset($_POST['datosPDFrubro']))
 			$rubro=htmlEntities($_POST['datosPDFrubro']);
@@ -55,9 +54,10 @@ class controladorEmpresa {
 		//$data = html_entity_decode($datosPDF);
 		//$data = json_decode($data, true);
 		$pdf->SetFont('Arial','',14);
-		$_SESSION['tituloPDF']=($data[0]['denominacion']); //título PDF
+		$empresa= PDOEmpresa::buscarEmpresa($idempresa);
+		$_SESSION['tituloPDF']=($empresa->getDenominacion()); //título PDF
 		$pdf->AddPage('P','A4');
-		$pdf->TablaEmpresa($empresa, $rubro, $categoria,$contactos,$medidores,
+		$pdf->TablaEmpresa($idempresa, $rubro, $categoria,$contactos,$medidores,
 				 $telefonos, $correos,$domicilios,$abonados);
 		$pdf->Output();
 	}
@@ -216,7 +216,6 @@ class controladorEmpresa {
 		}
 		if ($cantPaginas > 5) {
 			if(($pag + 5) > $cantPaginas ){
-				var_dump($cantPaginas);
 				$actual = $cantPaginas-5;
 				$cantMostrar = $cantPaginas;
 			}else{
@@ -238,8 +237,9 @@ class controladorEmpresa {
 		}else{
 			$ant = $pag - 1;
 		}
-		$rubros = PDOrubro::listar();
 		$paginaBaja = $pag;
+		$rubros = PDOrubro::listar();
+		
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
 		$medidores = PDOMedidor::listarMedidores();
@@ -323,7 +323,7 @@ class controladorEmpresa {
 		}
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
+		echo $template->render(array('aviso'=>$aviso,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
 		'cantidadPaginas'=>$cantPaginas,'idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
    }
@@ -459,6 +459,8 @@ class controladorEmpresa {
 				
 				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
 					$cargoContrubuyente = true;
+					$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
+					$unaEmpresa->guardar();
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
@@ -480,7 +482,7 @@ class controladorEmpresa {
 
 			//Decide si cargo o no cargo contribuyente
 			if ($cargoContrubuyente) {
-				header('Location:privado.php?c=empresa&a=listar');
+				header('Location:privado.php?c=empresa&a=listar&pagina=1');
 			}else{
 				header('Location:privado.php?c=empresa&a=eleccion&id='.$ultimoIdempresaInsertado);
 				//Todo salio bien se cargo la empresa deberia seguir cargando cosas..	

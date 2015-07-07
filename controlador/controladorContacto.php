@@ -29,6 +29,7 @@ class controladorContacto {
 		$pdf->Output();
 	}
 	static function altaconid($idempresa){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -70,12 +71,13 @@ class controladorContacto {
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idempresa'=>$idempresa));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo,'idempresa'=>$idempresa));
 		}
 	}
 
 
 	static function alta(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -108,16 +110,17 @@ class controladorContacto {
 			}
 			
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo));
 
 		}else{
 			$aviso=0;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo));
 		}
 	}
 
 	static function modificar(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -168,13 +171,13 @@ class controladorContacto {
 			$unContacto = PDOContacto::buscarContacto($idcontacto);
 
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto,'contacto'=>$unContacto));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto,'contacto'=>$unContacto));
 
 		}else{
 			$unContacto = PDOContacto::buscarContacto($idcontacto);
 			$aviso=0;
 			$template = $twig->loadTemplate('contacto/altaContacto.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto,'contacto'=>$unContacto));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo,'idcontacto'=>$idcontacto,'contacto'=>$unContacto));
 		}
 	}
 
@@ -192,27 +195,42 @@ class controladorContacto {
 		}else{
 			$valor = intval($pag-1) * $cantResultados ;
 		}
-		$cantPaginas = ceil(count(PDOContacto::listar()) / $cantResultados);	
+		$cantPaginas = ceil(count(PDOContacto::listar()) / $cantResultados);
+
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
+		}else{
+			$cantMostrar = $cantPaginas;
+		}
+		$contactos = PDOContacto::listarPaginacion($valor,$cantResultados);
 		//Sig
 		if ($pag == $cantPaginas ) {
 			$sig = $cantPaginas;
 		}else{
 			$sig = $pag + 1;
 		}
-		
 		//ant
 		if($pag == 1){
 			$ant = 1 ;
 		}else{
 			$ant = $pag - 1;
 		}
-		//cant paginas
-		$cantPaginas = floor(count(PDOContacto::listar()) / $cantResultados);
-		
-		$contactos = PDOContacto::listarPaginacion($valor,$cantResultados);
+		$paginaBaja = $pag;
 
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'contactos'=>$contactos));
+		echo $template->render(array('user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
+		'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
+		'user'=>$user,'contactos'=>$contactos));
 
 	}
 
@@ -254,8 +272,10 @@ class controladorContacto {
 			echo $template->render(array('user'=>$user,'contactos'=>$contactos, 'tipoFiltro'=>$tipoFiltro ,'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo));	
 	}
 		
-	public function baja(){
+	public function baja($pag){
+		$user=$_SESSION['user'];
 
+		$cantResultados = 25;
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
@@ -268,10 +288,47 @@ class controladorContacto {
 		}else{
 			$aviso = 2;
 		}
-		$contactos = PDOContacto::listar();
+			if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$cantPaginas = ceil(count(PDOContacto::listar()) / $cantResultados);
+
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
+		}else{
+			$cantMostrar = $cantPaginas;
+		}
+		$contactos = PDOContacto::listarPaginacion($valor,$cantResultados);
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
+		$paginaBaja = $pag;
 		
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('contactos'=>$contactos,'aviso'=>$aviso));
+		echo $template->render(array('user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
+		'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
+		'contactos'=>$contactos,'aviso'=>$aviso));
       
    }
 

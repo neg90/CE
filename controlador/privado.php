@@ -9,6 +9,8 @@ require_once 'controladorMedidor.php';
 require_once 'controladorCorreo.php';
 require_once 'controladorExcel.php';
 require_once 'controladorAbonado.php';
+require_once '../modelo/PDO/PDOPermisos.php';
+
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -18,17 +20,33 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 	if (!isset($_SESSION['user']) and !isset($_SESSION['clave']) ){
 		header("Location:index.php?aviso=5");
 	}else{
+		/*-------------------------------------------------------------------------------------------------
+			esta aprte busco los permisos del usuario que se acabade logerar. es LOG - IN (?)
+		------------------------------------------------------------------------------------------------*/
 		$user = $_SESSION['user'];
+		$pass = $_SESSION['clave'];
+		$usuario = PDOusuario::buscarUser($user,$pass);
+		$idRol = $usuario['idrol'];
+		$rol = PDOrol::rolPorID($idRol);
+		$permiso = PDOPermisos::traerPermiso($rol[0]->idpermisos);
+		/*-------------------------------------------------------------------------------------------------
 
+		Arranca el controlador como siempre.
+		-------------------------------------------------------------------------------------------------*/
 		$controlador=htmlEntities(@$_GET['c']); 
 		$accion=htmlEntities(@$_GET['a']); 
 		if ((!empty($controlador)) and (!empty($accion))){
+			/*Esta parte no tiene controles ni permisos mala nuestra ... iguale s facil programador del futuro,
+			solo deberias agregar mas propiedades al crud de la tabla permisos, modificar las vistas, poner carteles 
+			... NO tiene control abonado, ni correo ni el tema del excel..*/
 			/* -------- CORREO ---------- */
 			if ($controlador=='correo') {
 				if($accion == 'mostrar'){
 					controladorCorreo::renderCorreo();
 				}elseif ($accion == 'enviar') {
 					controladorCorreo::enviar();
+				}elseif ($accion ='verinf') {
+					controladorCorreo::mostrarInforme();
 				}
 
 			/* -------- ECEL ---------- */
@@ -71,7 +89,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'modificar') {
 					controladorAbonado::modificar();
 				}elseif ($accion == 'baja') {
-					controladorAbonado::baja();
+					$pag=htmlEntities(@$_GET['pagina']);
+					controladorAbonado::baja($pag);
 				}elseif ($accion == 'listar') {
 					$pag =htmlEntities(@$_GET['pagina']); 
 					controladorAbonado::listar($pag);
@@ -86,29 +105,53 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
 				if($accion == 'alta'){
-					controladorContacto::alta();
+					if ($permiso->csocio == 1) {
+						controladorContacto::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'modificar'){
-					controladorContacto::modificar();
+					if ($permiso->usocio == 1) {
+						controladorContacto::modificar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+				
 				}elseif($accion == 'baja'){
-					controladorContacto::baja();
+					if ($permiso->dsocio == 1) {
+						$pag =htmlEntities(@$_GET['pagina']); 
+						controladorContacto::baja($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+					
 				}elseif($accion == 'listar'){
-						/* FILTROS CONTACTOS*/
-					if (isset($_POST['tipoFiltro'])){
-								if (!empty($_POST['tipoFiltro']))
-									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-					}
-					else $tipoFiltro='nada';
+					if ($permiso->rsocio == 1) {
+							/* FILTROS CONTACTOS*/
+						if (isset($_POST['tipoFiltro'])){
+									if (!empty($_POST['tipoFiltro']))
+										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+						}
+						else $tipoFiltro='nada';
 
-					if (isset($_POST['dato'])){
-								if (!empty($_POST['dato']))
-									$datoFiltro=htmlEntities($_POST['dato']);
-					}
+						if (isset($_POST['dato'])){
+									if (!empty($_POST['dato']))
+										$datoFiltro=htmlEntities($_POST['dato']);
+						}
 
-					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
-					else {
-						$pag=htmlEntities(@$_GET['pagina']);
-						controladorContacto::listar($pag);
+						if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
+						else {
+							$pag=htmlEntities(@$_GET['pagina']);
+							controladorContacto::listar($pag);
+						}
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
+					
 				}
 				elseif($accion == 'pdf'){ //PDF Contacto
 					if ($_POST['datosPDF']){
@@ -126,51 +169,113 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			/* -------- ROLES ---------- */
 			}elseif($controlador == 'roles'){
 				if($accion == 'alta'){
-					controladorRol::alta();
+					if ($permiso->crol == 1) {
+						controladorRol::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+					
 				}elseif($accion == 'modificar'){
-					if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
-						$idrol=htmlEntities($_POST['idrol']);
-						$idpermiso=htmlEntities($_POST['idpermiso']);
-						controladorRol::modificar($idrol,$idpermiso);
+					if ($permiso->urol == 1){
+						if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
+							$idrol=htmlEntities($_POST['idrol']);
+							$idpermiso=htmlEntities($_POST['idpermiso']);
+							controladorRol::modificar($idrol,$idpermiso);
+						}
+						else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
+					
 				}elseif($accion == 'baja'){
-					if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
-						$idrol=htmlEntities($_POST['idrol']);
-						$idpermiso=htmlEntities($_POST['idpermiso']);
-						controladorRol::baja($idrol,$idpermiso);
+					if ($permiso->drol == 1){
+						if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
+							$idrol=htmlEntities($_POST['idrol']);
+							$idpermiso=htmlEntities($_POST['idpermiso']);
+							controladorRol::baja($idrol,$idpermiso);
+						}
+						else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
 				}elseif($accion == 'listar'){
-					controladorRol::listar();
+					if ($permiso->rrol == 1){
+						controladorRol::listar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}
 			}
 
 			/* -------- EMPRESA ---------- */
 			elseif($controlador == 'empresa'){
 				if($accion == 'alta'){
-					controladorEmpresa::alta();
+					if ($permiso->cci == 1) {
+						controladorEmpresa::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'modificar'){
-					controladorEmpresa::modificar();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'baja'){
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorEmpresa::baja($pag);
+					if ($permiso->dci == 1) {
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorEmpresa::baja($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'listar'){
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorEmpresa::listar($pag);
+					if ($permiso->rci == 1) {
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorEmpresa::listar($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'detalle'){
 					if (!empty($_POST['id'])){
 						$idempresa=htmlEntities($_POST['id']);
 						controladorEmpresa::detalle($idempresa);
 					}
 				}elseif($accion == 'modificarContactos'){
-					controladorEmpresa::modificarContactos();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarContactos();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'modificarTelefonos') {
-					controladorEmpresa::modificarTelefonos();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarTelefonos();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'modificarDomicilios') {
-					controladorEmpresa::modificarDomicilios();	
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarDomicilios();	
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'modificarCorreos') {
-					controladorEmpresa::modificarCorreos();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarCorreos();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'eleccion') {
 					if (isset($_GET['id'])) {
 						$id=htmlEntities(@$_GET['id']); 
@@ -179,51 +284,54 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'filtro') {
 					controladorEmpresa::Filtros();
 				}
-				elseif($accion == 'pdf'){ //PDF Usuarios
-					if ($_POST['datosPDF']){
-						$datosPDF=htmlEntities($_POST['datosPDF']);
-						controladorEmpresa::pdfEmpresa($datosPDF);
-					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-				}
+				elseif($accion == 'pdf') //PDF Usuarios
+						controladorEmpresa::pdfEmpresa();
 			}
 
 			/* -------- USUARIOS ---------- */
 			elseif($controlador == 'usuarios'){
 				//ALTA
 				if($accion == 'alta'){
-					controladorUsuario::alta();
+					if ($permiso->cusuario == 1) {
+						controladorUsuario::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'modificar'){
-					if (!empty($_POST['idusuario'])){
-						$idusuario=htmlEntities($_POST['idusuario']);
-						controladorUsuario::modificar($idusuario);
+					if ($permiso->uusuario == 1) {
+						if (!empty($_POST['idusuario'])){
+							$idusuario=htmlEntities($_POST['idusuario']);
+							controladorUsuario::modificar($idusuario);
+						}
+						else {header('Location:privado.php?c=usuarios&a=listar');} 
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-
-				//BAJA
-				}elseif($accion == 'baja'){ //invierte activos
-					if (!empty($_GET['id'])){
-						$idusuario=htmlEntities($_GET['id']);
-						controladorUsuario::bajaUsuario($idusuario);
-					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
-
+				
 				//Listar
 				}elseif($accion == 'listar'){
-					/* FILTROS USUARIOS*/
-					if (isset($_POST['tipoFiltro'])){
-								if (!empty($_POST['tipoFiltro']))
-									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-					}
-					else $tipoFiltro='nada';
+					if ($permiso->rusuario == 1) {
+						/* FILTROS USUARIOS*/
+						if (isset($_POST['tipoFiltro'])){
+									if (!empty($_POST['tipoFiltro']))
+										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+						}
+						else $tipoFiltro='nada';
 
-					if (isset($_POST['dato'])){
-								if (!empty($_POST['dato']))
-									$datoFiltro=htmlEntities($_POST['dato']);
-					}
+						if (isset($_POST['dato'])){
+									if (!empty($_POST['dato']))
+										$datoFiltro=htmlEntities($_POST['dato']);
+						}
 
-					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro);
-					else controladorUsuario::listar();
+						if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorUsuario::Filtros($tipoFiltro,$datoFiltro);
+						else controladorUsuario::listar();
+
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 
 				//Detalle
 				}elseif($accion == 'detalle'){
@@ -235,12 +343,17 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
 
 				//Eliminar
-				}elseif($accion == 'eliminar'){ //elimina fisicamente
-					if (!empty($_GET['id'])){
-						$idusuario=htmlEntities($_GET['id']);
-						controladorUsuario::eliminaUsuario($idusuario);
+				}elseif($accion == 'eliminar'){ 
+					if ($permiso->dusuario == 1) {
+						if (!empty($_GET['id'])){
+							$idusuario=htmlEntities($_GET['id']);
+							controladorUsuario::eliminaUsuario($idusuario);
+						}
+						else {header('Location:privado.php?c=usuarios&a=listar');} 
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
 				//Modif. Mis datos
 				}elseif($accion == 'misdatos'){
 						controladorUsuario::misDatos();
@@ -256,56 +369,55 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				/* -------- MEDIDOR ---------- */
 				elseif($controlador == 'medidor'){
 					if($accion == 'alta'){
-						if (isset($_GET['id'])) {
-							$id=htmlEntities(@$_GET['id']); 
-							controladorMedidor::alta($id);	
+						if ($permiso->cmedidor == 1) {
+							if (isset($_GET['id'])) {
+								$id=htmlEntities(@$_GET['id']); 
+								controladorMedidor::alta($id);	
+							}
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
 						}
 					}elseif ($accion == 'altaNormal') {
-						controladorMedidor::altaNormal();	
+						if ($permiso->cmedidor == 1) {
+							controladorMedidor::altaNormal();
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
+						}	
 					}elseif($accion == 'modificar'){
-						controladorMedidor::modificar();
-					}elseif($accion == 'baja'){
-						controladorMedidor::baja();
+						if ($permiso->umedidor == 1) {
+							controladorMedidor::modificar();
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
+						}
 					}elseif ($accion == 'eleccion') {
 					if (isset($_GET['id'])) {
 						$id=htmlEntities(@$_GET['id']); 
 						controladorMedidor::eleccion($id);
 					}
-				}elseif($accion == 'listar'){
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorMedidor::listar($pag);
-					// esto ta invisidivle??' a carajo'
-						/* FILTROS MEDIDOR*/
-				/*		if (isset($_POST['tipoFiltro'])){
-									if (!empty($_POST['tipoFiltro']))
-										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+					}elseif($accion == 'listar'){
+						if ($permiso->rmedidor == 1) {
+							$pag=htmlEntities(@$_GET['pagina']);
+							controladorMedidor::listar($pag);
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
 						}
-						else $tipoFiltro='nada';
-
-					if ((isset($_POST['dato'])) and ($_POST['dato'] != '')) {
-								if (!empty($_POST['dato']))
-									$datoFiltro=htmlEntities($_POST['dato']);
-					}
-					else ($datoFiltro='nada');
-
-					//die('tipo '.$tipoFiltro.'. dato '.$datoFiltro);
-
-					if ((isset($tipoFiltro)) and (isset($datoFiltro))) controladorMedidor::Filtros($tipoFiltro,$datoFiltro);
-					else{
-
-						$pag=htmlEntities(@$_GET['pagina']);
-						controladorMedidor::listar($pag);
-				*/
-					//FILTROS
+				
 					}elseif ($accion == 'filtro') {
 						controladorMedidor::Filtros();
 					//Eliminar
-					}elseif($accion == 'eliminar'){ //elimina fisicamente
-						if (!empty($_GET['id'])){
-							$idMedidor=htmlEntities($_GET['id']);
-							controladorMedidor::eliminaMedidor($idMedidor);
+					}elseif($accion == 'eliminar'){ 
+						if ($permiso->dmedidor == 1) {
+							$pag=htmlEntities($_GET['pagina']);
+							controladorMedidor::eliminaMedidor($pag);
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
 						}
-						else {header('Location:privado.php?c=usuarios&a=listar');} //Si no vienen por post, arafue!
+						
 					}
 					elseif($accion == 'pdf'){ //PDF Medidor
 					if ($_POST['datosPDF']){
@@ -313,8 +425,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						controladorMedidor::pdfMedidor($datosPDF);
 					}
 					else {header('Location:privado.php?c=medidor&a=listar');} //Si no vienen por post, arafue!
-					}
 				}
+			}
 		}else{
 			//Avisar q pifio path
 			//puso Acción o Controlador MAL

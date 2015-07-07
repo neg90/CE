@@ -100,31 +100,39 @@ $(document).ready(function() {
         </div> 
      </div> 
     {% endif %}
+
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li> 
+            
+            <li><a href="privado.php?c=medidor&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
+                <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li><a href="privado.php?c=medidor&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
+            <li>
+              <a href="privado.php?c=medidor&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
+    </div>
+  </div>
  
-    <div class="row">
-          <div class="col-lg-4"></div>
-          <div class="col-lg-4">
-          {% if cantidadPaginas  > 0 %}
-            <div class="bs-example" data-example-id="disabled-active-pagination">
-              <nav>
-                <ul class="pagination">
-                  <li class="">
-                    <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
-                    <span aria-hidden="true">«</span></a>
-                  </li>
-                    {% for item in 1..cantidadPaginas %} 
-                      <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
-                    {% endfor %}
-                  <li>
-                    <a href="privado.php?c=medidor&a=listar&pagina={{sig}}" aria-label="Next">
-                    <span aria-hidden="true">»</span></a>
-                  </li>
-               </ul>
-             </nav>
-            </div>
-          {% endif %}
-          </div>
-        </div>
+   
   {% if filtroActivo == 0 %}
   		<form method="POST" action="privado.php?c=medidor&a=filtro" id="form_herramientas_medidor">
   		<div id="herramientasTop" class="inline-block">
@@ -277,7 +285,10 @@ $(document).ready(function() {
 					</form>
           {% if cargarElimianar == true %}
   				    <!--Eliminar medidor  -->
-    					<form method="post" action="privado.php?c=medidor&a=eliminar&id={{medidor.idmedidor}}" id="eliminaMedidor{{medidor.idmedidor}}">
+              {% if actual == 1 %}
+                {% set paginaBaja = 1 %}
+              {% endif %}
+    					<form method="post" action="privado.php?c=medidor&a=eliminar&pagina={{paginaBaja}}" id="eliminaMedidor{{medidor.idmedidor}}">
                 <input type="hidden" value="{{medidor.idmedidor}}" name="idmedidor">
     						<a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el titular?')){document.getElementById('eliminaMedidor{{medidor.idmedidor}}').submit();} return false;">
   							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -290,4 +301,34 @@ $(document).ready(function() {
 	{% endif %}
   </tbody>
   </table>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li> 
+            
+            <li><a href="privado.php?c=medidor&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
+                <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li><a href="privado.php?c=medidor&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
+            <li>
+              <a href="privado.php?c=medidor&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
+    </div>
+  </div>
 {% endblock %}

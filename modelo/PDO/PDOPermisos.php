@@ -13,6 +13,17 @@ class PDOPermisos extends permisos{
 	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol);
 	
 	}
+   public static function traerPermiso($id){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM permisos WHERE idpermiso = :idpermiso');
+      $consulta->bindParam(':idpermiso',$id);
+      $consulta->execute();
+      $objeto = $consulta->fetch(PDO::FETCH_OBJ);
+      return $objeto;
+   }
 	
 	public static function listarPermisos(){
 		try{

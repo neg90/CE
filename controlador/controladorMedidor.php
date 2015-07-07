@@ -3,6 +3,7 @@
 require_once '../modelo/clases/usuario.php';
 require_once '../modelo/PDO/PDOMedidor.php';
 require_once '../modelo/PDO/PDOmedidorempresa.php';
+require_once '../modelo/PDO/PDOempresa.php';
 
 
 class controladorMedidor {
@@ -45,15 +46,38 @@ class controladorMedidor {
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
 			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-
-			
 			$medidoresempresa = PDOmedidorempresa::listar();
 			if (intval($pag) == 1) {
 				$valor = 0;
 			}else{
 				$valor = intval($pag-1) * $cantResultados ;
 			}
-			$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);	
+			$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);
+
+			if ($pag == 1 ) {
+				$actual = 1;
+			}else{
+				$actual = $pag -1;
+			}
+			if ($cantPaginas > 5) {
+				if(($pag + 5) > $cantPaginas ){
+					
+					$actual = $cantPaginas-5;
+					$cantMostrar = $cantPaginas;
+				}else{
+					$cantMostrar = intval($pag) + 5; 
+				}
+			}else{
+				$cantMostrar = $cantPaginas;
+			}
+			$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
+				
+			if (intval($pag) == 1) {
+				$valor = 0;
+			}else{
+				$valor = intval($pag-1) * $cantResultados ;
+			}
+			;	
 			//Sig
 			if ($pag == $cantPaginas ) {
 				$sig = $cantPaginas;
@@ -66,19 +90,18 @@ class controladorMedidor {
 			}else{
 				$ant = $pag - 1;
 			}
-			//cant paginas
-			
-			$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
-
+			$paginaBaja = $pag;
 			$arayVista = '';
+
 			for ($i=0; $i < count($medidoresempresa); $i++) { 
 				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
 				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
 				$arayVista[$i] = $arrayUnario;
 			}
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
-			'user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
+			echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+			'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'ListaMedidores'=>$ListaMedidores,
+			'relacion'=>$arayVista));	
 	}
 
 	public static function Filtros(){
@@ -151,38 +174,11 @@ class controladorMedidor {
 			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores, 'datoFiltro'=>$datoFiltro, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro, 'relacion'=>$arayVista));	
 	}
 
-	static function listarConCartel($eliminado){
-			$user=$_SESSION['user'];
-			Twig_Autoloader::register();
-			$loader = new Twig_Loader_Filesystem('../vista');
-			$twig = new Twig_Environment($loader, array(
-			//'cache' => '../cache','
-			'debug' => 'false'
-			));
-
-			$ListaMedidores=PDOMedidor::listarMedidores();
-
-			$medidoresempresa = PDOmedidorempresa::listar();
-
-			$arayVista = '';
-			for ($i=0; $i < count($medidoresempresa); $i++) { 
-				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
-				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
-				$arayVista[$i] = $arrayUnario;
-			}
-
-			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('user'=>$user,'ListaMedidores'=>$ListaMedidores,'eliminado'=>$eliminado,'relacion'=>$arayVista));	
-	}
-
 	static function verMedidor($idmedidor){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
-			$twig = new Twig_Environment($loader, array(
-			//'cache' => '../cache','
-			'debug' => 'false'
-			));
+			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 			$unMedidor=PDOMedidor::medidorPorID($idmedidor);
 
@@ -190,16 +186,77 @@ class controladorMedidor {
 			echo $template->render(array('user'=>$user,'unMedidor'=>$unMedidor));	
 	}
 
-	/*static function bajaMedidor($idmedidor){
-			PDOMedidor::baja($idusuario);
-			$ultPag = $_SERVER['HTTP_REFERER'];
-			header('Location:'.$ultPag);
-	}*/
+	
+	public static function eliminaMedidor($pag){
+		$cantResultados = 25;
 
-	static function eliminaMedidor($idMedidor){
-			if ((PDOMedidor::borrar($idMedidor))==1) ($medidorEliminado=1);
-			else $medidorEliminado=0;
-			self::listarConCartel($medidorEliminado);
+		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+		$loader = new Twig_Loader_Filesystem('../vista');
+		$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+		
+		$idMedidor = htmlentities($_POST['idmedidor']);
+		if (PDOMedidor::borrar($idMedidor) == 1) {
+			$eliminado = 1;
+		}else{
+			$eliminado = 2;
+		}
+
+		$medidoresempresa = PDOmedidorempresa::listar();
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);
+
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
+		}else{
+			$cantMostrar = $cantPaginas;
+		}
+		$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
+				
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$paginaBaja = $pag;
+		$arayVista = '';		
+
+		for ($i=0; $i < count($medidoresempresa); $i++) { 
+			$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
+			$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
+			$arayVista[$i] = $arrayUnario;
+		}
+		
+		$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
+		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'ListaMedidores'=>$ListaMedidores,
+		'eliminado'=>$eliminado,'relacion'=>$arayVista));	
 	}
 
 	public static function alta($idempresa){
@@ -222,18 +279,24 @@ class controladorMedidor {
 			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo,$fechadeultimopago);
 			if($unMedidor->validarInsertar()){
 				$untimoID = $unMedidor->guardar();
+				//Aca se trae la empresa y se le guarda el numero de usuario para desp arreglar los informes.
+				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
+				$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($untimoID));
+				$unaEmpresa->guardar();
 				$relacion = new PDOmedidorempresa(0,$untimoID,$idempresa);
 				$relacion->guardar();
 				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
 				$tipoAviso= 'exito';
 				header('Location:privado.php?c=medidor&a=eleccion&id='.$idempresa);
 			}else{
-				//levantar errores
+				$aviso=2;
+				$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+				echo $template->render(array('aviso'=>$aviso,'user'=>$user,'idempresa'=>$idempresa));
 			}
 			
 
 		}else{
-			$aviso=false;
+			$aviso=0;
 			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'user'=>$user,'idempresa'=>$idempresa));
 		}

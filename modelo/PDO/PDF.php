@@ -139,14 +139,16 @@ function TablaMedidor($header, $data)
 	$this->Cell(array_sum($w),0,'','T');
 }
 
-function TablaEmpresa($data)
+function TablaEmpresa($idempresa, $rubro, $categoria,$contactos,$medidores,
+				 $telefonos, $correos,$domicilios,$abonados)
 {
-	$data = $data[0];
+	$empresa= PDOEmpresa::buscarEmpresa($idempresa);
+
 	$categorias = PDOcategoria::listar();
 	$rubros = PDOrubro::listar();
-	$correos = PDOcorreoempresa::buscarCorreos($data['idempresa']);
-	$domicilios = PDOdomicilioempresa::buscarDomicilios($data['idempresa']);
-	$telefonos = PDOtelefonoempresa::buscarTelefonos($data['idempresa']);
+	$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());
+	$domicilios = PDOdomicilioempresa::buscarDomicilios($empresa->getIdempresa());
+	$telefonos = PDOtelefonoempresa::buscarTelefonos($empresa->getIdempresa());
 
 	// Colors, line width and bold font
 	$this->SetFillColor(120,120,120);
@@ -154,76 +156,167 @@ function TablaEmpresa($data)
 	$this->SetDrawColor(200,200,200);
 	$this->SetLineWidth(0);
 	$this->SetFont('','B');
-	// Header
-	/*$w = array(60, 45, 50, 30, 40, 45);
-	for($i=0;$i<count($header);$i++)
-		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
-	$this->Ln();*/
-	// Color and font restoration
+
+
 	$this->SetFillColor(235,235,235);
 	$this->SetTextColor(0,0,0);
 	$this->SetFont('');
-	// Data
+
 	$fill = true;
+
+	$this->SetFont('','B',16);
+			$this->Cell(0,20,utf8_decode('Datos Generales '),0,1,'C');
+
+	$this->SetFont('','B',13);	
 	$this->Cell(0,8,utf8_decode('Nº de Socio : '),0,1,'L',$fill);
-	$this->Cell(0,8,$data['idempresa'],0,1,'L');
+	$this->SetFont('');
+	$this->Cell(0,8,$empresa->getIdempresa(),0,1,'L');
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'Cantidad de empleados: ',0,1,'L',$fill);
-	$this->Cell(0,8,$data['cantempleados'],0,1,'L');
-	$this->Cell(0,8,'Importe mensual: $',0,1,'L',$fill);
-	$this->Cell(0,8,$data['importemensual'],0,1,'L');
+	$this->SetFont('');
+	$this->Cell(0,8,$empresa->getCantempleados(),0,1,'L');
+
+	$this->SetFont('','B');	
+	$this->Cell(0,8,'Importe mensual:',0,1,'L',$fill);
+	$this->SetFont('');
+	$this->Cell(0,8,'$'.$empresa->getImportemensual(),0,1,'L');
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'Web: ',0,1,'L',$fill);
-	$this->Cell(0,8,$data['web'],0,1,'L');
+	$this->SetFont('');
+	$this->Cell(0,8,$empresa->getWeb(),0,1,'L');
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'CUIT: ',0,1,'L',$fill);
-	$this->Cell(0,8,$data['cuit'],0,1,'L');
+	$this->SetFont('');
+	$this->Cell(0,8,$empresa->getCuit(),0,1,'L');
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'Fecha de inicio en C.E.: ',0,1,'L',$fill);
-	$this->Cell(0,8,$data['fechainicioce'],0,1,'L');
+	$this->SetFont('');
+	$fechaInicioCE = new DateTime($empresa->getFechainicioce());
+	$this->Cell(0,8,$fechaInicioCE->format('d/m/Y'),0,1,'L');
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,utf8_decode('Categoría: '),0,1,'L',$fill);
+	$this->SetFont('');
 	foreach ($categorias as $c){
-		if ($c->id ==$data['idcategoria']){
+		if ($c->id ==$empresa->getIdcategoria()){
 			$this->Cell(0,8,$c->descripcion,0,1,'L');
 		}
 	}
 	
+	$this->SetFont('','B');	
 	$this->Cell(0,8,utf8_decode('Rubro: '),0,1,'L',$fill);
+	$this->SetFont('');
 	foreach ($rubros as $r){
-		if ($r->id ==$data['idrubro']){
+		if ($r->id ==$empresa->getIdrubro()){
 			$this->Cell(0,8,$r->descripcion,0,1,'L');
 		}
 	}
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'Detalle de actividad: ',0,1,'L',$fill);
-	$this->MultiCell(0,8,utf8_decode($data['detactividad']),0,1,'J');
+	$this->SetFont('');
+	$this->SetFillColor(255,255,255);
+	$this->MultiCell(0,8,utf8_decode($empresa->getDetactividad()),0,1,'J',$fill);
+	$this->SetFillColor(235,235,235);
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'Fecha de inicio de actividades: ',0,1,'L',$fill);
-	$this->Cell(0,8,$data['fechafundacion'],0,1,'L');
+	$this->SetFont('');
+	$fechaFund = new DateTime($empresa->getFechafundacion());
+	$this->Cell(0,8,$fechaFund->format('d/m/Y'),0,1,'L');
+
+	$this->SetFont('','B');	
 	$this->Cell(0,8,'Domicilios: ',0,1,'L',$fill);
-		foreach ($domicilios as $domicilio){
-			$this->Cell(0,8,utf8_decode(html_entity_decode($domicilio['domicilio'])).' - '.utf8_decode(html_entity_decode($domicilio['descripcion'])),0,1,'L');
+	$this->SetFont('');
+		if ($domicilios != null)
+		{
+			foreach ($domicilios as $domicilio){
+					$this->Cell(0,8,utf8_decode(html_entity_decode($domicilio['domicilio'])).' - '.utf8_decode(html_entity_decode($domicilio['descripcion'])),0,1,'L');
+				}
 		}
+		else $this->Cell(0,8,utf8_decode('No hay domicilios asociados.'),0,1,'L');
 
+	$this->SetFont('','B');	
 	$this->Cell(0,8,utf8_decode('Teléfonos: '),0,1,'L',$fill);
-		foreach ($telefonos as $telefono){
-			$this->Cell(0,8,utf8_decode(html_entity_decode($telefono['telefono'])).' - '.utf8_decode(html_entity_decode($telefono['descripcion'])),0,1,'L');
-		}	
-
-	$this->Cell(0,8,utf8_decode('Emails: '),0,1,'L',$fill);
-		foreach ($correos as $correo){
-			$this->Cell(0,8,utf8_decode(html_entity_decode($correo->correo)).' - '.utf8_decode(html_entity_decode($correo->descripcion)),0,1,'L');
+	$this->SetFont('');
+		if ($telefonos != null){
+				foreach ($telefonos as $telefono){
+					$this->Cell(0,8,utf8_decode(html_entity_decode($telefono['telefono'])).' - '.utf8_decode(html_entity_decode($telefono['descripcion'])),0,1,'L');
+				}	
 		}
+		else $this->Cell(0,8,utf8_decode('No hay teléfonos asociados.'),0,1,'L');
 
-	//$this->Cell(0,10,'Nº de Usuario: '.$data['numusuario'],0,1,'L');
-	/* foreach($data as $row)
-	{
-		$this->Cell($w[0],6,utf8_decode($row['nomyap']),'LR',0,'L',$fill);
-		$this->Cell($w[1],6,$row['telefono'],'LR',0,'L',$fill);
-		$this->Cell($w[2],6,utf8_decode($row['domicilio']),'LR',0,'L',$fill);
-		$this->Cell($w[3],6,$row['importepago'],'LR',0,'L',$fill);
-		$this->Cell($w[4],6,$row['numusuario'],'LR',0,'L',$fill);
-		$this->Cell($w[5],6,$row['numsuministro'],'LR',0,'L',$fill);
-		//$this->Cell($w[3],6,number_format($row[3]),'LR',0,'R',$fill);
-		$this->Ln();
-		$fill = !$fill;
-	}*/
-	// Closing line
-//	$this->Cell(array_sum($w),0,'','T');
+	$this->SetFont('','B');	
+	$this->Cell(0,8,utf8_decode('Emails: '),0,1,'L',$fill);
+	$this->SetFont('');
+		if ($correos != null){
+				foreach ($correos as $correo){
+					$this->Cell(0,8,utf8_decode(html_entity_decode($correo->correo)).' - '.utf8_decode(html_entity_decode($correo->descripcion)),0,1,'L');
+				}
+		}
+		else $this->Cell(0,8,utf8_decode('No hay correos asociados.'),0,1,'L');
+
+
+	$this->AddPage('P','A4');
+	$abonadoempresa=PDOabonadoempresa::buscarAbonadosRelacionados($empresa->getIdempresa());
+	$medidorempresa=PDOmedidorempresa::buscarMedidorRelacionados($empresa->getIdempresa());
+	if ($abonadoempresa != null)
+		{	$abonado=PDOabonado::buscarAbonado($abonadoempresa->numabonado);
+			$this->SetFont('','B',16);
+			$this->Cell(0,20,utf8_decode('Datos Abonado '),0,1,'C');
+			//$numabonado,$importe,$fechadeultimopago,$activo
+			$this->SetFont('','B',13);
+			$this->Cell(0,8,utf8_decode('Número de Abonado: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,$abonado->getNumabonado(),0,1,'L');
+
+			$this->SetFont('','B');
+			$this->Cell(0,8,utf8_decode('Importe: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,'$'.$abonado->getImporte(),0,1,'L');
+
+			$this->SetFont('','B');
+			$fechaUltPago= new DateTime($abonado->getFechadeultimopago());
+			$this->Cell(0,8,utf8_decode('Fecha de último pago: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,$fechaUltPago->format('d/m/Y'),0,1,'L');
+		}
+	elseif ($medidorempresa !=null)
+		{	$medidor=PDOmedidor::medidorPorID($medidorempresa->idmedidor);
+			$this->SetFont('','B',16);
+			$this->Cell(0,20,utf8_decode('Datos Medidor: '),0,1,'L');
+			//$nomyap,$telefono,$domicilio,$importepago,$numusuario,$numsuministro,$activo,$fechadeultimopago
+			$this->SetFont('','B',13);
+			$this->Cell(0,8,utf8_decode('Nombre y Apellido: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,$medidor->nomyap,0,1,'L');
+
+			$this->SetFont('','B');
+			$this->Cell(0,8,utf8_decode('Importe de pago: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,'$'.$medidor->importepago,0,1,'L');
+
+			$this->SetFont('','B');
+			$this->Cell(0,8,utf8_decode('Número de Usuario: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,$medidor->numusuario,0,1,'L');
+
+			$this->SetFont('','B');
+			$this->Cell(0,8,utf8_decode('Número de Suministro: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,$medidor->numsuministro,0,1,'L');
+
+			$this->SetFont('','B');
+			$fechaUltPago= new DateTime($medidor->fechadeultimopago);
+			$this->Cell(0,8,utf8_decode('Fecha de último pago: '),0,1,'L',$fill);
+			$this->SetFont('');
+			$this->Cell(0,8,$fechaUltPago->format('d/m/Y'),0,1,'L');
+
+		}
 }
 
 /*function TablaEmpresa($data)
