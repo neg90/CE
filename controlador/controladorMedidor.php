@@ -177,10 +177,7 @@ class controladorMedidor {
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
-			$twig = new Twig_Environment($loader, array(
-			//'cache' => '../cache','
-			'debug' => 'false'
-			));
+			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 			$unMedidor=PDOMedidor::medidorPorID($idmedidor);
 
