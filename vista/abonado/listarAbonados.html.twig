@@ -23,8 +23,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
     {% if cantidadPaginas  > 0 %}
       <div class="bs-example" data-example-id="disabled-active-pagination">
         <nav>
@@ -32,10 +32,15 @@
             <li class="">
               <a href="privado.php?c=abonado&a=listar&pagina={{ant}}" aria-label="Previous">
               <span aria-hidden="true">«</span></a>
-            </li>
-              {% for item in 1..cantidadPaginas %} 
+            </li> 
+            
+            <li><a href="privado.php?c=abonado&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
                 <li><a href="privado.php?c=abonado&a=listar&pagina={{item}}">{{item}}</a></li>
               {% endfor %}
+            <li><a href="privado.php?c=abonado&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=abonado&a=listar&pagina={{sig}}" aria-label="Next">
               <span aria-hidden="true">»</span></a>
@@ -44,6 +49,7 @@
        </nav>
       </div>
     {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
     </div>
   </div>
 
@@ -103,8 +109,11 @@
             </a>
           </form>
           {% if cargarElimianar == true %}
+              {% if actual == 1 %}
+                {% set paginaBaja = 1 %}
+              {% endif %}
             <!--Eliminar abonado-->
-            <form method="post" action="privado.php?c=abonado&a=baja" id="bajaAbonado{{item.numabonado}}">
+            <form method="post" action="privado.php?c=abonado&a=baja&pagina={{paginaBaja}}" id="bajaAbonado{{item.numabonado}}">
               <input type="hidden" value="{{item.numabonado}}" name="numabonado">
               <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaAbonado{{item.numabonado}}').submit();}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -116,5 +125,35 @@
     {% endfor %}
   </tbody>
   </table>
+
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    {% if cantidadPaginas  > 0 %}
+      <div class="bs-example" data-example-id="disabled-active-pagination">
+        <nav>
+          <ul class="pagination">
+            <li class="">
+              <a href="privado.php?c=abonado&a=listar&pagina={{ant}}" aria-label="Previous">
+              <span aria-hidden="true">«</span></a>
+            </li> 
+            
+            <li><a href="privado.php?c=abonado&a=listar&pagina=1">Primera</a></li>
+              
+              {% for item in actual..cantMostrar %}
+
+                <li><a href="privado.php?c=abonado&a=listar&pagina={{item}}">{{item}}</a></li>
+              {% endfor %}
+            <li><a href="privado.php?c=abonado&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
+            <li>
+              <a href="privado.php?c=abonado&a=listar&pagina={{sig}}" aria-label="Next">
+              <span aria-hidden="true">»</span></a>
+            </li>
+         </ul>
+       </nav>
+      </div>
+    {% endif %}
+    <input type="hidden" value="{{paginaBaja}}" name="paginaBaja">
+    </div>
 
 {% endblock %}

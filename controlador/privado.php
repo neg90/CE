@@ -73,7 +73,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'modificar') {
 					controladorAbonado::modificar();
 				}elseif ($accion == 'baja') {
-					controladorAbonado::baja();
+					$pag=htmlEntities(@$_GET['pagina']);
+					controladorAbonado::baja($pag);
 				}elseif ($accion == 'listar') {
 					$pag =htmlEntities(@$_GET['pagina']); 
 					controladorAbonado::listar($pag);

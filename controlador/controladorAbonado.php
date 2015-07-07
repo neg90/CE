@@ -150,7 +150,24 @@ class controladorAbonado {
 		}else{
 			$valor = intval($pag-1) * $cantResultados ;
 		}
-		$cantPaginas = ceil(count(PDOabonado::listar()) / $cantResultados);	
+		$cantPaginas = ceil(count(PDOabonado::listar()) / $cantResultados);
+
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
+		}else{
+			$cantMostrar = $cantPaginas;
+		}
+		$abonado = PDOabonado::listarPaginacion($valor,$cantResultados);
 		//Sig
 		if ($pag == $cantPaginas ) {
 			$sig = $cantPaginas;
@@ -163,9 +180,9 @@ class controladorAbonado {
 		}else{
 			$ant = $pag - 1;
 		}
-		//cant paginas
+		$paginaBaja = $pag;
 		
-		$abonado = PDOabonado::listarPaginacion($valor,$cantResultados);
+	
 		$arayVista = '';
 		for ($i=0; $i < count($abonadoempresas); $i++) { 
 			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
@@ -175,13 +192,14 @@ class controladorAbonado {
 		
 		$empresas = PDOempresa::listar();
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
-		'user'=>$user,'abonado'=>$abonado,'empresas'=>$empresas,'relacion'=>$arayVista	));
+		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'abonado'=>$abonado,
+		'empresas'=>$empresas,'relacion'=>$arayVista));
 
 	}
 	
 		
-	public function baja(){
+	public function baja($pag){
 		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -196,16 +214,57 @@ class controladorAbonado {
 		}else{
 			$aviso = 2;
 		}
+		$cantResultados = 25;
+		
 		$abonadoempresas = PDOabonadoempresa::listar();
+
+		if (intval($pag) == 1) {
+			$valor = 0;
+		}else{
+			$valor = intval($pag-1) * $cantResultados ;
+		}
+		$cantPaginas = ceil(count(PDOabonado::listar()) / $cantResultados);
+
+		if ($pag == 1 ) {
+			$actual = 1;
+		}else{
+			$actual = $pag -1;
+		}
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
+		}else{
+			$cantMostrar = $cantPaginas;
+		}
+		$abonado = PDOabonado::listarPaginacion($valor,$cantResultados);
+		//Sig
+		if ($pag == $cantPaginas ) {
+			$sig = $cantPaginas;
+		}else{
+			$sig = $pag + 1;
+		}
+		//ant
+		if($pag == 1){
+			$ant = 1 ;
+		}else{
+			$ant = $pag - 1;
+		}
+		$paginaBaja = $pag;
+		
+	
 		$arayVista = '';
+
 		for ($i=0; $i < count($abonadoempresas); $i++) { 
 			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
 			$arrayUnario = array ('numabonado'=>$abonadoempresas[$i]->numabonado,'denominacion'=>$denominasao->getDenominacion());
 			$arayVista[$i] = $arrayUnario;
 		}
-		
 
-		$abonado = PDOabonado::listar();
+		
 		$empresas = PDOempresa::listar();
 		
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');

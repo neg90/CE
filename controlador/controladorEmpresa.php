@@ -195,8 +195,9 @@ class controladorEmpresa {
 		}else{
 			$ant = $pag - 1;
 		}
-		$rubros = PDOrubro::listar();
 		$paginaBaja = $pag;
+		$rubros = PDOrubro::listar();
+		
 		$contactos = PDOContacto::listar();
 		$abonados = PDOabonado::listar();
 		$medidores = PDOMedidor::listarMedidores();
