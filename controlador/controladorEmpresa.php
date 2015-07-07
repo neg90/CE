@@ -281,7 +281,7 @@ class controladorEmpresa {
 		}
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
+		echo $template->render(array('aviso'=>$aviso,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
 		'cantidadPaginas'=>$cantPaginas,'idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
    }
