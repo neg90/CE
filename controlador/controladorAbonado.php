@@ -14,6 +14,7 @@
 class controladorAbonado {
 
 	static function alta($idempresa){
+		$user=$_SESSION['user'];
 		
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -42,11 +43,12 @@ class controladorAbonado {
 		}elseif ($untimoID == null) {
 			$aviso=0;
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'idempresa'=>$idempresa));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'idempresa'=>$idempresa));
 		}
 	}
 
 	static function altaNormal(){
+		$user=$_SESSION['user'];
 		
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -63,11 +65,11 @@ class controladorAbonado {
 			$unAbonado->guardar();
 			$aviso=1;
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo));
 
 		}else{
 			$template = $twig->loadTemplate('abonado/altaAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'modo'=>$modo));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'modo'=>$modo));
 		}
 		
 	}
@@ -86,10 +88,11 @@ class controladorAbonado {
 	  	}
 
 	  	$template = $twig->loadTemplate('abonado/eleccion.html.twig');
-		echo $template->render(array('idempresa'=>$idempresa));
+		echo $template->render(array('user'=>$user,'idempresa'=>$idempresa));
 	}
 
 	static function modificar(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -131,7 +134,7 @@ class controladorAbonado {
 			$unAbonado = PDOabonado::buscarAbonado($numabonado);
 			$aviso=0;
 			$template = $twig->loadTemplate('abonado/modificarAbonado.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'numabonado'=>$numabonado,'abonado'=>$unAbonado));
+			echo $template->render(array('user'=>$user,'aviso'=>$aviso,'numabonado'=>$numabonado,'abonado'=>$unAbonado));
 		}
 	}
 
