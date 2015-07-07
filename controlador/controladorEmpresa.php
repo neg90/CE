@@ -417,6 +417,8 @@ class controladorEmpresa {
 				
 				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
 					$cargoContrubuyente = true;
+					$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
+					$unaEmpresa->guardar();
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
@@ -438,7 +440,7 @@ class controladorEmpresa {
 
 			//Decide si cargo o no cargo contribuyente
 			if ($cargoContrubuyente) {
-				header('Location:privado.php?c=empresa&a=listar');
+				header('Location:privado.php?c=empresa&a=listar&pagina=1');
 			}else{
 				header('Location:privado.php?c=empresa&a=eleccion&id='.$ultimoIdempresaInsertado);
 				//Todo salio bien se cargo la empresa deberia seguir cargando cosas..	
