@@ -29,6 +29,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorCorreo::renderCorreo();
 				}elseif ($accion == 'enviar') {
 					controladorCorreo::enviar();
+				}elseif ($accion ='verinf') {
+					controladorCorreo::mostrarInforme();
 				}
 
 			/* -------- ECEL ---------- */
