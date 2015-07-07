@@ -362,31 +362,55 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				/* -------- MEDIDOR ---------- */
 				elseif($controlador == 'medidor'){
 					if($accion == 'alta'){
-						if (isset($_GET['id'])) {
-							$id=htmlEntities(@$_GET['id']); 
-							controladorMedidor::alta($id);	
+						if ($permiso->cmedidor == 1) {
+							if (isset($_GET['id'])) {
+								$id=htmlEntities(@$_GET['id']); 
+								controladorMedidor::alta($id);	
+							}
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
 						}
 					}elseif ($accion == 'altaNormal') {
-						controladorMedidor::altaNormal();	
+						if ($permiso->cmedidor == 1) {
+							controladorMedidor::altaNormal();
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
+						}	
 					}elseif($accion == 'modificar'){
-						controladorMedidor::modificar();
-					}elseif($accion == 'baja'){
-						controladorMedidor::baja();
+						if ($permiso->umedidor == 1) {
+							controladorMedidor::modificar();
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
+						}
 					}elseif ($accion == 'eleccion') {
 					if (isset($_GET['id'])) {
 						$id=htmlEntities(@$_GET['id']); 
 						controladorMedidor::eleccion($id);
 					}
 					}elseif($accion == 'listar'){
-						$pag=htmlEntities(@$_GET['pagina']);
-						controladorMedidor::listar($pag);
+						if ($permiso->rmedidor == 1) {
+							$pag=htmlEntities(@$_GET['pagina']);
+							controladorMedidor::listar($pag);
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
+						}
 				
 					}elseif ($accion == 'filtro') {
 						controladorMedidor::Filtros();
 					//Eliminar
 					}elseif($accion == 'eliminar'){ 
-						$pag=htmlEntities($_GET['pagina']);
-						controladorMedidor::eliminaMedidor($pag);
+						if ($permiso->dmedidor == 1) {
+							$pag=htmlEntities($_GET['pagina']);
+							controladorMedidor::eliminaMedidor($pag);
+						}else{
+							$template = $twig->loadTemplate('accesodenegado.html.twig');
+							echo $template->render(array());
+						}
+						
 					}
 					elseif($accion == 'pdf'){ //PDF Medidor
 					if ($_POST['datosPDF']){
