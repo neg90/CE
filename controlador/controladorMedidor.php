@@ -45,15 +45,31 @@ class controladorMedidor {
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
 			$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-
-			
 			$medidoresempresa = PDOmedidorempresa::listar();
 			if (intval($pag) == 1) {
 				$valor = 0;
 			}else{
 				$valor = intval($pag-1) * $cantResultados ;
 			}
-			$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);	
+			$cantPaginas = ceil(count(PDOMedidor::listarMedidores()) / $cantResultados);
+
+			if ($pag == 1 ) {
+				$actual = 1;
+			}else{
+				$actual = $pag -1;
+			}
+			if ($cantPaginas > 5) {
+				if(($pag + 5) > $cantPaginas ){
+					
+					$actual = $cantPaginas-5;
+					$cantMostrar = $cantPaginas;
+				}else{
+					$cantMostrar = intval($pag) + 5; 
+				}
+			}else{
+				$cantMostrar = $cantPaginas;
+			}
+			$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
 			//Sig
 			if ($pag == $cantPaginas ) {
 				$sig = $cantPaginas;
@@ -66,19 +82,37 @@ class controladorMedidor {
 			}else{
 				$ant = $pag - 1;
 			}
-			//cant paginas
-			
-			$ListaMedidores = PDOMedidor::listarPaginacion($valor,$cantResultados);
-
+				
+			if (intval($pag) == 1) {
+				$valor = 0;
+			}else{
+				$valor = intval($pag-1) * $cantResultados ;
+			}
+			;	
+			//Sig
+			if ($pag == $cantPaginas ) {
+				$sig = $cantPaginas;
+			}else{
+				$sig = $pag + 1;
+			}
+			//ant
+			if($pag == 1){
+				$ant = 1 ;
+			}else{
+				$ant = $pag - 1;
+			}
+			$paginaBaja = $pag;
 			$arayVista = '';
+
 			for ($i=0; $i < count($medidoresempresa); $i++) { 
 				$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
 				$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
 				$arayVista[$i] = $arrayUnario;
 			}
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
-			'user'=>$user,'ListaMedidores'=>$ListaMedidores,'relacion'=>$arayVista));	
+			echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+			'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'ListaMedidores'=>$ListaMedidores,
+			'relacion'=>$arayVista));	
 	}
 
 	public static function Filtros(){

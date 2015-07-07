@@ -174,7 +174,7 @@ class controladorEmpresa {
 		}
 		if ($cantPaginas > 5) {
 			if(($pag + 5) > $cantPaginas ){
-				var_dump($cantPaginas);
+				
 				$actual = $cantPaginas-5;
 				$cantMostrar = $cantPaginas;
 			}else{
