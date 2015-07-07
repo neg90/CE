@@ -215,28 +215,68 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			/* -------- EMPRESA ---------- */
 			elseif($controlador == 'empresa'){
 				if($accion == 'alta'){
-					controladorEmpresa::alta();
+					if ($permiso->cci == 1) {
+						controladorEmpresa::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'modificar'){
-					controladorEmpresa::modificar();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'baja'){
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorEmpresa::baja($pag);
+					if ($permiso->dci == 1) {
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorEmpresa::baja($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'listar'){
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorEmpresa::listar($pag);
+					if ($permiso->rci == 1) {
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorEmpresa::listar($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'detalle'){
 					if (!empty($_POST['id'])){
 						$idempresa=htmlEntities($_POST['id']);
 						controladorEmpresa::detalle($idempresa);
 					}
 				}elseif($accion == 'modificarContactos'){
-					controladorEmpresa::modificarContactos();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarContactos();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'modificarTelefonos') {
-					controladorEmpresa::modificarTelefonos();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarTelefonos();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'modificarDomicilios') {
-					controladorEmpresa::modificarDomicilios();	
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarDomicilios();	
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'modificarCorreos') {
-					controladorEmpresa::modificarCorreos();
+					if ($permiso->uci == 1) {
+						controladorEmpresa::modificarCorreos();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'eleccion') {
 					if (isset($_GET['id'])) {
 						$id=htmlEntities(@$_GET['id']); 
