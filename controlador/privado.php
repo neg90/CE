@@ -21,7 +21,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		header("Location:index.php?aviso=5");
 	}else{
 		/*-------------------------------------------------------------------------------------------------
-			esta aprte busco los permisos del usuario que se acabade logerar. es LOG - IN (?)
+			esta aprte busco los permisos del usuario que se acabade logerar. es LOG - IN (?) JAJA VIRGI
 		------------------------------------------------------------------------------------------------*/
 		$user = $_SESSION['user'];
 		$pass = $_SESSION['clave'];
