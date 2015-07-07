@@ -22,56 +22,63 @@ class controladorEmpresa {
 
 
 	public static function pdfEmpresa(){
-		if (isset($_POST['idempresa']))
-			$idempresa=htmlEntities($_POST['idempresa']);
 
-		if (isset($_POST['datosPDFrubro']))
-			$rubro=htmlEntities($_POST['datosPDFrubro']);
-
-		if (isset($_POST['datosPDFcategoria']))
-			$categoria=htmlEntities($_POST['datosPDFcategoria']);
-
-		if (isset($_POST['datosPDFcontactos']))
-			$contactos=htmlEntities($_POST['datosPDFcontactos']);
-
-		if (isset($_POST['datosPDFmedidores']))
-			$medidores=htmlEntities($_POST['datosPDFmedidores']);
-
-		if (isset($_POST['datosPDFtelefonos']))
-			$telefonos=htmlEntities($_POST['datosPDFtelefonos']);
-
-		if (isset($_POST['datosPDFcorreos']))
-			$correos=htmlEntities($_POST['datosPDFcorreos']);
-
-		if (isset($_POST['datosPDFdomicilios']))
-			$domicilios=htmlEntities($_POST['datosPDFdomicilios']);
-
-		if (isset($_POST['datosPDFabonados']))
-			$abonados=htmlEntities($_POST['datosPDFabonados']);
-
-		$pdf = new PDF();
-		// Cargo la info
-		//$data = html_entity_decode($datosPDF);
-		//$data = json_decode($data, true);
-		$pdf->SetFont('Arial','',14);
-		$empresa= PDOEmpresa::buscarEmpresa($idempresa);
-		$_SESSION['tituloPDF']=($empresa->getDenominacion()); //título PDF
-		$pdf->AddPage('P','A4');
-		$pdf->TablaEmpresa($idempresa, $rubro, $categoria,$contactos,$medidores,
-				 $telefonos, $correos,$domicilios,$abonados);
-		$pdf->Output();
+	if (isset($_POST['datosPDF'])){
+		self::pdfEmpresaListado(htmlentities($_POST['datosPDF']));
+	}
+	else{
+			if (isset($_POST['idempresa']))
+				$idempresa=htmlEntities($_POST['idempresa']);
+	
+			if (isset($_POST['datosPDFrubro']))
+				$rubro=htmlEntities($_POST['datosPDFrubro']);
+	
+			if (isset($_POST['datosPDFcategoria']))
+				$categoria=htmlEntities($_POST['datosPDFcategoria']);
+	
+			if (isset($_POST['datosPDFcontactos']))
+				$contactos=htmlEntities($_POST['datosPDFcontactos']);
+	
+			if (isset($_POST['datosPDFmedidores']))
+				$medidores=htmlEntities($_POST['datosPDFmedidores']);
+	
+			if (isset($_POST['datosPDFtelefonos']))
+				$telefonos=htmlEntities($_POST['datosPDFtelefonos']);
+	
+			if (isset($_POST['datosPDFcorreos']))
+				$correos=htmlEntities($_POST['datosPDFcorreos']);
+	
+			if (isset($_POST['datosPDFdomicilios']))
+				$domicilios=htmlEntities($_POST['datosPDFdomicilios']);
+	
+			if (isset($_POST['datosPDFabonados']))
+				$abonados=htmlEntities($_POST['datosPDFabonados']);
+	
+			$pdf = new PDF();
+			// Cargo la info
+			//$data = html_entity_decode($datosPDF);
+			//$data = json_decode($data, true);
+			$pdf->SetFont('Arial','',14);
+			$empresa= PDOEmpresa::buscarEmpresa($idempresa);
+			$_SESSION['tituloPDF']=($empresa->getDenominacion()); //título PDF
+			$pdf->AddPage('P','A4');
+			$pdf->TablaEmpresa($idempresa, $rubro, $categoria,$contactos,$medidores,
+					 $telefonos, $correos,$domicilios,$abonados);
+			$pdf->Output();
+		}
 	}
 
 	public static function pdfEmpresaListado($datosPDF){
 
 		$pdf = new PDF();
 		// Cargo la info
+		$header = array(utf8_decode('Denominación'), 'CUIT', 'Rubro', utf8_decode('Categoría'),'Importe Mensual', 'Cant. Empleados');
 		$data = html_entity_decode($datosPDF);
 		$data = json_decode($data, true);
 		$pdf->SetFont('Arial','',14);
-		$_SESSION['tituloPDF']=($data[0]['denominacion']); //título PDF
-		$pdf->AddPage('P','A4');
-		$pdf->TablaEmpresa($data);
+		$_SESSION['tituloPDF']=('Listado de Empresas'); //título PDF
+		$pdf->AddPage();
+		$pdf->TablaListadoEmpresas($header,$data);
 		$pdf->Output();
 	}
 
@@ -138,12 +145,12 @@ class controladorEmpresa {
 		$medidores = PDOMedidor::listarMedidores();
 		$arrayVista[0] = '';
 		if (count($empresas)>0){
-				for ($i=0; $i < $totalEmpresas   ; $i++) { 
-					$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]->idempresa);
-					$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresas[$i]->idempresa);
-					$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresas[$i]->idempresa);
-					$arrayUnario = array('idempresa'=>$empresas[$i]->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
-					$arrayVista[$i] = $arrayUnario;
+				foreach ($empresas as $empresa) { 
+					$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresa->idempresa);
+					$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresa->idempresa);
+					$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresa->idempresa);
+					$arrayUnario = array('idempresa'=>$empresa->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
+					$arrayVista[$empresa->idempresa] = $arrayUnario;
 				}
 		}
 		$filtroActivo=1;

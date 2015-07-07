@@ -193,7 +193,7 @@ $(document).ready(function() {
             <span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
           </div>            
           <div class="col-lg-2">
-            <a href="privado.php?c=empresa&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+            <a href="privado.php?c=empresa&a=listar&pagina=1" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
               Quitar filtro
           </a>
         </div>
@@ -206,7 +206,7 @@ $(document).ready(function() {
               <button type="submit" class="btn btn-default btn-block" id="bottonEnviarCorreo" name="irMail">Crear Correo</button>
               {% if empresas is null %}
                 {% else %}
-                   <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+                   <a href="privado.php?c=empresa&a=listar&pagina=1" target="_blank" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
                        Ver en PDF
                    </a>
                 {% endif %}        
