@@ -289,12 +289,14 @@ class controladorMedidor {
 				$tipoAviso= 'exito';
 				header('Location:privado.php?c=medidor&a=eleccion&id='.$idempresa);
 			}else{
-				//levantar errores
+				$aviso=2;
+				$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
+				echo $template->render(array('aviso'=>$aviso,'user'=>$user,'idempresa'=>$idempresa));
 			}
 			
 
 		}else{
-			$aviso=false;
+			$aviso=0;
 			$template = $twig->loadTemplate('medidor/altaMedidor.html.twig');
 			echo $template->render(array('aviso'=>$aviso,'user'=>$user,'idempresa'=>$idempresa));
 		}
