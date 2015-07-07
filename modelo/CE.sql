@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-07-2015 a las 16:18:05
+-- Tiempo de generación: 07-07-2015 a las 00:51:41
 -- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
 -- Versión de PHP: 5.5.9-1ubuntu4.9
 
@@ -311,8 +311,18 @@ CREATE TABLE IF NOT EXISTS `infcorreo` (
   `cantcontactos` int(11) NOT NULL,
   `arrayempresas` longtext NOT NULL,
   `fecha` datetime NOT NULL,
+  `adjunto` longtext NOT NULL,
+  `mensaje` longtext NOT NULL,
+  `asunto` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `infcorreo`
+--
+
+INSERT INTO `infcorreo` (`id`, `cantempresas`, `cantcontactos`, `arrayempresas`, `fecha`, `adjunto`, `mensaje`, `asunto`) VALUES
+(0, 5, 3, '["8652","8653"]', '2015-07-07 12:07:17', '{"name":"","type":"","tmp_name":"","error":4,"size":0}', '<p>asdsdasadasdsad</p>', 'asdasdasd');
 
 -- --------------------------------------------------------
 
