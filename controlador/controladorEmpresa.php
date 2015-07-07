@@ -426,6 +426,7 @@ class controladorEmpresa {
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 	  	$modo = 'alta';
 	  	$aviso = 0;
+	  	$fechaActual = date('Y-m-d');
 	  	//Traigo contactos !! :D
 	  	$unosContactos = PDOcontacto::listar();
 	  	$unosMedidores = PDOMedidor::listarMedidores();
@@ -492,7 +493,7 @@ class controladorEmpresa {
 				//falla la validacion vamos de nuevo.
 				$aviso=2;
 				$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-				echo $template->render(array('aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+				echo $template->render(array('fecha'=>$fechaActual,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
 			}
 
@@ -509,7 +510,7 @@ class controladorEmpresa {
 			//primera vez que entra al formulario.
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
+			echo $template->render(array('fecha'=>$fechaActual,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados,'user'=>$user));
 		}
 	}
