@@ -34,8 +34,10 @@ class PDOusuario extends usuario{
 		$conexion = new conexion; //creo instancia de la conexion
 		}catch (PDOException $e){}
 		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE username = :username and password = :password');
+		$consulta->bindParam(':username',$user);
+		$consulta->bindParam(':password',$password);
 		$consulta->execute();
-		$existe=$consulta->fetch();
+		return $existe=$consulta->fetch();
 
 	}
 

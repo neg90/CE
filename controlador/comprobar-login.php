@@ -17,6 +17,7 @@ require_once('../modelo/PDO/PDOusuario.php');
 				$verificado=PDOusuario::verificarUser($user,$clave);
 				if ($verificado == 1) {
 					$_SESSION['user'] = htmlEntities($_POST['user']);
+					$_SESSION['clave'] = htmlEntities($_POST['clave']);
 					header("Location:privado.php?c=inicio&a=inicio");
 				} else {
 					//aca el usuario no existe por uno u otro campo

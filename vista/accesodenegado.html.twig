@@ -1,0 +1,33 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %}Acceso denegado {% endblock %}
+
+{% block contenedor %}
+	<style type="text/css">
+	<!--
+	.asd {font-family: Tahoma, Geneva, sans-serif;font-size: 36px;}
+	.rrr {font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
+	-->
+	</style>
+
+
+
+	<div align="center">
+		<p class="asd">Acá no está lo que buscás</p>
+		<p><img src="../img/awesome.jpg" width="600" height="600" /></p>
+
+		 <div class="row fila-de-boton">
+			 	<div class=" col-lg-4"></div>
+			 	<div class=" col-lg-4">
+					<a href="#" class="rrr" onclick="window.history.back();">
+						<button type="button" class="btn btn-default btn-lg btn-block col-lg-4" >
+							Volver al listado
+						</button>
+					</a>
+				</div>
+				<div class=" col-lg-4"></div>
+			</div>
+
+		
+	</div>
+{% endblock %}

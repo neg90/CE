@@ -9,6 +9,8 @@ require_once 'controladorMedidor.php';
 require_once 'controladorCorreo.php';
 require_once 'controladorExcel.php';
 require_once 'controladorAbonado.php';
+require_once '../modelo/PDO/PDOPermisos.php';
+
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
@@ -18,11 +20,26 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 	if (!isset($_SESSION['user']) and !isset($_SESSION['clave']) ){
 		header("Location:index.php?aviso=5");
 	}else{
+		/*-------------------------------------------------------------------------------------------------
+			esta aprte busco los permisos del usuario que se acabade logerar. es LOG - IN (?)
+		------------------------------------------------------------------------------------------------*/
 		$user = $_SESSION['user'];
+		$pass = $_SESSION['clave'];
+		$usuario = PDOusuario::buscarUser($user,$pass);
+		$idRol = $usuario['idrol'];
+		$rol = PDOrol::rolPorID($idRol);
+		$permiso = PDOPermisos::traerPermiso($rol[0]->idpermisos);
+		var_dump($permiso);
+		/*-------------------------------------------------------------------------------------------------
 
+		Arranca el controlador como siempre.
+		-------------------------------------------------------------------------------------------------*/
 		$controlador=htmlEntities(@$_GET['c']); 
 		$accion=htmlEntities(@$_GET['a']); 
 		if ((!empty($controlador)) and (!empty($accion))){
+			/*Esta parte no tiene controles ni permisos mala nuestra ... iguale s facil programador del futuro,
+			solo deberias agregar mas propiedades al crud de la tabla permisos, modificar las vistas, poner carteles 
+			... NO tiene control abonado, ni correo ni el tema del excel..*/
 			/* -------- CORREO ---------- */
 			if ($controlador=='correo') {
 				if($accion == 'mostrar'){
@@ -89,30 +106,53 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
 				if($accion == 'alta'){
-					controladorContacto::alta();
+					if ($permiso->csocio == 1) {
+						controladorContacto::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'modificar'){
-					controladorContacto::modificar();
+					if ($permiso->usocio == 1) {
+						controladorContacto::modificar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+				
 				}elseif($accion == 'baja'){
-					$pag =htmlEntities(@$_GET['pagina']); 
-					controladorContacto::baja($pag);
+					if ($permiso->dsocio == 1) {
+						$pag =htmlEntities(@$_GET['pagina']); 
+						controladorContacto::baja($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+					
 				}elseif($accion == 'listar'){
-						/* FILTROS CONTACTOS*/
-					if (isset($_POST['tipoFiltro'])){
-								if (!empty($_POST['tipoFiltro']))
-									$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
-					}
-					else $tipoFiltro='nada';
+					if ($permiso->rsocio == 1) {
+							/* FILTROS CONTACTOS*/
+						if (isset($_POST['tipoFiltro'])){
+									if (!empty($_POST['tipoFiltro']))
+										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+						}
+						else $tipoFiltro='nada';
 
-					if (isset($_POST['dato'])){
-								if (!empty($_POST['dato']))
-									$datoFiltro=htmlEntities($_POST['dato']);
-					}
+						if (isset($_POST['dato'])){
+									if (!empty($_POST['dato']))
+										$datoFiltro=htmlEntities($_POST['dato']);
+						}
 
-					if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
-					else {
-						$pag=htmlEntities(@$_GET['pagina']);
-						controladorContacto::listar($pag);
+						if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
+						else {
+							$pag=htmlEntities(@$_GET['pagina']);
+							controladorContacto::listar($pag);
+						}
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
+					
 				}
 				elseif($accion == 'pdf'){ //PDF Contacto
 					if ($_POST['datosPDF']){
