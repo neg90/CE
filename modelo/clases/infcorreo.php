@@ -7,18 +7,48 @@ class infcorreo {
 	private $cantContactos;
 	private $cantEmpresas;
 	private $arrayEmpresas;
+	private $asunto;
+	private $adjunto;
+	private $mensaje;
 	private $fecha;
 	
 
 
-	public function	__construct($id,$cantContactos,$cantEmpresas,$arrayEmpresas,$fecha) {
+	public function	__construct($id,$cantContactos,$cantEmpresas,$arrayEmpresas,$fecha,$asunto,$adjunto,$mensaje) {
 	
 		$this->id = $id;
 		$this->cantContactos = $cantContactos;
 		$this->cantEmpresas = $cantEmpresas;
 		$this->arrayEmpresas = $arrayEmpresas;
 		$this->fecha = $fecha;
+		$this->asunto = $asunto;
+		$this->adjunto = $adjunto;
+		$this->mensaje = $mensaje;
 
+	}
+
+	public function getMensaje(){
+		return $this->mensaje;
+	}
+
+	public function setMensaje($mensaje){
+		$this->mensaje = $mensaje;
+	}
+
+	public function getAsunto(){
+		return $this->asunto;
+	}
+
+	public function setAsunto($asunto){
+		$this->asunto = $asunto;
+	}
+
+	public function getAdjunto(){
+		return $this->adjunto;
+	}
+
+	public function setAdjunto($adjunto){
+		$this->adjunto = $adjunto;
 	}
 
 	public function getId(){

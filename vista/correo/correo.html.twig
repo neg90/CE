@@ -24,6 +24,23 @@
 		{% for item in empresas %}
 			<input type="hidden" name="arrayIdempresa[]" value="{{item}}" >
 		{% endfor %}
+
+		<div class="row fila-de-alerta">
+			<div class=" col-lg-2"></div>
+			<div class=" col-lg-8">
+				{% if error == 1 %}
+					<div class="alert alert-success alert-dismissable">
+		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
+		    			<strong>Error!</strong> No seleccionaste emrpesas para enviar correos, intenta volver al listado de empresas y seleccionarlas.
+	  				</div>
+  				{% elseif  error == 2 %}
+  					<div class="alert alert-danger alert-dismissable">
+		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
+		    			<strong></strong> 
+	  				</div>
+	  			{% endif %}
+			</div>
+		</div>
 		
 		<div class="row fila-de-titulo">
 			<div class=" col-lg-4"></div>

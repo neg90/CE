@@ -44,52 +44,59 @@ class controladorCorreo {
 		echo $template->render(array('empresas'=>$empresas));
 
 	}
-
+	/*Error 1 , es por que no tiene emrpesas seleccionadas */
 	public static function enviar(){
-
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 	  	if (isset($_POST['enviarCorreo'])){
 	  		$cantContactos=0;
 	  		$cantEmpresas = 0;
 	  		$empresas = $_POST['arrayIdempresa'];
-	  		$limitEmpresas = count($empresas);
-	  	
-
-	  		$adjunto = $_FILES['adjunto'];
-	  		$asunto = $_POST['asunto'];
-	  		$cuerpo = $_POST['cuerpoMensaje'];
-
-	  		for ($i=0; $i < $limitEmpresas ; $i++) { 
-	  			//Emrpesa ACTUAL
-	  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
-	  			//correos relacionados a la empresa.
-	  			$limitCorreos = count($unosCorreo);
-	  			for ($c=0; $c < $limitCorreos ; $c++){ 
-	  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
-	  				$cantEmpresas++;
-	  			}
-	  			//busco el contacto con la idempresa.
-	  			$relaciones = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]);
-	  			for ($c=0; $c < count($relaciones) ; $c++){ 
-	  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
-	  				$unCorreo = $unContacto->getCorreo();
-	  				$cantContactos++;
-	  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
-	  			}
-	  			$unaEmpresa = null;
+	  		if (count($empresas) == 0 ) {
+	  			$error = 1;
+	  			$template = $twig->loadTemplate('correo/correo.html.twig');
+				echo $template->render(array('error'=>$error,'empresas'=>$empresas));
 	  			
+	  		}else{
+		  		$limitEmpresas = count($empresas);
+
+		  		$adjunto = $_FILES['adjunto'];
+		  		$asunto = $_POST['asunto'];
+		  		$cuerpo = $_POST['cuerpoMensaje'];
+
+		  		for ($i=0; $i < $limitEmpresas ; $i++) { 
+		  			//Emrpesa ACTUAL
+		  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
+		  			//correos relacionados a la empresa.
+		  			$limitCorreos = count($unosCorreo);
+		  			for ($c=0; $c < $limitCorreos ; $c++){ 
+		  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+		  				$cantEmpresas++;
+		  			}
+		  			//busco el contacto con la idempresa.
+		  			$relaciones = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]);
+		  			for ($c=0; $c < count($relaciones) ; $c++){ 
+		  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
+		  				$unCorreo = $unContacto->getCorreo();
+		  				$cantContactos++;
+		  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
+		  			}
+		  			$unaEmpresa = null;
+		  		}
+
+		  		//delete del anterior.
+		  		PDOinfcorreo::eliminar();
+		  		//cargo nuevo :D
+		  		$fechaActual = date('Y-m-d h:m:s');
+		  		$empresasJSON = json_encode($empresas);
+		  		$adjuntoJSON = json_encode($adjunto);
+		  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual,$asunto,$adjuntoJSON,$cuerpo);
+		  		$unInforme->guardar();
+		  		self::mostrarInforme();
+	
 	  		}
-
-	  		//delete del anterior.
-	  		PDOinfcorreo::eliminar();
-	  		//cargo nuevo :D
-	  		$fechaActual = date('Y-m-d h:m:s');
-	  		$empresasJSON = json_encode($empresas);
-	  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual);
-	  		$unInforme->guardar();
-	  		self::mostrarInforme();
-
-	  			
 	  	}
 	}
 
@@ -102,6 +109,9 @@ class controladorCorreo {
 
 	  	$idsEmpresas = html_entity_decode($unInforme->arrayempresas);
 	  	$empresas = json_decode($idsEmpresas,true);
+
+	  	$auxAdjunto = html_entity_decode($unInforme->adjunto);
+	  	$adjunto = json_decode($auxAdjunto,true);
 
 	  	$empresasVista1 = '';
 	  	$empresasVista2 = '';
@@ -120,6 +130,10 @@ class controladorCorreo {
 	  	
 	  	$template = $twig->loadTemplate('correo/detalleCorreo.html.twig');
 		echo $template->render(array(
+			'cuerpo'=>html_entity_decode($unInforme->mensaje),
+			'asunto'=>$unInforme->asunto,
+			'adjunto'=>$adjunto,
+			'fecha'=>$unInforme->fecha,
 			'empresasVista1'=>$empresasVista1,
 			'empresasVista2'=>$empresasVista2,
 			'cantEmpresas'=>$unInforme->cantempresas,
