@@ -3,6 +3,7 @@
 require_once '../modelo/clases/usuario.php';
 require_once '../modelo/PDO/PDOMedidor.php';
 require_once '../modelo/PDO/PDOmedidorempresa.php';
+require_once '../modelo/PDO/PDOempresa.php';
 
 
 class controladorMedidor {
@@ -278,6 +279,10 @@ class controladorMedidor {
 			$unMedidor = new PDOMedidor(0,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo,$fechadeultimopago);
 			if($unMedidor->validarInsertar()){
 				$untimoID = $unMedidor->guardar();
+				//Aca se trae la empresa y se le guarda el numero de usuario para desp arreglar los informes.
+				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
+				$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($untimoID));
+				$unaEmpresa->guardar();
 				$relacion = new PDOmedidorempresa(0,$untimoID,$idempresa);
 				$relacion->guardar();
 				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
