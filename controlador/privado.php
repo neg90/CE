@@ -170,23 +170,45 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			/* -------- ROLES ---------- */
 			}elseif($controlador == 'roles'){
 				if($accion == 'alta'){
-					controladorRol::alta();
+					if ($permiso->crol == 1) {
+						controladorRol::alta();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+					
 				}elseif($accion == 'modificar'){
-					if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
-						$idrol=htmlEntities($_POST['idrol']);
-						$idpermiso=htmlEntities($_POST['idpermiso']);
-						controladorRol::modificar($idrol,$idpermiso);
+					if ($permiso->urol == 1){
+						if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
+							$idrol=htmlEntities($_POST['idrol']);
+							$idpermiso=htmlEntities($_POST['idpermiso']);
+							controladorRol::modificar($idrol,$idpermiso);
+						}
+						else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
+					
 				}elseif($accion == 'baja'){
-					if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
-						$idrol=htmlEntities($_POST['idrol']);
-						$idpermiso=htmlEntities($_POST['idpermiso']);
-						controladorRol::baja($idrol,$idpermiso);
+					if ($permiso->drol == 1){
+						if ((isset($_POST['idrol'])) && (isset($_POST['idpermiso']))){
+							$idrol=htmlEntities($_POST['idrol']);
+							$idpermiso=htmlEntities($_POST['idpermiso']);
+							controladorRol::baja($idrol,$idpermiso);
+						}
+						else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
-					else {header('Location:privado.php?c=roles&a=listar');} //Si no vienen por post, arafue!
 				}elseif($accion == 'listar'){
-					controladorRol::listar();
+					if ($permiso->rrol == 1){
+						controladorRol::listar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}
 			}
 
