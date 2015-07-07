@@ -36,7 +36,17 @@
   				{% elseif  error == 2 %}
   					<div class="alert alert-danger alert-dismissable">
 		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
-		    			<strong></strong> 
+		    			<strong>Error!</strong> El servidor no admite un archivo tan grande.
+	  				</div>
+	  			{% elseif  error == 3 %}
+  					<div class="alert alert-danger alert-dismissable">
+		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
+		    			<strong>Error!</strong> Se cancelo el envio durante la carga del archivo
+	  				</div>
+	  			{% elseif  error == 4 %}
+  					<div class="alert alert-danger alert-dismissable">
+		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
+		    			<strong>Error!</strong> El archivo es nulo
 	  				</div>
 	  			{% endif %}
 			</div>
