@@ -282,11 +282,11 @@ class controladorMedidor {
 				//Aca se trae la empresa y se le guarda el numero de usuario para desp arreglar los informes.
 				$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 				$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($untimoID));
+				$unaEmpresa->setImportemensual($importe);
 				$unaEmpresa->guardar();
 				$relacion = new PDOmedidorempresa(0,$untimoID,$idempresa);
 				$relacion->guardar();
-				$aviso='Perfecto! El titular fue dado de alta con éxito. ';
-				$tipoAviso= 'exito';
+				
 				header('Location:privado.php?c=medidor&a=eleccion&id='.$idempresa);
 			}else{
 				$aviso=2;
@@ -369,6 +369,13 @@ class controladorMedidor {
 			$unMedidor = new PDOMedidor($idmedidor,$nomyap,$telefono,$domicilio,$importe,$numusuario,$numsuministro,$activo,$fechadeultimopago);
 
 			$unMedidor->setIdmedidor($idmedidor);
+
+			$unaEmpresa = PDOempresa::buscarEmpresaMedidor($numusuario);
+			var_dump($unaEmpresa->getIdempresa());
+			$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($untimoID));
+			$unaEmpresa->setImportemensual($importe);
+			$unaEmpresa->guardar();
+
 			$unMedidor->guardar();
 
 			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');

@@ -476,7 +476,7 @@ class controladorEmpresa {
 				
 				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
 					$cargoContrubuyente = true;
-					$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
+					$unaEmpresa->setNumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
 					$unaEmpresa->guardar();
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
@@ -592,7 +592,7 @@ class controladorEmpresa {
 					//en caso de que anteriormente tengoamos un medidor lo fleto.
 					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
 					//busco el numero de usuario para modificarlo.
-					$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
+					$unaEmpresa->setNumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
@@ -600,10 +600,14 @@ class controladorEmpresa {
 					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
 					//y borra el numero de usuario
-					$unaEmpresa->setnumusuario(00000000);
+					$unaEmpresa->setNumusuario(00000000);
 					//en caso de que anteriormente tengoamos un medidor lo fleto.
 					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
-					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa());
+					//aca new de abonado.
+					$activo= true;
+					$abonadoAUX = new PDOabonado(0,$unaEmpresa->getImportemensual(),0,$activo);
+					$ultimaID  = $abonadoAUX->guardar();
+					$unAbonado = new PDOabonadoempresa(0,$ultimaID,$unaEmpresa->getIdempresa());
 					$unAbonado->guardar();
 				}
 				$unaEmpresa->guardar();

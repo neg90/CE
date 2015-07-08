@@ -208,8 +208,8 @@
 					 <div class="col-lg-6"> 
 					 	<div class="form-group">
 							<div class="btn-group btn-group-md" role="group" aria-label="...">
-				  				<button type="button" id="botonAbonado" class="btn btn-default" onclick="esAbonado(1)"> Abonado </button>
-				  				<button type="button" id="botonMedidor" class="btn btn-default" onclick="esAbonado(0)"> Medidor </button>
+				  				<button type="button" id="botonAbonado" class="btn btn-default" onclick="esAbonado(1)"> Abona en CE </button>
+				  				<button type="button" id="botonMedidor" class="btn btn-default" onclick="esAbonado(0)"> Abona en CELTA </button>
 							</div>
 						</div>
 					</div>
@@ -240,15 +240,8 @@
 					<div class="row">
 						 <div class="col-lg-6"> 
 						 		<div class="form-group">
-									<label class="col-lg-2 control-label">Abonado: </label>
-								<div class="col-lg-6 "> 
-									<select class="form-control" name="abonado" id="selectAbonado">
-										<option value="-1">Abonado CE</option>
-									{% for item in abonados %}
-										<option value="{{item.numabonado}}">{{item.numabonado}}</option>
-									{% endfor %}
-									</select>
-								</div>	
+									<label class="col-lg-6 control-label">Se creara un nuevo abonado en CE </label>
+								
 							</div>
 						</div>
 					</div>
@@ -257,7 +250,7 @@
 			<div class="row">
 				<div class="form-group">
 					<label class="control-label"> *Si el titular del medidor no existe vaya a crear uno nuevo </label>
-					
+					<input type="hidden" name="abonado" value="1">
 				</div>
 			</div>
 			<div class="row fila-de-boton">

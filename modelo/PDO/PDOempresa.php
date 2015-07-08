@@ -396,6 +396,25 @@ class PDOempresa extends empresa{
 
    }
 
+   public static function buscarEmpresaMedidor ($numusuario){
+      
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE (numusuario = :numusuario)');
+      
+      $consulta->bindParam(':numusuario', $numusuario);
+    
+      $consulta->execute();
+
+      $resultado = $consulta->fetch();
+
+      $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
+      $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],$resultado['activo'],
+      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['numusuario']);
+      
+      return $objeto;
+
+   }
+
   
 	
 }
