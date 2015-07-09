@@ -288,7 +288,7 @@ class controladorContacto {
 		}else{
 			$aviso = 2;
 		}
-			if (intval($pag) == 1) {
+		if (intval($pag) == 1) {
 			$valor = 0;
 		}else{
 			$valor = intval($pag-1) * $cantResultados ;

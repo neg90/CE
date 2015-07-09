@@ -38,7 +38,7 @@ class controladorAbonado {
 			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
 			$unaEmpresa->setImportemensual($importe);
 			$unaEmpresa->guardar();
-			
+
 			$aviso=1;
 			
 			//en un futuro no muy lejano deberia llevarlo al listado mostrando solo este y 
@@ -281,7 +281,8 @@ class controladorAbonado {
 		$empresas = PDOempresa::listar();
 		
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('user'=>$user,'empresas'=>$empresas,'abonado'=>$abonado,'aviso'=>$aviso,'relacion'=>$arayVista));
+		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'empresas'=>$empresas,'abonado'=>$abonado,'aviso'=>$aviso,'relacion'=>$arayVista));
       
    }
 
