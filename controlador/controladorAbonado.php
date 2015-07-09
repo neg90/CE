@@ -34,6 +34,11 @@ class controladorAbonado {
 			$untimoID = $unAbonado->guardar();
 			$relacion = new PDOabonadoempresa(0,$untimoID,$idempresa);
 			$relacion->guardar();
+
+			$unaEmpresa = PDOempresa::buscarEmpresa($idempresa);
+			$unaEmpresa->setImportemensual($importe);
+			$unaEmpresa->guardar();
+			
 			$aviso=1;
 			
 			//en un futuro no muy lejano deberia llevarlo al listado mostrando solo este y 
@@ -75,7 +80,7 @@ class controladorAbonado {
 	}*/
 
 	public static function eleccion($idempresa){
-		
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));

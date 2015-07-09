@@ -271,7 +271,7 @@ class controladorEmpresa {
 		$filtroActivo = 0; //Si está filtrando la tabla, es 1.
 
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		echo $template->render(array('pag'=>$pag,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
 		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'empresas'=>$empresas,'rubros'=>$rubros,
 		'categorias'=>$categorias,'contactos'=>$contactos,'medidores'=>$medidores,'arrayVista'=>$arrayVista,
 		'abonados'=>$abonados,'user'=>$user, 'filtroActivo' => $filtroActivo));
@@ -339,7 +339,7 @@ class controladorEmpresa {
 		}
 		
 		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('aviso'=>$aviso,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
+		echo $template->render(array('pag'=>$pag,'aviso'=>$aviso,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,
 		'cantidadPaginas'=>$cantPaginas,'idempresa'=>$idempresa,'empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
 		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user));
    }
@@ -466,7 +466,7 @@ class controladorEmpresa {
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 				//alta abonado
 				$cargoContrubuyente = false;
-				if (isset($_POST['abonadoCheck'])) {
+				/*if (isset($_POST['abonadoCheck'])) {
 					$cargoContrubuyente = true;
 
 					$activo= true;
@@ -478,7 +478,7 @@ class controladorEmpresa {
 					//$numabonado = htmlEntities($_POST['abonado']);
 				}
 				//alta medidor
-				
+				*/
 				if( $idMedidor <>'-1'){
 					$cargoContrubuyente = true;
 					$unaEmpresa->setNumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));

@@ -314,11 +314,8 @@ $(document).ready(function() {
               <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
               <span aria-hidden="true">«</span></a>
             </li> 
-            
             <li><a href="privado.php?c=medidor&a=listar&pagina=1">Primera</a></li>
-              
               {% for item in actual..cantMostrar %}
-
                {% if  item == pag %}
                  <li class="active"><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
                 {% else %}  
@@ -338,3 +335,5 @@ $(document).ready(function() {
     </div>
   </div>
 {% endblock %}
+
+      

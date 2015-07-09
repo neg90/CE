@@ -237,8 +237,7 @@ class controladorMedidor {
 			$ant = 1 ;
 		}else{
 			$ant = $pag - 1;
-		}
-				
+		}	
 		if (intval($pag) == 1) {
 			$valor = 0;
 		}else{
