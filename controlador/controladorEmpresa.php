@@ -607,7 +607,9 @@ class controladorEmpresa {
 				}
 				
 				if (isset($_POST['abonadoCheck'])) {
-					//Borro el abonado??
+					//Borro el abonado
+					$thisrelacionAbonadoForYou = PDOabonadoempresa::buscarAbonadosRelacionados($unaEmpresa->getIdempresa());
+					PDOabonado::baja($thisrelacionAbonadoForYou->numabonado);
 					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
 					//y borra el numero de usuario

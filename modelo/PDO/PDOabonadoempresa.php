@@ -40,7 +40,6 @@ class PDOabonadoempresa extends abonadoempresa{
        
          $consulta->execute();
 
-         
       }
    
 
