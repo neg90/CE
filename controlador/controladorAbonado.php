@@ -205,7 +205,7 @@ class controladorAbonado {
 		
 		$empresas = PDOempresa::listar();
 		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
-		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		echo $template->render(array('pag'=>$pag,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
 		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'abonado'=>$abonado,
 		'empresas'=>$empresas,'relacion'=>$arayVista));
 
@@ -273,7 +273,7 @@ class controladorAbonado {
 
 		for ($i=0; $i < count($abonadoempresas); $i++) { 
 			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
-			$arrayUnario = array ('numabonado'=>$abonadoempresas[$i]->numabonado,'denominacion'=>$denominasao->getDenominacion());
+			$arrayUnario = array ('pag'=>$pag,'numabonado'=>$abonadoempresas[$i]->numabonado,'denominacion'=>$denominasao->getDenominacion());
 			$arayVista[$i] = $arrayUnario;
 		}
 

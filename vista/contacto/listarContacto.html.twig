@@ -99,8 +99,11 @@ $(document).ready(function() {
             <li><a href="privado.php?c=contacto&a=listar&pagina=1">Primera</a></li>
               
               {% for item in actual..cantMostrar %}
-
-                <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+                 {% if  item == pag %}
+                   <li class="active"><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% else %} 
+                  <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+                 {% endif %}  
               {% endfor %}
             <li><a href="privado.php?c=contacto&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
@@ -302,8 +305,11 @@ $(document).ready(function() {
             <li><a href="privado.php?c=contacto&a=listar&pagina=1">Primera</a></li>
               
               {% for item in actual..cantMostrar %}
-
-                <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+                  {% if  item == pag %}
+                   <li class="active"><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% else %} 
+                  <li><a href="privado.php?c=contacto&a=listar&pagina={{item}}">{{item}}</a></li>
+                 {% endif %} 
               {% endfor %}
             <li><a href="privado.php?c=contacto&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>

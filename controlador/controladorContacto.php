@@ -228,7 +228,7 @@ class controladorContacto {
 		$paginaBaja = $pag;
 
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
+		echo $template->render(array('pag'=>$pag,'user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
 		'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
 		'user'=>$user,'contactos'=>$contactos));
 
@@ -326,7 +326,7 @@ class controladorContacto {
 		$paginaBaja = $pag;
 		
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
+		echo $template->render(array('pag'=>$pag,'user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
 		'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
 		'contactos'=>$contactos,'aviso'=>$aviso));
       

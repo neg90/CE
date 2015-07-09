@@ -617,7 +617,7 @@ class controladorEmpresa {
 					//en caso de que anteriormente tengoamos un medidor lo fleto.
 					PDOmedidorempresa::borrarMedidorEmpresa($unaEmpresa->getIdempresa());
 					//aca new de abonado.
-					$activo= true;
+					$activo = true;
 					$abonadoAUX = new PDOabonado(0,$unaEmpresa->getImportemensual(),0,$activo);
 					$ultimaID  = $abonadoAUX->guardar();
 					$unAbonado = new PDOabonadoempresa(0,$ultimaID,$unaEmpresa->getIdempresa());
