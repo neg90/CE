@@ -596,7 +596,10 @@ class controladorEmpresa {
 					$unMedidor = new PDOmedidorempresa(0,$idMedidor,$unaEmpresa->getIdempresa());
 					$unMedidor->guardar(); 
 				}
-				if( $numabonado <> '-1'){
+				
+				if (isset($_POST['abonadoCheck'])) {
+					//Borro el abonado
+					
 					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
 					//y borra el numero de usuario
@@ -610,6 +613,7 @@ class controladorEmpresa {
 					$unAbonado = new PDOabonadoempresa(0,$ultimaID,$unaEmpresa->getIdempresa());
 					$unAbonado->guardar();
 				}
+					
 				$unaEmpresa->guardar();
 				$aviso=1;
 				//Busco de nuevo la empresa actualizada.
