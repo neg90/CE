@@ -304,11 +304,15 @@ class controladorEmpresa {
 		}else{
 			$actual = $pag -1;
 		}
-		if(($pag + 5) > $cantPaginas ){
-			$actual = $cantPaginas-5;
-			$cantMostrar = $cantPaginas;
+		if ($cantPaginas > 5) {
+			if(($pag + 5) > $cantPaginas ){
+				$actual = $cantPaginas-5;
+				$cantMostrar = $cantPaginas;
+			}else{
+				$cantMostrar = intval($pag) + 5; 
+			}
 		}else{
-			$cantMostrar = intval($pag) + 5; 
+			$cantMostrar = $cantPaginas;
 		}
 		$empresas = PDOempresa::listarPaginacion($valor,$cantResultados);
 		//Sig
