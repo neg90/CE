@@ -466,15 +466,20 @@ class controladorEmpresa {
 				controladorEmpresa::validarMedidores($unaEmpresa->getIdempresa());
 				//alta abonado
 				$cargoContrubuyente = false;
-				if(( $numabonado <> '-1') && ( $idMedidor == '-1')){
+				if (isset($_POST['abonadoCheck'])) {
 					$cargoContrubuyente = true;
-					$unAbonado = new PDOabonadoempresa(0,$numabonado,$unaEmpresa->getIdempresa());
+
+					$activo= true;
+					$abonadoAUX = new PDOabonado(0,$unaEmpresa->getImportemensual(),0,$activo);
+					$ultimaID  = $abonadoAUX->guardar();
+					$unAbonado = new PDOabonadoempresa(0,$ultimaID,$unaEmpresa->getIdempresa());
 					$unAbonado->guardar();
+
 					//$numabonado = htmlEntities($_POST['abonado']);
 				}
 				//alta medidor
 				
-				if(( $idMedidor <>'-1') and ($numabonado == '-1')){
+				if( $idMedidor <>'-1'){
 					$cargoContrubuyente = true;
 					$unaEmpresa->setNumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
 					$unaEmpresa->guardar();
@@ -598,8 +603,7 @@ class controladorEmpresa {
 				}
 				
 				if (isset($_POST['abonadoCheck'])) {
-					//Borro el abonado
-					
+					//Borro el abonado??
 					//en caso de que anteriormente tengamos un abonado lo fleto
 					PDOabonadoempresa::borrarAbonadosEmpresa($unaEmpresa->getIdempresa());
 					//y borra el numero de usuario

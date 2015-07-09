@@ -112,12 +112,14 @@ $(document).ready(function() {
               <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
               <span aria-hidden="true">«</span></a>
             </li> 
-            
             <li><a href="privado.php?c=medidor&a=listar&pagina=1">Primera</a></li>
-              
+              {% set pintar = actual %}
               {% for item in actual..cantMostrar %}
-
-                <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% if  item == pag %}
+                 <li class="active"><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% else %}  
+                <li class=""><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% endif %}
               {% endfor %}
             <li><a href="privado.php?c=medidor&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
@@ -317,7 +319,11 @@ $(document).ready(function() {
               
               {% for item in actual..cantMostrar %}
 
-                <li><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+               {% if  item == pag %}
+                 <li class="active"><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% else %}  
+                <li class=""><a href="privado.php?c=medidor&a=listar&pagina={{item}}">{{item}}</a></li>
+                {% endif %}
               {% endfor %}
             <li><a href="privado.php?c=medidor&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>

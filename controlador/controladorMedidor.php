@@ -99,7 +99,7 @@ class controladorMedidor {
 				$arayVista[$i] = $arrayUnario;
 			}
 			$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-			echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+			echo $template->render(array('pag'=>$pag,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
 			'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'ListaMedidores'=>$ListaMedidores,
 			'relacion'=>$arayVista));	
 	}
@@ -254,7 +254,7 @@ class controladorMedidor {
 		}
 		
 		$template = $twig->loadTemplate('medidor/listarMedidores.html.twig');
-		echo $template->render(array('paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		echo $template->render(array('pag'=>$pag,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
 		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'ListaMedidores'=>$ListaMedidores,
 		'eliminado'=>$eliminado,'relacion'=>$arayVista));	
 	}
@@ -371,15 +371,15 @@ class controladorMedidor {
 			$unMedidor->setIdmedidor($idmedidor);
 
 			$unaEmpresa = PDOempresa::buscarEmpresaMedidor($numusuario);
-			var_dump($unaEmpresa->getIdempresa());
-			$unaEmpresa->setnumusuario(PDOMedidor::buscarNumerodeUsuario($untimoID));
+		
+			$unaEmpresa->setnumusuario($numusuario);
 			$unaEmpresa->setImportemensual($importe);
 			$unaEmpresa->guardar();
 
 			$unMedidor->guardar();
 
 			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');
-			echo $template->render(array('aviso'=>$aviso,'tipoAviso' => $tipoAviso,'unMedidor'=>$unMedidor,'user'=>$user));
+			echo $template->render(array('unMedidor'=>$unMedidor,'user'=>$user));
 		
 		}else{
 			
