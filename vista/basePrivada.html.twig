@@ -56,8 +56,89 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
+                               <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Asociados<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="privado.php?c=empresa&a=listar&pagina=1">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar Asociados
+                      </a>
+                    </li>
+                    <li>
+                      <a href="privado.php?c=empresa&a=alta">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Nuevo Asociado
+                      </a>
+                    </li>
+                    <li>
+                      <a href="privado.php?c=correo&a=verinf">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Ult. Informe de correo
+                      </a>
+                    </li>
+                  </ul>
+                </li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Usuario<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Contacto<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="privado.php?c=contacto&a=listar&pagina=1">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar contactos
+                      </a>
+                    </li>
+                    <li>
+                      <a href="privado.php?c=contacto&a=alta">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Nuevo contacto
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Titulares de Medidor<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="privado.php?c=medidor&a=listar&pagina=1">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar Medidores
+                      </a>
+                    </li>
+                     <li>
+                      <a href="privado.php?c=medidor&a=altaNormal">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Nuevo Medidor
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Abonados en CE<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="privado.php?c=abonado&a=listar&pagina=1">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar Abonados
+                      </a>
+                    </li>
+                    
+                  </ul>
+                </li>
+                
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Excel<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="privado.php?c=excel&a=listarinfmedidores">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Informes de Importacion de Excel
+                      </a>
+                    </li><li>
+                      <a href="privado.php?c=excel&a=cargarmedidor">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Importar Excel de Medidores
+                      </a>
+                    </li>
+                    <li>
+                      <a href="privado.php?c=excel&a=cargarempresa">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Importar Excel de Empresas
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Usuarios<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li>
                       <a href="privado.php?c=usuarios&a=listar">
@@ -72,7 +153,7 @@
                   </ul>
                 </li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Rol<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Roles<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li>
                       <a href="privado.php?c=roles&a=listar">
@@ -86,89 +167,6 @@
                     </li>
                   </ul>
                 </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Contacto<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="privado.php?c=contacto&a=listar&pagina=1">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar contacto
-                      </a>
-                    </li>
-                    <li>
-                      <a href="privado.php?c=contacto&a=alta">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Nuevo contacto
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Abonado en CE<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="privado.php?c=abonado&a=listar&pagina=1">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar Abonados
-                      </a>
-                    </li>
-                    
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Titulares de Medidor<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="privado.php?c=medidor&a=listar&pagina=1">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar titulares
-                      </a>
-                    </li>
-                     <li>
-                      <a href="privado.php?c=medidor&a=altaNormal">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Nuevo titulares
-                      </a>
-                    </li>
-                   
-                  </ul>
-                </li>
-                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Empresas<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="privado.php?c=empresa&a=listar&pagina=1">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Listar empresa
-                      </a>
-                    </li>
-                    <li>
-                      <a href="privado.php?c=empresa&a=alta">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Nueva Empresa
-                      </a>
-                    </li>
-                    <li>
-                      <a href="privado.php?c=correo&a=verinf">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Ult. Informe de correo
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-              <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Excel<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="privado.php?c=excel&a=cargarmedidor">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Importar Excel medidor
-                      </a>
-                    </li>
-                    <li>
-                      <a href="privado.php?c=excel&a=listarinfmedidores">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Informes Medidor Excel
-                      </a>
-                    </li>
-                    <li>
-                      <a href="privado.php?c=excel&a=cargarempresa">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Importar Excel Empresa
-                      </a>
-                    </li>
-                  </ul>
-                </li>  
               </ul>
               
               <ul class="nav navbar-nav navbar-right">
@@ -195,7 +193,7 @@
         <div id="contenedor">{% block contenedor %}{% endblock %}</div>
         <div class="footer">
             {% block footer %}
-                <div class="panel-footer pie">Sistema de gestión Cámara Económica Tres Arroyos</div>
+                <div class="panel-footer pie">Sistema de Gestión de Asociados a la Cámara Económica de Tres Arroyos</div>
             {% endblock %}
         </div>
     </body>

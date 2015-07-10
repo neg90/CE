@@ -4,44 +4,38 @@
 {% block contenedor %}{{id}}
 
  
-  <div class="row fila-de-titulo">
-    <div class=" col-lg-4"></div>
-    <div class=" col-lg-4">
-      <h3> Detalle de carga de medidor</h3>
-    </div>
-  </div>
-  <div class="clearfix"></div>
+    <div class="clearfix"></div>
   <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-6">
       <div class="panel panel-primary ">
           <div class="panel-heading">
-            <h3 class="panel-title">Numeros del informe</h3>
+            <h3 class="panel-title">Detalle de Importacion de Excel</h3>
           </div>
           <div class="panel-body">
              <div class="row inf" >
                 <h5> Total de registros leidos: {{totalRegistros}} </h5> 
               </div>
               <div class="row inf" >
-                <h5> Total de registros que fallados: {{registroNoInsertado}} </h5> 
+                <h5> Total de registros que fallaron: {{registroNoInsertado}} </h5> 
               </div>
               <div class="row inf">
-                <h5> Total de Abonados en CELTA insertados: {{medidorInsertado}} </h5> 
+                <h5> Total de Medidores de CELTA nuevos: {{medidorInsertado}} </h5> 
               </div>
               <div class="row inf">
-                <h5> Total de Abonados en CELTA actualizados: {{medidorActualizado}} </h5> 
+                <h5> Total de Medidores de CELTA actualizados: {{medidorActualizado}} </h5> 
               </div>
               <div class="row inf ">
                 <h5> Total de empresas actualizadas: {{empresaActualizada}}</h5>
              </div>
              <div class="row inf ">
-                <h5> La cantida de relaciones creadas entre abonado CELTA y empresa es: {{relacionInsertada}}</h5>
+                <h5> Cantidad de relaciones creadas entre Medidores de CELTA y Asociados: {{relacionInsertada}}</h5>
               </div>
               <div class="row inf ">
-                <h5> Abonados CELTA sin empresa insertados: {{medidorSinEmpresaInsertado}}</h5>
+                <h5> Medidores de CELTA sin Asociado insertados: {{medidorSinEmpresaInsertado}}</h5>
               </div>
               <div class="row inf ">
-                <h5> Abonados CELTA sin empresa actualizados: {{medidorSinEmpresaActualizado}}</h5>
+                <h5> Medidores de CELTA sin Asociado actualizados: {{medidorSinEmpresaActualizado}}</h5>
               </div>
              <div class="row inf">
                 <h5> Informe generado: {{fecha}}</h5>
@@ -54,7 +48,7 @@
     <div class="row fila-de-titulo">
       <div class=" col-lg-1"></div>
       <div class=" col-lg-10">
-        <h4> Informe detallado de regsitros que no se pudieron cargar</h4>
+        <h4> Informe detallado de registros que no se pudieron cargar</h4>
       </div>
     </div>
   </div>
@@ -73,7 +67,7 @@
         {% if fallados == null %}
           <tr>
             <td colspan="6">
-              Todos los registros del archivo exel fueron procesados 
+              Todos los registros del archivo excel fueron procesados 
             </td>
           </tr>
         {% else %}

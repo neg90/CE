@@ -4,19 +4,13 @@
 {% block contenedor %}{{id}}
 
  
-  <div class="row fila-de-titulo">
-    <div class=" col-lg-4"></div>
-    <div class=" col-lg-4">
-      <h3> Detalle de envio de correos</h3>
-    </div>
-  </div>
   <div class="clearfix"></div>
   <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-6">
       <div class="panel panel-primary ">
           <div class="panel-heading">
-            <h3 class="panel-title">Numeros del informe</h3>
+            <h3 class="panel-title">Detalle de envio de correos</h3>
           </div>
           <div class="panel-body">
              <div class="row inf" >
@@ -32,23 +26,17 @@
                 <h5> Fueron enviados el dia: {{fecha}} </h5> 
               </div> 
               <div class="row inf">
-                <h5> El archivo enviado fue: {% if adjunto.name == '' %} No enviaste archivo{% else %}{{adjunto.name}}{% endif %}</h5> 
+                <h5> Asunto del correo: {{asunto}} </h5> 
+              </div>
+              <div class="row inf">
+                <h5> El archivo adjunto fue: {% if adjunto.name == '' %} No enviaste archivo{% else %}{{adjunto.name}}{% endif %}</h5> 
             </div>         
           </div>
         </div>
   </div>
   </div>
-   <h5><strong>Asunto del correo: </strong></h5> 
-  <div class="row">
 
-    {{asunto}}
-  </div>
-  <h5><strong>Cuerpo del correo:</strong> </h5> 
-  <div class="row">
-      {% autoescape 'html' %}
-         {{cuerpo|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-      {% endautoescape %}
-  </div>
+
   <div class="row">
     <div class="row fila-de-titulo">
       <div class=" col-lg-1"></div>
