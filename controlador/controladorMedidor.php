@@ -124,9 +124,13 @@ class controladorMedidor {
 					$datoFiltro=htmlEntities($_POST['dato']);
 			}
 
-			if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
+			/* if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
 			elseif ((isset($tipoFiltro))!='sinempresa') {
 				header('Location:privado.php?c=medidor&a=listar');
+			}*/
+
+			if (isset($_POST['datoActivo'])){
+				$datoFiltro=htmlEntities($_POST['datoActivo']);
 			}
 
 			//statusActivo es 2 si se ven Activos e Inactivos
@@ -156,6 +160,9 @@ class controladorMedidor {
 				case 'nada':
 					$ListaMedidores=PDOMedidor::listarMedidores();
 					break;
+				case 'activo':
+					$ListaMedidores=PDOMedidor::filtroActivo($datoFiltro);
+				break;
 			}
 
 			$medidoresempresa = PDOmedidorempresa::listar();

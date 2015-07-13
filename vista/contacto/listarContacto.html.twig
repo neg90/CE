@@ -7,7 +7,8 @@ $(document).ready(function() {
   /* Filtros */
      $("#dato").css("display", "none");
      $("#EnviarFiltro").css("display", "none");
-     $("#asociados").css("display", "none");  
+     $("#asociados").css("display", "none");
+     $("#activo").css("display", "none"); 
      $('#datoAsociado').on('change',function(){
         var valor = $(this).val();
         document.getElementById('datoTexto').value=valor;
@@ -24,6 +25,7 @@ $(document).ready(function() {
          case "Nombre y/o Apellido":
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
+          $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           $("#asociados").css("display", "none");
           document.getElementById('tipoFiltro').value = 'nomyap';
@@ -32,6 +34,7 @@ $(document).ready(function() {
          case "Telefono":
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: 2983401234");
+          $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           $("#asociados").css("display", "none");
           document.getElementById('tipoFiltro').value = 'telefono';
@@ -40,6 +43,7 @@ $(document).ready(function() {
          case "Documento":
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: 35252252");
+          $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           $("#asociados").css("display", "none");
           document.getElementById('tipoFiltro').value = 'documento';
@@ -48,6 +52,7 @@ $(document).ready(function() {
          case "Correo":
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "ejemplo@ejemplo.com");
+          $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           $("#asociados").css("display", "none");
           document.getElementById('tipoFiltro').value = 'correo';
@@ -56,9 +61,20 @@ $(document).ready(function() {
          case "Asociados a SM":
           $("#dato").css("display", "none");
           $("#asociados").css("display", "inline-block");
+          $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           document.getElementById('tipoFiltro').value = 'asociadossm';
             break;
+
+          case "Activo":
+          $("#dato").css("display", "none");
+          $("#criterio").css("display", "none");
+          $("#activo").css("display","inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: 10");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'activo';
+            break;  
+
         }
     }
 
@@ -146,9 +162,18 @@ $(document).ready(function() {
                 <option>Telefono</option>
                 <option>Correo</option>
                 <option>Asociados a SM</option>
+                <option>Activo</option>
               </select>
               </form>
           </div>
+          <div id="activo" class="none">
+                  <select name="datoActivo" id="datoActivo" class="form-control">
+                      <option value="0" selected>Seleccione</option>
+                      <option value="1">Sólo Activos</option>
+                      <option value="2">Sólo Inactivos</option>
+                  </select>
+
+              </div>
           <div id="dato">
                             <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
           </div>
@@ -175,6 +200,12 @@ $(document).ready(function() {
               {% set tipoFiltro = 'Nombre/Apellido' %}
           {% elseif tipoFiltro == 'asociadossm' %}
               {% set tipoFiltro = '' %}
+          {% elseif tipoFiltro == 'activo' %}
+              {% if datoFiltro == '1' %}
+                  {% set datoFiltro='Sólo activos'%}
+              {% else %}
+                  {% set datoFiltro='Sólo inactivos'%}
+              {% endif %}
           {% endif %}
 
             <span>Filtrando resultados para {{tipoFiltro}} 
@@ -188,7 +219,7 @@ $(document).ready(function() {
             </span>
           </div>            
           <div class="col-lg-2">
-            <a href="privado.php?c=contacto&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+            <a href="privado.php?c=contacto&a=listar&pagina=1" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
               Quitar filtro
           </a>
         </div>

@@ -7,6 +7,7 @@
 $(document).ready(function() {
 	/* Filtros */
      $("#dato").css("display", "none");
+     $("#activo").css("display", "none");
      $("#EnviarFiltro").css("display", "none");
 });
 
@@ -21,6 +22,7 @@ $(document).ready(function() {
          case "Nombre y/o Apellido":
          	$("#dato").css("display", "inline-block");
          	$("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
+          $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'nomyap';
             break;
@@ -28,6 +30,7 @@ $(document).ready(function() {
          case "Telefono":
          	$("#dato").css("display", "inline-block");
          	$("#datoTexto").attr("placeholder", "Ej.: 2983401234");
+          $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'telefono';
             break;
@@ -35,6 +38,7 @@ $(document).ready(function() {
          case "Domicilio":
          	$("#dato").css("display", "inline-block");
          	$("#datoTexto").attr("placeholder", "Ej.: Azcuénaga 123");
+          $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'domicilio';
             break;
@@ -42,6 +46,7 @@ $(document).ready(function() {
          case "Empresa":
          	$("#dato").css("display", "inline-block");
          	$("#datoTexto").attr("placeholder", "Nombre de empresa");
+          $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'empresa';
          	alert('Falta implementarlo!');
@@ -50,6 +55,7 @@ $(document).ready(function() {
          case "Num. Usuario":
          	$("#dato").css("display", "inline-block");
          	$("#datoTexto").attr("placeholder", "Ej.: 000365");
+          $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'numusuario';
             break;
@@ -57,6 +63,7 @@ $(document).ready(function() {
          case "Num. Suministro":
          	$("#dato").css("display", "inline-block");
          	$("#datoTexto").attr("placeholder", "Ej.: 000365");
+          $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'numsuministro';
             break;
@@ -64,9 +71,19 @@ $(document).ready(function() {
           case "Sin empresa asignada":
           $("#dato").css("display", "none");
           $("#datoTexto").attr("placeholder", " ");
+          $("#activo").css("display","none");
           $("#EnviarFiltro").css("display", "inline-block");
           document.getElementById('tipoFiltro').value = 'sinempresa';
-            break;            
+            break;
+
+          case "Activo":
+          $("#dato").css("display", "none");
+          $("#criterio").css("display", "none");
+          $("#activo").css("display","inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: 10");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'activo';
+            break;              
 
         }
     }
@@ -165,9 +182,18 @@ $(document).ready(function() {
 				  			<option>Num. Usuario</option>
 				  			<option>Num. Suministro</option>
                 <option>Sin empresa asignada</option>
+                <option>Activo</option>
 				  		</select>
 				  		</form>
 				  </div>
+          <div id="activo" class="none">
+                  <select name="datoActivo" id="datoActivo" class="form-control">
+                      <option value="0" selected>Seleccione</option>
+                      <option value="1">Sólo Activos</option>
+                      <option value="2">Sólo Inactivos</option>
+                  </select>
+
+              </div>
 				  <div id="dato">
 		                        <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
 		          </div>
@@ -192,11 +218,17 @@ $(document).ready(function() {
                 {% set tipoFiltro = 'número de usuario' %}
             {% elseif tipoFiltro == 'numsuministro' %}
                 {% set tipoFiltro = 'número de suministro' %}
+            {% elseif tipoFiltro == 'activo' %}
+              {% if datoFiltro == '1' %}
+                  {% set datoFiltro='Sólo activos'%}
+              {% else %}
+                  {% set datoFiltro='Sólo inactivos'%}
+              {% endif %}
             {% endif %}
         		<span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
         	</div>        		
         	<div class="col-lg-2">
-	        	<a href="privado.php?c=medidor&a=listar" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+	        	<a href="privado.php?c=medidor&a=listar&pagina=1" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
 			  			Quitar filtro
 			  	</a>
 		  	</div>

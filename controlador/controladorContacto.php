@@ -234,7 +234,7 @@ class controladorContacto {
 
 	}
 
-	static function Filtros($tipoFiltro,$datoFiltro){
+	static function Filtros($tipoFiltro){
 			$user=$_SESSION['user'];
 			Twig_Autoloader::register();
 			$loader = new Twig_Loader_Filesystem('../vista');
@@ -242,6 +242,17 @@ class controladorContacto {
 			//'cache' => '../cache','
 			'debug' => 'false'
 			));
+
+			if (!isset($_POST['dato'])) $datoFiltro=null;
+
+			if (isset($_POST['dato'])){
+									if (!empty($_POST['dato']))
+										$datoFiltro=htmlEntities($_POST['dato']);
+			}
+
+			if (isset($_POST['datoActivo'])){
+				$datoFiltro=htmlEntities($_POST['datoActivo']);
+			}
 
 			//statusActivo es 2 si se ven Activos e Inactivos
 			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
@@ -263,6 +274,9 @@ class controladorContacto {
 				case 'nada':
 					$contactos = PDOContacto::listar();
 					break;
+				case 'activo':
+					$contactos=PDOContacto::filtroActivo($datoFiltro);
+				break;
 			}
 
 			//Si está filtrando la tabla, es 1.

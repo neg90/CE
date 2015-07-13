@@ -129,6 +129,20 @@ class PDOcontacto extends contacto{
       
    }
 
+   public static function filtroActivo($datoActivo){
+      if ($datoActivo=='2') $datoActivo=0;
+
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM contacto WHERE activo = :datoActivo");
+      $consulta->bindParam(':datoActivo',$datoActivo);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
    public static function filtroNomyAp($NomyAp){
       try{
          $conexion=new conexion; //creo la instancia de la conexión

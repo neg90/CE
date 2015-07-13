@@ -137,12 +137,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						}
 						else $tipoFiltro='nada';
 
-						if (isset($_POST['dato'])){
-									if (!empty($_POST['dato']))
-										$datoFiltro=htmlEntities($_POST['dato']);
-						}
-
-						if ((isset($tipoFiltro)) and (isset($datoFiltro)))  controladorContacto::Filtros($tipoFiltro,$datoFiltro);
+						if (isset($tipoFiltro))  controladorContacto::Filtros($tipoFiltro);
 						else {
 							$pag=htmlEntities(@$_GET['pagina']);
 							controladorContacto::listar($pag);

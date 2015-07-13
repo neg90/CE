@@ -114,8 +114,8 @@ li a span{font-size:11px; margin-right:5px; margin-left:-10px;}
 #referenciasRol{ margin-bottom:30px;}
 .tituloRol {font-weight: bold; color:#666;}
 
-.activoSI{background-color:#45B500; color:white; font-weight:bold}
-.activoNO{background-color:red; color:white; font-weight:bold}
+.activoSI{background-color:#45B500!important; color:white!important; font-weight:bold!important}
+.activoNO{background-color:red!important; color:white!important; font-weight:bold!important}
 
 hr{border:1px solid #ccc;}
 
@@ -133,7 +133,7 @@ hr{border:1px solid #ccc;}
 
 #formBotonesTop{display: inline-block; float:right;margin-top: -44px;}
 #form_herramientas_empresa, #form_herramientas_usuario, #form_herramientas_contacto,
-#form_herramientas_medidor {width: 640px; margin: 0px; display: inline-block; float: left;}
+#form_herramientas_medidor, #form_herramientas_abonado {width: 640px; margin: 0px; display: inline-block; float: left;}
 
 .filtrandoresultados{margin-bottom:12px!important;}
 

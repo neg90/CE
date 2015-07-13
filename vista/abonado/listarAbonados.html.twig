@@ -3,6 +3,69 @@
 {% block title %} Lista de Contactos {% endblock %}
 {% block contenedor %}
 
+<script>
+$(document).ready(function() {
+  /* Filtros */
+     $("#dato").css("display", "none");
+     $("#criterio").css("display", "none");
+     $("#activo").css("display", "none");
+     $("#EnviarFiltro").css("display", "none");
+
+     $('#datoCriterio').on('change',function(){
+      var valor = $(this).val();
+      if (valor != '0') {$("#EnviarFiltro").css("display", "inline-block");
+                         $("#dato").css("display", "inline-block");}
+      else {$("#EnviarFiltro").css("display", "none");
+            $("#dato").css("display", "none");}
+      });
+});
+
+
+  function getval(sel) {
+       switch (sel.value) {
+         case "Todos":
+            location.reload();
+            break;
+
+         case "Num. Abonado":
+          $("#dato").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: 0001");
+          $("#activo").css("display", "none");
+          $("#criterio").css("display", "none"); 
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'numabonado';
+            break;
+
+         case "Empresa":
+          $("#dato").css("display", "inline-block");
+          $("#datoTexto").attr("placeholder", "Ej.: Nombre Empresa");
+          $("#criterio").css("display", "none");
+          $("#activo").css("display", "none"); 
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'empresa';
+            break;
+
+          case "Importe":
+          $("#dato").css("display", "none");
+          $("#criterio").css("display", "inline-block");
+          $("#activo").css("display","none");
+          $("#datoTexto").attr("placeholder", "Ej.: 87");
+          $("#EnviarFiltro").css("display", "none");
+          document.getElementById('tipoFiltro').value = 'importe';
+            break; 
+
+          case "Activo":
+          $("#dato").css("display", "none");
+          $("#criterio").css("display", "none");
+          $("#activo").css("display","inline-block");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'activo';
+            break;  
+
+        }
+    }
+
+</script>
 
 <h3 id="tituloBloque">Listado de Abonados en CE</h3>
 <div class="clearfix"></div>
@@ -56,6 +119,91 @@
     </div>
   </div>
 
+  <div class="clearfix"></div>
+  {% if filtroActivo == 0 %}
+      <form method="POST" action="privado.php?c=abonado&a=filtro" id="form_herramientas_abonado">
+      <div id="herramientasTop" class="inline-block">
+          <div class="accionActivoparent inline-block">
+
+                <!--
+                  <input type="hidden" name="datoActivo" id="datoActivo" value="{{statusActivo}}">
+                -->
+                <input type="hidden" name="tipoFiltro" id="tipoFiltro">
+
+                <!--
+                  <a href="#" onclick="cambiarActivo();document.getElementById('form_herramientas_usuario').submit();" class="left inline-block">
+                  <span id="accionActivo" class="label label-default">Activos e Inactivos</span>
+                </a>
+                -->
+          </div>
+          <div id="filtroPor" class="inline-block">
+              <span> 
+                <b>Filtrar por:</b>
+              </span>
+                  <select class="form-control" onchange="getval(this);">
+                    <option selected>Todos</option>
+                    <option>Num. Abonado</option>
+                    <option>Empresa</option>
+                    <option>Importe</option>
+                    <option>Activo</option>
+                  </select>
+          </div>
+
+              <div id="criterio" class="none">
+                  <select name="datoCriterio" id="datoCriterio" class="form-control">
+                      <option value="0" selected>Seleccione</option>
+                      <option value="1">Mayor a</option>
+                      <option value="2">Igual a</option>
+                      <option value="3">Menor a</option>
+                  </select>
+
+              </div>
+
+              <div id="activo" class="none">
+                  <select name="datoActivo" id="datoActivo" class="form-control">
+                      <option value="0" selected>Seleccione</option>
+                      <option value="1">Sólo Activos</option>
+                      <option value="2">Sólo Inactivos</option>
+                  </select>
+
+              </div>
+
+              <div id="dato">
+                            <input id="datoTexto" class="form-control" pattern="[a-zA-Z0-9ñÑá-úÁ-Úä-üÄ-Ü ]+" type="text" name="dato">
+              </div>
+              <button id="EnviarFiltro" class="btn btn-default" onclick="document.getElementById('form_herramientas_abonado').submit();">Enviar</button>
+        </div>
+        </form>
+    {% else %}
+          <div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
+           {% if tipoFiltro == 'activo' %}
+              {% if datoFiltro == '1' %}
+                  {% set datoFiltro='Sólo activos'%}
+              {% else %}
+                  {% set datoFiltro='Sólo inactivos'%}
+              {% endif %}
+           {% endif %}
+            <span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
+          </div>            
+          <div class="col-lg-2">
+            <a href="privado.php?c=abonado&a=listar&pagina=1" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">
+              Quitar filtro
+          </a>
+        </div>
+    {% endif %}
+    <form id="enviarPDF" class="inline-block" action="privado.php?c=abonado&a=pdf" method="POST">
+            <input type="hidden" id="datosPDF" name="datosPDF" value="{{ abonado|json_encode() }}"/>
+    </form>   
+  <form class="form-horizontal" action="privado.php?c=correo&a=mostrar" role="form" method="POST" id="formBotonesTop">
+          <div id="botonesTop" class="block right">
+              {% if abonado is null %}
+                {% else %}
+                   <a href="privado.php?c=abonado&a=listar&pagina=1" target="_blank" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+                       Ver en PDF
+                   </a>
+                {% endif %}
+        </div>
+  </form>
   <table class="table table-hover">
   <thead>
     <tr>
@@ -88,7 +236,7 @@
         </td>
         <td>
           {% autoescape 'html' %}
-            {{item.importe}} {{item.documento|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+            ${{item.importe}} {{item.documento|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
           {% endautoescape %}
         </td>
         <td>

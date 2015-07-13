@@ -13,6 +13,91 @@
 	//0->No mostrar mensaje, es solo carga del formulario.
 class controladorAbonado {
 
+
+	public static function filtros(){
+		$user=$_SESSION['user'];
+
+		/* FILTROS USUARIOS*/
+		if (isset($_POST['tipoFiltro'])){
+				if (!empty($_POST['tipoFiltro']))
+					$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
+		}
+
+		if (isset($_POST['dato'])){
+			if (!empty($_POST['dato'])){
+							$datoFiltro=htmlEntities($_POST['dato']);
+			}
+		}
+
+		if (isset($_POST['datoCriterio'])){
+			$criterio=htmlEntities($_POST['datoCriterio']);
+		}
+		
+		if (isset($_POST['datoActivo'])){
+			$datoFiltro=htmlEntities($_POST['datoActivo']);
+		}
+
+
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
+		$categorias = PDOcategoria::listar();
+		//$empresas = PDOempresa::listar();
+
+		switch($tipoFiltro){
+			case 'numabonado':
+				$a=PDOabonado::filtroNumabonado($datoFiltro);
+				break;
+
+			case 'cuit':
+				$empresas=PDOempresa::filtroCUIT($datoFiltro);
+				break;
+
+			case 'cantempleados':
+				$empresas=PDOempresa::filtroCantempleados($datoFiltro);
+				break;	
+
+			case 'importe':
+				$empresas=PDOempresa::filtroImporte($criterio,$datoFiltro);
+				break;
+
+			case 'rubro':
+				$rubros=PDOrubro::filtroRubro($datoFiltro);
+				$empresas=PDOempresa::filtroRubro($rubros);
+				break;
+
+			case 'categoria':
+				$cats=PDOcategoria::filtroCategoria($datoFiltro);
+				$empresas=PDOempresa::filtroCategoria($cats);
+				break;
+
+			case 'activo':
+				$empresas=PDOempresa::filtroActivo($datoFiltro);
+				break;
+		}
+
+		$rubros = PDOrubro::listar();
+		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
+		$contactos = PDOContacto::listar();
+		$abonados = PDOabonado::listar();
+		$medidores = PDOMedidor::listarMedidores();
+		$arrayVista[0] = '';
+		if (count($empresas)>0){
+				foreach ($empresas as $empresa) { 
+					$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresa->idempresa);
+					$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresa->idempresa);
+					$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresa->idempresa);
+					$arrayUnario = array('idempresa'=>$empresa->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
+					$arrayVista[$empresa->idempresa] = $arrayUnario;
+				}
+		}
+		$filtroActivo=1;
+		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
+		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
+		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro,'datoFiltro'=>$datoFiltro));
+	}
+
+
 	static function alta($idempresa){
 		$user=$_SESSION['user'];
 		
