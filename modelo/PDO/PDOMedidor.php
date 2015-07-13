@@ -144,6 +144,8 @@ class PDOMedidor extends medidor{
          $consulta->bindParam(':activo', $this->getActivo());
          $consulta->bindParam(':fechadeultimopago',$this->getFechadeultimopago());
          $consulta->execute();
+         $objeto = $consulta->fetch();
+         return $objeto;
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          $consulta = $conexion->prepare('INSERT INTO medidor (nomyap, telefono, domicilio, importepago, numusuario, numsuministro, activo,fechadeultimopago) 

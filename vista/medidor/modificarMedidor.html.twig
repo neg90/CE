@@ -37,15 +37,15 @@ function cambiarActivo(nuevoActivo){
 				 <div class=" col-lg-4">
 				 	{% if aviso is null %}
 				 	{% else %}
-				 		{% if tipoAviso == 'exito' %}
+				 		{% if aviso == 2 %}
 				 		<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				  {{aviso}}
+		    				  Perfecto! el titular del medidor fue modificado correctamente
 	  					</div>
-	  					{% elseif tipoAviso == 'error' %}
+	  					{% elseif aviso == 1 %}
 	  						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				  {{aviso}}
+		    				  Error! no se pudo modificar el titular del medidor
 	  					</div>
 	  					{% endif %}
   					{% endif %}

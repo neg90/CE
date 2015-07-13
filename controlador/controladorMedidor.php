@@ -375,10 +375,14 @@ class controladorMedidor {
 			$unaEmpresa->setImportemensual($importe);
 			$unaEmpresa->guardar();
 
-			$unMedidor->guardar();
+			if ($unMedidor->guardar()) {
+				$aviso = 1;
+			}else{
+				$aviso = 2;
+			}
 
 			$template = $twig->loadTemplate('medidor/modificarMedidor.html.twig');
-			echo $template->render(array('unMedidor'=>$unMedidor,'user'=>$user));
+			echo $template->render(array('aviso'=>$aviso,'unMedidor'=>$unMedidor,'user'=>$user));
 		
 		}else{
 			
