@@ -188,3 +188,7 @@ hr{border:1px solid #ccc;}
 .inf{text-align:center!important;}
 
 .footer{clear:both;}
+
+
+/* FALTA CENTRAR PAGINACIONES */
+.paginacionGeneral, .paginacionGeneral ul{margin: 0 auto;}
