@@ -101,7 +101,12 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					}
 				}elseif ($accion=='altaNormal') {
 					controladorAbonado::altaNormal();
+				}elseif ($accion == 'filtro') {
+					controladorAbonado::Filtros();
 				}
+				elseif($accion == 'pdf') //PDF Usuarios
+						controladorAbonado::pdfAbonado();
+
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
 				if($accion == 'alta'){

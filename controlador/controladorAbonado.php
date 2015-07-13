@@ -17,84 +17,72 @@ class controladorAbonado {
 	public static function filtros(){
 		$user=$_SESSION['user'];
 
-		/* FILTROS USUARIOS*/
 		if (isset($_POST['tipoFiltro'])){
 				if (!empty($_POST['tipoFiltro']))
 					$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
 		}
 
 		if (isset($_POST['dato'])){
-			if (!empty($_POST['dato'])){
-							$datoFiltro=htmlEntities($_POST['dato']);
+			if ($tipoFiltro == 'activo'){
+						$datoFiltro=htmlEntities($_POST['datoActivo']);
+			}
+			elseif (!empty($_POST['dato'])){
+					$datoFiltro=htmlEntities($_POST['dato']);
 			}
 		}
 
 		if (isset($_POST['datoCriterio'])){
 			$criterio=htmlEntities($_POST['datoCriterio']);
 		}
-		
-		if (isset($_POST['datoActivo'])){
-			$datoFiltro=htmlEntities($_POST['datoActivo']);
-		}
 
 
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
-		$categorias = PDOcategoria::listar();
-		//$empresas = PDOempresa::listar();
 
 		switch($tipoFiltro){
 			case 'numabonado':
-				$a=PDOabonado::filtroNumabonado($datoFiltro);
+				$abonado=PDOabonado::filtroNumabonado($datoFiltro);
 				break;
 
-			case 'cuit':
-				$empresas=PDOempresa::filtroCUIT($datoFiltro);
+			case 'empresa':
+				$abonado=PDOabonado::filtroEmpresa($datoFiltro);
 				break;
-
-			case 'cantempleados':
-				$empresas=PDOempresa::filtroCantempleados($datoFiltro);
-				break;	
 
 			case 'importe':
-				$empresas=PDOempresa::filtroImporte($criterio,$datoFiltro);
-				break;
-
-			case 'rubro':
-				$rubros=PDOrubro::filtroRubro($datoFiltro);
-				$empresas=PDOempresa::filtroRubro($rubros);
-				break;
-
-			case 'categoria':
-				$cats=PDOcategoria::filtroCategoria($datoFiltro);
-				$empresas=PDOempresa::filtroCategoria($cats);
+				$abonado=PDOabonado::filtroImporte($criterio,$datoFiltro);
 				break;
 
 			case 'activo':
-				$empresas=PDOempresa::filtroActivo($datoFiltro);
+				$abonado=PDOabonado::filtroActivo($datoFiltro);
 				break;
 		}
 
-		$rubros = PDOrubro::listar();
-		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
-		$contactos = PDOContacto::listar();
-		$abonados = PDOabonado::listar();
-		$medidores = PDOMedidor::listarMedidores();
-		$arrayVista[0] = '';
-		if (count($empresas)>0){
-				foreach ($empresas as $empresa) { 
-					$contactosRelacionados = PDOcontactoempresa::buscarContactosRelacionados($empresa->idempresa);
-					$medidordeEmpresa = PDOmedidorempresa::buscarMedidorRelacionados($empresa->idempresa);
-					$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($empresa->idempresa);
-					$arrayUnario = array('idempresa'=>$empresa->idempresa,'contactos'=>$contactosRelacionados,'medidor'=>$medidordeEmpresa,'abonado'=>$unAbonadoRelacionado);
-					$arrayVista[$empresa->idempresa] = $arrayUnario;
-				}
-		}
 		$filtroActivo=1;
-		$template = $twig->loadTemplate('empresa/listarEmpresa.html.twig');
-		echo $template->render(array('empresas'=>$empresas,'rubros'=>$rubros,'categorias'=>$categorias,'contactos'=>$contactos,
-		'medidores'=>$medidores,'arrayVista'=>$arrayVista,'abonados'=>$abonados,'user'=>$user, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro,'datoFiltro'=>$datoFiltro));
+
+		$abonadoempresas = PDOabonadoempresa::listar();
+		$arayVista = '';
+		for ($i=0; $i < count($abonadoempresas); $i++) { 
+			$denominasao = PDOempresa::buscarEmpresa($abonadoempresas[$i]->idempresa);
+			$arrayUnario = array ('numabonado'=>$abonadoempresas[$i]->numabonado,'denominacion'=>$denominasao->getDenominacion());
+			$arayVista[$i] = $arrayUnario;
+		}
+
+		$empresas = PDOempresa::listar();
+
+		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
+		echo $template->render(array('user'=>$user,'abonado'=>$abonado,
+		'empresas'=>$empresas,'relacion'=>$arayVista,'abonado'=>$abonado,'user'=>$user, 'filtroActivo'=>$filtroActivo, 'tipoFiltro'=>$tipoFiltro,'datoFiltro'=>$datoFiltro));
+
+		/*
+		
+		$empresas = PDOempresa::listar();
+		$template = $twig->loadTemplate('abonado/listarAbonados.html.twig');
+		echo $template->render(array('pag'=>$pag,'paginaBaja'=>$paginaBaja,'actual'=>$actual,'cantMostrar'=>$cantMostrar,
+		'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,'user'=>$user,'abonado'=>$abonado,
+		'empresas'=>$empresas,'relacion'=>$arayVista));
+
+		*/
 	}
 
 

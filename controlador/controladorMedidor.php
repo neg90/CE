@@ -120,18 +120,18 @@ class controladorMedidor {
 			}
 
 			if (isset($_POST['dato'])){
-				if (!empty($_POST['dato']))
+			if ($tipoFiltro == 'activo'){
+						$datoFiltro=htmlEntities($_POST['datoActivo']);
+			}
+			elseif (!empty($_POST['dato'])){
 					$datoFiltro=htmlEntities($_POST['dato']);
 			}
+		}
 
 			/* if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
 			elseif ((isset($tipoFiltro))!='sinempresa') {
 				header('Location:privado.php?c=medidor&a=listar');
 			}*/
-
-			if (isset($_POST['datoActivo'])){
-				$datoFiltro=htmlEntities($_POST['datoActivo']);
-			}
 
 			//statusActivo es 2 si se ven Activos e Inactivos
 			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO

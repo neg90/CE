@@ -135,7 +135,11 @@ hr{border:1px solid #ccc;}
 #form_herramientas_empresa, #form_herramientas_usuario, #form_herramientas_contacto,
 #form_herramientas_medidor, #form_herramientas_abonado {width: 640px; margin: 0px; display: inline-block; float: left;}
 
+#form_herramientas_abonado{width:740px;}
+
 .filtrandoresultados{margin-bottom:12px!important;}
+
+.verPdfboton#formBotonesTop{margin-top:-14px!important;}
 
 .inline-block{display:inline-block!important;}
 .block{display:block!important;}

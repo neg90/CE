@@ -116,6 +116,21 @@ class PDOMedidor extends medidor{
       return $objeto;
    }
 
+   public static function filtroEmpresa($datoFiltro){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+
+      $consulta = $conexion->prepare("SELECT * FROM medidor WHERE idmedidor IN 
+                                       ( SELECT idmedidor from medidorempresa WHERE idempresa IN
+                                          (SELECT idempresa FROM empresa WHERE denominacion LIKE concat('%',:datoFiltro,'%')))");
+      $consulta->bindParam(':datoFiltro',$datoFiltro);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;
+   } 
 
    /* FIN FILTROS */
 	

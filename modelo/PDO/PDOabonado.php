@@ -11,6 +11,69 @@ class PDOabonado extends abonado{
 		parent::__construct($numabonado,$importe,$fechadeultimopago,$activo);
 	}
 
+   public static function filtroNumabonado($numabonado){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM abonado WHERE numabonado = :numabonado");
+      $consulta->bindParam(':numabonado',$numabonado);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
+   public static function filtroImporte($crit,$importe){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+
+      $crit = htmlentities($crit);
+
+      if ($crit == 1) $criterio = '>';
+      elseif ($crit == 2) $criterio = '=';
+      else $criterio = '<';
+
+      $consulta = $conexion->prepare("SELECT * FROM abonado WHERE importe ".$criterio. ":importe");
+      $consulta->bindParam(':importe',$importe);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   } 
+
+   public static function filtroActivo($datoActivo){
+      if ($datoActivo=='2') $datoActivo=0;
+
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+      $consulta = $conexion->prepare("SELECT * FROM abonado WHERE activo = :datoActivo");
+      $consulta->bindParam(':datoActivo',$datoActivo);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }  
+
+
+   public static function filtroEmpresa($datoFiltro){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+
+      $consulta = $conexion->prepare("SELECT * FROM abonado WHERE numabonado IN 
+                                       ( SELECT numabonado from abonadoempresa WHERE idempresa IN
+                                          (SELECT idempresa FROM empresa WHERE denominacion LIKE concat('%',:datoFiltro,'%')))");
+      $consulta->bindParam(':datoFiltro',$datoFiltro);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;
+   } 
+
+
    public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}
       

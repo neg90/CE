@@ -194,16 +194,16 @@ $(document).ready(function() {
     <form id="enviarPDF" class="inline-block" action="privado.php?c=abonado&a=pdf" method="POST">
             <input type="hidden" id="datosPDF" name="datosPDF" value="{{ abonado|json_encode() }}"/>
     </form>   
-  <form class="form-horizontal" action="privado.php?c=correo&a=mostrar" role="form" method="POST" id="formBotonesTop">
-          <div id="botonesTop" class="block right">
-              {% if abonado is null %}
-                {% else %}
-                   <a href="privado.php?c=abonado&a=listar&pagina=1" target="_blank" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
-                       Ver en PDF
-                   </a>
-                {% endif %}
-        </div>
-  </form>
+    <form class="form-horizontal verPdfboton" role="form" method="POST" id="formBotonesTop">
+            <div id="botonesTop" class="block right">
+                {% if abonado is null %}
+                  {% else %}
+                     <a href="privado.php?c=abonado&a=listar&pagina=1" target="_blank" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+                         Ver en PDF
+                     </a>
+                  {% endif %}
+          </div>
+    </form>
   <table class="table table-hover">
   <thead>
     <tr>

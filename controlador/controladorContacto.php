@@ -246,14 +246,13 @@ class controladorContacto {
 			if (!isset($_POST['dato'])) $datoFiltro=null;
 
 			if (isset($_POST['dato'])){
-									if (!empty($_POST['dato']))
-										$datoFiltro=htmlEntities($_POST['dato']);
+				if ($tipoFiltro == 'activo'){
+							$datoFiltro=htmlEntities($_POST['datoActivo']);
+				}
+				elseif (!empty($_POST['dato'])){
+						$datoFiltro=htmlEntities($_POST['dato']);
+				}
 			}
-
-			if (isset($_POST['datoActivo'])){
-				$datoFiltro=htmlEntities($_POST['datoActivo']);
-			}
-
 			//statusActivo es 2 si se ven Activos e Inactivos
 			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
 				case 'nomyap':

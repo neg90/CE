@@ -92,10 +92,14 @@ class controladorEmpresa {
 		}
 
 		if (isset($_POST['dato'])){
-			if (!empty($_POST['dato'])){
-							$datoFiltro=htmlEntities($_POST['dato']);
+			if ($tipoFiltro == 'activo'){
+						$datoFiltro=htmlEntities($_POST['datoActivo']);
+			}
+			elseif (!empty($_POST['dato'])){
+					$datoFiltro=htmlEntities($_POST['dato']);
 			}
 		}
+
 
 		/* if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
 		else header('Location:privado.php?c=empresa&a=listar'); */
@@ -104,9 +108,6 @@ class controladorEmpresa {
 			$criterio=htmlEntities($_POST['datoCriterio']);
 		}
 		
-		if (isset($_POST['datoActivo'])){
-			$datoFiltro=htmlEntities($_POST['datoActivo']);
-		}
 
 
 		Twig_Autoloader::register();
