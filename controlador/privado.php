@@ -140,7 +140,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 									if (!empty($_POST['tipoFiltro']))
 										$tipoFiltro=htmlEntities($_POST['tipoFiltro']);
 						}
-						else $tipoFiltro='nada';
+						//else $tipoFiltro='nada';
 
 						if (isset($tipoFiltro))  controladorContacto::Filtros($tipoFiltro);
 						else {
