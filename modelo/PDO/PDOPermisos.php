@@ -7,10 +7,10 @@ class PDOPermisos extends permisos{
 	
 
 	public function	__construct ($idpermiso,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,$umedidor,$dmedidor,$cci,$rci,$uci,$dci,
-	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol){
+	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol,$enviarcorreo,$cargarexcelmedidor,$verinfexcelmedidor,$verinfcorreo){
 		
 		parent::__construct($idpermiso,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,$umedidor,$dmedidor,$cci,$rci,$uci,$dci,
-	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol);
+	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol,$enviarcorreo,$cargarexcelmedidor,$verinfexcelmedidor,$verinfcorreo);
 	
 	}
    public static function traerPermiso($id){
@@ -56,7 +56,9 @@ class PDOPermisos extends permisos{
          cmedidor = :cmedidor, rmedidor = :rmedidor, umedidor = :umedidor, dmedidor = :dmedidor,
          cci = :cci, rci = :rci, uci = :uci, dci = :dci,
          crol = :crol, rrol = :rrol,urol = :urol, drol = :drol,
-         cusuario = :cusuario, rusuario = :rusuario, uusuario = :uusuario, dusuario = :dusuario WHERE idpermiso = :idpermiso');
+         cusuario = :cusuario, rusuario = :rusuario, uusuario = :uusuario, dusuario = :dusuario
+         enviarcorreo = :enviarcorreo, cargarexcelmedidor = :cargarexcelmedidor, verinfexcelmedidor = :verinfexcelmedidor 
+         verinfcorreo= :verinfcorreo WHERE idpermiso = :idpermiso');
          
          $consulta->bindParam(':csocio', $this->getCsocio());
          $consulta->bindParam(':rsocio', $this->getRsocio());
@@ -79,11 +81,18 @@ class PDOPermisos extends permisos{
          $consulta->bindParam(':uusuario', $this->getUusuario());
          $consulta->bindParam(':dusuario', $this->getDusuario());
          $consulta->bindParam(':idpermiso', $this->getIdpermiso());
+         $consulta->bindParam(':enviarcorreo', $this->getEnviarcorreo());
+         $consulta->bindParam(':cargarexcelmedidor', $this->getCargarexcelmedidor());
+         $consulta->bindParam(':verinfexcelmedidor', $this->getVerinfexcelmedidor());
+         $consulta->bindParam(':verinfcorreo', $this->getVerinfcorreo());
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
-         $consulta = $conexion->prepare('INSERT INTO permisos (csocio, rsocio, usocio, dsocio, cmedidor, rmedidor, umedidor, dmedidor, cci, rci, uci, dci, crol, rrol, urol, drol, cusuario, rusuario, uusuario, dusuario) 
-         VALUES(:csocio, :rsocio, :usocio, :dsocio, :cmedidor, :rmedidor, :umedidor, :dmedidor, :cci, :rci, :uci, :dci, :crol, :rrol, :urol, :drol, :cusuario, :rusuario, :uusuario, :dusuario)');         
+         $consulta = $conexion->prepare('INSERT INTO permisos (csocio, rsocio, usocio, dsocio, cmedidor, 
+         rmedidor, umedidor, dmedidor, cci, rci, uci, dci, crol, rrol, urol, drol, cusuario, rusuario, uusuario,dusuario,enviarcorreo,cargarexcelmedidor
+         verinfexcelmedidor,verinfcorreo) 
+         VALUES(:csocio, :rsocio, :usocio, :dsocio, :cmedidor, :rmedidor, :umedidor, :dmedidor, :cci, :rci, :uci, :dci, :crol, :rrol, 
+            :urol, :drol, :cusuario, :rusuario, :uusuario, :dusuario,:enviarcorreo,:cargarexcelmedidor,:verinfexcelmedidor,:verinfcorreo)');         
          
          $consulta->bindParam(':csocio', $this->getCsocio());
          $consulta->bindParam(':rsocio', $this->getRsocio());
@@ -105,6 +114,10 @@ class PDOPermisos extends permisos{
          $consulta->bindParam(':uusuario', $this->getRusuario());
          $consulta->bindParam(':rusuario', $this->getUusuario());
          $consulta->bindParam(':dusuario', $this->getDusuario());
+         $consulta->bindParam(':enviarcorreo', $this->getEnviarcorreo());
+         $consulta->bindParam(':cargarexcelmedidor', $this->getCargarexcelmedidor());
+         $consulta->bindParam(':verinfexcelmedidor', $this->getVerinfexcelmedidor());
+         $consulta->bindParam(':verinfcorreo', $this->getVerinfcorreo());
          $consulta->execute();
          
       }

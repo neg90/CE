@@ -102,7 +102,7 @@ class controladorRol {
 		  	if ($nombre_rol == $nombreActual){
 		  		$unPermiso = new PDOPermisos(null,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,
 			  								$umedidor,$dmedidor,$cci,$rci,$uci,$dci,$cusuario,$rusuario,
-			  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol);
+			  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,1,1,1,1);
 			  	$unPermiso->setIdpermiso($idpermiso);
 			  	$unPermiso->guardar();
 
@@ -119,7 +119,7 @@ class controladorRol {
 			  	if (empty(PDORol::existeRol($nombre_rol))){
 				  	$unPermiso = new PDOPermisos(null,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,
 				  								$umedidor,$dmedidor,$cci,$rci,$uci,$dci,$cusuario,$rusuario,
-				  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol);
+				  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,1,1,1,1);
 				  	$unPermiso->setIdpermiso($idpermiso);
 				  	$unPermiso->guardar();
 

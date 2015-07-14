@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.2.6deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-07-2015 a las 00:51:41
--- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
--- Versión de PHP: 5.5.9-1ubuntu4.9
+-- Tiempo de generación: 14-07-2015 a las 17:21:29
+-- Versión del servidor: 5.5.43-0ubuntu0.14.10.1
+-- Versión de PHP: 5.5.12-2ubuntu4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,16 +30,14 @@ CREATE TABLE IF NOT EXISTS `abonado` (
   `importe` double NOT NULL,
   `fechadeultimopago` date NOT NULL,
   `activo` tinyint(1) NOT NULL,
-  `numabonado` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`numabonado`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+`numabonado` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Volcado de datos para la tabla `abonado`
 --
 
 INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) VALUES
-(2, '2015-07-08', 1, 1),
 (5, '2015-07-07', 1, 2),
 (44, '2015-07-01', 1, 3),
 (5, '2015-07-07', 1, 4),
@@ -64,7 +62,6 @@ INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) V
 (44, '2015-07-01', 1, 23),
 (5, '2015-07-07', 1, 24),
 (44, '2015-07-01', 1, 25),
-(5, '2015-07-07', 1, 26),
 (44, '2015-07-01', 1, 27),
 (5, '2015-07-07', 1, 28),
 (44, '2015-07-01', 1, 29),
@@ -73,7 +70,18 @@ INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) V
 (35.22, '2015-07-02', 1, 32),
 (35.2, '2015-07-22', 1, 33),
 (2, '2015-07-16', 1, 34),
-(35.2, '2015-07-27', 1, 35);
+(35.2, '2015-07-27', 1, 35),
+(0, '2015-07-05', 1, 36),
+(56.5, '2015-07-05', 0, 37),
+(56.5, '0000-00-00', 1, 39),
+(65, '0000-00-00', 1, 40),
+(1, '0000-00-00', 1, 41),
+(56, '0000-00-00', 1, 42),
+(65, '0000-00-00', 1, 43),
+(65, '0000-00-00', 1, 44),
+(65, '0000-00-00', 1, 45),
+(234234, '0000-00-00', 1, 47),
+(87, '0000-00-00', 1, 48);
 
 -- --------------------------------------------------------
 
@@ -82,13 +90,22 @@ INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) V
 --
 
 CREATE TABLE IF NOT EXISTS `abonadoempresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
-  `numabonado` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `numabonado` (`numabonado`),
-  KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `numabonado` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Volcado de datos para la tabla `abonadoempresa`
+--
+
+INSERT INTO `abonadoempresa` (`id`, `idempresa`, `numabonado`) VALUES
+(5, 8654, 39),
+(7, 8655, 41),
+(8, 8653, 42),
+(11, 8652, 45),
+(13, 8659, 47),
+(14, 8661, 48);
 
 -- --------------------------------------------------------
 
@@ -97,10 +114,9 @@ CREATE TABLE IF NOT EXISTS `abonadoempresa` (
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(500) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+`id` int(11) NOT NULL,
+  `descripcion` varchar(500) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Volcado de datos para la tabla `categoria`
@@ -108,7 +124,9 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 
 INSERT INTO `categoria` (`id`, `descripcion`) VALUES
 (15, 'N/A'),
-(16, 'Economia');
+(16, 'Economia'),
+(17, 'PYME'),
+(18, 'humo');
 
 -- --------------------------------------------------------
 
@@ -117,7 +135,7 @@ INSERT INTO `categoria` (`id`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `contacto` (
-  `idcontacto` int(11) NOT NULL AUTO_INCREMENT,
+`idcontacto` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `telefono` varchar(100) NOT NULL,
@@ -126,17 +144,14 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   `asociadosm` tinyint(1) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `tipodocumento` varchar(4) NOT NULL,
-  `documento` varchar(100) NOT NULL,
-  PRIMARY KEY (`idcontacto`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=218 ;
+  `documento` varchar(100) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=219 ;
 
 --
 -- Volcado de datos para la tabla `contacto`
 --
 
 INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicilio`, `correo`, `asociadosm`, `activo`, `tipodocumento`, `documento`) VALUES
-(162, 'Fer', 'Nisman', '(011) 15-3858-7990', 'Moreno 8567', 'financiera.naveyra@gmail.com', 0, 1, 'DU', '35414241'),
-(163, 'Nelson', 'Nisman', '(011) 15-3858-7990', 'Moreno 856', 'neg90@hotmail.com', 0, 1, 'DU', '123213132123'),
 (164, 'Fer', 'Garrido', '123123', 'Moreno 856', 'nismanSomosTodos@gmail.com', 0, 1, 'DU', '123'),
 (165, 'asd', 'asd', '', '', '', 0, 0, '', ''),
 (166, '', '', '', '', '', 0, 0, '', ''),
@@ -161,7 +176,6 @@ INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicil
 (185, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
 (186, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
 (187, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(188, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
 (189, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
 (190, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
 (191, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
@@ -190,7 +204,8 @@ INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicil
 (214, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
 (215, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
 (216, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(217, 'Nelson', 'Garrido', '112312', 'asd', 'financiera.naveyra@gmail.com', 0, 1, 'DU', '3541424');
+(217, 'Nelson', 'Garrido', '112312', 'asd', 'financiera.naveyra@gmail.com', 0, 1, 'DU', '3541424'),
+(218, 'Roberto', 'Carlos', '654137987987', 'Calle Ejemplo 654', 'tomates@gaga', 0, 1, 'DU', '6158974');
 
 -- --------------------------------------------------------
 
@@ -199,23 +214,19 @@ INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicil
 --
 
 CREATE TABLE IF NOT EXISTS `contactoempresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idcontacto` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
-  `relacion` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idcontacto` (`idcontacto`),
-  KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
+  `relacion` varchar(30) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=155 ;
 
 --
 -- Volcado de datos para la tabla `contactoempresa`
 --
 
 INSERT INTO `contactoempresa` (`id`, `idcontacto`, `idempresa`, `relacion`) VALUES
-(64, 162, 8652, ''),
-(65, 163, 8652, ''),
-(66, 165, 8652, '');
+(69, 165, 8652, ''),
+(113, 218, 8660, 'Due&amp;amp;ntilde;o');
 
 -- --------------------------------------------------------
 
@@ -224,13 +235,11 @@ INSERT INTO `contactoempresa` (`id`, `idcontacto`, `idempresa`, `relacion`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `correoempresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  `descripcion` varchar(200) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Volcado de datos para la tabla `correoempresa`
@@ -241,7 +250,9 @@ INSERT INTO `correoempresa` (`id`, `idempresa`, `correo`, `descripcion`) VALUES
 (4, 8652, 'neg90@hotmail.com', ''),
 (5, 8653, 'neg90.ng@gmail.com', ''),
 (6, 8653, 'neg90@hotmail.com', ''),
-(7, 8653, 'sistemas@cresta.edu.ar', '');
+(7, 8653, 'sistemas@cresta.edu.ar', ''),
+(8, 8660, 'hola@gmafil.com', 'Roberto'),
+(9, 8660, 'aja@hotmoail.com', 'Carlos');
 
 -- --------------------------------------------------------
 
@@ -250,13 +261,11 @@ INSERT INTO `correoempresa` (`id`, `idempresa`, `correo`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `domicilioempresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
   `domicilio` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `descripcion` varchar(200) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Volcado de datos para la tabla `domicilioempresa`
@@ -264,7 +273,14 @@ CREATE TABLE IF NOT EXISTS `domicilioempresa` (
 
 INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) VALUES
 (2, 8652, 'Moreno 400', ''),
-(3, 8653, 'Moreno 400', '');
+(3, 8653, 'Moreno 400', ''),
+(4, 8654, 'Maipu 270', ''),
+(5, 8655, 'Maipu 270', ''),
+(8, 8658, 'Maipu 270', ''),
+(9, 8659, 'Maipu 270', ''),
+(12, 8660, '3 de febrero 456', 'Vivenda'),
+(13, 8660, '3 de febrero 458', 'Local'),
+(14, 8661, 'ygkygkr', '');
 
 -- --------------------------------------------------------
 
@@ -273,7 +289,7 @@ INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) V
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
-  `idempresa` int(11) NOT NULL AUTO_INCREMENT,
+`idempresa` int(11) NOT NULL,
   `denominacion` varchar(30) NOT NULL,
   `idrubro` int(11) NOT NULL,
   `detactividad` varchar(500) NOT NULL,
@@ -281,23 +297,26 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   `idcategoria` int(11) NOT NULL,
   `fechainicioce` date NOT NULL,
   `activo` tinyint(1) NOT NULL,
-  `importemensual` double NOT NULL,
+  `importemensual` varchar(10) NOT NULL,
   `fechafundacion` date NOT NULL,
   `cuit` varchar(100) NOT NULL,
   `web` varchar(100) NOT NULL,
-  `numusuario` int(11) NOT NULL,
-  PRIMARY KEY (`idempresa`),
-  KEY `idrubro` (`idrubro`),
-  KEY `idcategoria` (`idcategoria`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8654 ;
+  `numusuario` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8662 ;
 
 --
 -- Volcado de datos para la tabla `empresa`
 --
 
 INSERT INTO `empresa` (`idempresa`, `denominacion`, `idrubro`, `detactividad`, `cantempleados`, `idcategoria`, `fechainicioce`, `activo`, `importemensual`, `fechafundacion`, `cuit`, `web`, `numusuario`) VALUES
-(8652, 'Mercantil ', 12, '', 1, 16, '2015-07-22', 1, 65, '2015-07-03', '20354140447', 'www.merecantil.com.ar', 0),
-(8653, 'Suchar', 12, '', 3, 16, '2015-07-17', 1, 50, '0000-00-00', '124', 'www.merecantil.com', 484901);
+(8652, 'Mercantil Andina S.A.', 12, '', 1, 16, '2015-07-22', 1, '65', '2015-07-03', '20354140447', 'www.merecantil.com.ar', 0),
+(8653, 'Suchar', 12, '', 3, 16, '2015-07-17', 1, '56', '0000-00-00', '124', 'www.merecantil.com', 0),
+(8654, 'Parque Hotel', 12, '', 3, 16, '2015-07-04', 1, '56.5', '0000-00-00', '111', 'qq', 0),
+(8655, 'Perseverancia Seguros S.A.', 11, '', 2, 15, '2015-07-10', 1, '1', '0000-00-00', '111', 'qq', 0),
+(8658, 'qwe', 12, '', 1, 16, '2015-07-08', 1, '65', '0000-00-00', '111', 'qq', 484901),
+(8659, 'asd', 11, '', 1, 15, '2015-07-10', 1, '234234', '0000-00-00', '111', 'qq', 0),
+(8660, 'hgfsw', 14, 'Fabrica de pizzas', 4, 17, '2015-07-14', 1, '180', '2014-04-23', '20-54123654-4', 'www.ejemplo.com.arn', 7516387),
+(8661, 'asgdfn', 14, '', 1, 17, '2015-07-14', 1, '87', '0000-00-00', '544', 'dfhdf', 0);
 
 -- --------------------------------------------------------
 
@@ -313,8 +332,7 @@ CREATE TABLE IF NOT EXISTS `infcorreo` (
   `fecha` datetime NOT NULL,
   `adjunto` longtext NOT NULL,
   `mensaje` longtext NOT NULL,
-  `asunto` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `asunto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -331,7 +349,7 @@ INSERT INTO `infcorreo` (`id`, `cantempresas`, `cantcontactos`, `arrayempresas`,
 --
 
 CREATE TABLE IF NOT EXISTS `infmedidorexcel` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `actualizados` longtext NOT NULL,
   `totalregistros` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
@@ -342,9 +360,7 @@ CREATE TABLE IF NOT EXISTS `infmedidorexcel` (
   `empresaActualizada` int(11) NOT NULL,
   `relacionInsertada` int(11) NOT NULL,
   `medidorSinEmpresaInsertado` int(11) NOT NULL,
-  `medidorSinEmpresaActualizado` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
+  `medidorSinEmpresaActualizado` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
@@ -369,7 +385,7 @@ INSERT INTO `infmedidorexcel` (`id`, `actualizados`, `totalregistros`, `fecha`, 
 --
 
 CREATE TABLE IF NOT EXISTS `medidor` (
-  `idmedidor` int(11) NOT NULL AUTO_INCREMENT,
+`idmedidor` int(11) NOT NULL,
   `nomyap` varchar(20) NOT NULL,
   `telefono` varchar(20) NOT NULL,
   `domicilio` varchar(20) NOT NULL,
@@ -377,16 +393,15 @@ CREATE TABLE IF NOT EXISTS `medidor` (
   `numusuario` varchar(11) NOT NULL,
   `numsuministro` varchar(11) NOT NULL,
   `activo` tinyint(1) NOT NULL,
-  `fechadeultimopago` date NOT NULL,
-  PRIMARY KEY (`idmedidor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3816 ;
+  `fechadeultimopago` date NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3819 ;
 
 --
 -- Volcado de datos para la tabla `medidor`
 --
 
 INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importepago`, `numusuario`, `numsuministro`, `activo`, `fechadeultimopago`) VALUES
-(3347, 'ABELLEIRA FABIAN-LEN', '00015611812', 'COLON 239', '50', '484901', '7712', 1, '2015-07-03'),
+(3347, 'ABELLEIRA FABIAN-LEN', '00015611812', 'COLON 239', '65', '484901', '7712', 1, '2015-07-03'),
 (3348, 'ACA SALUD COOPERATIV', '0', 'CHACABUCO 549', '87', '549033', '45768', 1, '2015-07-03'),
 (3349, 'ACMC S.R.L.', '00000000000', 'MORENO 423', '50', '5597630', '8242', 1, '2015-07-03'),
 (3350, 'AGF ALLIANZ ARG.CIA ', '00000000000', 'MAIPU 80', '50', '543770', '7919', 1, '2015-07-03'),
@@ -850,7 +865,10 @@ INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importep
 (3811, '3 NET S.A.', '00000420903', 'CHACABUCO 98', '87', '532006', '7641', 1, '2015-07-03'),
 (3812, 'Tito Puente', '123123', 'Moreno 856', '2', '123222', '5456464654', 1, '2015-07-16'),
 (3814, 'From', '123123', 'Moreno 8567', '0.0', '0', '7712', 1, '2015-07-11'),
-(3815, 'Tito Puente', '123123', 'Moreno 8567', '0.0', '1212', '5456464654', 1, '2015-07-10');
+(3815, 'Tito Puente', '123123', 'Moreno 8567', '0.0', '1212', '5456464654', 1, '2015-07-10'),
+(3816, 'hjo', '', 'jjolojl', '56', '456645', '564321', 1, '2015-07-08'),
+(3817, 'Roberto Carlos', '654987263', 'Moreno 999', '180', '7516387', '98754', 1, '0000-00-00'),
+(3818, 'wetweg', '', '', '35', '354245', '3544444', 1, '2014-12-30');
 
 -- --------------------------------------------------------
 
@@ -859,13 +877,18 @@ INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importep
 --
 
 CREATE TABLE IF NOT EXISTS `medidorempresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idmedidor` int(11) NOT NULL,
-  `idempresa` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idempresa` (`idempresa`),
-  KEY `idmedidor` (`idmedidor`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `idempresa` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `medidorempresa`
+--
+
+INSERT INTO `medidorempresa` (`id`, `idmedidor`, `idempresa`) VALUES
+(8, 3347, 8658),
+(9, 3817, 8660);
 
 -- --------------------------------------------------------
 
@@ -874,7 +897,7 @@ CREATE TABLE IF NOT EXISTS `medidorempresa` (
 --
 
 CREATE TABLE IF NOT EXISTS `permisos` (
-  `idpermiso` int(11) NOT NULL AUTO_INCREMENT,
+`idpermiso` int(11) NOT NULL,
   `csocio` tinyint(1) NOT NULL,
   `rsocio` tinyint(1) NOT NULL,
   `usocio` tinyint(1) NOT NULL,
@@ -895,15 +918,18 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   `rusuario` tinyint(1) NOT NULL,
   `uusuario` tinyint(1) NOT NULL,
   `dusuario` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idpermiso`)
+  `enviarcorreo` tinyint(1) NOT NULL,
+  `cargarexcelmedidor` tinyint(1) NOT NULL,
+  `verinfexcelmedidor` tinyint(1) NOT NULL,
+  `verinfcorreo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
-INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cmedidor`, `rmedidor`, `umedidor`, `dmedidor`, `cci`, `rci`, `uci`, `dci`, `crol`, `rrol`, `urol`, `drol`, `cusuario`, `rusuario`, `uusuario`, `dusuario`) VALUES
-(5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cmedidor`, `rmedidor`, `umedidor`, `dmedidor`, `cci`, `rci`, `uci`, `dci`, `crol`, `rrol`, `urol`, `drol`, `cusuario`, `rusuario`, `uusuario`, `dusuario`, `enviarcorreo`, `cargarexcelmedidor`, `verinfexcelmedidor`, `verinfcorreo`) VALUES
+(5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -912,11 +938,9 @@ INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cm
 --
 
 CREATE TABLE IF NOT EXISTS `rol` (
-  `idrol` int(11) NOT NULL AUTO_INCREMENT,
+`idrol` int(11) NOT NULL,
   `nombre` varchar(10) NOT NULL,
-  `idpermisos` int(11) NOT NULL,
-  PRIMARY KEY (`idrol`),
-  KEY `idpermisos` (`idpermisos`)
+  `idpermisos` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
@@ -933,11 +957,9 @@ INSERT INTO `rol` (`idrol`, `nombre`, `idpermisos`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `rubro` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(500) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+`id` int(11) NOT NULL,
+  `descripcion` varchar(500) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Volcado de datos para la tabla `rubro`
@@ -945,7 +967,9 @@ CREATE TABLE IF NOT EXISTS `rubro` (
 
 INSERT INTO `rubro` (`id`, `descripcion`) VALUES
 (11, 'N/A'),
-(12, 'Camnines');
+(12, 'Camnines'),
+(13, 'Panader&iacute;a'),
+(14, 'Panaderia');
 
 -- --------------------------------------------------------
 
@@ -954,13 +978,11 @@ INSERT INTO `rubro` (`id`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `telefonoempresa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
   `telefono` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idempresa` (`idempresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `descripcion` varchar(200) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Volcado de datos para la tabla `telefonoempresa`
@@ -968,7 +990,14 @@ CREATE TABLE IF NOT EXISTS `telefonoempresa` (
 
 INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VALUES
 (2, 8652, '272727', ''),
-(3, 8653, '272727', '');
+(3, 8653, '272727', ''),
+(4, 8654, '0800 - NISMAN', ''),
+(5, 8655, '213', ''),
+(8, 8658, '213', ''),
+(9, 8659, '213', ''),
+(16, 8660, '454', '453'),
+(17, 8660, '65354', 'Local'),
+(18, 8661, '35434', '');
 
 -- --------------------------------------------------------
 
@@ -977,17 +1006,14 @@ INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VAL
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
+`idusuario` int(11) NOT NULL,
   `nombre` varchar(10) NOT NULL,
   `apellido` varchar(10) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(25) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `correo` varchar(30) NOT NULL,
-  `idrol` int(11) NOT NULL,
-  PRIMARY KEY (`idusuario`),
-  KEY `idrol` (`idrol`),
-  KEY `idrol_2` (`idrol`)
+  `idrol` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
@@ -999,6 +1025,196 @@ INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`
 (3, 'sdfsdfsdf', 'Garrido', 'neg90', 'kapanga', 1, 'dsa@dsa.com', 6);
 
 --
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `abonado`
+--
+ALTER TABLE `abonado`
+ ADD PRIMARY KEY (`numabonado`);
+
+--
+-- Indices de la tabla `abonadoempresa`
+--
+ALTER TABLE `abonadoempresa`
+ ADD PRIMARY KEY (`id`), ADD KEY `numabonado` (`numabonado`), ADD KEY `idempresa` (`idempresa`);
+
+--
+-- Indices de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+ ADD PRIMARY KEY (`idcontacto`);
+
+--
+-- Indices de la tabla `contactoempresa`
+--
+ALTER TABLE `contactoempresa`
+ ADD PRIMARY KEY (`id`), ADD KEY `idcontacto` (`idcontacto`), ADD KEY `idempresa` (`idempresa`);
+
+--
+-- Indices de la tabla `correoempresa`
+--
+ALTER TABLE `correoempresa`
+ ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`);
+
+--
+-- Indices de la tabla `domicilioempresa`
+--
+ALTER TABLE `domicilioempresa`
+ ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`);
+
+--
+-- Indices de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+ ADD PRIMARY KEY (`idempresa`), ADD KEY `idrubro` (`idrubro`), ADD KEY `idcategoria` (`idcategoria`);
+
+--
+-- Indices de la tabla `infcorreo`
+--
+ALTER TABLE `infcorreo`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `infmedidorexcel`
+--
+ALTER TABLE `infmedidorexcel`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indices de la tabla `medidor`
+--
+ALTER TABLE `medidor`
+ ADD PRIMARY KEY (`idmedidor`);
+
+--
+-- Indices de la tabla `medidorempresa`
+--
+ALTER TABLE `medidorempresa`
+ ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`), ADD KEY `idmedidor` (`idmedidor`);
+
+--
+-- Indices de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+ ADD PRIMARY KEY (`idpermiso`);
+
+--
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+ ADD PRIMARY KEY (`idrol`), ADD KEY `idpermisos` (`idpermisos`);
+
+--
+-- Indices de la tabla `rubro`
+--
+ALTER TABLE `rubro`
+ ADD PRIMARY KEY (`id`), ADD KEY `id` (`id`);
+
+--
+-- Indices de la tabla `telefonoempresa`
+--
+ALTER TABLE `telefonoempresa`
+ ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+ ADD PRIMARY KEY (`idusuario`), ADD KEY `idrol` (`idrol`), ADD KEY `idrol_2` (`idrol`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `abonado`
+--
+ALTER TABLE `abonado`
+MODIFY `numabonado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=49;
+--
+-- AUTO_INCREMENT de la tabla `abonadoempresa`
+--
+ALTER TABLE `abonadoempresa`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=219;
+--
+-- AUTO_INCREMENT de la tabla `contactoempresa`
+--
+ALTER TABLE `contactoempresa`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=155;
+--
+-- AUTO_INCREMENT de la tabla `correoempresa`
+--
+ALTER TABLE `correoempresa`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT de la tabla `domicilioempresa`
+--
+ALTER TABLE `domicilioempresa`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+MODIFY `idempresa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8662;
+--
+-- AUTO_INCREMENT de la tabla `infmedidorexcel`
+--
+ALTER TABLE `infmedidorexcel`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT de la tabla `medidor`
+--
+ALTER TABLE `medidor`
+MODIFY `idmedidor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3819;
+--
+-- AUTO_INCREMENT de la tabla `medidorempresa`
+--
+ALTER TABLE `medidorempresa`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT de la tabla `rubro`
+--
+ALTER TABLE `rubro`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT de la tabla `telefonoempresa`
+--
+ALTER TABLE `telefonoempresa`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -1006,59 +1222,59 @@ INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`
 -- Filtros para la tabla `abonadoempresa`
 --
 ALTER TABLE `abonadoempresa`
-  ADD CONSTRAINT `abonadoempresa_ibfk_2` FOREIGN KEY (`numabonado`) REFERENCES `abonado` (`numabonado`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `abonadoempresa_ibfk_3` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `abonadoempresa_ibfk_2` FOREIGN KEY (`numabonado`) REFERENCES `abonado` (`numabonado`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `abonadoempresa_ibfk_3` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `contactoempresa`
 --
 ALTER TABLE `contactoempresa`
-  ADD CONSTRAINT `contactoempresa_ibfk_1` FOREIGN KEY (`idcontacto`) REFERENCES `contacto` (`idcontacto`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `contactoempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `contactoempresa_ibfk_1` FOREIGN KEY (`idcontacto`) REFERENCES `contacto` (`idcontacto`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `contactoempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `correoempresa`
 --
 ALTER TABLE `correoempresa`
-  ADD CONSTRAINT `correoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `correoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `domicilioempresa`
 --
 ALTER TABLE `domicilioempresa`
-  ADD CONSTRAINT `domicilioempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `domicilioempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `empresa`
 --
 ALTER TABLE `empresa`
-  ADD CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `medidorempresa`
 --
 ALTER TABLE `medidorempresa`
-  ADD CONSTRAINT `medidorempresa_ibfk_1` FOREIGN KEY (`idmedidor`) REFERENCES `medidor` (`idmedidor`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `medidorempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `medidorempresa_ibfk_1` FOREIGN KEY (`idmedidor`) REFERENCES `medidor` (`idmedidor`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `medidorempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `rol`
 --
 ALTER TABLE `rol`
-  ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`idpermisos`) REFERENCES `permisos` (`idpermiso`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`idpermisos`) REFERENCES `permisos` (`idpermiso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `telefonoempresa`
 --
 ALTER TABLE `telefonoempresa`
-  ADD CONSTRAINT `telefonoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `telefonoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

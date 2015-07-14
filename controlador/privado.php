@@ -29,6 +29,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		$idRol = $usuario['idrol'];
 		$rol = PDOrol::rolPorID($idRol);
 		$permiso = PDOPermisos::traerPermiso($rol[0]->idpermisos);
+		var_dump($permiso);
 		/*-------------------------------------------------------------------------------------------------
 
 		Arranca el controlador como siempre.
@@ -42,25 +43,66 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			/* -------- CORREO ---------- */
 			if ($controlador=='correo') {
 				if($accion == 'mostrar'){
-					controladorCorreo::renderCorreo();
+					if ($permiso->enviarcorreo == 1) {
+						controladorCorreo::renderCorreo();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+					
 				}elseif ($accion == 'enviar') {
-					controladorCorreo::enviar();
+					if ($permiso->enviarcorreo == 1) {
+						controladorCorreo::enviar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion ='verinf') {
-					controladorCorreo::mostrarInforme();
+					if ($permiso->verinfcorreo == 1) {
+						controladorCorreo::mostrarInforme();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}
 
 			/* -------- ECEL ---------- */
 			}elseif ($controlador == 'excel') {
 				if($accion == 'cargarmedidor'){
-					controladorExcel::cargarmedidor();
+					if ($permiso->cargarexcelmedidor == 1) {
+						controladorExcel::cargarmedidor();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}	
 				}elseif ($accion == 'listarinfmedidores') {
-					controladorExcel::listarinfmedidores();
+					if ($permiso->verinfexcelmedidor == 1) {
+						controladorExcel::listarinfmedidores();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}	
 				}elseif ($accion == 'bajainformemedidor') {
-					controladorExcel::bajainformemedidor();
+					if ($permiso->verinfexcelmedidor == 1) {
+						controladorExcel::bajainformemedidor();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}	
 				}elseif ($accion == 'bajainformesexel') {
-					controladorExcel::bajainformesexel();
+					if ($permiso->verinfexcelmedidor == 1) {
+						controladorExcel::bajainformesexel();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}		
 				}elseif ($accion == 'verdetalleinformemedidor') {
-					controladorExcel::verdetalleinformemedidor();
+					if ($permiso->verinfexcelmedidor == 1) {
+						controladorExcel::verdetalleinformemedidor();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}	
 				}elseif ($accion == 'cargarempresa') {
 					controladorExcel::cargarempresa();
 				}elseif ($accion == 'listarinfempresa') {

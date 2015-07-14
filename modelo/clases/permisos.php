@@ -26,11 +26,15 @@ class permisos {
 	private $rrol;
 	private $urol;
 	private $drol;
+	private $enviarcorreo;
+	private $cargarexcelmedidor;
+	private $verinfexcelmedidor;
+	private $verinfcorreo;
 	
 	
 
 	public function	__construct ($idpermiso,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,$umedidor,$dmedidor,$cci,$rci,$uci,$dci,
-	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol){
+	$cusuario,$rusuario,$uusuario,$dusuario,$crol,$rrol,$urol,$drol,$enviarcorreo,$cargarexcelmedidor,$verinfexcelmedidor,$verinfcorreo){
 		
 		$this->idpermiso = $idpermiso;
 		$this->csocio = $csocio;
@@ -53,8 +57,43 @@ class permisos {
 		$this->rrol = $rrol;
 		$this->urol = $urol;
 		$this->drol = $drol;
+		$this->enviarcorreo = $enviarcorreo;
+		$this->cargarexcelmedidor = $cargarexcelmedidor;
+		$this->verinfexcelmedidor = $verinfexcelmedidor;
+		$this->verinfcorreo = $verinfcorreo;
 
 	
+	}
+	public function getEnviarcorreo(){
+		return $this->enviarcorreo;
+	}
+
+	public function setEnviarcorreo($enviarcorreo){
+		$this->enviarcorreo = $enviarcorreo;
+	}
+
+	public function getCargarexcelmedidor(){
+		return $this->cargarexcelmedidor;
+	}
+
+	public function setCargarexcelmedidor($cargarexcelmedidor){
+		$this->cargarexcelmedidor = $cargarexcelmedidor;
+	}
+
+	public function getVerinfexcelmedidor(){
+		return $this->verinfexcelmedidor;
+	}
+
+	public function setVerinfexcelmedidor($verinfexcelmedidor){
+		$this->verinfexcelmedidor = $verinfexcelmedidor;
+	}
+
+	public function getVerinfcorreo(){
+		return $this->verinfcorreo;
+	}
+
+	public function setVerinfcorreo($verinfcorreo){
+		$this->verinfcorreo = $verinfcorreo;
 	}
 
 	public function getIdpermiso(){
