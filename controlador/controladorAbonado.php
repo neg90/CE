@@ -14,6 +14,21 @@
 class controladorAbonado {
 
 
+	static function pdfAbonado($datosPDF){
+
+		$pdf = new PDF();
+		// Encabezados de tabla
+		$header = array(utf8_decode('Nº Abonado'), 'Empresa', 'Importe', utf8_decode('Fecha últ. pago'));
+		// Cargo la info
+		$data = html_entity_decode($datosPDF);
+		$data = json_decode($data, true);
+		$pdf->SetFont('Arial','',14);
+		$_SESSION['tituloPDF']=('Abonados'); //título PDF
+		$pdf->AddPage();
+		$pdf->TablaAbonado($header,$data);
+		$pdf->Output();
+	}
+
 	public static function filtros(){
 		$user=$_SESSION['user'];
 

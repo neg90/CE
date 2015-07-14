@@ -104,6 +104,47 @@ function TablaContacto($header, $data)
 	$this->Cell(array_sum($w),0,'','T');
 }
 
+function TablaAbonado($header, $data)
+{
+	// Colors, line width and bold font
+	$this->SetFillColor(120,120,120);
+	$this->SetTextColor(255);
+	$this->SetDrawColor(200,200,200);
+	$this->SetLineWidth(0);
+	$this->SetFont('','B');
+	// Header
+	$w = array(35, 100, 30, 50);
+	for($i=0;$i<count($header);$i++)
+		$this->Cell($w[$i],7,$header[$i],1,0,'C',true);
+	$this->Ln();
+	// Color and font restoration
+	$this->SetFillColor(235,235,235);
+	$this->SetTextColor(100,100,100);
+	$this->SetFont('');
+	// Data
+	$fill = false;
+	foreach($data as $row)
+	{
+
+		$this->Cell($w[0],6,utf8_decode($row['numabonado']),'LR',0,'C',$fill);
+
+		$abonadoEmpresa=PDOabonadoempresa::buscarAbonadoId($row['numabonado']);
+		$empresaid=$abonadoEmpresa->idempresa;
+		$empresa=PDOempresa::buscarEmpresa($empresaid);
+
+		$this->Cell($w[1],6,utf8_decode($empresa->getDenominacion()),'LR',0,'C',$fill);
+		$this->Cell($w[2],6,'    $'.$row['importe'],'LR',0,'L',$fill);
+
+		$ultPago = new DateTime($row['fechadeultimopago']);
+		$this->Cell($w[3],6,$ultPago->format('d/m/Y'),'LR',0,'C',$fill);
+
+		$this->Ln();
+		$fill = !$fill;
+	}
+	// Closing line
+	$this->Cell(array_sum($w),0,'','T');
+}
+
 function TablaMedidor($header, $data)
 {
 	// Colors, line width and bold font

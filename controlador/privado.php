@@ -105,7 +105,10 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorAbonado::Filtros();
 				}
 				elseif($accion == 'pdf') //PDF Usuarios
-						controladorAbonado::pdfAbonado();
+						if ($_POST['datosPDF']){
+							$datosPDF=htmlEntities($_POST['datosPDF']);
+							controladorAbonado::pdfAbonado($datosPDF);
+						}
 
 			/* -------- CONTACTO ---------- */
 			}elseif($controlador == 'contacto'){
