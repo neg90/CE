@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-07-2015 a las 17:21:29
+-- Tiempo de generación: 14-07-2015 a las 19:26:02
 -- Versión del servidor: 5.5.43-0ubuntu0.14.10.1
 -- Versión de PHP: 5.5.12-2ubuntu4.6
 
@@ -218,14 +218,13 @@ CREATE TABLE IF NOT EXISTS `contactoempresa` (
   `idcontacto` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
   `relacion` varchar(30) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=155 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=218 ;
 
 --
 -- Volcado de datos para la tabla `contactoempresa`
 --
 
 INSERT INTO `contactoempresa` (`id`, `idcontacto`, `idempresa`, `relacion`) VALUES
-(69, 165, 8652, ''),
 (113, 218, 8660, 'Due&amp;amp;ntilde;o');
 
 -- --------------------------------------------------------
@@ -239,20 +238,20 @@ CREATE TABLE IF NOT EXISTS `correoempresa` (
   `idempresa` int(11) NOT NULL,
   `correo` varchar(100) NOT NULL,
   `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `correoempresa`
 --
 
 INSERT INTO `correoempresa` (`id`, `idempresa`, `correo`, `descripcion`) VALUES
-(3, 8652, 'neg90.ng@gmail.com', ''),
-(4, 8652, 'neg90@hotmail.com', ''),
 (5, 8653, 'neg90.ng@gmail.com', ''),
 (6, 8653, 'neg90@hotmail.com', ''),
 (7, 8653, 'sistemas@cresta.edu.ar', ''),
 (8, 8660, 'hola@gmafil.com', 'Roberto'),
-(9, 8660, 'aja@hotmoail.com', 'Carlos');
+(9, 8660, 'aja@hotmoail.com', 'Carlos'),
+(10, 8652, 'neg90.ng@gmail.com', ''),
+(11, 8652, 'neg90@hotmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -265,14 +264,13 @@ CREATE TABLE IF NOT EXISTS `domicilioempresa` (
   `idempresa` int(11) NOT NULL,
   `domicilio` varchar(100) NOT NULL,
   `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Volcado de datos para la tabla `domicilioempresa`
 --
 
 INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) VALUES
-(2, 8652, 'Moreno 400', ''),
 (3, 8653, 'Moreno 400', ''),
 (4, 8654, 'Maipu 270', ''),
 (5, 8655, 'Maipu 270', ''),
@@ -280,7 +278,8 @@ INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) V
 (9, 8659, 'Maipu 270', ''),
 (12, 8660, '3 de febrero 456', 'Vivenda'),
 (13, 8660, '3 de febrero 458', 'Local'),
-(14, 8661, 'ygkygkr', '');
+(14, 8661, 'ygkygkr', ''),
+(15, 8652, 'Moreno 400', '');
 
 -- --------------------------------------------------------
 
@@ -922,14 +921,15 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   `cargarexcelmedidor` tinyint(1) NOT NULL,
   `verinfexcelmedidor` tinyint(1) NOT NULL,
   `verinfcorreo` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
 INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cmedidor`, `rmedidor`, `umedidor`, `dmedidor`, `cci`, `rci`, `uci`, `dci`, `crol`, `rrol`, `urol`, `drol`, `cusuario`, `rusuario`, `uusuario`, `dusuario`, `enviarcorreo`, `cargarexcelmedidor`, `verinfexcelmedidor`, `verinfcorreo`) VALUES
-(5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0);
+(6, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0),
+(7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -941,14 +941,15 @@ CREATE TABLE IF NOT EXISTS `rol` (
 `idrol` int(11) NOT NULL,
   `nombre` varchar(10) NOT NULL,
   `idpermisos` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`idrol`, `nombre`, `idpermisos`) VALUES
-(6, 'root', 5);
+(7, 'root', 6),
+(10, 'sin permis', 7);
 
 -- --------------------------------------------------------
 
@@ -982,14 +983,13 @@ CREATE TABLE IF NOT EXISTS `telefonoempresa` (
   `idempresa` int(11) NOT NULL,
   `telefono` varchar(100) NOT NULL,
   `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Volcado de datos para la tabla `telefonoempresa`
 --
 
 INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VALUES
-(2, 8652, '272727', ''),
 (3, 8653, '272727', ''),
 (4, 8654, '0800 - NISMAN', ''),
 (5, 8655, '213', ''),
@@ -997,7 +997,8 @@ INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VAL
 (9, 8659, '213', ''),
 (16, 8660, '454', '453'),
 (17, 8660, '65354', 'Local'),
-(18, 8661, '35434', '');
+(18, 8661, '35434', ''),
+(22, 8652, '123321', '');
 
 -- --------------------------------------------------------
 
@@ -1014,15 +1015,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `activo` tinyint(1) NOT NULL,
   `correo` varchar(30) NOT NULL,
   `idrol` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`, `activo`, `correo`, `idrol`) VALUES
-(2, 'Alejandro', 'Cabane', 'qw3r7y', 'kapanga', 1, 'asd@asd.com', 6),
-(3, 'sdfsdfsdf', 'Garrido', 'neg90', 'kapanga', 1, 'dsa@dsa.com', 6);
+(4, 'Nñlson', 'Garrido', 'neg90', 'kapanga', 1, '1', 7);
 
 --
 -- Índices para tablas volcadas
@@ -1158,17 +1158,17 @@ MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=219;
 -- AUTO_INCREMENT de la tabla `contactoempresa`
 --
 ALTER TABLE `contactoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=155;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=218;
 --
 -- AUTO_INCREMENT de la tabla `correoempresa`
 --
 ALTER TABLE `correoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `domicilioempresa`
 --
 ALTER TABLE `domicilioempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `empresa`
 --
@@ -1193,12 +1193,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `rubro`
 --
@@ -1208,12 +1208,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 -- AUTO_INCREMENT de la tabla `telefonoempresa`
 --
 ALTER TABLE `telefonoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --
