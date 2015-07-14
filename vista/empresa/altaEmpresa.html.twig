@@ -246,7 +246,7 @@
 									<select  class="form-control" name="contacto0" id="contacto0">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
-											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre}} {{item.apellido}}</option>
 										{% endfor %}	
 									</select>
 								</div>
@@ -275,7 +275,7 @@
 									<select class="form-control"  name="contacto{{i}}" id="contacto{{i}}">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
-											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre}} {{item.apellido}}</option>
 										{% endfor %}	
 									</select>
 								</div>

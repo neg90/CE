@@ -42,7 +42,7 @@
 										{% if (contactosRelacionados[i].idcontacto ==  item.idcontacto) %}
 											<option value="{{item.idcontacto}}" selected>{{item.nombre}}</option>
 										{% else %}
-											<option value="{{item.idcontacto}}">{{item.nombre}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre}} {{item.apellido}}</option>
 										{% endif %}	
 										
 									{% endfor %}	
