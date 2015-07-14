@@ -191,4 +191,6 @@ hr{border:1px solid #ccc;}
 
 
 /* FALTA CENTRAR PAGINACIONES */
-.paginacionGeneral, .paginacionGeneral ul{margin: 0 auto;}
+.paginacionGeneral, .paginacionGeneral ul{margin: 0 auto; text-align: center}
+.paginacionGeneral ul li:first-child a{padding:8px 5px 9px 20px!important;}
+.paginacionGeneral ul li:last-child a{padding:8px 5px 9px 20px!important;}

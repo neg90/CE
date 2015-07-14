@@ -190,16 +190,20 @@ class controladorEmpresa {
 		$medidoresTodos = PDOMedidor::listarMedidores();
 		for ($mt=0; $mt<count($medidoresTodos);$mt++){
 			$medidorEncontrado = PDOmedidorempresa::buscarMedidorId($medidoresTodos[$mt]->idmedidor);
-			if ($medidorEncontrado->idempresa  == $empresa->getIdempresa()){
-						$medidores[$mt] = PDOMedidor::medidorPorID($medidoresTodos[$mt]->idmedidor);
+			if (isset($medidorEncontrado->idempresa)){
+						if ($medidorEncontrado->idempresa  == $empresa->getIdempresa()){
+									$medidores[$mt] = PDOMedidor::medidorPorID($medidoresTodos[$mt]->idmedidor);
+						}
 			}
 		}
 		$abonados = null;
 		$abonadosTodos = PDOabonado::listar();
 		for ($at=0; $at<count($abonadosTodos);$at++){
 			$abonadoEncontrado = PDOabonadoempresa::buscarAbonadoId($abonadosTodos[$at]->numabonado);
-			if ($abonadoEncontrado->idempresa == $empresa->getIdempresa()){
-						$abonados[$at] = PDOabonado::buscarAbonado($abonadosTodos[$at]->numabonado);
+			if (isset($abonadoEncontrado->idempresa)){
+						if ($abonadoEncontrado->idempresa == $empresa->getIdempresa()){
+									$abonados[$at] = PDOabonado::buscarAbonado($abonadosTodos[$at]->numabonado);
+						}
 			}
 		}
 		$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());

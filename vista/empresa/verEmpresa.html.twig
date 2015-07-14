@@ -170,18 +170,6 @@ function cambiarAction(accion){
                     <span class="tituloBloqueDet"><p><b>Medidor/Abonado: </b></span>
                                       <li class="medidorAbonado"> 
                                                   <p><b> No tiene ningun medidor / abonado asociado </b></p>
-                                                  <p><b> ¿Desea asociar uno? </b></p>
-                              <form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=eleccion&id={{empresa.idempresa}}" role="form" method="POST">
-                                          <input type="hidden" value="{{empresa.idempresa}}" name="idempresa">
-                                          <div class="left inline-block">
-                                                <button type="submit" class="btn btn-default btn-md btn-block col-lg-4 botonAsociarLeft" name="nuevoMedidor">  Asociar Medidor
-                                                </button>
-                                          </div>
-                                          <div class="right inline-block">
-                                                <button type="submit" class="btn btn-default btn-md btn-block col-lg-4 botonAsociarRight" name="nuevoAbonado">  Asociar Abonado
-                                                </button>
-                                          </div>
-                              </form>
                                       </li>
                     </p>
           </div>
@@ -246,16 +234,15 @@ function cambiarAction(accion){
                   <input type="hidden" id="datosPDFcorreos" name="datosPDFcorreos" value="{{ correos|json_encode() }}"/>
                   <input type="hidden" id="datosPDFdomicilios" name="datosPDFdomicilios" value="{{ domicilios|json_encode() }}"/>
                   <input type="hidden" id="datosPDFabonados" name="datosPDFabonados" value="{{ abonados|json_encode() }}"/>
-              <button formtarget="_blank" style="text-decoration:none" class="btn btn-default btn-lg btn-block col-lg-4">
+              <button formtarget="_blank" class="btn btn-default btn-lg btn-block col-lg-4">
                   Ver en PDF
               </button>
-              </form>
-			  <a href="privado.php?c=empresa&a=listar&pagina=1">
+              <a href="privado.php?c=empresa&a=listar&pagina=1">
                 <button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="volver">
                   Volver al listado
                 </button>
-          </a>
-
+        </a>
+              </form>
       </div>
   </div>
   <div class="clearfix"></div>
