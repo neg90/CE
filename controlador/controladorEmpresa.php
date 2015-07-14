@@ -598,6 +598,14 @@ class controladorEmpresa {
 				$unaEmpresa->setCuit($cuit);
 				$unaEmpresa->setFechafundacion($fechafundacion);
 				$unaEmpresa->setImportemensual($importemensual);
+
+				//Si pone activo el false tngo q deshabilitar el abonado.
+				$thisrelacionAbonadoForYou = PDOabonadoempresa::buscarAbonadosRelacionados($unaEmpresa->getIdempresa());
+				if ($thisrelacionAbonadoForYou) {
+					$abonadoMod = PDOabonado::buscarAbonado($thisrelacionAbonadoForYou->numabonado);
+					$abonadoMod->setActivo($activo);
+					$abonadoMod->guardar();
+				}
 				
 				//Agrego el nuevo o el mismo :/
 				if( $idMedidor <> '-1'){
