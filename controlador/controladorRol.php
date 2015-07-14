@@ -72,6 +72,10 @@ class controladorRol {
 		  	$arrayPermiso[18]=$_POST['rusuario'];
 		  	$arrayPermiso[19]=$_POST['uusuario'];
 		  	$arrayPermiso[20]=$_POST['dusuario'];
+		  	$arrayPermiso[21]=$_POST['enviarcorreo'];
+		  	$arrayPermiso[22]=$_POST['cargarexcelmedidor'];
+		  	$arrayPermiso[23]=$_POST['verinfexcelmedidor'];
+		  	$arrayPermiso[24]=$_POST['verinfcorreo'];
 		  	$aviso=null;$tipoAviso=null;
 
 	  		$nombre_rol = $_POST['nombre_rol'];
@@ -95,6 +99,10 @@ class controladorRol {
 		  	$rusuario = $_POST['rusuario'];
 		  	$uusuario = $_POST['uusuario'];
 		  	$dusuario = $_POST['dusuario'];
+		  	$enviarcorreo = $_POST['enviarcorreo'];
+		  	$cargarexcelmedidor = $_POST['cargarexcelmedidor'];
+		  	$verinfexcelmedidor = $_POST['verinfexcelmedidor'];
+			$verinfcorreo = $_POST['verinfcorreo'];		  	
 
 		  	$rol->nombre=$nombre_rol;
 
@@ -102,7 +110,8 @@ class controladorRol {
 		  	if ($nombre_rol == $nombreActual){
 		  		$unPermiso = new PDOPermisos(null,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,
 			  								$umedidor,$dmedidor,$cci,$rci,$uci,$dci,$cusuario,$rusuario,
-			  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,1,1,1,1);
+			  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,$enviarcorreo,$cargarexcelmedidor,$verinfexcelmedidor,$verinfcorreo);
+		  		
 			  	$unPermiso->setIdpermiso($idpermiso);
 			  	$unPermiso->guardar();
 
@@ -119,7 +128,7 @@ class controladorRol {
 			  	if (empty(PDORol::existeRol($nombre_rol))){
 				  	$unPermiso = new PDOPermisos(null,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,
 				  								$umedidor,$dmedidor,$cci,$rci,$uci,$dci,$cusuario,$rusuario,
-				  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,1,1,1,1);
+				  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,$enviarcorreo,$cargarexcelmedidor,$verinfexcelmedidor,$verinfcorreo);
 				  	$unPermiso->setIdpermiso($idpermiso);
 				  	$unPermiso->guardar();
 
@@ -162,6 +171,10 @@ class controladorRol {
 		  	$arrayPermiso[18]=$permiso->rusuario;
 		  	$arrayPermiso[19]=$permiso->uusuario;
 		  	$arrayPermiso[20]=$permiso->dusuario;
+		  	$arrayPermiso[21]=$permiso->enviarcorreo;
+		  	$arrayPermiso[22]=$permiso->cargarexcelmedidor;
+		  	$arrayPermiso[23]=$permiso->verinfexcelmedidor;
+		  	$arrayPermiso[24]=$permiso->verinfcorreo;
 		  	$aviso=null;$tipoAviso=null;
 		}
 		$template = $twig->loadTemplate('roles/modificarRol.html.twig');
@@ -197,10 +210,14 @@ class controladorRol {
 		  	$rusuario = $_POST['rusuario'];
 		  	$uusuario = $_POST['uusuario'];
 		  	$dusuario = $_POST['dusuario'];
+		 	$enviarcorreo = $_POST['enviarcorreo'];
+		  	$cargarexcelmedidor = $_POST['cargarexcelmedidor'];
+		  	$verinfexcelmedidor = $_POST['verinfexcelmedidor'];
+			$verinfcorreo = $_POST['verinfcorreo'];	
 		  	if (empty(PDORol::existeRol($nombre_rol))){
 			  	$unPermiso = new PDOPermisos(null,$csocio,$rsocio,$usocio,$dsocio,$cmedidor,$rmedidor,
 			  								$umedidor,$dmedidor,$cci,$rci,$uci,$dci,$cusuario,$rusuario,
-			  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol);
+			  								$uusuario,$dusuario,$crol,$rrol,$urol,$drol,$enviarcorreo,$cargarexcelmedidor,$verinfexcelmedidor,$verinfcorreo);
 			  	$unPermiso->guardar();
 
 			  	//Recupero el último permiso creado para tomar el ID

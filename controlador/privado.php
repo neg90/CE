@@ -29,7 +29,6 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		$idRol = $usuario['idrol'];
 		$rol = PDOrol::rolPorID($idRol);
 		$permiso = PDOPermisos::traerPermiso($rol[0]->idpermisos);
-		var_dump($permiso);
 		/*-------------------------------------------------------------------------------------------------
 
 		Arranca el controlador como siempre.
