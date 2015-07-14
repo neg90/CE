@@ -727,11 +727,11 @@ class controladorEmpresa {
 	  		$unosContactos = PDOcontacto::listar();  
 			$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
-			'idempresa'=>$idempresa,'user'=>$user));
+			'idempresa'=>$idempresa,'user'=>$user,'aviso'=>$aviso));
 	  	}else{
 	  		$template = $twig->loadTemplate('empresa/modificarContactosEmpresa.html.twig');
 			echo $template->render(array('contactosRelacionados'=>$unosContactosRelacionados,'contactos'=>$unosContactos,
-			'idempresa'=>$idempresa,'user'=>$user));
+			'idempresa'=>$idempresa,'user'=>$user,'aviso'=>$aviso));
 	  	}
 	}
 	public function modificarDomicilios(){
