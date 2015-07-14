@@ -64,54 +64,91 @@ class controladorCorreo {
 		  		$limitEmpresas = count($empresas);
 
 		  		$adjunto = $_FILES['adjunto'];
-		  		if($adjunto['error'] == 1 ){
+		  		if (empty($adjunto)) {
+		  			if($adjunto['error'] == 1 ){
 		  			$error = 2;
 		  			$template = $twig->loadTemplate('correo/correo.html.twig');
 					echo $template->render(array('error'=>$error,'empresas'=>$empresas));
 	  			
-		  		}elseif ($adjunto['error'] == 4) {
-		  			$error = 3;
-		  			$template = $twig->loadTemplate('correo/correo.html.twig');
-					echo $template->render(array('error'=>$error,'empresas'=>$empresas));
-		  		}elseif ($adjunto['error'] == 3) {
-		  			$error = 4;
-		  			$template = $twig->loadTemplate('correo/correo.html.twig');
-					echo $template->render(array('error'=>$error,'empresas'=>$empresas));
+			  		}elseif ($adjunto['error'] == 4) {
+			  			$error = 3;
+			  			$template = $twig->loadTemplate('correo/correo.html.twig');
+						echo $template->render(array('error'=>$error,'empresas'=>$empresas));
+			  		}elseif ($adjunto['error'] == 3) {
+			  			$error = 4;
+			  			$template = $twig->loadTemplate('correo/correo.html.twig');
+						echo $template->render(array('error'=>$error,'empresas'=>$empresas));
+			  		}else{
+			  			$asunto = $_POST['asunto'];
+			  			$cuerpo = $_POST['cuerpoMensaje'];
+
+			  			for ($i=0; $i < $limitEmpresas ; $i++) { 
+				  			//Emrpesa ACTUAL
+				  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
+				  			//correos relacionados a la empresa.
+				  			$limitCorreos = count($unosCorreo);
+				  			for ($c=0; $c < $limitCorreos ; $c++){ 
+				  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+				  				$cantEmpresas++;
+				  			}
+				  			//busco el contacto con la idempresa.
+				  			$relaciones = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]);
+				  			for ($c=0; $c < count($relaciones) ; $c++){ 
+				  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
+				  				$unCorreo = $unContacto->getCorreo();
+				  				$cantContactos++;
+				  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
+				  			}
+				  			$unaEmpresa = null;
+			  			}
+
+				  		//delete del anterior.
+				  		PDOinfcorreo::eliminar();
+				  		//cargo nuevo :D
+				  		$fechaActual = date('Y-m-d h:m:s');
+				  		$empresasJSON = json_encode($empresas);
+				  		$adjuntoJSON = json_encode($adjunto);
+				  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual,$asunto,$adjuntoJSON,$cuerpo);
+				  		$unInforme->guardar();
+				  		self::mostrarInforme();
+			
+			  		}
 		  		}else{
 		  			$asunto = $_POST['asunto'];
-		  			$cuerpo = $_POST['cuerpoMensaje'];
+			  			$cuerpo = $_POST['cuerpoMensaje'];
 
-		  			for ($i=0; $i < $limitEmpresas ; $i++) { 
-			  			//Emrpesa ACTUAL
-			  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
-			  			//correos relacionados a la empresa.
-			  			$limitCorreos = count($unosCorreo);
-			  			for ($c=0; $c < $limitCorreos ; $c++){ 
-			  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
-			  				$cantEmpresas++;
+			  			for ($i=0; $i < $limitEmpresas ; $i++) { 
+				  			//Emrpesa ACTUAL
+				  			$unosCorreo = PDOcorreoempresa::buscarCorreosArray($empresas[$i]);
+				  			//correos relacionados a la empresa.
+				  			$limitCorreos = count($unosCorreo);
+				  			for ($c=0; $c < $limitCorreos ; $c++){ 
+				  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+				  				$cantEmpresas++;
+				  			}
+				  			//busco el contacto con la idempresa.
+				  			$relaciones = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]);
+				  			for ($c=0; $c < count($relaciones) ; $c++){ 
+				  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
+				  				$unCorreo = $unContacto->getCorreo();
+				  				$cantContactos++;
+				  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
+				  			}
+				  			$unaEmpresa = null;
 			  			}
-			  			//busco el contacto con la idempresa.
-			  			$relaciones = PDOcontactoempresa::buscarContactosRelacionados($empresas[$i]);
-			  			for ($c=0; $c < count($relaciones) ; $c++){ 
-			  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
-			  				$unCorreo = $unContacto->getCorreo();
-			  				$cantContactos++;
-			  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
-			  			}
-			  			$unaEmpresa = null;
-		  			}
 
-			  		//delete del anterior.
-			  		PDOinfcorreo::eliminar();
-			  		//cargo nuevo :D
-			  		$fechaActual = date('Y-m-d h:m:s');
-			  		$empresasJSON = json_encode($empresas);
-			  		$adjuntoJSON = json_encode($adjunto);
-			  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual,$asunto,$adjuntoJSON,$cuerpo);
-			  		$unInforme->guardar();
-			  		self::mostrarInforme();
-		
+				  		//delete del anterior.
+				  		PDOinfcorreo::eliminar();
+				  		//cargo nuevo :D
+				  		$fechaActual = date('Y-m-d h:m:s');
+				  		$empresasJSON = json_encode($empresas);
+				  		$adjuntoJSON = json_encode($adjunto);
+				  		$unInforme = new PDOinfcorreo(0,$cantContactos,$cantEmpresas,$empresasJSON,$fechaActual,$asunto,$adjuntoJSON,$cuerpo);
+				  		$unInforme->guardar();
+				  		self::mostrarInforme();
+			
 		  		}
+		  		
 		  		
 	  		}
 	  	}
