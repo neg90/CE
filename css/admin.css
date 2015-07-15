@@ -148,7 +148,7 @@ hr{border:1px solid #ccc;}
 .accionActivoparent a{text-decoration: none;}
 
 #datoTexto{width:200px; padding-bottom:8px;}
-#dato{display:inline-block;}
+#dato{display:inline-block; vertical-align: middle}
 
 #botonesTop{float: right; margin-bottom: 20px;}
 #botonesTop a{display:inline-block; width:150px; margin-top:0px;}
@@ -191,6 +191,7 @@ hr{border:1px solid #ccc;}
 
 
 /* FALTA CENTRAR PAGINACIONES */
+.paginacionGeneral {margin: 10px auto!important;}
 .paginacionGeneral, .paginacionGeneral ul{margin: 0 auto; text-align: center}
 .paginacionGeneral ul li:first-child a{padding:8px 5px 9px 20px!important;}
 .paginacionGeneral ul li:last-child a{padding:8px 5px 9px 20px!important;}
