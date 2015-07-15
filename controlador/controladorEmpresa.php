@@ -177,16 +177,19 @@ class controladorEmpresa {
 		$empresa = PDOempresa::buscarEmpresa($idempresa);
 		$categoria = PDOcategoria::buscarDescripcion($empresa->getIdcategoria());
 		$rubro = PDOrubro::buscarDescripcion($empresa->getIdrubro());
-//		$contactoempresa = PDOcontactoempresa::buscarContactosRelacionados($empresa->getIdempresa());
+
 		$contactos=null;
 		$contactosTodos = PDOcontacto::listar();
 		for ($ct=0; $ct<count($contactosTodos);$ct++){
-			if (PDOcontactoempresa::buscarContactoId($contactosTodos[$ct]->idcontacto)){
-						$contactos[$ct] = PDOcontacto::buscarContacto($contactosTodos[$ct]->idcontacto);
+			$contactoEncontrado = PDOcontactoempresa::buscarContactoId($contactosTodos[$ct]->idcontacto);
+			if (isset($contactoEncontrado['idempresa'])){
+				if ($contactoEncontrado['idempresa'] == $empresa->getIdempresa()){
+					$contactos[$ct] = PDOcontacto::buscarContacto($contactosTodos[$ct]->idcontacto);
+				}
 			}
 		}
+
 		$medidores=null;
-//		$medidoresempresa = PDOmedidorempresa::buscarMedidor($empresa->getIdempresa());
 		$medidoresTodos = PDOMedidor::listarMedidores();
 		for ($mt=0; $mt<count($medidoresTodos);$mt++){
 			$medidorEncontrado = PDOmedidorempresa::buscarMedidorId($medidoresTodos[$mt]->idmedidor);

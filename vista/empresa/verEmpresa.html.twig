@@ -91,20 +91,20 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detTelefono');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
-                    {% if telefonos is null %}
-                            <p class="noInfoDetalle">No se encontraron telefonos asignados.</p>
-                    {% else %}
+                    {% if telefonos != null %}
                         {% for itemtel in telefonos %}
                                 <li class="telefono"> 
                                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                                     {{ itemtel.telefono |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                                    {% if itemtel.descripcion is null%}
-
-                                    {% else %}
+                                    {% if itemtel.descripcion != null%}
                                         ( {{ itemtel.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% else %}
+                                        
                                     {% endif %}
                                 </li>
                               {% endfor %}
+                    {% else %}                              
+                        <p class="noInfoDetalle">No se encontraron telefonos asignados.</p>
                     {% endif %}        
                 </p>
             </div>
@@ -113,21 +113,21 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detCorreo');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
-                    {% if correos is null %}
-                            <p class="noInfoDetalle">No se encontraron correos asignados.</p>
-                    {% else %}
+                    {% if correos != null %}
                         {% for itemcorreo in correos %}
                                 <li class="correo"> 
                                     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                     {{ itemcorreo.correo |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
 
-                                    {% if itemcorreo.descripcion is null%}
-
+                                    {% if itemcorreo.descripcion != null%}
+                                        ( {{ itemcorreo.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
                                     {% else %}
-                                          ( {{ itemcorreo.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                          
                                     {% endif %}
                                 </li>
                               {% endfor %}
+                    {% else %}                              
+                      <p class="noInfoDetalle">No se encontraron correos asignados.</p>
                     {% endif %}        
                 </p>
             </div>
@@ -136,20 +136,20 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detDomicilio');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
-                    {% if domicilios is null %}
-                            <p class="noInfoDetalle">No se encontraron domicilios asignados.</p>
-                    {% else %}
+                    {% if domicilios != null %}
                         {% for itemdomicilio in domicilios %}
                                 <li class="domicilio"> 
                                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                     {{ itemdomicilio.domicilio |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
-                                    {% if itemdomicilio.descripcion is null%}
-                                    
-                                    {% else %}
+                                    {% if itemdomicilio.descripcion != null%}
                                         ( {{ itemdomicilio.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                    {% else %}
+                                        
                                     {% endif %}
                                 </li>
-                              {% endfor %}        
+                              {% endfor %}  
+                    {% else %}
+                        <p class="noInfoDetalle">No se encontraron domicilios asignados.</p>      
                     {% endif %}
                 </p>
             </div>
