@@ -26,7 +26,7 @@ $(document).ready(function() {
 });
 
 function marcarTodos(){
-	for (i=1; i<=20; i++){
+	for (i=1; i<=24; i++){
 		$("#botonActivoSI"+i).addClass("activoSI");
 		$("#botonActivoSI"+i).removeClass("activoNO");
 		$("#botonActivoNO"+i).removeClass("activoSI");
@@ -36,7 +36,7 @@ function marcarTodos(){
 }
 
 function desmarcarTodos(){
-	for (i=1; i<=20; i++){
+	for (i=1; i<=24; i++){
 		$("#botonActivoSI"+i).removeClass("activoSI");
 		$("#botonActivoSI"+i).removeClass("activoNO");
 		$("#botonActivoNO"+i).removeClass("activoSI");
@@ -291,6 +291,46 @@ function marcarNO(numeroNO){
 							</div>
 			</div>
 	</div>
+
+		<div class="row col-lg-6">
+			<h3>Especiales</h3>
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Enviar correo: </label>
+						<input type="hidden" name="enviarcorreo" id="input21">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI21" class="btn btn-default" onclick="marcarSI(21)"> SI </button>
+			  						<button type="button" id="botonActivoNO21" class="btn btn-default" onclick="marcarNO(21)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Ver informe de correos: </label>
+						<input type="hidden" name="cargarexcelmedidor" id="input22">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI22" class="btn btn-default" onclick="marcarSI(22)"> SI </button>
+			  						<button type="button" id="botonActivoNO22" class="btn btn-default" onclick="marcarNO(22)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Cargar Excel: </label>
+						<input type="hidden" name="verinfexcelmedidor" id="input23">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI23" class="btn btn-default" onclick="marcarSI(23)"> SI </button>
+			  						<button type="button" id="botonActivoNO23" class="btn btn-default" onclick="marcarNO(23)"> NO </button>
+							</div>
+			</div>
+
+			<div class=" col-lg-12">
+						<label class="col-lg-5">Informes de excel: </label>
+						<input type="hidden" name="verinfcorreo" id="input24">
+							<div class="btn-group btn-group-xs" role="group" aria-label="...">
+			  						<button type="button" id="botonActivoSI24" class="btn btn-default" onclick="marcarSI(24)"> SI </button>
+			  						<button type="button" id="botonActivoNO24" class="btn btn-default" onclick="marcarNO(24)"> NO </button>
+							</div>
+			</div>
+	</div>
+
 	<input name="idrol" type="hidden" value="{{rol.idrol}}">
 	<input type="hidden" name="idpermiso" value="{{rol.idpermisos}}">
 	<div class="row col-lg-4 enviarRol">
