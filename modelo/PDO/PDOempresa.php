@@ -263,11 +263,10 @@ class PDOempresa extends empresa{
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
-         
          $consulta = $conexion->prepare('INSERT INTO empresa (denominacion, web, idrubro, detactividad, cantempleados, idcategoria, fechainicioce,
          activo, cuit,fechafundacion, importemensual,numusuario) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
          :activo,:cuit,:fechafundacion,:importemensual,:numusuario)');
-
+       
          $consulta->bindParam(':denominacion', $this->getDenominacion());
 
          $consulta->bindParam(':web', $this->getWeb());

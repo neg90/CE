@@ -13,11 +13,11 @@
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../modelo/PDO/PDOabonadoempresa.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
-	
 //Valores para la variable aviso :
 //1->Inserto con exito
 //2->Ya existe un contacto igual
 //0->No mostrar mensaje, es solo carga del formulario.
+
 class controladorEmpresa {
 
 
@@ -452,7 +452,7 @@ class controladorEmpresa {
 	  	$unosAbonados = PDOabonado::listar();
 	  	$ultimoIdempresaInsertado = null;
 		if (isset($_POST['guardarEmpresa'])){
-			$denominacion = htmlEntities($_POST['denominacion']);
+			$denominacion = htmlEntities(($_POST['denominacion']));
 			$cantempleados = htmlEntities($_POST['cantempleados']);
 			$importemensual = htmlEntities($_POST['importemensual']);
 			$cuit = htmlEntities($_POST['cuit']);
@@ -496,6 +496,9 @@ class controladorEmpresa {
 				}
 				//alta medidor
 				*/
+				if (!empty($numusuario)) {
+					$cargoContrubuyente = true;
+				}
 				if( $idMedidor <>'-1'){
 					$cargoContrubuyente = true;
 					$unaEmpresa->setNumusuario(PDOMedidor::buscarNumerodeUsuario($idMedidor));
@@ -577,7 +580,7 @@ class controladorEmpresa {
 	  	$unosAbonados = PDOabonado::listar();
 		if (isset($_POST['guardarEmpresa'])){
 			if(PDOempresa::buscarEmpresa($idempresa)){
-				$denominacion = htmlEntities($_POST['denominacion']);
+				$denominacion = (htmlEntities($_POST['denominacion']));
 				$cantempleados = htmlEntities($_POST['cantempleados']);
 				$importemensual = htmlEntities($_POST['importemensual']);
 				$cuit = htmlEntities($_POST['cuit']);

@@ -239,19 +239,19 @@ $(document).ready(function() {
             {% for em in relacion  %}
                 {% if em.numabonado == item.numabonado %}
                    {% set cargarElimianar = false %}
-                    <li>{{em.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }} </li>
+                    <li>{{em.denominacion|raw }} </li>
                 {% endif %}
               {% endfor %}  
           {% endautoescape %}
         </td>
         <td>
           {% autoescape 'html' %}
-            ${{item.importe}} {{item.documento|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+            $ {{item.importe}}    
           {% endautoescape %}
         </td>
         <td>
           {% autoescape 'html' %}
-            {{item.fechadeultimopago}} {{item.documento|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+            {{item.fechadeultimopago}}  
           {% endautoescape %}
         </td>
         <td class="celda-numero">

@@ -256,27 +256,27 @@ $(document).ready(function() {
         <tr>
           <td>
             {% autoescape 'html' %}
-              {{ item.nombre|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{ item.nombre|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              {{item.apellido|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{item.apellido|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              {{item.tipodocumento}} {{item.documento|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{item.tipodocumento}} {{item.documento|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              {{ item.telefono|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{ item.telefono|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              {{ item.correo|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{ item.correo|raw }}    
             {% endautoescape %}
           </td>
           <td class="celda-numero">

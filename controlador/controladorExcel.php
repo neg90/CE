@@ -329,9 +329,14 @@ class controladorExcel {
 			$rotas = '';
 
 			for ($i=0; $i < $totalregistros; $i++) { 
+
 				if(self::filaEmpresaValida($arrayExcel[$i])){
+
 					$unaEmpresa = self::crearInstanciaEmpresa($arrayExcel[$i]);
-					$id = $unaEmpresa->guardar();	
+
+					$id = $unaEmpresa->guardar();
+				
+
 					if ($arrayExcel[$i][1] != 999999) {
 						if(PDOempresa::buscarEmpresaNumeroUsuario($arrayExcel[$i][1])){
 							//relacion
@@ -362,8 +367,8 @@ class controladorExcel {
    		$fechainicioce = date('Y-m-d');
    		$activo = false;
    		
-		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,11,'Sin completar',0,15,$fechainicioce,$activo,0
-		,$fechainicioce,0,$unRegistro[1]);
+		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,17,'Sin completar',0,24,$fechainicioce,$activo,0,$fechainicioce,0,$unRegistro[1]);
+		
 		return $unaEmpresa;
 
 	}

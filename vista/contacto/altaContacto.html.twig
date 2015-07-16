@@ -8,7 +8,7 @@
 	{% elseif modo == 'modificar' %}
 		<form class="form-horizontal" action="privado.php?c=contacto&a=modificar" role="form" method="POST">
 	{% elseif modo == 'altaconid' %}
-		<form class="form-horizontal" action="privado.php?c=contacto&a=altaconid	&id={{idempresa}}" role="form" method="POST">
+		<form class="form-horizontal" action="privado.php?c=contacto&a=altaconid&id={{idempresa}}" role="form" method="POST">
 	{% endif %}
 		<input type="hidden" name="idcontacto" value="{{idcontacto}}">
 		{% if modo == 'altaconid' %}
@@ -27,7 +27,7 @@
   					{% elseif  aviso == 2 %}
   						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>No se guardo el contacto!</strong> No re cagues ni utilicez f5 en el formulario. Causa: El contacto ya se encuentra registrado.
+		    				<strong>No se guardo el contacto!</strong> No re cargues ni utilicez f5 en el formulario. Causa: El contacto ya se encuentra registrado.
 	  					</div>
 	  				{% elseif  aviso == 3 %}
   						<div class="alert alert-danger alert-dismissable">

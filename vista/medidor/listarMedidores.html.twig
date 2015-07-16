@@ -273,14 +273,14 @@ $(document).ready(function() {
 				<td> {{ medidor.nomyap }}</td>
 				<td> 
 					{% if medidor.telefono != null %}
-						{{ medidor.telefono }}
+						{{ medidor.telefono|raw }}
 					{% else %}
 						N/A
 					{% endif %}
 				</td>
 				<td> 
 					{% if medidor.domicilio != null %}					
-						{{ medidor.domicilio }}
+						{{ medidor.domicilio|raw }}
 					{% else %}
 						N/A
 					{% endif %}
@@ -291,15 +291,15 @@ $(document).ready(function() {
             {% for em in relacion  %}
                 {% if em.idmedidor == medidor.idmedidor %}
                    {% set cargarElimianar = false %}
-                    <li>{{em.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }} </li>
+                    <li>{{em.denominacion|raw }} </li>
                 {% endif %}
               {% endfor %}  
           {% endautoescape %}
         </td>
-				<td> <small>$</small> {{ medidor.importepago }}</td>
-				<td> {{ medidor.numusuario }}</td>
-				<td> {{ medidor.numsuministro }}</td>
-        <td> {{ medidor.fechadeultimopago }}</td>
+				<td> <small>$</small> {{ medidor.importepago|raw }}</td>
+				<td> {{ medidor.numusuario|raw }}</td>
+				<td> {{ medidor.numsuministro|raw }}</td>
+        <td> {{ medidor.fechadeultimopago|raw }}</td>
 				<td> 
 					{% if medidor.activo == 1 %}
 						<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>

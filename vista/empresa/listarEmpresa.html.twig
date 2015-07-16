@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %} Lista de Empresas {% endblock %}
+{% block title %} Lista de Asociado {% endblock %}
 {% block contenedor %}  
 
 <script>
@@ -109,12 +109,12 @@ $(document).ready(function() {
           {% if aviso == 1 %}
             <div class="alert alert-success alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>Perfecto!</strong> la empresa fue eliminada correctamente.
+                <strong>Perfecto!</strong> el asociado fue eliminado correctamente.
               </div>
             {% elseif  aviso == 2 %}
               <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>Error!</strong> No se pudo eliminar la empresa
+                <strong>Error!</strong> No se pudo eliminar el asociado
               </div>
             {% endif %}
          </div>
@@ -123,7 +123,7 @@ $(document).ready(function() {
     <span class="glyphicon glyphicon-tag" style="font-size:10px" aria-hidden="true"></span>
       Referencias
       <small>
-        [<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>=Modificar Correos, <span class="glyphicon glyphicon-home" aria-hidden="true"></span>=Modificar domicilios,<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>=Modificar telefonos, <span class="glyphicon glyphicon-user" aria-hidden="true"></span>=Modificar contactos, <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>= Modificar datos generales de empresa, M = Asociar titular de medidor, A = Asociar un abonado]
+        [<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>=Modificar Correos, <span class="glyphicon glyphicon-home" aria-hidden="true"></span>=Modificar domicilios,<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>=Modificar telefonos, <span class="glyphicon glyphicon-user" aria-hidden="true"></span>=Modificar contactos, <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>= Modificar datos generales del asociado, M = Asociar titular de medidor, A = Asociar un abonado]
       </small>
   </h5>
 
@@ -270,19 +270,19 @@ $(document).ready(function() {
   </form>
           <td>
             {% autoescape 'html' %}
-              {{ item.denominacion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{item.denominacion|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              {{ item.cuit|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{ item.cuit|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
               {% for r in rubros %}
                 {% if r.id == item.idrubro %}
-                  {{r.descripcion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}  
+                  {{r.descripcion|raw }}  
                 {% endif %}
               {% endfor %}
             {% endautoescape %}
@@ -291,19 +291,19 @@ $(document).ready(function() {
             {% autoescape 'html' %}
               {% for c in categorias %}
                 {% if c.id == item.idcategoria %}
-                  {{c.descripcion|convert_encoding(from='iso-2022-jp', to='UTF-8') }}  
+                  {{c.descripcion|raw }}  
                 {% endif %}
               {% endfor %}
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              ${{ item.importemensual|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              ${{ item.importemensual|raw }}    
             {% endautoescape %}
           </td>
           <td>
             {% autoescape 'html' %}
-              {{ item.cantempleados|convert_encoding(from='iso-2022-jp', to='UTF-8') }}    
+              {{ item.cantempleados|raw }}    
             {% endautoescape %}
           </td>
           <td> 
@@ -321,7 +321,7 @@ $(document).ready(function() {
                 {% for mNom in medidores %}
                   {% if mNom.idmedidor == i['medidor'].idmedidor %}
                    
-                      <li> {{ mNom.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</li>
+                      <li> {{ mNom.nomyap|raw }}</li>
                        {% set tienContribuyente = 1 %}
                   {% endif %}
                 {% endfor %}
@@ -337,7 +337,7 @@ $(document).ready(function() {
                 <li> 
                   {% for mAbon in abonados %}
                     {% if mAbon.numabonado == i['abonado'].numabonado %}
-                     {{ mAbon.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                     {{ mAbon.numabonado|raw }}
                       {% set tienContribuyente = 1 %}
                     {% endif %}
                   {% endfor %}

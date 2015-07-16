@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.6deb1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-07-2015 a las 19:26:02
--- Versión del servidor: 5.5.43-0ubuntu0.14.10.1
--- Versión de PHP: 5.5.12-2ubuntu4.6
+-- Tiempo de generación: 16-07-2015 a las 08:02:28
+-- Versión del servidor: 5.5.43-0ubuntu0.14.04.1
+-- Versión de PHP: 5.5.9-1ubuntu4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,58 +30,9 @@ CREATE TABLE IF NOT EXISTS `abonado` (
   `importe` double NOT NULL,
   `fechadeultimopago` date NOT NULL,
   `activo` tinyint(1) NOT NULL,
-`numabonado` int(11) NOT NULL
+  `numabonado` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`numabonado`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
-
---
--- Volcado de datos para la tabla `abonado`
---
-
-INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) VALUES
-(5, '2015-07-07', 1, 2),
-(44, '2015-07-01', 1, 3),
-(5, '2015-07-07', 1, 4),
-(44, '2015-07-01', 1, 5),
-(5, '2015-07-07', 1, 6),
-(44, '2015-07-01', 1, 7),
-(5, '2015-07-07', 1, 8),
-(44, '2015-07-01', 1, 9),
-(5, '2015-07-07', 1, 10),
-(44, '2015-07-01', 1, 11),
-(5, '2015-07-07', 1, 12),
-(44, '2015-07-01', 1, 13),
-(5, '2015-07-07', 1, 14),
-(44, '2015-07-01', 1, 15),
-(5, '2015-07-07', 1, 16),
-(44, '2015-07-01', 1, 17),
-(5, '2015-07-07', 1, 18),
-(44, '2015-07-01', 1, 19),
-(5, '2015-07-07', 1, 20),
-(44, '2015-07-01', 1, 21),
-(5, '2015-07-07', 1, 22),
-(44, '2015-07-01', 1, 23),
-(5, '2015-07-07', 1, 24),
-(44, '2015-07-01', 1, 25),
-(44, '2015-07-01', 1, 27),
-(5, '2015-07-07', 1, 28),
-(44, '2015-07-01', 1, 29),
-(35.2, '2015-07-23', 1, 30),
-(35.22, '2015-07-02', 1, 31),
-(35.22, '2015-07-02', 1, 32),
-(35.2, '2015-07-22', 1, 33),
-(2, '2015-07-16', 1, 34),
-(35.2, '2015-07-27', 1, 35),
-(0, '2015-07-05', 1, 36),
-(56.5, '2015-07-05', 0, 37),
-(56.5, '0000-00-00', 1, 39),
-(65, '0000-00-00', 1, 40),
-(1, '0000-00-00', 1, 41),
-(56, '0000-00-00', 1, 42),
-(65, '0000-00-00', 1, 43),
-(65, '0000-00-00', 1, 44),
-(65, '0000-00-00', 1, 45),
-(234234, '0000-00-00', 1, 47),
-(87, '0000-00-00', 1, 48);
 
 -- --------------------------------------------------------
 
@@ -90,22 +41,13 @@ INSERT INTO `abonado` (`importe`, `fechadeultimopago`, `activo`, `numabonado`) V
 --
 
 CREATE TABLE IF NOT EXISTS `abonadoempresa` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idempresa` int(11) NOT NULL,
-  `numabonado` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
-
---
--- Volcado de datos para la tabla `abonadoempresa`
---
-
-INSERT INTO `abonadoempresa` (`id`, `idempresa`, `numabonado`) VALUES
-(5, 8654, 39),
-(7, 8655, 41),
-(8, 8653, 42),
-(11, 8652, 45),
-(13, 8659, 47),
-(14, 8661, 48);
+  `numabonado` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `numabonado` (`numabonado`),
+  KEY `idempresa` (`idempresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -114,19 +56,17 @@ INSERT INTO `abonadoempresa` (`id`, `idempresa`, `numabonado`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
-`id` int(11) NOT NULL,
-  `descripcion` varchar(500) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
 INSERT INTO `categoria` (`id`, `descripcion`) VALUES
-(15, 'N/A'),
-(16, 'Economia'),
-(17, 'PYME'),
-(18, 'humo');
+(24, 'N/A');
 
 -- --------------------------------------------------------
 
@@ -135,7 +75,7 @@ INSERT INTO `categoria` (`id`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `contacto` (
-`idcontacto` int(11) NOT NULL,
+  `idcontacto` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `telefono` varchar(100) NOT NULL,
@@ -144,68 +84,9 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   `asociadosm` tinyint(1) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `tipodocumento` varchar(4) NOT NULL,
-  `documento` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=219 ;
-
---
--- Volcado de datos para la tabla `contacto`
---
-
-INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicilio`, `correo`, `asociadosm`, `activo`, `tipodocumento`, `documento`) VALUES
-(164, 'Fer', 'Garrido', '123123', 'Moreno 856', 'nismanSomosTodos@gmail.com', 0, 1, 'DU', '123'),
-(165, 'asd', 'asd', '', '', '', 0, 0, '', ''),
-(166, '', '', '', '', '', 0, 0, '', ''),
-(167, 'asd', 'asd', '', '', '', 0, 0, '', ''),
-(168, '', '', '', '', '', 0, 0, '', ''),
-(169, 'asdasd', 'qweqwewqe', '', '', '', 0, 0, '', ''),
-(170, 'asd', 'asd', '', '', '', 0, 0, '', ''),
-(171, 'asdasd', 'qweqwewqe', '', '', '', 0, 0, '', ''),
-(172, 'asd', 'asd', '', '', '', 0, 0, '', ''),
-(173, 'asdasd', 'qweqwewqe', '', '', '', 0, 0, '', ''),
-(174, 'asd', 'asd', '', '', '', 0, 0, '', ''),
-(175, 'asdasd', 'qweqwewqe', '', '', '', 0, 0, '', ''),
-(176, 'asd', 'asd', '', '', '', 0, 0, '', ''),
-(177, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(178, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(179, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(180, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(181, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(182, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(183, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(184, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(185, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(186, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(187, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(189, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(190, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(191, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(192, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(193, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(194, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(195, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(196, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(197, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(198, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(199, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(200, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(201, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(202, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(203, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(204, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(205, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(206, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(207, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(208, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(209, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(210, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(211, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(212, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(213, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(214, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(215, 'asdasdqweqwe', 'adssadasd', '', '', '', 0, 0, '', ''),
-(216, 'asd', 'asdads', '', '', '', 0, 0, '', ''),
-(217, 'Nelson', 'Garrido', '112312', 'asd', 'financiera.naveyra@gmail.com', 0, 1, 'DU', '3541424'),
-(218, 'Roberto', 'Carlos', '654137987987', 'Calle Ejemplo 654', 'tomates@gaga', 0, 1, 'DU', '6158974');
+  `documento` varchar(100) NOT NULL,
+  PRIMARY KEY (`idcontacto`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=221 ;
 
 -- --------------------------------------------------------
 
@@ -214,18 +95,14 @@ INSERT INTO `contacto` (`idcontacto`, `nombre`, `apellido`, `telefono`, `domicil
 --
 
 CREATE TABLE IF NOT EXISTS `contactoempresa` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idcontacto` int(11) NOT NULL,
   `idempresa` int(11) NOT NULL,
-  `relacion` varchar(30) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=218 ;
-
---
--- Volcado de datos para la tabla `contactoempresa`
---
-
-INSERT INTO `contactoempresa` (`id`, `idcontacto`, `idempresa`, `relacion`) VALUES
-(113, 218, 8660, 'Due&amp;amp;ntilde;o');
+  `relacion` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idcontacto` (`idcontacto`),
+  KEY `idempresa` (`idempresa`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=724 ;
 
 -- --------------------------------------------------------
 
@@ -234,24 +111,21 @@ INSERT INTO `contactoempresa` (`id`, `idcontacto`, `idempresa`, `relacion`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `correoempresa` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idempresa` int(11) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+  `descripcion` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idempresa` (`idempresa`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Volcado de datos para la tabla `correoempresa`
 --
 
 INSERT INTO `correoempresa` (`id`, `idempresa`, `correo`, `descripcion`) VALUES
-(5, 8653, 'neg90.ng@gmail.com', ''),
-(6, 8653, 'neg90@hotmail.com', ''),
-(7, 8653, 'sistemas@cresta.edu.ar', ''),
-(8, 8660, 'hola@gmafil.com', 'Roberto'),
-(9, 8660, 'aja@hotmoail.com', 'Carlos'),
-(10, 8652, 'neg90.ng@gmail.com', ''),
-(11, 8652, 'neg90@hotmail.com', '');
+(13, 12893, 'sistemas@cresta.edu.ar', ''),
+(14, 12893, 'neg90.ng@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -260,26 +134,20 @@ INSERT INTO `correoempresa` (`id`, `idempresa`, `correo`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `domicilioempresa` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idempresa` int(11) NOT NULL,
   `domicilio` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  `descripcion` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idempresa` (`idempresa`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Volcado de datos para la tabla `domicilioempresa`
 --
 
 INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) VALUES
-(3, 8653, 'Moreno 400', ''),
-(4, 8654, 'Maipu 270', ''),
-(5, 8655, 'Maipu 270', ''),
-(8, 8658, 'Maipu 270', ''),
-(9, 8659, 'Maipu 270', ''),
-(12, 8660, '3 de febrero 456', 'Vivenda'),
-(13, 8660, '3 de febrero 458', 'Local'),
-(14, 8661, 'ygkygkr', ''),
-(15, 8652, 'Moreno 400', '');
+(42, 12893, 'Maipu 200', '');
 
 -- --------------------------------------------------------
 
@@ -288,7 +156,7 @@ INSERT INTO `domicilioempresa` (`id`, `idempresa`, `domicilio`, `descripcion`) V
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
-`idempresa` int(11) NOT NULL,
+  `idempresa` int(11) NOT NULL AUTO_INCREMENT,
   `denominacion` varchar(30) NOT NULL,
   `idrubro` int(11) NOT NULL,
   `detactividad` varchar(500) NOT NULL,
@@ -300,22 +168,493 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   `fechafundacion` date NOT NULL,
   `cuit` varchar(100) NOT NULL,
   `web` varchar(100) NOT NULL,
-  `numusuario` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8662 ;
+  `numusuario` int(11) NOT NULL,
+  PRIMARY KEY (`idempresa`),
+  KEY `idrubro` (`idrubro`),
+  KEY `idcategoria` (`idcategoria`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12894 ;
 
 --
 -- Volcado de datos para la tabla `empresa`
 --
 
 INSERT INTO `empresa` (`idempresa`, `denominacion`, `idrubro`, `detactividad`, `cantempleados`, `idcategoria`, `fechainicioce`, `activo`, `importemensual`, `fechafundacion`, `cuit`, `web`, `numusuario`) VALUES
-(8652, 'Mercantil Andina S.A.', 12, '', 1, 16, '2015-07-22', 1, '65', '2015-07-03', '20354140447', 'www.merecantil.com.ar', 0),
-(8653, 'Suchar', 12, '', 3, 16, '2015-07-17', 1, '56', '0000-00-00', '124', 'www.merecantil.com', 0),
-(8654, 'Parque Hotel', 12, '', 3, 16, '2015-07-04', 1, '56.5', '0000-00-00', '111', 'qq', 0),
-(8655, 'Perseverancia Seguros S.A.', 11, '', 2, 15, '2015-07-10', 1, '1', '0000-00-00', '111', 'qq', 0),
-(8658, 'qwe', 12, '', 1, 16, '2015-07-08', 1, '65', '0000-00-00', '111', 'qq', 484901),
-(8659, 'asd', 11, '', 1, 15, '2015-07-10', 1, '234234', '0000-00-00', '111', 'qq', 0),
-(8660, 'hgfsw', 14, 'Fabrica de pizzas', 4, 17, '2015-07-14', 1, '180', '2014-04-23', '20-54123654-4', 'www.ejemplo.com.arn', 7516387),
-(8661, 'asgdfn', 14, '', 1, 17, '2015-07-14', 1, '87', '0000-00-00', '544', 'dfhdf', 0);
+(12419, '18 DE SETIEMBRE S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 467715),
+(12420, '3 NET S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.3net.com.ar/', 532006),
+(12421, 'ABELLEIRA FABIAN-LENTOCHNIK C.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 484901),
+(12422, 'Aberturas Alemani', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 286808),
+(12423, 'ACA SALUD', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 549033),
+(12424, 'ACMC SRL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5597630),
+(12425, 'Acosta Juan Enrique', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 431266),
+(12426, 'AGENCIA ISIDORO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 470959),
+(12427, 'AGF ALLIANZ ARG.CIA SEGUROS SS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 543770),
+(12428, 'AGRO EL CARRETERO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.agroelcarretero.com.ar/', 342458),
+(12429, 'AGRO INDUSTRIA TRES ARROYOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 410854),
+(12430, 'AGRO-GILARDONI S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 588393),
+(12431, 'Agromar SA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 411835),
+(12432, 'AGROPAL S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.agropal.com/', 327253),
+(12433, 'AGROPRIMUS S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.agroprimus.com.ar/', 565886),
+(12434, 'AGUADAS GOMEZ HNOS S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.pisosgomez.com.ar/', 593052),
+(12435, 'Agustin Clerch', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 609160),
+(12436, 'AIELLO JOSE E HIJOS S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.aielloehijos.com.ar/', 319766),
+(12437, 'AIELLO NATALIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 162926),
+(12438, 'ALARCON ANA VERONICA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 486165),
+(12439, 'ALBA E.A.DE Y G.ALBA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 229401),
+(12440, 'ALBERCA FACUNDO SEBASTIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 557865),
+(12441, 'ALEGRO MARIA ANTONELA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 592563),
+(12442, 'ALONSO CARLOS ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 531689),
+(12443, 'ALONSO MARIA ROSARIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 475420),
+(12444, 'ALTUNA CARLOS F.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 318219),
+(12445, 'ALVARADO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 374130),
+(12446, 'ALVAREZ TARGISE JUAN CARLOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 250359),
+(12447, 'Amestoy Automotores / AMESTOY ', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 233336),
+(12448, 'ANA JORGE OSCAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 202260),
+(12449, 'ANDERBERG FERNANDO ALFREDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 400956),
+(12450, 'ANDORNO GABRIELA ROSA FERNANDA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12451, 'ANDREATTA GRACIELA DEL CARMEN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 477772),
+(12452, 'Antuen S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5596670),
+(12453, 'AQUATICA S.A. E/F.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.complejoaquatica.com/', 593775),
+(12454, 'ARAMBERRI LUIS ALFREDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 475723),
+(12455, 'ARANEGUI KARINA BEATRIZ', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5594571),
+(12456, 'ARENAS OSVALDO ARIEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.arenasneumaticos.com.ar/', 251981),
+(12457, 'ARIAS AMALIA-GROENENBERG E.S.H', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 552671),
+(12458, 'ARISTEGUI SERGIO FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 406280),
+(12459, 'ARRACHEA BARRIOS SRL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 382526),
+(12460, 'ARTURE DE MARTINEZ CANEL M. J.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 261704),
+(12461, 'ASEF EDUARDO RUBEN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 479239),
+(12462, 'ASOC. DE ABOGADOS DE TS.AS.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 320980),
+(12463, 'ASOC. MUTUAL DAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://mutualdan.com.ar/', 172446),
+(12464, 'ASTIZ JORGE ARIEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 480961),
+(12465, 'ASTIZ MARIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 561152),
+(12466, 'AUSTRAL MOTOR S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.australmotor.com.ar/', 403537),
+(12467, 'Automotores Vazquez', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.automotoresvazquez.com.ar/', 264835),
+(12468, 'AYALA RAMON ANDRES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 400682),
+(12469, 'AZTIZ MARIO SANTIAGO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 502360),
+(12470, 'BAQUEDANO MARTIN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 494737),
+(12471, 'Barainca Eduardo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 314455),
+(12472, 'BARAINCA EDUARDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12473, 'BARCALA SERGIO ANDRES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 389538),
+(12474, 'BARRAZA MARIA MATILDE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 450195),
+(12475, 'BARRERAS ALBERTO MIGUEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 537320),
+(12476, 'BASSINI MARIA PAULA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 543552),
+(12477, 'BAZAR EL MUNDIAL S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 425089),
+(12478, 'BEITIA LUIS ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 361837),
+(12479, 'BELOQUI ALBERTO Y IRIGOIN M', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 398181),
+(12480, 'BENGOCHEA SUSANA MARILENA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 565684),
+(12481, 'BERESFORD S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5595861),
+(12482, 'BERGARMO LUCIANA CAROLINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 607661),
+(12483, 'BERTEL SKOU SAAII Y C', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 176079),
+(12484, 'BETTOMEO ROBERTO SANTIAGO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 329954),
+(12485, 'BIANCHI LUCIANO SEBASTIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 541268),
+(12486, 'Bodycare', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 538880),
+(12487, 'BONIFACIO LILIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 532530),
+(12488, 'BONINI JUAN CARLOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 473237),
+(12489, 'BORIONI JUAN PABLO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 451873),
+(12490, 'BRACCO LAURA NOEMI', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 570141),
+(12491, 'BRAJOVICH GUILLERMO PEDRO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 456894),
+(12492, 'BRAVO CARLOS-MARQUIS MARTA SH', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 552192),
+(12493, 'BREA DIEGO ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 258876),
+(12494, 'BREA OMAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 193571),
+(12495, 'BUSTOS SILVINA LILIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 572709),
+(12496, 'CABANE OSMAR ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 509415),
+(12497, 'CAMBEX S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 383187),
+(12498, 'CAMPAGNE MARIO CESAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 240451),
+(12499, 'CAMPOS CARMEN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 397100),
+(12500, 'CAMUS FLORENCIA AGUSTINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 599849),
+(12501, 'CAPRISTO FLORENCIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5595089),
+(12502, 'CARRERA HNOS.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 530536),
+(12503, 'CARRERA MARIA INES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 502041),
+(12504, 'CARRERA NELIDA SUSANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 575146),
+(12505, 'CARRERA Y SALDUNA SOC.DE HECHO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 506906),
+(12506, 'CASA HUMBERTO LUCAIOLI S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 457660),
+(12507, 'CASTRO NELLY', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 573562),
+(12508, 'CATALANO MAURO ELIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 584210),
+(12509, 'CELTA-COOP.OB.Y S.PUB.Y S.S.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.celtatsas.com.ar/', 347772),
+(12510, 'CENTRO ACOPIADORES CEREALES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 290166),
+(12511, 'CENTRO BULONERO TS.AS. S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 427979),
+(12512, 'CEPEDA MARISOL GRACIELA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 573184),
+(12513, 'CEPEDA SILVIA MARIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 603881),
+(12514, 'CEREALERA TRES ARROYOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 407173),
+(12515, 'CERIANI NANCY GRACIELA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 564834),
+(12516, 'CERVINI MARIA SUSANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 291987),
+(12517, 'CHACHERO GUILLERMO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 512167),
+(12518, 'Childrens Wish', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 559191),
+(12519, 'CHIQUETTE NESTOR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 555500),
+(12520, 'CIA.DE SEG.LA MERCANTIL ANDINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'https://www.mercantilandina.com.ar/', 484220),
+(12521, 'Ciancaglini Cesar Mauricio', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 316143),
+(12522, 'Clerch Ignacio Agustin', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 485852),
+(12523, 'Clinica Privada Hispano', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 38928),
+(12524, 'CLUB DE CAZADORES DE TS.AS.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.clubcazadores.com.ar/', 175564),
+(12525, 'COLANTONIO JOSE A.Y MARTIN A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 243191),
+(12526, 'COLLAZOS ALDO O.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 176949),
+(12527, 'COLONNA OMAR RODOLFO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 340672),
+(12528, 'COMASA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 505475),
+(12529, 'COMPAÃ‘IA EURO SRL.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 485230),
+(12530, 'Compu3', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.compu3.com.ar/', 483816),
+(12531, 'CONFITERIA LA PERLA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 164089),
+(12532, 'CONSULTORA RH -TRES ARROYOS Y ', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 236018),
+(12533, 'CONTRERAS LUIS ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 304951),
+(12534, 'COOP.DE TRANSP.DE TS.AS.LTDA.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 80187),
+(12535, 'COOP.ELECT.LTDA.DE CLAROMECO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://celcla.com.ar/', 237549),
+(12536, 'COOP.RURAL LTDA.ALFA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.coopalfa.com.ar/', 79426),
+(12537, 'Cooperativa Agraria de Ts As L', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 53862),
+(12538, 'CREDIL S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 455334),
+(12539, 'CUELLO ROLANDO FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12540, 'CUMECHE S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12541, 'CUMECHE SRL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 460963),
+(12542, 'DABIEN DE CHIRINO MARIA ROSA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 340685),
+(12543, 'DAGUERRE CRISTINA JOSEFA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 382047),
+(12544, 'DALESA S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 489847),
+(12545, 'DANUNZZIO MARIANELA MIRNA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12546, 'DANUNZZIO VALERIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12547, 'DATRI SANDRA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 405717),
+(12548, 'DE BENEDETTO AUGUSTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 566740),
+(12549, 'DE LA CAL FRANCISCO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 319346),
+(12550, 'DE LA PENNA JUAN CARLOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 322391),
+(12551, 'DE ZOETE SANDRA MARINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 498041),
+(12552, 'DEJEAN ROBERTO OSCAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 399087),
+(12553, 'DEL CASTAÃ‘O ANGEL RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 418603),
+(12554, 'DEL GRANDE SERGIO FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 438034),
+(12555, 'DEL VALLE MARIA LOURDES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 479529),
+(12556, 'DEL VALLE NELSON BERNARDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 420097),
+(12557, 'Delgado Sonia Alejandra', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5595502),
+(12558, 'Despensa El Gauchito"', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 575364),
+(12559, 'DESTAIN ANA KARINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12560, 'DI BELLO GABRIEL GUILLERMO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 519368),
+(12561, 'DI CROCE CLAUDIA ALEJANDRA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 537854),
+(12562, 'DI FULVIO LUIS EUGENIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 287355),
+(12563, 'DI MARCO JUAN E.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 199791),
+(12564, 'DI ROCCO GUILLERMINA MERCEDES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 557810),
+(12565, 'DI ROCCO MARIA CECILIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 448323),
+(12566, 'DI SALVO GRACIELA ESTER', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 534097),
+(12567, 'DI SALVO GUILLERMO ENRIQUE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 465492),
+(12568, 'DI SALVO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 257345),
+(12569, 'DI TOMMASO MARIO Y TOMAS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 307255),
+(12570, 'DI VITO CARMELO A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 200312),
+(12571, 'DI VITO CLAUDIA SUSANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 427429),
+(12572, 'DIAZ RAUL ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 451642),
+(12573, 'DIAZ ROSANA BEATRIZ (Viento No', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 498517),
+(12574, 'DIEZ PATRICIA ANDREA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 485575),
+(12575, 'DIFONZO & MARCHI', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 234304),
+(12576, 'Dragon Rojo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'www.dragonrojotaekwondo.com.ar', 558282),
+(12577, 'DUPUY STELLA MARIS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 570200),
+(12578, 'E.I.L.A. S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'Ver Facebook', 499934),
+(12579, 'Eduardo Ramon Jatib', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 184322),
+(12580, 'EDUARDO SANTIAGO JUAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 393245),
+(12581, 'EICHLER EDUARDO HUGO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 295422),
+(12582, 'ELCUAZ HECTOR A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 195012),
+(12583, 'ELEBAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.elebar.com.ar/', 560706),
+(12584, 'ELGART REYNALDO E Y ABEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 555845),
+(12585, 'ELGART VERONICA Y ELGART MARIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 580430),
+(12586, 'ELICALDE NESTOR JUAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 406075),
+(12587, 'Elsa Maria Garat', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 380623),
+(12588, 'ELUSTONDO ALICIA BEATRIZ', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.federada.com/', 605175),
+(12589, 'ERRAZU MARIA EMILIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 588380),
+(12590, 'ESPELUSE RODOLFO Y CIA.SOC.COL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 528041),
+(12591, 'Estacion de Servicio Tartaglin', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 315609),
+(12592, 'ESTUDIO ANDRENACCI', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12593, 'ESTUDIO PANDOLFO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 579782),
+(12594, 'ESTUDIO SALIM', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12595, 'ETCHETO ENRIQUE ANDRES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12596, 'ETCHEVERRY ALFREDO JUAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 317078),
+(12597, 'ETERNET S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.eternet.cc/', 479587),
+(12598, 'EXPRESO EL VASQUITO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.expresoelvasquito.com.ar/', 589387),
+(12599, 'FAGEMAR S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 576909),
+(12600, 'FAMTEX S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 499745),
+(12601, 'FARINA AMERICO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 132756),
+(12602, 'FARMACIA TRES ARROYOS S C S', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5594842),
+(12603, 'FAVACARD S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.favacardweb.com.ar/', 474322),
+(12604, 'FERNANDEZ CRISTINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 510222),
+(12605, 'FERNANDEZ DESTAIN CELINA IRENE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 560953),
+(12606, 'FERNANDEZ MIGUEL ANGEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 320733),
+(12607, 'FERNANDEZ PABLO O Y CARROZZI D', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12608, 'FERNANDEZ RODOLFO Y RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 497738),
+(12609, 'FERNANDEZ VILLANUEVA JUAN ALDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 411369),
+(12610, 'FERRARI RICARDO DOMINGO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 421661),
+(12611, 'FERRARI RODRIGO EDUARDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 509893),
+(12612, 'FERRARIO GUSTAVO ADRIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 394402),
+(12613, 'FINVERCAR S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 531546),
+(12614, 'FLYING MOTORS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'www.flyingmotors.com.ar', 485386),
+(12615, 'FOSQUE MARIA ADELA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 435251),
+(12616, 'FRIGORIFICO CAPRIATA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 516077),
+(12617, 'FUCHS SANDRA CECILIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 592941),
+(12618, 'FUSION VIAJES S.R.L', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 513148),
+(12619, 'GALLARDO JAVIER NESTOR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.istilart.com.ar/inicio/', 420518),
+(12620, 'Ganim Nestor Hugo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 455291),
+(12621, 'GARCIA GABRIEL Y GUSTAVO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 399191),
+(12622, 'GARCIA MARIA DEL CARMEN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 345912),
+(12623, 'GARCIA MAURICIO DAVID', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 421238),
+(12624, 'GARCIA ROCIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 530015),
+(12625, 'GARCIA SERGIO RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 500089),
+(12626, 'GASANEO JUAN PEDRO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12627, 'GASPAROLI ANA TERESA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 568874),
+(12628, 'GEJO RUBEN Y RODOLFO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 486758),
+(12629, 'GENOVESI HNOS.S.R.L', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.estaciongenovesihnossrl.com/', 248095),
+(12630, 'Gestion Inmobiliaria', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 363280),
+(12631, 'GIACOMINO ANDREA SUSANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 411705),
+(12632, 'GIANELLI MARIA VICTORIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 558660),
+(12633, 'GIMNASIO STADIUM', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://stadiumgim.com.ar/', 302234),
+(12634, 'GIULIANI HECTOR Y LUCIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 310040),
+(12635, 'GONZALEZ JORGE VENTURA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 516442),
+(12636, 'GONZALEZ LUIS ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 379252),
+(12637, 'GONZALEZ MARCELO GABRIEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 365819),
+(12638, 'GONZALEZ MARCELO OSCAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 443647),
+(12639, 'GONZALEZ MARIA LAURA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 469012),
+(12640, 'GRANDA LUCIANO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 563983),
+(12641, 'GROSSO CLAUDIA LUJAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 133519),
+(12642, 'GRUAS Y MONTAJES IORIO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.ioriogruas.com.ar/', 571614),
+(12643, 'GUAZZORA ELSA CELICA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 360595),
+(12644, 'GUILLERMO ECHEVARRIA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 472041),
+(12645, 'GUISASOLA MARIA LEONOR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 215879),
+(12646, 'GUSTAVO FIORDA MAQUINARIAS S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.fiordagustavo.com.ar/', 580502),
+(12647, 'HERNANDEZ HUGO SEBASTIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 529064),
+(12648, 'HERRERA F-HERRERA N-GEREZ D SH', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 583936),
+(12649, 'HERRERO RAUL MARIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 318769),
+(12650, 'HOJOBAR S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 519007),
+(12651, 'HOLLENDER PEDRO MARCELO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 468291),
+(12652, 'Hotel Elegance', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.elegancetresarroyos.com.ar/', 485676),
+(12653, 'Hugo Costanzo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 220020),
+(12654, 'IELMINI NELIDA ESTER', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 483571),
+(12655, 'INGENERARE SRL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://fluorless.com.ar/', 545211),
+(12656, 'INMOBILIARIA VENTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12657, 'INSEL INGENIERIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.inselingenieria.com/', 366308),
+(12658, 'INSTITUTO BIOQUIMICO TS.AS.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.ibta.com.ar/', 280617),
+(12659, 'IRIART FERNANDO RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 257462),
+(12660, 'IRIBARNE EDUARDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 610472),
+(12661, 'ISMAEL CLAUDIO ANIBAL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 456689),
+(12662, 'ITALIANI MARIA ELENA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 378314),
+(12663, 'JACOBSEN ANDRES RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 354695),
+(12664, 'JALLE ANDRES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 572901),
+(12665, 'JAUREGUIBEHERE LIA MARIA JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 467382),
+(12666, 'JEANNERET JULIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 205450),
+(12667, 'JORGE ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 499123),
+(12668, 'LA AGRICOLA GANAD.DE TS.AS.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.laagricolaganadera.com.ar/', 19914),
+(12669, 'La Atomica Carlos Cerri e Hijo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.laatomica.com.ar/', 395601),
+(12670, 'LA CASA DE LOS BULONES NECOCHE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.lacasadelosbulones.com.ar/', 459840),
+(12671, 'La casa del pantalon', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 185127),
+(12672, 'LA PERSEVERANCIA SEGUROS S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 20167),
+(12673, 'La Voz del Pueblo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 567806),
+(12674, 'LABORDE CARLOS ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 222721),
+(12675, 'LAGO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.chevroletlago.com.ar/', 498416),
+(12676, 'LAMBERTA JORGE MIGUEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 459361),
+(12677, 'LANCE FABIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 570574),
+(12678, 'LARA ROBERTO MARCELO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 391951),
+(12679, 'LARRIESTRA BEATRIZ CARLOTA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 437776),
+(12680, 'LARSEN CESAR GERARDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 379005),
+(12681, 'LAS MECHAS SOCIEDAD DE HECHO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 566098),
+(12682, 'LASO - 3 ARROYOS S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.laso.com.ar/laempresa.htm', 583819),
+(12683, 'LATORRE ALEJANDRO MARTIN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 522993),
+(12684, 'LATORRE JOAQUIN IGNACIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 550055),
+(12685, 'LAVANDERIA TRES ARROYOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 229270),
+(12686, 'LAVERENS GUSTAVO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 506122),
+(12687, 'Leguizamon Esteban Horacio', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 558341),
+(12688, 'LETAMENDI LUIS ANGEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 392671),
+(12689, 'LIEBANA JORGE F.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 188359),
+(12690, 'LIFIRON S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 548935),
+(12691, 'LLANOS ALICIA CLALFIRA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 594466),
+(12692, 'LOFIEGO JOSE JUIS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 406583),
+(12693, 'LOPEZ IRMA ELENA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 471305),
+(12694, 'LOPEZ NESTOR FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 445931),
+(12695, 'LOSADA RICARDO OSVALDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 346889),
+(12696, 'LUIS BLANCO S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 300357),
+(12697, 'M.A.M. S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.mam-sa.com/contacto.php', 421456),
+(12698, 'MACHADO ROBERTO OSCAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 382975),
+(12699, 'MACHADO ROBERTO OSCAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 396998),
+(12700, 'MACIEL HERMANOS S.A.E.C.I.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 223744),
+(12701, 'MADERAS S. JOSE DE LOS ARROYOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 536844),
+(12702, 'MAPFRE ARGENTINA SEGUROS S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 536147),
+(12703, 'Marco Polo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 533944),
+(12704, 'Marea', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 507163),
+(12705, 'MARINO MONICA GRACIELA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 476791),
+(12706, 'MARKON MARIA TERESA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 589765),
+(12707, 'MARTINEZ CLAUDIO NESTOR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 402745),
+(12708, 'MARTINEZ DE CAMPOS ARSENIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 456618),
+(12709, 'MARTINEZ JULIO CESAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 548759),
+(12710, 'MARTINEZ RUBEN OSCAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 999999),
+(12711, 'MARTIN-GUIDO-PERALTA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 481447),
+(12712, 'MASCHI EDUARDO ERNESTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.eduardomaschi.com.ar/', 199485),
+(12713, 'MASTROSIMONE GUSTAVO DOMINGO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 402370),
+(12714, 'MAYER RICARDO AUTOMOTORES S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 530725),
+(12715, 'MENNA CEREALES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 343471),
+(12716, 'MENNA ELIANA ANDREA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 599793),
+(12717, 'MENNA LORENZO N.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 187828),
+(12718, 'MEO GUZMAN ENRIQUE FELIX', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 399683),
+(12719, 'Mera Fernando Omar', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 513555),
+(12720, 'MERLINO PLAN S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 450661),
+(12721, 'MERLO CARMEN HERMINIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 335421),
+(12722, 'MESA DE FORCHETTI MONICA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 354826),
+(12723, 'METALURGICA MOLINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 386872),
+(12724, 'Miedan, Ana Karina', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 439826),
+(12725, 'MILLA SUR S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.grupo-milla.com.ar/', 604774),
+(12726, 'MIO FIGLIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5594994),
+(12727, 'MOIRANO EVELIA LILIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 512776),
+(12728, 'MOIZZI JUAN JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 468796),
+(12729, 'MOLINA HECTOR MARIANO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 561279),
+(12730, 'MOLINOS TRES ARROYOS S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 400725),
+(12731, 'MOLINOS ZALLA S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.molinoszalla.com.ar/', 525473),
+(12732, 'MOLLER GUSTAVO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 285436),
+(12733, 'MONSALVO MARIA DE LOS ANGELES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 522980),
+(12734, 'MONTESINOS JOSE MANUEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 308092),
+(12735, 'MORA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 582955),
+(12736, 'MORAN JORGE ANTONIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 366021),
+(12737, 'MULLER DE PRADO BLANCA SUSANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 310109),
+(12738, 'NIELSEN SILVINA ANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 468682),
+(12739, 'NIKRO S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 532514),
+(12740, 'NOICSA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 533638),
+(12741, 'OHACO RAUL BAUTISTA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 336734),
+(12742, 'OLEOHIDRAULICA DI ROCCO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 381516),
+(12743, 'OLOCCO BARTOLO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 240116),
+(12744, 'OLSEN CRISTIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 460093),
+(12745, 'ONGARINI LIVIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 195911),
+(12746, 'PALLA SILVIA CRISTINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 500757),
+(12747, 'PALLADINO  S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 392802),
+(12748, 'PALMA NORA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 488853),
+(12749, 'Panaderia San Agustin', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 559673),
+(12750, 'Panificadora San Juan', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 519850),
+(12751, 'PANNELLA SERGIO RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 490843),
+(12752, 'PARDO ALBERTO ARNALDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.castelliypardo.com/', 193249),
+(12753, 'Parque Hotel', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.parquehotel.com.ar/', 190886),
+(12754, 'PARRAVICINI EDUARDO RAUL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 89832),
+(12755, 'PASCUAL SILVIA ADRIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 398761),
+(12756, 'PAZOS DE VELOSO MABEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 417071),
+(12757, 'PC TRUCKS TRES ARROYOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.pctrucks.com.ar/', 574455),
+(12758, 'PELLITERO MARIA LAURA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 566245),
+(12759, 'Penelope Lanas', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 399133),
+(12760, 'PENNINI MARIO A Y DELFOR A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 470917),
+(12761, 'PEQUEÃ‘O JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 213817),
+(12762, 'PERCON MATERIALES Y CONST.S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 585581),
+(12763, 'PEREZ DALSGAARD Y CIA.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 261225),
+(12764, 'PEREZ GUILLERMO LUIS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 271729),
+(12765, 'PEREZ GUSTAVO MIGUEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 431048),
+(12766, 'PEREZ MARIA ISABEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 459938),
+(12767, 'PEREZ NELSON ADRIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 480336),
+(12768, 'PEREZ PAULA ANDREA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 464554),
+(12769, 'Perfumeria Beatriz', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 333007),
+(12770, 'PERTICARARI JUAN PABLO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 505840),
+(12771, 'PETELA HECTOR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 307138),
+(12772, 'PIERINI CARLOS FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 451206),
+(12773, 'PINTURERIAS RUCCI S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 520667),
+(12774, 'PIROSANTO CAMILO ALDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 318613),
+(12775, 'Pizza 3', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.pizza-3.com/legal', 559074),
+(12776, 'PODESTA MARIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 491840),
+(12777, 'POLIMED DE TRES ARROYOS S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 488967),
+(12778, 'PONCE EDUARDO ESTEBAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 336620),
+(12779, 'POULSEN PEDRO-CAZEAUX FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 543871),
+(12780, 'PRIETO JUAN JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 483148),
+(12781, 'PROCACCINI FRANCISCO ALFREDO Y', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 265122),
+(12782, 'PRODYSER S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 486699),
+(12783, 'Quimera Travel Group', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 537492),
+(12784, 'QUIMICA MOLERO S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 521811),
+(12785, 'Quintana Roberto Mario', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 346788),
+(12786, 'RANZINI MATIAS FEDERICO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 581961),
+(12787, 'RAVELLA RICARDO H.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 237406),
+(12788, 'RE MARIO CESAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 460110),
+(12789, 'RECARI MARIANO (PanaderÃ­a Bel', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 446101),
+(12790, 'RECICLADOS TRES ARROYOS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 452359),
+(12791, 'RED 24', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 588784),
+(12792, 'REFAFLOTO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 507701),
+(12793, 'REFRESH', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 393144),
+(12794, 'RENDO DE PODESTA IRMA MABEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 404374),
+(12795, 'REY ANA MARIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 408574),
+(12796, 'RIDINO EDUARDO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 478825),
+(12797, 'ROAS SACIF', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://roas.com.ar/', 585507),
+(12798, 'RODERA FRANCISCO Y JORGE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 471565),
+(12799, 'RODRIGUEZ TERESA ANGELICA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 470933),
+(12800, 'ROLANDO LUIS ROBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 352691),
+(12801, 'RUBIO DANIEL CECILIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 312321),
+(12802, 'SABATINI MARCELO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 502490),
+(12803, 'SAEZ SILVIA NELLY', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 348926),
+(12804, 'SAGARDOY FERNANDO JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 514611),
+(12805, 'SAINI SERGIO DANIEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 430487),
+(12806, 'SALOME JULIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 256159),
+(12807, 'SAN PELLEGRINI DE M.CARMEN DOR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 78546),
+(12808, 'SANCHEZ ELIZABETH', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 581828),
+(12809, 'SANCHEZ GRACIELA NOEMI', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 515315),
+(12810, 'SANCHEZ MONICA LUJAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 572800),
+(12811, 'SANCHEZ N.DE PEREYRA MARIA S.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 401689),
+(12812, 'SANDE JUAN JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 349965),
+(12813, 'Sandra Marisa Rivero', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 505808),
+(12814, 'SANI TRES S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 544227),
+(12815, 'SANTAJULIANA M. ALEJANDRA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 444628),
+(12816, 'SANTIRSO MARIA ROSANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 558976),
+(12817, 'SANTOS NESTOR HUGO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 300546),
+(12818, 'SAURO ROBERTO CESAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 360973),
+(12819, 'SCARCELLA DIEGO JOSE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 566304),
+(12820, 'SCHENCH ANDREA FABIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 584441),
+(12821, 'SCHUMACHER ALFREDO Y LUCAS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.oleodinamicatrh.com.ar/', 576143),
+(12822, 'Sebastian Rosales', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5597406),
+(12823, 'SEGURID. FENIX S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 569275),
+(12824, 'SEMILLERA PAMPA FERTIL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.pampafertilsemillas.com.ar/', 326399),
+(12825, 'SEQUEIRA CARLOS ENRIQUE', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 229717),
+(12826, 'SISTEMAS TERMODINAMICOS S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.trezzo.com.ar/', 463124),
+(12827, 'SOBANSKI VICTOR ADOLFO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 400044),
+(12828, 'SOC. DE TRANSP.LIBRES TS.AS.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 171263),
+(12829, 'SODA LA HUELLA S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 359225),
+(12830, 'SODE HORACIO ABEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.implementossode.com.ar/', 230928),
+(12831, 'SORIANO MIGUEL ANGEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 262714),
+(12832, 'SORIANO RAFAEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://sorianoinmobiliaria.com.ar/', 233714),
+(12833, 'SPENZA MARIANO M.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5596458),
+(12834, 'STARCEL PAMPA CENTRO S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 601728),
+(12835, 'SUAREZ ADELA JOSEFINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 474625),
+(12836, 'SUAREZ JORGE EDUARDO S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.jorgesuarezsa.com.ar/', 175766),
+(12837, 'SUPERCARNE S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 439969),
+(12838, 'SUPERMERCADO PLANETA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.supermercadoplaneta.com.ar/', 310659),
+(12839, 'SUR AGROPECUARIA S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 565583),
+(12840, 'SURIA ISMAEL C.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 148294),
+(12841, 'TARABORELLI MARIO JESUS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 420550),
+(12842, 'TARANTELA ELVIRA ELSA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 548661),
+(12843, 'TARJETA NARANJA SA.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.tarjetanaranja.com/', 561918),
+(12844, 'TARQUINUS ALEJANDRA GLADYS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 458902),
+(12845, 'TEILETCHE ENRIQUE Y CIA.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 189907),
+(12846, 'TIEMERSMA SEBASTIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 520319);
+INSERT INTO `empresa` (`idempresa`, `denominacion`, `idrubro`, `detactividad`, `cantempleados`, `idcategoria`, `fechainicioce`, `activo`, `importemensual`, `fechafundacion`, `cuit`, `web`, `numusuario`) VALUES
+(12847, 'Tito Otero', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.titootero.com/', 268598),
+(12848, 'TORRES CARIONI MARIANA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 375788),
+(12849, 'TORRES CARIONI SANTIAGO nestor', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 346140),
+(12850, 'TOSTEX S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.tostex.com.ar/', 541691),
+(12851, 'TRAFER SAIC', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.trafer.com.ar/', 329749),
+(12852, 'TRANSPORTE GOIZUETA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 366122),
+(12853, 'TRAVERSO GUILLERMO HERNAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 482750),
+(12854, 'Trelactea', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://trelactea.com/', 431194),
+(12855, 'TRESNECO S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 552655),
+(12856, 'TRIBIÃ‘O ALBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 459967),
+(12857, 'TRUCK EXPRESS S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.transportetrucksexpress.com/', 506498),
+(12858, 'TUMINI D. Y J. Y MENNA H.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 311571),
+(12859, 'TURINI PABLO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 587859),
+(12860, 'UGALDE ALDO FABIAN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 428963),
+(12861, 'ULLERUP RAUL ADOLFO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 316811),
+(12862, 'UNIVALORES S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5594397),
+(12863, 'URBAN ANDERSEN MARCOS G.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 590367),
+(12864, 'URBIETA ANDRES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5596845),
+(12865, 'URRUTIA MARIA MARTA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 522300),
+(12866, 'UZCUDUN S.A.F.I.M.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 431413),
+(12867, 'UZIDINGER EDUARDO NICOLAS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 392479),
+(12868, 'VACCA REINALDO RUBEN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 311861),
+(12869, 'Venecia Turismo', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 543813),
+(12870, 'VERGNANO RAUL ANDRES', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 524971),
+(12871, 'VERKUYL ASTRID CINTIA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 525792),
+(12872, 'VETERINARIA EL MOLINO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 478069),
+(12873, 'VIGILAN S.R.L.AG.DE INV.Y SEG.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', 'http://www.securitas.com/ar/', 595160),
+(12874, 'VILLAFRANCA MARTA S. Y MARIA E', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 421528),
+(12875, 'VILLALBA PEDRO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 536134),
+(12876, 'VILLEMUR GUSTAVO MIGUEL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 370477),
+(12877, 'VINOTECA LOS TONELES S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 598725),
+(12878, 'Viviana A Villalva', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 229658),
+(12879, 'VIVIANI CARMEN', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 209692),
+(12880, 'VIZZOLINI HUGO CESAR', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 310499),
+(12881, 'VIZZOLINI NESTOR J.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 221043),
+(12882, 'WEHRHANNE HORACIO MARIO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 340816),
+(12883, 'WEST FERNANDO LUIS', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 552336),
+(12884, 'ZIJLSTRA JORGE ROBERTO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 424255),
+(12885, 'ZIJLSTRA SILVINA', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 586458),
+(12886, 'ZORRILLA HNOS. S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5595870),
+(12887, 'ZOTES SAUL FRANCISCO', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 338943),
+(12888, 'ZURITA HNOS. Y CIA.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 152897),
+(12889, 'RUTA 2 S.R.L.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 261179),
+(12890, 'MIO FIGLIO SRL', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 5594994),
+(12891, 'NALDO LOMBARDI S.A', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 555438),
+(12892, 'EL CONSTRUCTOR DE TS AS S.A.', 17, 'Sin completar', 0, 24, '2015-07-16', 0, '0', '2015-07-16', '0', '', 595678),
+(12893, 'Test', 17, '', 300, 24, '2015-07-16', 1, '600', '0000-00-00', '00000', 'www.cresta.edu.ar', 0);
 
 -- --------------------------------------------------------
 
@@ -331,7 +670,8 @@ CREATE TABLE IF NOT EXISTS `infcorreo` (
   `fecha` datetime NOT NULL,
   `adjunto` longtext NOT NULL,
   `mensaje` longtext NOT NULL,
-  `asunto` text NOT NULL
+  `asunto` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -339,7 +679,7 @@ CREATE TABLE IF NOT EXISTS `infcorreo` (
 --
 
 INSERT INTO `infcorreo` (`id`, `cantempresas`, `cantcontactos`, `arrayempresas`, `fecha`, `adjunto`, `mensaje`, `asunto`) VALUES
-(0, 5, 3, '["8652","8653"]', '2015-07-07 12:07:17', '{"name":"","type":"","tmp_name":"","error":4,"size":0}', '<p>asdsdasadasdsad</p>', 'asdasdasd');
+(0, 2, 0, '["12893"]', '2015-07-16 08:07:18', '{"name":"","type":"","tmp_name":"","error":4,"size":0}', '<p>asd</p>', 'asd');
 
 -- --------------------------------------------------------
 
@@ -348,7 +688,7 @@ INSERT INTO `infcorreo` (`id`, `cantempresas`, `cantcontactos`, `arrayempresas`,
 --
 
 CREATE TABLE IF NOT EXISTS `infmedidorexcel` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `actualizados` longtext NOT NULL,
   `totalregistros` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
@@ -359,23 +699,17 @@ CREATE TABLE IF NOT EXISTS `infmedidorexcel` (
   `empresaActualizada` int(11) NOT NULL,
   `relacionInsertada` int(11) NOT NULL,
   `medidorSinEmpresaInsertado` int(11) NOT NULL,
-  `medidorSinEmpresaActualizado` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+  `medidorSinEmpresaActualizado` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Volcado de datos para la tabla `infmedidorexcel`
 --
 
 INSERT INTO `infmedidorexcel` (`id`, `actualizados`, `totalregistros`, `fecha`, `fallados`, `medidorInsertado`, `registroNoInsertado`, `medidorActualizado`, `empresaActualizada`, `relacionInsertada`, `medidorSinEmpresaInsertado`, `medidorSinEmpresaActualizado`) VALUES
-(15, '""', 465, '2015-07-03 03:07:43', '""', 465, 0, 0, 0, 0, 465, 0);
-INSERT INTO `infmedidorexcel` (`id`, `actualizados`, `totalregistros`, `fecha`, `fallados`, `medidorInsertado`, `registroNoInsertado`, `medidorActualizado`, `empresaActualizada`, `relacionInsertada`, `medidorSinEmpresaInsertado`, `medidorSinEmpresaActualizado`) VALUES
-(16, '{"1":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ABELLEIRA FABIAN-LEN","cuit":"0","titular":"ABELLEIRA FABIAN-LEN"},"2":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ACA SALUD","cuit":"0","titular":"ACA SALUD COOPERATIV"},"3":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ACMC SRL","cuit":"0","titular":"ACMC S.R.L."},"4":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGF ALLIANZ ARG.CIA ","cuit":"0","titular":"AGF ALLIANZ ARG.CIA "},"5":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AGRO EL CARRETERO S.","cuit":"0","titular":"AGRO EL CARRETERO S."},"6":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGRO INDUSTRIA TRES ","cuit":"0","titular":"AGRO INDUSTRIA TRES "},"7":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AGRO-GILARDONI S.R.L","cuit":"0","titular":"AGRO-GILARDONI S.R.L"},"8":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGROPAL S.A.","cuit":"0","titular":"AGROPAL S.A."},"9":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGROPRIMUS S.A","cuit":"0","titular":"AGROPRIMUS S.A"},"10":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AGUADAS GOMEZ HNOS S","cuit":"0","titular":"AGUADAS GOMEZ HNOS S"},"11":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"AIELLO JOSE E HIJOS ","cuit":"0","titular":"AIELLO JOSE E HIJOS "},"12":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AIELLO NATALIO","cuit":"0","titular":"AIELLO NATALIO"},"13":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALARCON ANA VERONICA","cuit":"0","titular":"ALARCON ANA VERONICA"},"14":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALBA E.A.DE Y G.ALBA","cuit":"0","titular":"ALBA E.A.DE Y G.ALBA"},"15":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIZZOLINI HUGO CESAR","cuit":"0","titular":"ALBA MIRTA GRACIELA"},"16":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALBERCA FACUNDO SEBA","cuit":"0","titular":"ALBERCA FACUNDO SEBA"},"18":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALEGRO MARIA ANTONEL","cuit":"0","titular":"ALEGRO MARIA ANTONEL"},"20":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Aberturas Alemani","cuit":"0","titular":"ALEMANI CARLOS DANIE"},"21":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALONSO CARLOS ALBERT","cuit":"0","titular":"ALONSO CARLOS ALBERT"},"22":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALONSO MARIA ROSARIO","cuit":"0","titular":"ALONSO MARIA ROSARIO"},"23":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ALTUNA CARLOS F.","cuit":"0","titular":"ALTUNA CARLOS F."},"24":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ALVARADO S.A.","cuit":"0","titular":"ALVARADO S.A."},"25":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALVAREZ TARGISE JUAN","cuit":"0","titular":"ALVAREZ TARGISE JUAN"},"26":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ANA JORGE OSCAR","cuit":"0","titular":"ANA JORGE OSCAR"},"27":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ANDERBERG FERNANDO A","cuit":"0","titular":"ANDERBERG FERNANDO A"},"28":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ANDREATTA GRACIELA D","cuit":"0","titular":"ANDREATTA GRACIELA D"},"29":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"La Voz del Pueblo","cuit":"0","titular":"ANTONIO MACIEL S.R.L"},"30":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AQUATICA S.A. E\\/F.","cuit":"0","titular":"AQUATICA S.A. E\\/F."},"31":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ARAMBERRI LUIS ALFRE","cuit":"0","titular":"ARAMBERRI LUIS ALFRE"},"32":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ARANEGUI KARINA BEAT","cuit":"0","titular":"ARANEGUI KARINA BEAT"},"33":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Eduardo Ramon Jatib","cuit":"0","titular":"ARENAL PABLO E."},"34":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ARENAS OSVALDO ARIEL","cuit":"0","titular":"ARENAS OSVALDO ARIEL"},"35":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ARIAS AMALIA-GROENEN","cuit":"0","titular":"ARIAS AMALIA-GROENEN"},"37":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ARISTEGUI SERGIO FAB","cuit":"0","titular":"ARISTEGUI SERGIO FAB"},"39":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Antuen S.A.","cuit":"0","titular":"ARRECHEA JUAN FRANCI"},"40":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ARTURE DE MARTINEZ C","cuit":"0","titular":"ARTURE DE MARTINEZ C"},"41":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ASEF EDUARDO RUBEN","cuit":"0","titular":"ASEF EDUARDO RUBEN"},"42":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ASOC. DE ABOGADOS DE","cuit":"0","titular":"ASOC. DE ABOGADOS DE"},"43":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ASOC. MUTUAL DAN","cuit":"0","titular":"ASOC. MUTUAL DAN"},"45":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ASTIZ JORGE ARIEL","cuit":"0","titular":"ASTIZ JORGE ARIEL"},"46":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ASTIZ MARIANA","cuit":"0","titular":"ASTIZ MARIANA"},"47":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AZTIZ MARIO SANTIAGO","cuit":"0","titular":"ASTIZ MARIO SANTIAGO"},"48":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AUSTRAL MOTOR S.A.","cuit":"0","titular":"AUSTRAL MOTOR S.A."},"49":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AYALA RAMON ANDRES","cuit":"0","titular":"AYALA RAMON ANDRES"},"50":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BAQUEDANO MARTIN","cuit":"0","titular":"BAQUEDANO MARTIN"},"51":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Barainca Eduardo","cuit":"0","titular":"BARAINCA EDUARDO JUA"},"52":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BARCALA SERGIO ANDRE","cuit":"0","titular":"BARCALA SERGIO ANDRE"},"53":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BARRAZA MARIA MATILD","cuit":"0","titular":"BARRAZA MARIA MATILD"},"54":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BARRERAS ALBERTO MIG","cuit":"0","titular":"BARRERAS ALBERTO MIG"},"56":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BASSINI MARIA PAULA","cuit":"0","titular":"BASSINI MARIA PAULA"},"57":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BAZAR EL MUNDIAL S.R","cuit":"0","titular":"BAZAR EL MUNDIAL S.R"},"58":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BEITIA LUIS ALBERTO","cuit":"0","titular":"BEITIA LUIS ALBERTO"},"59":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BENGOCHEA SUSANA MAR","cuit":"0","titular":"BENGOCHEA SUSANA MAR"},"60":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"BERESFORD S.A.","cuit":"0","titular":"BERESFORD S.A"},"61":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BETTOMEO ROBERTO SAN","cuit":"0","titular":"BETTOMEO ROBERTO SAN"},"62":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BIANCHI LUCIANO SEBA","cuit":"0","titular":"BIANCHI LUCIANO SEBA"},"63":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BONIFACIO LILIANA","cuit":"0","titular":"BONIFACIO LILIANA"},"64":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BONINI JUAN CARLOS","cuit":"0","titular":"BONINI JUAN CARLOS"},"65":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"BORIONI JUAN PABLO","cuit":"0","titular":"BORIONI JUAN PABLO"},"66":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CONSULTORA RH -TRES ","cuit":"0","titular":"BORRA JORGE RENATO"},"67":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BRAJOVICH GUILLERMO ","cuit":"0","titular":"BRAJOVICH GUILLERMO "},"68":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BRAVO CARLOS-MARQUIS","cuit":"0","titular":"BRAVO CARLOS-MARQUIS"},"69":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BREA DIEGO ALBERTO","cuit":"0","titular":"BREA DIEGO ALBERTO"},"70":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BREA OMAR","cuit":"0","titular":"BREA OMAR"},"71":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BUSTOS SILVINA LILIA","cuit":"0","titular":"BUSTOS SILVINA LILIA"},"72":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CABANE OSMAR ALBERTO","cuit":"0","titular":"CABANE OSMAR ALBERTO"},"74":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CAMBEX S.A.","cuit":"0","titular":"CAMBEX S.A."},"75":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CAMPAGNE MARIO CESAR","cuit":"0","titular":"CAMPAGNE MARIO CESAR"},"77":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CAMPOS CARMEN","cuit":"0","titular":"CAMPOS CARMEN"},"78":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CAMUS FLORENCIA AGUS","cuit":"0","titular":"CAMUS FLORENCIA AGUS"},"80":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Venecia Turismo","cuit":"0","titular":"CARRACEDO NORMA"},"81":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CARRERA HNOS.","cuit":"0","titular":"CARRERA HNOS."},"82":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CARRERA MARIA INES","cuit":"0","titular":"CARRERA MARIA INES"},"83":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CARRERA NELIDA SUSAN","cuit":"0","titular":"CARRERA NELIDA SUSAN"},"84":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CARRERA Y SALDUNA SO","cuit":"0","titular":"CARRERA Y SALDUNA SO"},"86":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CASA HUMBERTO LUCAIO","cuit":"0","titular":"CASA HUMBERTO LUCAIO"},"87":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CASTRO NELLY","cuit":"0","titular":"CASTRO NELLY"},"88":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CATALANO MAURO ELIO","cuit":"0","titular":"CATALANO MAURO ELIO"},"89":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CENTRO ACOPIADORES C","cuit":"0","titular":"CENTRO ACOPIADORES C"},"90":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CENTRO BULONERO TS.A","cuit":"0","titular":"CENTRO BULONERO TS.A"},"91":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CEPEDA MARISOL GRACI","cuit":"0","titular":"CEPEDA MARISOL GRACI"},"92":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CEPEDA SILVIA MARIA","cuit":"0","titular":"CEPEDA SILVIA MARIA"},"93":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CEREALERA TRES ARROY","cuit":"0","titular":"CEREALERA TRES ARROY"},"94":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CERIANI NANCY GRACIE","cuit":"0","titular":"CERIANI NANCY GRACIE"},"95":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"La Atomica Carlos Ce","cuit":"0","titular":"CERRI CARLOS E HIJOS"},"96":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CERVINI MARIA SUSANA","cuit":"0","titular":"CERVINI MARIA SUSANA"},"97":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"CIA.DE SEG.LA MERCAN","cuit":"0","titular":"CIA.DE SEG.LA MERCAN"},"98":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Agustin Clerch","cuit":"0","titular":"CLERCH AGUSTIN"},"99":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Clerch Ignacio Agust","cuit":"0","titular":"CLERCH IGNACIO"},"100":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CLUB DE CAZADORES DE","cuit":"0","titular":"CLUB DE CAZADORES DE"},"102":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COLANTONIO JOSE A.Y ","cuit":"0","titular":"COLANTONIO JOSE A.Y "},"104":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"COLLAZOS ALDO O.","cuit":"0","titular":"COLLAZOS ALDO O."},"106":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COLONNA OMAR RODOLFO","cuit":"0","titular":"COLONNA OMAR RODOLFO"},"107":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COMASA S.A.","cuit":"0","titular":"COMASA S.A."},"108":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COMPA\\u00d1IA EURO SRL.","cuit":"0","titular":"COMPA\\u00d1IA EURO SRL."},"109":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CONFITERIA LA PERLA ","cuit":"0","titular":"CONFITERIA LA PERLA "},"111":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CONTRERAS LUIS ALBER","cuit":"0","titular":"CONTRERAS LUIS ALBER"},"112":{"ModImpo":"Si","Empresa":"Actualizada","imp":200,"Medidor":"Actualizado","denominacion":"Cooperativa Agraria ","cuit":"0","titular":"COOP.AGRARIA DE TS.A"},"113":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"COOP.DE TRANSP.DE TS","cuit":"0","titular":"COOP.DE TRANSP.DE TS"},"114":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"COOP.ELECT.LTDA.DE C","cuit":"0","titular":"COOP.ELECT.LTDA.DE C"},"115":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"COOP.RURAL LTDA.ALFA","cuit":"0","titular":"COOP.RURAL LTDA.ALFA"},"116":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Hugo Costanzo","cuit":"0","titular":"COSTANZO HUGO JUAN"},"118":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CREDIL S.R.L.","cuit":"0","titular":"CREDIL S.R.L."},"119":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CUMECHE SRL","cuit":"0","titular":"CUMECHE S.R.L."},"120":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DABIEN DE CHIRINO MA","cuit":"0","titular":"DABIEN DE CHIRINO MA"},"121":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DAGUERRE CRISTINA JO","cuit":"0","titular":"DAGUERRE CRISTINA JO"},"122":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DATRI SANDRA","cuit":"0","titular":"D''ATRI SANDRA ELIZAB"},"123":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Parque Hotel","cuit":"0","titular":"DAWSON S.A."},"126":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE LA CAL FRANCISCO","cuit":"0","titular":"DE LA CAL FRANCISCO"},"127":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE LA PENNA JUAN CAR","cuit":"0","titular":"DE LA PENNA JUAN CAR"},"128":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SEGURID. FENIX S.A","cuit":"0","titular":"DE LA PENNA SEGURID."},"129":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Perfumeria Beatriz","cuit":"0","titular":"DE MARTINO MARIA EST"},"130":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE ZOETE SANDRA MARI","cuit":"0","titular":"DE ZOETE SANDRA MARI"},"131":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEJEAN ROBERTO OSCAR","cuit":"0","titular":"DEJEAN ROBERTO OSCAR"},"132":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DEL CASTA\\u00d1O ANGEL R","cuit":"0","titular":"DEL CASTA\\u00d1O ANGEL R"},"133":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEL GRANDE SERGIO FA","cuit":"0","titular":"DEL GRANDE SERGIO FA"},"134":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEL VALLE MARIA LOUR","cuit":"0","titular":"DEL VALLE MARIA LOUR"},"135":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEL VALLE NELSON BER","cuit":"0","titular":"DEL VALLE NELSON BER"},"136":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Delgado Sonia Alejan","cuit":"0","titular":"DELGADO SONIA ALEJAN"},"138":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI CROCE CLAUDIA ALE","cuit":"0","titular":"DI CROCE CLAUDIA ALE"},"139":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Trelactea","cuit":"0","titular":"DI CROCE LAURA OFELI"},"140":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MORA","cuit":"0","titular":"DI FELICE DORA NOEMI"},"141":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI FULVIO LUIS EUGEN","cuit":"0","titular":"DI FULVIO LUIS EUGEN"},"142":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI MARCO JUAN E.","cuit":"0","titular":"DI MARCO JUAN E."},"143":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI ROCCO MARIA CECIL","cuit":"0","titular":"DI ROCCO MARIA CECIL"},"144":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DI SALVO GUILLERMO E","cuit":"0","titular":"DI SALVI GUILLERMO E"},"145":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI SALVO GRACIELA ES","cuit":"0","titular":"DI SALVO GRACIELA ES"},"146":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI SALVO S.A.","cuit":"0","titular":"DI SALVO S.A."},"147":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DI TOMMASO MARIO Y T","cuit":"0","titular":"DI TOMMASO MARIO Y T"},"148":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DI VITO CARMELO A.","cuit":"0","titular":"DI VITO CARMELO A."},"149":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI VITO CLAUDIA SUSA","cuit":"0","titular":"DI VITO CLAUDIA SUSA"},"150":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DIAZ RAUL ALBERTO","cuit":"0","titular":"DIAZ RAUL ALBERTO"},"151":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DIFONZO & MARCHI","cuit":"0","titular":"DIFONZO & MARCHI"},"154":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TRIBI\\u00d1O ALBERTO","cuit":"0","titular":"DUCHOSAL VERONICA"},"155":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DUPUY STELLA MARIS","cuit":"0","titular":"DUPUY STELLA MARIS"},"156":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"EICHLER EDUARDO HUGO","cuit":"0","titular":"EICHLER EDUARDO HUGO"},"157":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ELCUAZ HECTOR A.","cuit":"0","titular":"ELCUAZ HECTOR A."},"158":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ELGART REYNALDO E Y ","cuit":"0","titular":"ELGART REYNALDO E Y "},"159":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ELGART VERONICA Y EL","cuit":"0","titular":"ELGART VERONICA Y EL"},"160":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ELICALDE NESTOR JUAN","cuit":"0","titular":"ELICALDE NESTOR JUAN"},"161":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ERRAZU MARIA EMILIA","cuit":"0","titular":"ERRAZU MARIA EMILIA"},"162":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ESPELUSE RODOLFO Y C","cuit":"0","titular":"ESPELUSE RODOLFO Y C"},"163":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ETCHEVERRY ALFREDO J","cuit":"0","titular":"ETCHEVERRY ALFREDO J"},"164":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ETERNET S.R.L.","cuit":"0","titular":"ETERNET S.R.L."},"165":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"EXPRESO EL VASQUITO ","cuit":"0","titular":"EXPRESO EL VASQUITO "},"166":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FAGEMAR S.A.","cuit":"0","titular":"FAGEMAR S.A."},"167":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"FAMTEX S.R.L.","cuit":"0","titular":"FAMTEX S.R.L."},"169":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FARINA AMERICO","cuit":"0","titular":"FARINA AMERICO"},"170":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FARMACIA TRES ARROYO","cuit":"0","titular":"FARMACIA TRES ARROYO"},"171":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Marco Polo","cuit":"0","titular":"FERNANDEZ JAVIER EDU"},"172":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERNANDEZ CRISTINA","cuit":"0","titular":"FERNANDEZ MARIA CRIS"},"173":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERNANDEZ MIGUEL ANG","cuit":"0","titular":"FERNANDEZ MIGUEL ANG"},"174":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERNANDEZ RODOLFO Y ","cuit":"0","titular":"FERNANDEZ RODOLFO Y "},"175":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"FERNANDEZ VILLANUEVA","cuit":"0","titular":"FERNANDEZ VILLANUEVA"},"176":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERRARI RICARDO DOMI","cuit":"0","titular":"FERRARI RICARDO DOMI"},"177":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"REFRESH","cuit":"0","titular":"FERRARIO GUILLERMO E"},"178":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERRARIO GUSTAVO ADR","cuit":"0","titular":"FERRARIO GUSTAVO ADR"},"185":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FOSQUE MARIA ADELA","cuit":"0","titular":"FOSQUE MARIA ADELA"},"186":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"FRIGORIFICO CAPRIATA","cuit":"0","titular":"FRIGORIFICO CAPRIATA"},"187":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FUCHS SANDRA CECILIA","cuit":"0","titular":"FUCHS SANDRA CECILIA"},"189":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"La casa del pantalon","cuit":"0","titular":"GALILEA EUGENIO HECT"},"190":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GALLARDO JAVIER NEST","cuit":"0","titular":"GALLARDO JAVIER NEST"},"192":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Ganim Nestor Hugo","cuit":"0","titular":"GANIM NESTOR HUGO"},"193":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Elsa Maria Garat","cuit":"0","titular":"GARAT ELSA MARIA"},"194":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Childrens Wish","cuit":"0","titular":"GARCIA ANA CAROLINA"},"195":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GARCIA GABRIEL Y GUS","cuit":"0","titular":"GARCIA GABRIEL Y GUS"},"196":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GARCIA ROCIO","cuit":"0","titular":"GARCIA MARCONI ROCIO"},"197":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GARCIA MARIA DEL CAR","cuit":"0","titular":"GARCIA MARIA DEL CAR"},"198":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GARCIA MAURICIO DAVI","cuit":"0","titular":"GARCIA MAURICIO DAVI"},"199":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GARCIA SERGIO RAUL","cuit":"0","titular":"GARCIA SERGIO RAUL"},"200":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Amestoy Automotores ","cuit":"0","titular":"GASANEO Y AMESTOY"},"201":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GASPAROLI ANA TERESA","cuit":"0","titular":"GASPAROLI ANA TERESA"},"202":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GEJO RUBEN Y RODOLFO","cuit":"0","titular":"GEJO RUBEN Y RODOLFO"},"203":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GENOVESI HNOS.S.R.L","cuit":"0","titular":"GENOVESI HNOS.S.R.L"},"204":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GIACOMINO ANDREA SUS","cuit":"0","titular":"GIACOMINO ANDREA SUS"},"206":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Acosta Juan Enrique","cuit":"0","titular":"GIDINI MARGARITA AGU"},"207":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GIMNASIO STADIUM","cuit":"0","titular":"GIMNASIO STADIUM"},"209":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GIULIANI HECTOR Y LU","cuit":"0","titular":"GIULIANI HECTOR Y LU"},"210":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ JORGE VENTU","cuit":"0","titular":"GONZALEZ JORGE VENTU"},"211":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ LUIS ALBERT","cuit":"0","titular":"GONZALEZ LUIS ALBERT"},"212":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ MARCELO GAB","cuit":"0","titular":"GONZALEZ MARCELO GAB"},"213":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ MARCELO OSC","cuit":"0","titular":"GONZALEZ MARCELO OSC"},"214":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ MARIA LAURA","cuit":"0","titular":"GONZALEZ MARIA LAURA"},"215":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GRANDA LUCIANO","cuit":"0","titular":"GRANDA LUCIANO"},"216":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GROSSO CLAUDIA LUJAN","cuit":"0","titular":"GROSSO CLAUDIA LUJAN"},"217":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GRUAS Y MONTAJES IOR","cuit":"0","titular":"GRUAS Y MONTAJES IOR"},"218":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GUAZZORA ELSA CELICA","cuit":"0","titular":"GUAZZORA ELSA CELICA"},"219":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GUILLERMO ECHEVARRIA","cuit":"0","titular":"GUILLERMO ECHEVARRIA"},"220":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GUISASOLA MARIA LEON","cuit":"0","titular":"GUISASOLA MARIA LEON"},"222":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GUSTAVO FIORDA MAQUI","cuit":"0","titular":"GUSTAVO FIORDA MAQUI"},"223":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HERNANDEZ HUGO SEBAS","cuit":"0","titular":"HERNANDEZ HUGO SEBAS"},"224":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HERRERA F-HERRERA N-","cuit":"0","titular":"HERRERA F-HERRERA N-"},"225":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"HERRERO RAUL MARIO","cuit":"0","titular":"HERRERO RAUL MARIO"},"226":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MACHADO ROBERTO OSCA","cuit":"0","titular":"HID MARIO HORACIO"},"227":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Marea","cuit":"0","titular":"HIDALGO MARIA EUGENI"},"229":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HOJOBAR S.A.","cuit":"0","titular":"HOJOBAR S.A."},"230":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HOLLENDER PEDRO MARC","cuit":"0","titular":"HOLLENDER PEDRO MARC"},"232":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"IELMINI NELIDA ESTER","cuit":"0","titular":"IELMINI NELIDA ESTER"},"234":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"INGENERARE SRL","cuit":"0","titular":"INGENERARE SRL"},"235":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"INSTITUTO BIOQUIMICO","cuit":"0","titular":"INSTITUTO BIOQUIMICO"},"236":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"IRIART FERNANDO RAUL","cuit":"0","titular":"IRIART FERNANDO RAUL"},"237":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"IRIBARNE EDUARDO","cuit":"0","titular":"IRIBARNE EDUARDO"},"239":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ISMAEL CLAUDIO ANIBA","cuit":"0","titular":"ISMAEL CLAUDIO ANIBA"},"240":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ITALIANI MARIA ELENA","cuit":"0","titular":"ITALIANI MARIA ELENA"},"241":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VETERINARIA EL MOLIN","cuit":"0","titular":"ITURBURU MARIA ISABE"},"242":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JACOBSEN ANDRES RAUL","cuit":"0","titular":"JACOBSEN ANDRES RAUL"},"243":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JALLE ANDRES","cuit":"0","titular":"JALLE ANDRES"},"244":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JAUREGUIBEHERE LIA M","cuit":"0","titular":"JAUREGUIBEHERE LIA M"},"245":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JEANNERET JULIO","cuit":"0","titular":"JEANNERET JULIO"},"246":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JORGE ALBERTO","cuit":"0","titular":"JORGE ALBERTO"},"247":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"EDUARDO SANTIAGO JUA","cuit":"0","titular":"JUAN EDUARDO"},"248":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Pizza 3","cuit":"0","titular":"JURORUSA S.A"},"249":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"LA AGRICOLA GANAD.DE","cuit":"0","titular":"LA AGRICOLA GANAD.DE"},"250":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LA CASA DE LOS BULON","cuit":"0","titular":"LA CASA DE LOS BULON"},"251":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"LA PERSEVERANCIA SEG","cuit":"0","titular":"LA PERSEVERANCIA SEG"},"252":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LABORDE CARLOS ALBER","cuit":"0","titular":"LABORDE CARLOS ALBER"},"253":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"LAGO S.A.","cuit":"0","titular":"LAGO S.A."},"254":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LAMBERTA JORGE MIGUE","cuit":"0","titular":"LAMBERTA JORGE MIGUE"},"255":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LANCE FABIANA","cuit":"0","titular":"LANCE FABIANA"},"256":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LARA ROBERTO MARCELO","cuit":"0","titular":"LARA ROBERTO MARCELO"},"257":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LARRIESTRA BEATRIZ C","cuit":"0","titular":"LARRIESTRA BEATRIZ C"},"258":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LARSEN CESAR GERARDO","cuit":"0","titular":"LARSEN CESAR GERARDO"},"259":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LAS MECHAS SOCIEDAD ","cuit":"0","titular":"LAS MECHAS SOCIEDAD "},"260":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LATORRE ALEJANDRO MA","cuit":"0","titular":"LATORRE ALEJANDRO MA"},"261":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LATORRE JOAQUIN IGNA","cuit":"0","titular":"LATORRE JOAQUIN IGNA"},"262":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LAVANDERIA TRES ARRO","cuit":"0","titular":"LAVANDERIA TRES ARRO"},"264":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Dragon Rojo","cuit":"0","titular":"LEGUIZAMON CLAUDIA I"},"265":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Leguizamon Esteban H","cuit":"0","titular":"LEGUIZAMON ESTEBAN H"},"266":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LETAMENDI LUIS ANGEL","cuit":"0","titular":"LETAMENDI LUIS ANGEL"},"267":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LIEBANA JORGE F.","cuit":"0","titular":"LIEBANA JORGE F."},"268":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LIFIRON S.A.","cuit":"0","titular":"LIFIRON S.A"},"269":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LLANOS ALICIA CLALFI","cuit":"0","titular":"LLANOS ALICIA CLALFI"},"270":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOFIEGO JOSE JUIS","cuit":"0","titular":"LOFIEGO JOSE JUIS"},"271":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOPEZ IRMA ELENA","cuit":"0","titular":"LOPEZ IRMA ELENA"},"272":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOPEZ NESTOR FABIAN","cuit":"0","titular":"LOPEZ NESTOR FABIAN"},"273":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOSADA RICARDO OSVAL","cuit":"0","titular":"LOSADA RICARDO OSVAL"},"274":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Despensa El Gauchito","cuit":"0","titular":"LUCERO OLGA"},"275":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"LUIS BLANCO S.A","cuit":"0","titular":"LUIS BLANCO S.A"},"276":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MACHADO ROBERTO OSCA","cuit":"0","titular":"MACHADO ROBERTO OSCA"},"277":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"MACIEL HERMANOS S.A.","cuit":"0","titular":"MACIEL HERMANOS S.A."},"278":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MADERAS S. JOSE DE L","cuit":"0","titular":"MADERAS S. JOSE DE L"},"279":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"M.A.M. S.A.","cuit":"0","titular":"M.A.M. S.A."},"280":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MARINO MONICA GRACIE","cuit":"0","titular":"MARINO MONICA GRACIE"},"281":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MARTINEZ CLAUDIO NES","cuit":"0","titular":"MARTINEZ CLAUDIO NES"},"282":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MARTINEZ DE CAMPOS A","cuit":"0","titular":"MARTINEZ DE CAMPOS A"},"283":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Agromar SA","cuit":"0","titular":"MARTINEZ FRANKLIN SE"},"284":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Compu3","cuit":"0","titular":"MARTINEZ GUILLERMO O"},"285":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MARTINEZ JULIO CESAR","cuit":"0","titular":"MARTINEZ JULIO CESAR"},"286":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MASCHI EDUARDO ERNES","cuit":"0","titular":"MASCHI EDUARDO ERNES"},"287":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MASTROSIMONE GUSTAVO","cuit":"0","titular":"MASTROSIMONE GUSTAVO"},"289":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MAYER RICARDO AUTOMO","cuit":"0","titular":"MAYER RICARDO AUTOMO"},"290":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MENNA ELIANA ANDREA","cuit":"0","titular":"MENNA ELIANA ANDREA"},"291":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MENNA CEREALES","cuit":"0","titular":"MENNA JOSE ANGEL"},"292":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MENNA LORENZO N.","cuit":"0","titular":"MENNA LORENZO N."},"293":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MEO GUZMAN ENRIQUE F","cuit":"0","titular":"MEO GUZMAN ENRIQUE F"},"294":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MERLINO PLAN S.A.","cuit":"0","titular":"MERLINO PLAN S.A."},"295":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MERLO CARMEN HERMINI","cuit":"0","titular":"MERLO CARMEN HERMINI"},"296":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MESA DE FORCHETTI MO","cuit":"0","titular":"MESA DE FORCHETTI MO"},"297":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Miedan, Ana Karina","cuit":"0","titular":"MIEDAN ANA KARINA"},"298":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MILLA SUR S.A.","cuit":"0","titular":"MILLA SUR S.A."},"299":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MIO FIGLIO","cuit":"0","titular":"MIO FIGLIO  S.R.L."},"300":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOIRANO EVELIA LILIA","cuit":"0","titular":"MOIRANO EVELIA LILIA"},"301":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOIZZI JUAN JOSE","cuit":"0","titular":"MOIZZI JUAN JOSE"},"303":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"METALURGICA MOLINA","cuit":"0","titular":"MOLINA EUGENIO ALFRE"},"304":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOLINA HECTOR MARIAN","cuit":"0","titular":"MOLINA HECTOR MARIAN"},"305":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MOLINOS TRES ARROYOS","cuit":"0","titular":"MOLINOS TRES ARROYOS"},"306":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MOLINOS ZALLA S.A","cuit":"0","titular":"MOLINOS ZALLA S.A."},"307":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOLLER GUSTAVO","cuit":"0","titular":"MOLLER ARTURO"},"308":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MONSALVO MARIA DE LO","cuit":"0","titular":"MONSALVO MARIA DE LO"},"309":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MONTESINOS JOSE MANU","cuit":"0","titular":"MONTESINOS JOSE MANU"},"310":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MORAN JORGE ANTONIO","cuit":"0","titular":"MORAN JORGE ANTONIO"},"312":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE BENEDETTO AUGUSTO","cuit":"0","titular":"MUNGAI MARIA MERCEDE"},"314":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"NALDO LOMBARDI S.A","cuit":"0","titular":"NALDO LOMBARDI S.A"},"315":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"NIKRO S.A","cuit":"0","titular":"NIKRO S.A"},"316":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"NOICSA S.A.","cuit":"0","titular":"NOICSA S.A."},"317":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Mera Fernando Omar","cuit":"0","titular":"NOVILLO VIRGINIA VER"},"318":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OHACO RAUL BAUTISTA","cuit":"0","titular":"OHACO RAUL BAUTISTA"},"319":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OLEOHIDRAULICA DI RO","cuit":"0","titular":"OLEOHIDRAULICA DI RO"},"320":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OLOCCO BARTOLO","cuit":"0","titular":"OLOCCO BARTOLO"},"321":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OLSEN CRISTIAN","cuit":"0","titular":"OLSEN CRISTIAN"},"322":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ONGARINI LIVIO","cuit":"0","titular":"ONGARINI LIVIO"},"323":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Tito Otero","cuit":"0","titular":"OTERO OSCAR ALBERTO"},"324":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PALLA SILVIA CRISTIN","cuit":"0","titular":"PALLA SILVIA CRISTIN"},"325":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PALLADINO  S.A.","cuit":"0","titular":"PALLADINO  S.A."},"326":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PALMA NORA","cuit":"0","titular":"PALMA NORA"},"327":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PASCUAL SILVIA ADRIA","cuit":"0","titular":"PASCUAL SILVIA ADRIA"},"328":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PAZOS DE VELOSO MABE","cuit":"0","titular":"PAZOS DE VELOSO MABE"},"329":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PC TRUCKS TRES ARROY","cuit":"0","titular":"PC TRUCKS TRES ARROY"},"330":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEQUE\\u00d1O JOSE","cuit":"0","titular":"PEQUE\\u00d1O JOSE"},"331":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FLYING MOTORS","cuit":"0","titular":"PEREYRA ESTEBAN CEFE"},"332":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PEREZ DALSGAARD Y CI","cuit":"0","titular":"PEREZ DALSGAARD Y CI"},"333":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ GUILLERMO LUIS","cuit":"0","titular":"PEREZ GUILLERMO LUIS"},"334":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ GUSTAVO MIGUEL","cuit":"0","titular":"PEREZ GUSTAVO MIGUEL"},"335":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ MARIA ISABEL","cuit":"0","titular":"PEREZ MARIA ISABEL"},"336":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ NELSON ADRIAN","cuit":"0","titular":"PEREZ NELSON ADRIAN"},"337":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ PAULA ANDREA","cuit":"0","titular":"PEREZ PAULA ANDREA"},"338":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Gestion Inmobiliaria","cuit":"0","titular":"PEREZ RAUL MARTIN"},"339":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PERTICARARI JUAN PAB","cuit":"0","titular":"PERTICARARI JUAN PAB"},"340":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PETELA HECTOR","cuit":"0","titular":"PETELA HECTOR"},"341":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PIERINI CARLOS FABIA","cuit":"0","titular":"PIERINI CARLOS FABIA"},"342":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PINTURERIAS RUCCI S.","cuit":"0","titular":"PINTURERIAS RUCCI S."},"343":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PIROSANTO CAMILO ALD","cuit":"0","titular":"PIROSANTO CAMILO ALD"},"344":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PODESTA MARIANA","cuit":"0","titular":"PODESTA MARIANA"},"345":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PONCE EDUARDO ESTEBA","cuit":"0","titular":"PONCE EDUARDO ESTEBA"},"346":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"POULSEN PEDRO-CAZEAU","cuit":"0","titular":"POULSEN PEDRO-CAZEAU"},"347":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Bodycare","cuit":"0","titular":"POZZOLI LAURA CECILI"},"349":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PRIETO JUAN JOSE","cuit":"0","titular":"PRIETO JUAN JOSE"},"350":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PROCACCINI FRANCISCO","cuit":"0","titular":"PROCACCINI FRANCISCO"},"351":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"QUIMICA MOLERO S.R.L","cuit":"0","titular":"QUIMICA MOLERO S.R.L"},"353":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RANZINI MATIAS FEDER","cuit":"0","titular":"RANZINI MATIAS FEDER"},"355":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RAVELLA RICARDO H.","cuit":"0","titular":"RAVELLA RICARDO H."},"356":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RE MARIO CESAR","cuit":"0","titular":"RE MARIO CESAR"},"357":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RECARI MARIANO (Pana","cuit":"0","titular":"RECARI MARIANO"},"358":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"REFAFLOTO S.A.","cuit":"0","titular":"REFAFLOTO S.A"},"359":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RENDO DE PODESTA IRM","cuit":"0","titular":"RENDO DE PODESTA IRM"},"360":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"REY ANA MARIA","cuit":"0","titular":"REY ANA MARIA"},"361":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RIDINO EDUARDO","cuit":"0","titular":"RIDINO EDUARDO NICOL"},"363":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ROAS SACIF","cuit":"0","titular":"ROAS SACIF"},"364":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RODERA FRANCISCO Y J","cuit":"0","titular":"RODERA FRANCISCO Y J"},"365":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Penelope Lanas","cuit":"0","titular":"RODRIGUEZ ELSA TERES"},"366":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RODRIGUEZ TERESA ANG","cuit":"0","titular":"RODRIGUEZ TERESA ANG"},"367":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ROLANDO LUIS ROBERTO","cuit":"0","titular":"ROLANDO LUIS ROBERTO"},"368":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGENCIA ISIDORO","cuit":"0","titular":"ROLDAN JUANA MARIELA"},"370":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RUBIO DANIEL CECILIO","cuit":"0","titular":"RUBIO DANIEL CECILIO"},"371":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RUTA 2 S.R.L.","cuit":"0","titular":"RUTA 2 S.R.L."},"372":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SABATINI MARCELO","cuit":"0","titular":"SABATINI MARCELO EDM"},"374":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAEZ SILVIA NELLY","cuit":"0","titular":"SAEZ SILVIA NELLY"},"375":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAGARDOY FERNANDO JO","cuit":"0","titular":"SAGARDOY FERNANDO JO"},"376":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAINI SERGIO DANIEL","cuit":"0","titular":"SAINI SERGIO DANIEL"},"377":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SALOME JULIO","cuit":"0","titular":"SALOME JULIO"},"378":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SAN PELLEGRINI DE M.","cuit":"0","titular":"SAN PELLEGRINI DE M."},"379":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANCHEZ ELIZABETH","cuit":"0","titular":"SANCHEZ ELIZABETH"},"380":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANCHEZ MONICA LUJAN","cuit":"0","titular":"SANCHEZ MONICA LUJAN"},"381":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANCHEZ N.DE PEREYRA","cuit":"0","titular":"SANCHEZ N.DE PEREYRA"},"382":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Quintana Roberto Mar","cuit":"0","titular":"SANCINETO VICTOR MAR"},"383":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANDE JUAN JOSE","cuit":"0","titular":"SANDE JUAN JOSE"},"384":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SANI TRES S.A.","cuit":"0","titular":"SANI TRES S.A."},"385":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANTAJULIANA M. ALEJ","cuit":"0","titular":"SANTAGIULIANA MARIA "},"386":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANTIRSO MARIA ROSAN","cuit":"0","titular":"SANTIRSO MARIA ROSAN"},"387":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAURO ROBERTO CESAR","cuit":"0","titular":"SAURO ROBERTO CESAR"},"388":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SCARCELLA DIEGO JOSE","cuit":"0","titular":"SCARCELLA DIEGO JOSE"},"389":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SCHENCH ANDREA FABIA","cuit":"0","titular":"SCHENCK ANDREA FABIA"},"390":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SCHUMACHER ALFREDO Y","cuit":"0","titular":"SCHUMACHER ALFREDO Y"},"391":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SEMILLERA PAMPA FERT","cuit":"0","titular":"SEMILLERA PAMPA FERT"},"392":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SEQUEIRA CARLOS ENRI","cuit":"0","titular":"SEQUEIRA CARLOS ENRI"},"393":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ESTUDIO PANDOLFO","cuit":"0","titular":"SERRANO ELSA GLORIA"},"394":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SISTEMAS TERMODINAMI","cuit":"0","titular":"SISTEMAS TERMODINAMI"},"395":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"BERTEL SKOU SAAII Y ","cuit":"0","titular":"SKOU BERTEL S.A."},"396":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SOBANSKI VICTOR ADOL","cuit":"0","titular":"SOBANSKI VICTOR ADOL"},"397":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SOC. DE TRANSP.LIBRE","cuit":"0","titular":"SOC. DE TRANSP.LIBRE"},"398":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Clinica Privada Hisp","cuit":"0","titular":"SOC.ESPA\\u00d1OLA DE S.M"},"399":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"RED 24","cuit":"0","titular":"SOCOLOFF MARTIN IVAN"},"400":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SODA LA HUELLA S.R.L","cuit":"0","titular":"SODA LA HUELLA S.R.L"},"401":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SODE HORACIO ABEL","cuit":"0","titular":"SODE HORACIO ABEL"},"402":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SORIANO MIGUEL ANGEL","cuit":"0","titular":"SORIANO MIGUEL ANGEL"},"403":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SORIANO RAFAEL","cuit":"0","titular":"SORIANO RAFAEL"},"404":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Panificadora San Jua","cuit":"0","titular":"SOULE SERGIO OSVALDO"},"405":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TORRES CARIONI MARIA","cuit":"0","titular":"SOUMOULOU PABLO HERN"},"406":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SPENZA MARIANO M.","cuit":"0","titular":"SPENZA MARIANO MARTI"},"408":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"STARCEL PAMPA CENTRO","cuit":"0","titular":"STARCEL PAMPA CENTRO"},"410":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SUAREZ ADELA JOSEFIN","cuit":"0","titular":"SUAREZ ADELA JOSEFIN"},"411":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUAREZ JORGE EDUARDO","cuit":"0","titular":"SUAREZ JORGE EDUARDO"},"412":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUPERCARNE S.A.","cuit":"0","titular":"SUPERCARNE S.A."},"413":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUPERMERCADO PLANETA","cuit":"0","titular":"SUPERMERCADO PLANETA"},"414":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUR AGROPECUARIA S.A","cuit":"0","titular":"SUR AGROPECUARIA S.A"},"415":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Sandra Marisa Rivero","cuit":"0","titular":"TARABORELLI ALEJANDR"},"416":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TARABORELLI MARIO JE","cuit":"0","titular":"TARABORELLI MARIO JE"},"417":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TARANTELA ELVIRA ELS","cuit":"0","titular":"TARANTELA ELVIRA ELS"},"418":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TARJETA NARANJA SA.","cuit":"0","titular":"TARJETA NARANJA SA."},"419":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Estacion de Servicio","cuit":"0","titular":"TARTAGLINO Y CIA. SR"},"420":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TEILETCHE ENRIQUE Y ","cuit":"0","titular":"TEILETCHE ENRIQUE Y "},"421":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RECICLADOS TRES ARRO","cuit":"0","titular":"TERRASANTA MONICA"},"422":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TIEMERSMA SEBASTIAN","cuit":"0","titular":"TIEMERSMA SEBASTIAN"},"423":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TORRES CARIONI SANTI","cuit":"0","titular":"TORRES CARIONI SANTI"},"425":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"TOSTEX S.A.","cuit":"0","titular":"TOSTEX S.A."},"426":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRAFER SAIC","cuit":"0","titular":"TRAFER SAIC"},"427":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRANSPORTE GOIZUETA","cuit":"0","titular":"TRANSPORTE GOIZUETA"},"428":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRAVERSO GUILLERMO H","cuit":"0","titular":"TRAVERSO GUILLERMO H"},"429":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TRESNECO S.A.","cuit":"0","titular":"TRESNECO S.A."},"431":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRUCK EXPRESS S.R.L.","cuit":"0","titular":"TRUCK EXPRESS S.R.L."},"432":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TUMINI D. Y J. Y MEN","cuit":"0","titular":"TUMINI D. Y J. Y MEN"},"433":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TURINI PABLO","cuit":"0","titular":"TURINI PABLO RENATO"},"434":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ULLERUP RAUL ADOLFO","cuit":"0","titular":"ULLERUP RAUL ADOLFO"},"435":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"UNIVALORES S.A.","cuit":"0","titular":"UNIVALORES S.A."},"436":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"URBAN ANDERSEN MARCO","cuit":"0","titular":"URBAN ANDERSEN MARCO"},"437":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"URBIETA ANDRES","cuit":"0","titular":"URBIETA ANDRES"},"438":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"URRUTIA MARIA MARTA","cuit":"0","titular":"URRUTIA MARIA MARTA"},"440":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"UZCUDUN S.A.F.I.M.","cuit":"0","titular":"UZCUDUN S.A.F.I.M."},"441":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"UZIDINGER EDUARDO NI","cuit":"0","titular":"UZIDINGER EDUARDO NI"},"442":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VACCA REINALDO RUBEN","cuit":"0","titular":"VACCA REINALDO RUBEN"},"443":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Automotores Vazquez","cuit":"0","titular":"VAZQUEZ MIGUEL ANGEL"},"444":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VERGNANO RAUL ANDRES","cuit":"0","titular":"VERGNANO RAUL ANDRES"},"445":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VERKUYL ASTRID CINTI","cuit":"0","titular":"VERKUYL ASTRID CINTI"},"447":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIGILAN S.R.L.AG.DE ","cuit":"0","titular":"VIGILAN S.R.L.AG.DE "},"448":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VILLAFRANCA MARTA S.","cuit":"0","titular":"VILLAFRANCA MARTA S."},"449":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Viviana A Villalva","cuit":"0","titular":"VILLALBA JORGE ALFRE"},"450":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"VILLALBA PEDRO","cuit":"0","titular":"VILLALBA PEDRO"},"452":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VILLEMUR GUSTAVO MIG","cuit":"0","titular":"VILLEMUR GUSTAVO MIG"},"453":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VINOTECA LOS TONELES","cuit":"0","titular":"VINOTECA LOS TONELES"},"454":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIVIANI CARMEN","cuit":"0","titular":"VIVIANI CARMEN"},"455":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIZZOLINI NESTOR J.","cuit":"0","titular":"VIZZOLINI NESTOR J."},"456":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"WEHRHANNE HORACIO MA","cuit":"0","titular":"WEHRHANNE HORACIO MA"},"457":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"WEST FERNANDO LUIS","cuit":"0","titular":"WEST FERNANDO LUIS"},"458":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ZIJLSTRA JORGE ROBER","cuit":"0","titular":"ZIJLSTRA JORGE ROBER"},"459":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ZIJLSTRA SILVINA","cuit":"0","titular":"ZIJLSTRA SILVINA ELE"},"460":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ZORRILLA HNOS. S.R.L","cuit":"0","titular":"ZORRILLA HNOS. S.R.L"},"461":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ZOTES SAUL FRANCISCO","cuit":"0","titular":"ZOTES SAUL FRANCISCO"},"462":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ZURITA HNOS. Y CIA.","cuit":"0","titular":"ZURITA HNOS. Y CIA."},"463":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"18 DE SETIEMBRE S.A","cuit":"0","titular":"18 DE SETIEMBRE S.A"},"464":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"LASO - 3 ARROYOS S.A","cuit":"0","titular":"3 ARROYOS S.A."},"465":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"3 NET S.A.","cuit":"0","titular":"3 NET S.A."}}', 465, '2015-07-03 03:07:36', '""', 0, 0, 465, 411, 0, 0, 54);
-INSERT INTO `infmedidorexcel` (`id`, `actualizados`, `totalregistros`, `fecha`, `fallados`, `medidorInsertado`, `registroNoInsertado`, `medidorActualizado`, `empresaActualizada`, `relacionInsertada`, `medidorSinEmpresaInsertado`, `medidorSinEmpresaActualizado`) VALUES
-(17, '""', 465, '2015-07-03 03:07:18', '""', 0, 0, 465, 0, 0, 0, 54),
-(18, '""', 465, '2015-07-03 03:07:11', '""', 0, 0, 465, 0, 0, 0, 54),
-(19, '""', 465, '2015-07-03 04:07:18', '""', 465, 0, 0, 0, 0, 465, 0);
-INSERT INTO `infmedidorexcel` (`id`, `actualizados`, `totalregistros`, `fecha`, `fallados`, `medidorInsertado`, `registroNoInsertado`, `medidorActualizado`, `empresaActualizada`, `relacionInsertada`, `medidorSinEmpresaInsertado`, `medidorSinEmpresaActualizado`) VALUES
-(20, '{"1":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ABELLEIRA FABIAN-LEN","cuit":"0","titular":"ABELLEIRA FABIAN-LEN"},"2":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ACA SALUD","cuit":"0","titular":"ACA SALUD COOPERATIV"},"3":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ACMC SRL","cuit":"0","titular":"ACMC S.R.L."},"4":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGF ALLIANZ ARG.CIA ","cuit":"0","titular":"AGF ALLIANZ ARG.CIA "},"5":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AGRO EL CARRETERO S.","cuit":"0","titular":"AGRO EL CARRETERO S."},"6":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGRO INDUSTRIA TRES ","cuit":"0","titular":"AGRO INDUSTRIA TRES "},"7":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AGRO-GILARDONI S.R.L","cuit":"0","titular":"AGRO-GILARDONI S.R.L"},"8":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGROPAL S.A.","cuit":"0","titular":"AGROPAL S.A."},"9":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGROPRIMUS S.A","cuit":"0","titular":"AGROPRIMUS S.A"},"10":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AGUADAS GOMEZ HNOS S","cuit":"0","titular":"AGUADAS GOMEZ HNOS S"},"11":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"AIELLO JOSE E HIJOS ","cuit":"0","titular":"AIELLO JOSE E HIJOS "},"12":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AIELLO NATALIO","cuit":"0","titular":"AIELLO NATALIO"},"13":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALARCON ANA VERONICA","cuit":"0","titular":"ALARCON ANA VERONICA"},"14":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALBA E.A.DE Y G.ALBA","cuit":"0","titular":"ALBA E.A.DE Y G.ALBA"},"15":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIZZOLINI HUGO CESAR","cuit":"0","titular":"ALBA MIRTA GRACIELA"},"16":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALBERCA FACUNDO SEBA","cuit":"0","titular":"ALBERCA FACUNDO SEBA"},"18":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALEGRO MARIA ANTONEL","cuit":"0","titular":"ALEGRO MARIA ANTONEL"},"20":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Aberturas Alemani","cuit":"0","titular":"ALEMANI CARLOS DANIE"},"21":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALONSO CARLOS ALBERT","cuit":"0","titular":"ALONSO CARLOS ALBERT"},"22":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALONSO MARIA ROSARIO","cuit":"0","titular":"ALONSO MARIA ROSARIO"},"23":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ALTUNA CARLOS F.","cuit":"0","titular":"ALTUNA CARLOS F."},"24":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ALVARADO S.A.","cuit":"0","titular":"ALVARADO S.A."},"25":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ALVAREZ TARGISE JUAN","cuit":"0","titular":"ALVAREZ TARGISE JUAN"},"26":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ANA JORGE OSCAR","cuit":"0","titular":"ANA JORGE OSCAR"},"27":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ANDERBERG FERNANDO A","cuit":"0","titular":"ANDERBERG FERNANDO A"},"28":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ANDREATTA GRACIELA D","cuit":"0","titular":"ANDREATTA GRACIELA D"},"29":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"La Voz del Pueblo","cuit":"0","titular":"ANTONIO MACIEL S.R.L"},"30":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AQUATICA S.A. E\\/F.","cuit":"0","titular":"AQUATICA S.A. E\\/F."},"31":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ARAMBERRI LUIS ALFRE","cuit":"0","titular":"ARAMBERRI LUIS ALFRE"},"32":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ARANEGUI KARINA BEAT","cuit":"0","titular":"ARANEGUI KARINA BEAT"},"33":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Eduardo Ramon Jatib","cuit":"0","titular":"ARENAL PABLO E."},"34":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ARENAS OSVALDO ARIEL","cuit":"0","titular":"ARENAS OSVALDO ARIEL"},"35":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ARIAS AMALIA-GROENEN","cuit":"0","titular":"ARIAS AMALIA-GROENEN"},"37":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ARISTEGUI SERGIO FAB","cuit":"0","titular":"ARISTEGUI SERGIO FAB"},"39":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Antuen S.A.","cuit":"0","titular":"ARRECHEA JUAN FRANCI"},"40":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ARTURE DE MARTINEZ C","cuit":"0","titular":"ARTURE DE MARTINEZ C"},"41":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ASEF EDUARDO RUBEN","cuit":"0","titular":"ASEF EDUARDO RUBEN"},"42":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ASOC. DE ABOGADOS DE","cuit":"0","titular":"ASOC. DE ABOGADOS DE"},"43":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ASOC. MUTUAL DAN","cuit":"0","titular":"ASOC. MUTUAL DAN"},"45":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ASTIZ JORGE ARIEL","cuit":"0","titular":"ASTIZ JORGE ARIEL"},"46":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ASTIZ MARIANA","cuit":"0","titular":"ASTIZ MARIANA"},"47":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AZTIZ MARIO SANTIAGO","cuit":"0","titular":"ASTIZ MARIO SANTIAGO"},"48":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"AUSTRAL MOTOR S.A.","cuit":"0","titular":"AUSTRAL MOTOR S.A."},"49":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AYALA RAMON ANDRES","cuit":"0","titular":"AYALA RAMON ANDRES"},"50":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BAQUEDANO MARTIN","cuit":"0","titular":"BAQUEDANO MARTIN"},"51":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Barainca Eduardo","cuit":"0","titular":"BARAINCA EDUARDO JUA"},"52":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BARCALA SERGIO ANDRE","cuit":"0","titular":"BARCALA SERGIO ANDRE"},"53":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BARRAZA MARIA MATILD","cuit":"0","titular":"BARRAZA MARIA MATILD"},"54":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BARRERAS ALBERTO MIG","cuit":"0","titular":"BARRERAS ALBERTO MIG"},"56":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BASSINI MARIA PAULA","cuit":"0","titular":"BASSINI MARIA PAULA"},"57":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BAZAR EL MUNDIAL S.R","cuit":"0","titular":"BAZAR EL MUNDIAL S.R"},"58":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BEITIA LUIS ALBERTO","cuit":"0","titular":"BEITIA LUIS ALBERTO"},"59":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BENGOCHEA SUSANA MAR","cuit":"0","titular":"BENGOCHEA SUSANA MAR"},"60":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"BERESFORD S.A.","cuit":"0","titular":"BERESFORD S.A"},"61":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BETTOMEO ROBERTO SAN","cuit":"0","titular":"BETTOMEO ROBERTO SAN"},"62":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BIANCHI LUCIANO SEBA","cuit":"0","titular":"BIANCHI LUCIANO SEBA"},"63":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BONIFACIO LILIANA","cuit":"0","titular":"BONIFACIO LILIANA"},"64":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BONINI JUAN CARLOS","cuit":"0","titular":"BONINI JUAN CARLOS"},"65":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"BORIONI JUAN PABLO","cuit":"0","titular":"BORIONI JUAN PABLO"},"66":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CONSULTORA RH -TRES ","cuit":"0","titular":"BORRA JORGE RENATO"},"67":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BRAJOVICH GUILLERMO ","cuit":"0","titular":"BRAJOVICH GUILLERMO "},"68":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BRAVO CARLOS-MARQUIS","cuit":"0","titular":"BRAVO CARLOS-MARQUIS"},"69":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BREA DIEGO ALBERTO","cuit":"0","titular":"BREA DIEGO ALBERTO"},"70":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BREA OMAR","cuit":"0","titular":"BREA OMAR"},"71":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"BUSTOS SILVINA LILIA","cuit":"0","titular":"BUSTOS SILVINA LILIA"},"72":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CABANE OSMAR ALBERTO","cuit":"0","titular":"CABANE OSMAR ALBERTO"},"74":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CAMBEX S.A.","cuit":"0","titular":"CAMBEX S.A."},"75":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CAMPAGNE MARIO CESAR","cuit":"0","titular":"CAMPAGNE MARIO CESAR"},"77":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CAMPOS CARMEN","cuit":"0","titular":"CAMPOS CARMEN"},"78":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CAMUS FLORENCIA AGUS","cuit":"0","titular":"CAMUS FLORENCIA AGUS"},"80":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Venecia Turismo","cuit":"0","titular":"CARRACEDO NORMA"},"81":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CARRERA HNOS.","cuit":"0","titular":"CARRERA HNOS."},"82":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CARRERA MARIA INES","cuit":"0","titular":"CARRERA MARIA INES"},"83":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CARRERA NELIDA SUSAN","cuit":"0","titular":"CARRERA NELIDA SUSAN"},"84":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CARRERA Y SALDUNA SO","cuit":"0","titular":"CARRERA Y SALDUNA SO"},"86":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CASA HUMBERTO LUCAIO","cuit":"0","titular":"CASA HUMBERTO LUCAIO"},"87":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CASTRO NELLY","cuit":"0","titular":"CASTRO NELLY"},"88":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CATALANO MAURO ELIO","cuit":"0","titular":"CATALANO MAURO ELIO"},"89":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CENTRO ACOPIADORES C","cuit":"0","titular":"CENTRO ACOPIADORES C"},"90":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CENTRO BULONERO TS.A","cuit":"0","titular":"CENTRO BULONERO TS.A"},"91":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CEPEDA MARISOL GRACI","cuit":"0","titular":"CEPEDA MARISOL GRACI"},"92":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CEPEDA SILVIA MARIA","cuit":"0","titular":"CEPEDA SILVIA MARIA"},"93":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CEREALERA TRES ARROY","cuit":"0","titular":"CEREALERA TRES ARROY"},"94":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CERIANI NANCY GRACIE","cuit":"0","titular":"CERIANI NANCY GRACIE"},"95":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"La Atomica Carlos Ce","cuit":"0","titular":"CERRI CARLOS E HIJOS"},"96":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CERVINI MARIA SUSANA","cuit":"0","titular":"CERVINI MARIA SUSANA"},"97":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"CIA.DE SEG.LA MERCAN","cuit":"0","titular":"CIA.DE SEG.LA MERCAN"},"98":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Agustin Clerch","cuit":"0","titular":"CLERCH AGUSTIN"},"99":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Clerch Ignacio Agust","cuit":"0","titular":"CLERCH IGNACIO"},"100":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CLUB DE CAZADORES DE","cuit":"0","titular":"CLUB DE CAZADORES DE"},"102":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COLANTONIO JOSE A.Y ","cuit":"0","titular":"COLANTONIO JOSE A.Y "},"104":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"COLLAZOS ALDO O.","cuit":"0","titular":"COLLAZOS ALDO O."},"106":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COLONNA OMAR RODOLFO","cuit":"0","titular":"COLONNA OMAR RODOLFO"},"107":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COMASA S.A.","cuit":"0","titular":"COMASA S.A."},"108":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"COMPA\\u00d1IA EURO SRL.","cuit":"0","titular":"COMPA\\u00d1IA EURO SRL."},"109":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CONFITERIA LA PERLA ","cuit":"0","titular":"CONFITERIA LA PERLA "},"111":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CONTRERAS LUIS ALBER","cuit":"0","titular":"CONTRERAS LUIS ALBER"},"112":{"ModImpo":"Si","Empresa":"Actualizada","imp":200,"Medidor":"Actualizado","denominacion":"Cooperativa Agraria ","cuit":"0","titular":"COOP.AGRARIA DE TS.A"},"113":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"COOP.DE TRANSP.DE TS","cuit":"0","titular":"COOP.DE TRANSP.DE TS"},"114":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"COOP.ELECT.LTDA.DE C","cuit":"0","titular":"COOP.ELECT.LTDA.DE C"},"115":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"COOP.RURAL LTDA.ALFA","cuit":"0","titular":"COOP.RURAL LTDA.ALFA"},"116":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Hugo Costanzo","cuit":"0","titular":"COSTANZO HUGO JUAN"},"118":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"CREDIL S.R.L.","cuit":"0","titular":"CREDIL S.R.L."},"119":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"CUMECHE SRL","cuit":"0","titular":"CUMECHE S.R.L."},"120":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DABIEN DE CHIRINO MA","cuit":"0","titular":"DABIEN DE CHIRINO MA"},"121":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DAGUERRE CRISTINA JO","cuit":"0","titular":"DAGUERRE CRISTINA JO"},"122":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DATRI SANDRA","cuit":"0","titular":"D''ATRI SANDRA ELIZAB"},"123":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Parque Hotel","cuit":"0","titular":"DAWSON S.A."},"126":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE LA CAL FRANCISCO","cuit":"0","titular":"DE LA CAL FRANCISCO"},"127":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE LA PENNA JUAN CAR","cuit":"0","titular":"DE LA PENNA JUAN CAR"},"128":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SEGURID. FENIX S.A","cuit":"0","titular":"DE LA PENNA SEGURID."},"129":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Perfumeria Beatriz","cuit":"0","titular":"DE MARTINO MARIA EST"},"130":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE ZOETE SANDRA MARI","cuit":"0","titular":"DE ZOETE SANDRA MARI"},"131":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEJEAN ROBERTO OSCAR","cuit":"0","titular":"DEJEAN ROBERTO OSCAR"},"132":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DEL CASTA\\u00d1O ANGEL R","cuit":"0","titular":"DEL CASTA\\u00d1O ANGEL R"},"133":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEL GRANDE SERGIO FA","cuit":"0","titular":"DEL GRANDE SERGIO FA"},"134":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEL VALLE MARIA LOUR","cuit":"0","titular":"DEL VALLE MARIA LOUR"},"135":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DEL VALLE NELSON BER","cuit":"0","titular":"DEL VALLE NELSON BER"},"136":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Delgado Sonia Alejan","cuit":"0","titular":"DELGADO SONIA ALEJAN"},"138":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI CROCE CLAUDIA ALE","cuit":"0","titular":"DI CROCE CLAUDIA ALE"},"139":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Trelactea","cuit":"0","titular":"DI CROCE LAURA OFELI"},"140":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MORA","cuit":"0","titular":"DI FELICE DORA NOEMI"},"141":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI FULVIO LUIS EUGEN","cuit":"0","titular":"DI FULVIO LUIS EUGEN"},"142":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI MARCO JUAN E.","cuit":"0","titular":"DI MARCO JUAN E."},"143":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI ROCCO MARIA CECIL","cuit":"0","titular":"DI ROCCO MARIA CECIL"},"144":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DI SALVO GUILLERMO E","cuit":"0","titular":"DI SALVI GUILLERMO E"},"145":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI SALVO GRACIELA ES","cuit":"0","titular":"DI SALVO GRACIELA ES"},"146":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI SALVO S.A.","cuit":"0","titular":"DI SALVO S.A."},"147":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DI TOMMASO MARIO Y T","cuit":"0","titular":"DI TOMMASO MARIO Y T"},"148":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DI VITO CARMELO A.","cuit":"0","titular":"DI VITO CARMELO A."},"149":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DI VITO CLAUDIA SUSA","cuit":"0","titular":"DI VITO CLAUDIA SUSA"},"150":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DIAZ RAUL ALBERTO","cuit":"0","titular":"DIAZ RAUL ALBERTO"},"151":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"DIFONZO & MARCHI","cuit":"0","titular":"DIFONZO & MARCHI"},"154":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TRIBI\\u00d1O ALBERTO","cuit":"0","titular":"DUCHOSAL VERONICA"},"155":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DUPUY STELLA MARIS","cuit":"0","titular":"DUPUY STELLA MARIS"},"156":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"EICHLER EDUARDO HUGO","cuit":"0","titular":"EICHLER EDUARDO HUGO"},"157":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ELCUAZ HECTOR A.","cuit":"0","titular":"ELCUAZ HECTOR A."},"158":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ELGART REYNALDO E Y ","cuit":"0","titular":"ELGART REYNALDO E Y "},"159":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ELGART VERONICA Y EL","cuit":"0","titular":"ELGART VERONICA Y EL"},"160":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ELICALDE NESTOR JUAN","cuit":"0","titular":"ELICALDE NESTOR JUAN"},"161":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ERRAZU MARIA EMILIA","cuit":"0","titular":"ERRAZU MARIA EMILIA"},"162":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ESPELUSE RODOLFO Y C","cuit":"0","titular":"ESPELUSE RODOLFO Y C"},"163":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ETCHEVERRY ALFREDO J","cuit":"0","titular":"ETCHEVERRY ALFREDO J"},"164":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ETERNET S.R.L.","cuit":"0","titular":"ETERNET S.R.L."},"165":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"EXPRESO EL VASQUITO ","cuit":"0","titular":"EXPRESO EL VASQUITO "},"166":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FAGEMAR S.A.","cuit":"0","titular":"FAGEMAR S.A."},"167":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"FAMTEX S.R.L.","cuit":"0","titular":"FAMTEX S.R.L."},"169":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FARINA AMERICO","cuit":"0","titular":"FARINA AMERICO"},"170":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FARMACIA TRES ARROYO","cuit":"0","titular":"FARMACIA TRES ARROYO"},"171":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Marco Polo","cuit":"0","titular":"FERNANDEZ JAVIER EDU"},"172":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERNANDEZ CRISTINA","cuit":"0","titular":"FERNANDEZ MARIA CRIS"},"173":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERNANDEZ MIGUEL ANG","cuit":"0","titular":"FERNANDEZ MIGUEL ANG"},"174":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERNANDEZ RODOLFO Y ","cuit":"0","titular":"FERNANDEZ RODOLFO Y "},"175":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"FERNANDEZ VILLANUEVA","cuit":"0","titular":"FERNANDEZ VILLANUEVA"},"176":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERRARI RICARDO DOMI","cuit":"0","titular":"FERRARI RICARDO DOMI"},"177":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"REFRESH","cuit":"0","titular":"FERRARIO GUILLERMO E"},"178":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FERRARIO GUSTAVO ADR","cuit":"0","titular":"FERRARIO GUSTAVO ADR"},"185":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FOSQUE MARIA ADELA","cuit":"0","titular":"FOSQUE MARIA ADELA"},"186":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"FRIGORIFICO CAPRIATA","cuit":"0","titular":"FRIGORIFICO CAPRIATA"},"187":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FUCHS SANDRA CECILIA","cuit":"0","titular":"FUCHS SANDRA CECILIA"},"189":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"La casa del pantalon","cuit":"0","titular":"GALILEA EUGENIO HECT"},"190":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GALLARDO JAVIER NEST","cuit":"0","titular":"GALLARDO JAVIER NEST"},"192":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Ganim Nestor Hugo","cuit":"0","titular":"GANIM NESTOR HUGO"},"193":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Elsa Maria Garat","cuit":"0","titular":"GARAT ELSA MARIA"},"194":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Childrens Wish","cuit":"0","titular":"GARCIA ANA CAROLINA"},"195":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GARCIA GABRIEL Y GUS","cuit":"0","titular":"GARCIA GABRIEL Y GUS"},"196":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GARCIA ROCIO","cuit":"0","titular":"GARCIA MARCONI ROCIO"},"197":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GARCIA MARIA DEL CAR","cuit":"0","titular":"GARCIA MARIA DEL CAR"},"198":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GARCIA MAURICIO DAVI","cuit":"0","titular":"GARCIA MAURICIO DAVI"},"199":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GARCIA SERGIO RAUL","cuit":"0","titular":"GARCIA SERGIO RAUL"},"200":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Amestoy Automotores ","cuit":"0","titular":"GASANEO Y AMESTOY"},"201":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GASPAROLI ANA TERESA","cuit":"0","titular":"GASPAROLI ANA TERESA"},"202":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GEJO RUBEN Y RODOLFO","cuit":"0","titular":"GEJO RUBEN Y RODOLFO"},"203":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GENOVESI HNOS.S.R.L","cuit":"0","titular":"GENOVESI HNOS.S.R.L"},"204":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GIACOMINO ANDREA SUS","cuit":"0","titular":"GIACOMINO ANDREA SUS"},"206":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Acosta Juan Enrique","cuit":"0","titular":"GIDINI MARGARITA AGU"},"207":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GIMNASIO STADIUM","cuit":"0","titular":"GIMNASIO STADIUM"},"209":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GIULIANI HECTOR Y LU","cuit":"0","titular":"GIULIANI HECTOR Y LU"},"210":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ JORGE VENTU","cuit":"0","titular":"GONZALEZ JORGE VENTU"},"211":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ LUIS ALBERT","cuit":"0","titular":"GONZALEZ LUIS ALBERT"},"212":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ MARCELO GAB","cuit":"0","titular":"GONZALEZ MARCELO GAB"},"213":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ MARCELO OSC","cuit":"0","titular":"GONZALEZ MARCELO OSC"},"214":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GONZALEZ MARIA LAURA","cuit":"0","titular":"GONZALEZ MARIA LAURA"},"215":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GRANDA LUCIANO","cuit":"0","titular":"GRANDA LUCIANO"},"216":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GROSSO CLAUDIA LUJAN","cuit":"0","titular":"GROSSO CLAUDIA LUJAN"},"217":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GRUAS Y MONTAJES IOR","cuit":"0","titular":"GRUAS Y MONTAJES IOR"},"218":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GUAZZORA ELSA CELICA","cuit":"0","titular":"GUAZZORA ELSA CELICA"},"219":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GUILLERMO ECHEVARRIA","cuit":"0","titular":"GUILLERMO ECHEVARRIA"},"220":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"GUISASOLA MARIA LEON","cuit":"0","titular":"GUISASOLA MARIA LEON"},"222":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"GUSTAVO FIORDA MAQUI","cuit":"0","titular":"GUSTAVO FIORDA MAQUI"},"223":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HERNANDEZ HUGO SEBAS","cuit":"0","titular":"HERNANDEZ HUGO SEBAS"},"224":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HERRERA F-HERRERA N-","cuit":"0","titular":"HERRERA F-HERRERA N-"},"225":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"HERRERO RAUL MARIO","cuit":"0","titular":"HERRERO RAUL MARIO"},"226":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MACHADO ROBERTO OSCA","cuit":"0","titular":"HID MARIO HORACIO"},"227":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Marea","cuit":"0","titular":"HIDALGO MARIA EUGENI"},"229":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HOJOBAR S.A.","cuit":"0","titular":"HOJOBAR S.A."},"230":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"HOLLENDER PEDRO MARC","cuit":"0","titular":"HOLLENDER PEDRO MARC"},"232":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"IELMINI NELIDA ESTER","cuit":"0","titular":"IELMINI NELIDA ESTER"},"234":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"INGENERARE SRL","cuit":"0","titular":"INGENERARE SRL"},"235":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"INSTITUTO BIOQUIMICO","cuit":"0","titular":"INSTITUTO BIOQUIMICO"},"236":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"IRIART FERNANDO RAUL","cuit":"0","titular":"IRIART FERNANDO RAUL"},"237":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"IRIBARNE EDUARDO","cuit":"0","titular":"IRIBARNE EDUARDO"},"239":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ISMAEL CLAUDIO ANIBA","cuit":"0","titular":"ISMAEL CLAUDIO ANIBA"},"240":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ITALIANI MARIA ELENA","cuit":"0","titular":"ITALIANI MARIA ELENA"},"241":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VETERINARIA EL MOLIN","cuit":"0","titular":"ITURBURU MARIA ISABE"},"242":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JACOBSEN ANDRES RAUL","cuit":"0","titular":"JACOBSEN ANDRES RAUL"},"243":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JALLE ANDRES","cuit":"0","titular":"JALLE ANDRES"},"244":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JAUREGUIBEHERE LIA M","cuit":"0","titular":"JAUREGUIBEHERE LIA M"},"245":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JEANNERET JULIO","cuit":"0","titular":"JEANNERET JULIO"},"246":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"JORGE ALBERTO","cuit":"0","titular":"JORGE ALBERTO"},"247":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"EDUARDO SANTIAGO JUA","cuit":"0","titular":"JUAN EDUARDO"},"248":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Pizza 3","cuit":"0","titular":"JURORUSA S.A"},"249":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"LA AGRICOLA GANAD.DE","cuit":"0","titular":"LA AGRICOLA GANAD.DE"},"250":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LA CASA DE LOS BULON","cuit":"0","titular":"LA CASA DE LOS BULON"},"251":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"LA PERSEVERANCIA SEG","cuit":"0","titular":"LA PERSEVERANCIA SEG"},"252":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LABORDE CARLOS ALBER","cuit":"0","titular":"LABORDE CARLOS ALBER"},"253":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"LAGO S.A.","cuit":"0","titular":"LAGO S.A."},"254":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LAMBERTA JORGE MIGUE","cuit":"0","titular":"LAMBERTA JORGE MIGUE"},"255":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LANCE FABIANA","cuit":"0","titular":"LANCE FABIANA"},"256":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LARA ROBERTO MARCELO","cuit":"0","titular":"LARA ROBERTO MARCELO"},"257":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LARRIESTRA BEATRIZ C","cuit":"0","titular":"LARRIESTRA BEATRIZ C"},"258":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LARSEN CESAR GERARDO","cuit":"0","titular":"LARSEN CESAR GERARDO"},"259":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LAS MECHAS SOCIEDAD ","cuit":"0","titular":"LAS MECHAS SOCIEDAD "},"260":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LATORRE ALEJANDRO MA","cuit":"0","titular":"LATORRE ALEJANDRO MA"},"261":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LATORRE JOAQUIN IGNA","cuit":"0","titular":"LATORRE JOAQUIN IGNA"},"262":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LAVANDERIA TRES ARRO","cuit":"0","titular":"LAVANDERIA TRES ARRO"},"264":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Dragon Rojo","cuit":"0","titular":"LEGUIZAMON CLAUDIA I"},"265":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Leguizamon Esteban H","cuit":"0","titular":"LEGUIZAMON ESTEBAN H"},"266":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LETAMENDI LUIS ANGEL","cuit":"0","titular":"LETAMENDI LUIS ANGEL"},"267":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LIEBANA JORGE F.","cuit":"0","titular":"LIEBANA JORGE F."},"268":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LIFIRON S.A.","cuit":"0","titular":"LIFIRON S.A"},"269":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LLANOS ALICIA CLALFI","cuit":"0","titular":"LLANOS ALICIA CLALFI"},"270":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOFIEGO JOSE JUIS","cuit":"0","titular":"LOFIEGO JOSE JUIS"},"271":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOPEZ IRMA ELENA","cuit":"0","titular":"LOPEZ IRMA ELENA"},"272":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOPEZ NESTOR FABIAN","cuit":"0","titular":"LOPEZ NESTOR FABIAN"},"273":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"LOSADA RICARDO OSVAL","cuit":"0","titular":"LOSADA RICARDO OSVAL"},"274":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Despensa El Gauchito","cuit":"0","titular":"LUCERO OLGA"},"275":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"LUIS BLANCO S.A","cuit":"0","titular":"LUIS BLANCO S.A"},"276":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MACHADO ROBERTO OSCA","cuit":"0","titular":"MACHADO ROBERTO OSCA"},"277":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"MACIEL HERMANOS S.A.","cuit":"0","titular":"MACIEL HERMANOS S.A."},"278":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MADERAS S. JOSE DE L","cuit":"0","titular":"MADERAS S. JOSE DE L"},"279":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"M.A.M. S.A.","cuit":"0","titular":"M.A.M. S.A."},"280":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MARINO MONICA GRACIE","cuit":"0","titular":"MARINO MONICA GRACIE"},"281":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MARTINEZ CLAUDIO NES","cuit":"0","titular":"MARTINEZ CLAUDIO NES"},"282":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MARTINEZ DE CAMPOS A","cuit":"0","titular":"MARTINEZ DE CAMPOS A"},"283":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Agromar SA","cuit":"0","titular":"MARTINEZ FRANKLIN SE"},"284":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Compu3","cuit":"0","titular":"MARTINEZ GUILLERMO O"},"285":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MARTINEZ JULIO CESAR","cuit":"0","titular":"MARTINEZ JULIO CESAR"},"286":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MASCHI EDUARDO ERNES","cuit":"0","titular":"MASCHI EDUARDO ERNES"},"287":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MASTROSIMONE GUSTAVO","cuit":"0","titular":"MASTROSIMONE GUSTAVO"},"289":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MAYER RICARDO AUTOMO","cuit":"0","titular":"MAYER RICARDO AUTOMO"},"290":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MENNA ELIANA ANDREA","cuit":"0","titular":"MENNA ELIANA ANDREA"},"291":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MENNA CEREALES","cuit":"0","titular":"MENNA JOSE ANGEL"},"292":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MENNA LORENZO N.","cuit":"0","titular":"MENNA LORENZO N."},"293":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MEO GUZMAN ENRIQUE F","cuit":"0","titular":"MEO GUZMAN ENRIQUE F"},"294":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MERLINO PLAN S.A.","cuit":"0","titular":"MERLINO PLAN S.A."},"295":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MERLO CARMEN HERMINI","cuit":"0","titular":"MERLO CARMEN HERMINI"},"296":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MESA DE FORCHETTI MO","cuit":"0","titular":"MESA DE FORCHETTI MO"},"297":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Miedan, Ana Karina","cuit":"0","titular":"MIEDAN ANA KARINA"},"298":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MILLA SUR S.A.","cuit":"0","titular":"MILLA SUR S.A."},"299":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MIO FIGLIO","cuit":"0","titular":"MIO FIGLIO  S.R.L."},"300":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOIRANO EVELIA LILIA","cuit":"0","titular":"MOIRANO EVELIA LILIA"},"301":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOIZZI JUAN JOSE","cuit":"0","titular":"MOIZZI JUAN JOSE"},"303":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"METALURGICA MOLINA","cuit":"0","titular":"MOLINA EUGENIO ALFRE"},"304":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOLINA HECTOR MARIAN","cuit":"0","titular":"MOLINA HECTOR MARIAN"},"305":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MOLINOS TRES ARROYOS","cuit":"0","titular":"MOLINOS TRES ARROYOS"},"306":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MOLINOS ZALLA S.A","cuit":"0","titular":"MOLINOS ZALLA S.A."},"307":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MOLLER GUSTAVO","cuit":"0","titular":"MOLLER ARTURO"},"308":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MONSALVO MARIA DE LO","cuit":"0","titular":"MONSALVO MARIA DE LO"},"309":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"MONTESINOS JOSE MANU","cuit":"0","titular":"MONTESINOS JOSE MANU"},"310":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"MORAN JORGE ANTONIO","cuit":"0","titular":"MORAN JORGE ANTONIO"},"312":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"DE BENEDETTO AUGUSTO","cuit":"0","titular":"MUNGAI MARIA MERCEDE"},"314":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"NALDO LOMBARDI S.A","cuit":"0","titular":"NALDO LOMBARDI S.A"},"315":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"NIKRO S.A","cuit":"0","titular":"NIKRO S.A"},"316":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"NOICSA S.A.","cuit":"0","titular":"NOICSA S.A."},"317":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Mera Fernando Omar","cuit":"0","titular":"NOVILLO VIRGINIA VER"},"318":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OHACO RAUL BAUTISTA","cuit":"0","titular":"OHACO RAUL BAUTISTA"},"319":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OLEOHIDRAULICA DI RO","cuit":"0","titular":"OLEOHIDRAULICA DI RO"},"320":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OLOCCO BARTOLO","cuit":"0","titular":"OLOCCO BARTOLO"},"321":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"OLSEN CRISTIAN","cuit":"0","titular":"OLSEN CRISTIAN"},"322":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ONGARINI LIVIO","cuit":"0","titular":"ONGARINI LIVIO"},"323":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Tito Otero","cuit":"0","titular":"OTERO OSCAR ALBERTO"},"324":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PALLA SILVIA CRISTIN","cuit":"0","titular":"PALLA SILVIA CRISTIN"},"325":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PALLADINO  S.A.","cuit":"0","titular":"PALLADINO  S.A."},"326":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PALMA NORA","cuit":"0","titular":"PALMA NORA"},"327":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PASCUAL SILVIA ADRIA","cuit":"0","titular":"PASCUAL SILVIA ADRIA"},"328":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PAZOS DE VELOSO MABE","cuit":"0","titular":"PAZOS DE VELOSO MABE"},"329":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PC TRUCKS TRES ARROY","cuit":"0","titular":"PC TRUCKS TRES ARROY"},"330":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEQUE\\u00d1O JOSE","cuit":"0","titular":"PEQUE\\u00d1O JOSE"},"331":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"FLYING MOTORS","cuit":"0","titular":"PEREYRA ESTEBAN CEFE"},"332":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PEREZ DALSGAARD Y CI","cuit":"0","titular":"PEREZ DALSGAARD Y CI"},"333":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ GUILLERMO LUIS","cuit":"0","titular":"PEREZ GUILLERMO LUIS"},"334":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ GUSTAVO MIGUEL","cuit":"0","titular":"PEREZ GUSTAVO MIGUEL"},"335":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ MARIA ISABEL","cuit":"0","titular":"PEREZ MARIA ISABEL"},"336":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ NELSON ADRIAN","cuit":"0","titular":"PEREZ NELSON ADRIAN"},"337":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PEREZ PAULA ANDREA","cuit":"0","titular":"PEREZ PAULA ANDREA"},"338":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Gestion Inmobiliaria","cuit":"0","titular":"PEREZ RAUL MARTIN"},"339":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PERTICARARI JUAN PAB","cuit":"0","titular":"PERTICARARI JUAN PAB"},"340":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PETELA HECTOR","cuit":"0","titular":"PETELA HECTOR"},"341":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PIERINI CARLOS FABIA","cuit":"0","titular":"PIERINI CARLOS FABIA"},"342":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"PINTURERIAS RUCCI S.","cuit":"0","titular":"PINTURERIAS RUCCI S."},"343":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PIROSANTO CAMILO ALD","cuit":"0","titular":"PIROSANTO CAMILO ALD"},"344":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PODESTA MARIANA","cuit":"0","titular":"PODESTA MARIANA"},"345":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PONCE EDUARDO ESTEBA","cuit":"0","titular":"PONCE EDUARDO ESTEBA"},"346":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"POULSEN PEDRO-CAZEAU","cuit":"0","titular":"POULSEN PEDRO-CAZEAU"},"347":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Bodycare","cuit":"0","titular":"POZZOLI LAURA CECILI"},"349":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PRIETO JUAN JOSE","cuit":"0","titular":"PRIETO JUAN JOSE"},"350":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"PROCACCINI FRANCISCO","cuit":"0","titular":"PROCACCINI FRANCISCO"},"351":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"QUIMICA MOLERO S.R.L","cuit":"0","titular":"QUIMICA MOLERO S.R.L"},"353":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RANZINI MATIAS FEDER","cuit":"0","titular":"RANZINI MATIAS FEDER"},"355":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RAVELLA RICARDO H.","cuit":"0","titular":"RAVELLA RICARDO H."},"356":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RE MARIO CESAR","cuit":"0","titular":"RE MARIO CESAR"},"357":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RECARI MARIANO (Pana","cuit":"0","titular":"RECARI MARIANO"},"358":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"REFAFLOTO S.A.","cuit":"0","titular":"REFAFLOTO S.A"},"359":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RENDO DE PODESTA IRM","cuit":"0","titular":"RENDO DE PODESTA IRM"},"360":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"REY ANA MARIA","cuit":"0","titular":"REY ANA MARIA"},"361":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RIDINO EDUARDO","cuit":"0","titular":"RIDINO EDUARDO NICOL"},"363":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ROAS SACIF","cuit":"0","titular":"ROAS SACIF"},"364":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RODERA FRANCISCO Y J","cuit":"0","titular":"RODERA FRANCISCO Y J"},"365":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Penelope Lanas","cuit":"0","titular":"RODRIGUEZ ELSA TERES"},"366":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RODRIGUEZ TERESA ANG","cuit":"0","titular":"RODRIGUEZ TERESA ANG"},"367":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ROLANDO LUIS ROBERTO","cuit":"0","titular":"ROLANDO LUIS ROBERTO"},"368":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"AGENCIA ISIDORO","cuit":"0","titular":"ROLDAN JUANA MARIELA"},"370":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RUBIO DANIEL CECILIO","cuit":"0","titular":"RUBIO DANIEL CECILIO"},"371":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RUTA 2 S.R.L.","cuit":"0","titular":"RUTA 2 S.R.L."},"372":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SABATINI MARCELO","cuit":"0","titular":"SABATINI MARCELO EDM"},"374":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAEZ SILVIA NELLY","cuit":"0","titular":"SAEZ SILVIA NELLY"},"375":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAGARDOY FERNANDO JO","cuit":"0","titular":"SAGARDOY FERNANDO JO"},"376":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAINI SERGIO DANIEL","cuit":"0","titular":"SAINI SERGIO DANIEL"},"377":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SALOME JULIO","cuit":"0","titular":"SALOME JULIO"},"378":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SAN PELLEGRINI DE M.","cuit":"0","titular":"SAN PELLEGRINI DE M."},"379":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANCHEZ ELIZABETH","cuit":"0","titular":"SANCHEZ ELIZABETH"},"380":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANCHEZ MONICA LUJAN","cuit":"0","titular":"SANCHEZ MONICA LUJAN"},"381":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANCHEZ N.DE PEREYRA","cuit":"0","titular":"SANCHEZ N.DE PEREYRA"},"382":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Quintana Roberto Mar","cuit":"0","titular":"SANCINETO VICTOR MAR"},"383":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANDE JUAN JOSE","cuit":"0","titular":"SANDE JUAN JOSE"},"384":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SANI TRES S.A.","cuit":"0","titular":"SANI TRES S.A."},"385":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANTAJULIANA M. ALEJ","cuit":"0","titular":"SANTAGIULIANA MARIA "},"386":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SANTIRSO MARIA ROSAN","cuit":"0","titular":"SANTIRSO MARIA ROSAN"},"387":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SAURO ROBERTO CESAR","cuit":"0","titular":"SAURO ROBERTO CESAR"},"388":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SCARCELLA DIEGO JOSE","cuit":"0","titular":"SCARCELLA DIEGO JOSE"},"389":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SCHENCH ANDREA FABIA","cuit":"0","titular":"SCHENCK ANDREA FABIA"},"390":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SCHUMACHER ALFREDO Y","cuit":"0","titular":"SCHUMACHER ALFREDO Y"},"391":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SEMILLERA PAMPA FERT","cuit":"0","titular":"SEMILLERA PAMPA FERT"},"392":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SEQUEIRA CARLOS ENRI","cuit":"0","titular":"SEQUEIRA CARLOS ENRI"},"393":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ESTUDIO PANDOLFO","cuit":"0","titular":"SERRANO ELSA GLORIA"},"394":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SISTEMAS TERMODINAMI","cuit":"0","titular":"SISTEMAS TERMODINAMI"},"395":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"BERTEL SKOU SAAII Y ","cuit":"0","titular":"SKOU BERTEL S.A."},"396":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SOBANSKI VICTOR ADOL","cuit":"0","titular":"SOBANSKI VICTOR ADOL"},"397":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SOC. DE TRANSP.LIBRE","cuit":"0","titular":"SOC. DE TRANSP.LIBRE"},"398":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Clinica Privada Hisp","cuit":"0","titular":"SOC.ESPA\\u00d1OLA DE S.M"},"399":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"RED 24","cuit":"0","titular":"SOCOLOFF MARTIN IVAN"},"400":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SODA LA HUELLA S.R.L","cuit":"0","titular":"SODA LA HUELLA S.R.L"},"401":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SODE HORACIO ABEL","cuit":"0","titular":"SODE HORACIO ABEL"},"402":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SORIANO MIGUEL ANGEL","cuit":"0","titular":"SORIANO MIGUEL ANGEL"},"403":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SORIANO RAFAEL","cuit":"0","titular":"SORIANO RAFAEL"},"404":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"Panificadora San Jua","cuit":"0","titular":"SOULE SERGIO OSVALDO"},"405":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TORRES CARIONI MARIA","cuit":"0","titular":"SOUMOULOU PABLO HERN"},"406":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SPENZA MARIANO M.","cuit":"0","titular":"SPENZA MARIANO MARTI"},"408":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"STARCEL PAMPA CENTRO","cuit":"0","titular":"STARCEL PAMPA CENTRO"},"410":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"SUAREZ ADELA JOSEFIN","cuit":"0","titular":"SUAREZ ADELA JOSEFIN"},"411":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUAREZ JORGE EDUARDO","cuit":"0","titular":"SUAREZ JORGE EDUARDO"},"412":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUPERCARNE S.A.","cuit":"0","titular":"SUPERCARNE S.A."},"413":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUPERMERCADO PLANETA","cuit":"0","titular":"SUPERMERCADO PLANETA"},"414":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"SUR AGROPECUARIA S.A","cuit":"0","titular":"SUR AGROPECUARIA S.A"},"415":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Sandra Marisa Rivero","cuit":"0","titular":"TARABORELLI ALEJANDR"},"416":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TARABORELLI MARIO JE","cuit":"0","titular":"TARABORELLI MARIO JE"},"417":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TARANTELA ELVIRA ELS","cuit":"0","titular":"TARANTELA ELVIRA ELS"},"418":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TARJETA NARANJA SA.","cuit":"0","titular":"TARJETA NARANJA SA."},"419":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Estacion de Servicio","cuit":"0","titular":"TARTAGLINO Y CIA. SR"},"420":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TEILETCHE ENRIQUE Y ","cuit":"0","titular":"TEILETCHE ENRIQUE Y "},"421":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"RECICLADOS TRES ARRO","cuit":"0","titular":"TERRASANTA MONICA"},"422":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TIEMERSMA SEBASTIAN","cuit":"0","titular":"TIEMERSMA SEBASTIAN"},"423":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TORRES CARIONI SANTI","cuit":"0","titular":"TORRES CARIONI SANTI"},"425":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"TOSTEX S.A.","cuit":"0","titular":"TOSTEX S.A."},"426":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRAFER SAIC","cuit":"0","titular":"TRAFER SAIC"},"427":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRANSPORTE GOIZUETA","cuit":"0","titular":"TRANSPORTE GOIZUETA"},"428":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRAVERSO GUILLERMO H","cuit":"0","titular":"TRAVERSO GUILLERMO H"},"429":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TRESNECO S.A.","cuit":"0","titular":"TRESNECO S.A."},"431":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"TRUCK EXPRESS S.R.L.","cuit":"0","titular":"TRUCK EXPRESS S.R.L."},"432":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TUMINI D. Y J. Y MEN","cuit":"0","titular":"TUMINI D. Y J. Y MEN"},"433":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"TURINI PABLO","cuit":"0","titular":"TURINI PABLO RENATO"},"434":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ULLERUP RAUL ADOLFO","cuit":"0","titular":"ULLERUP RAUL ADOLFO"},"435":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"UNIVALORES S.A.","cuit":"0","titular":"UNIVALORES S.A."},"436":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"URBAN ANDERSEN MARCO","cuit":"0","titular":"URBAN ANDERSEN MARCO"},"437":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"URBIETA ANDRES","cuit":"0","titular":"URBIETA ANDRES"},"438":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"URRUTIA MARIA MARTA","cuit":"0","titular":"URRUTIA MARIA MARTA"},"440":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"UZCUDUN S.A.F.I.M.","cuit":"0","titular":"UZCUDUN S.A.F.I.M."},"441":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"UZIDINGER EDUARDO NI","cuit":"0","titular":"UZIDINGER EDUARDO NI"},"442":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VACCA REINALDO RUBEN","cuit":"0","titular":"VACCA REINALDO RUBEN"},"443":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Automotores Vazquez","cuit":"0","titular":"VAZQUEZ MIGUEL ANGEL"},"444":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VERGNANO RAUL ANDRES","cuit":"0","titular":"VERGNANO RAUL ANDRES"},"445":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VERKUYL ASTRID CINTI","cuit":"0","titular":"VERKUYL ASTRID CINTI"},"447":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIGILAN S.R.L.AG.DE ","cuit":"0","titular":"VIGILAN S.R.L.AG.DE "},"448":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VILLAFRANCA MARTA S.","cuit":"0","titular":"VILLAFRANCA MARTA S."},"449":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"Viviana A Villalva","cuit":"0","titular":"VILLALBA JORGE ALFRE"},"450":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"VILLALBA PEDRO","cuit":"0","titular":"VILLALBA PEDRO"},"452":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VILLEMUR GUSTAVO MIG","cuit":"0","titular":"VILLEMUR GUSTAVO MIG"},"453":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VINOTECA LOS TONELES","cuit":"0","titular":"VINOTECA LOS TONELES"},"454":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIVIANI CARMEN","cuit":"0","titular":"VIVIANI CARMEN"},"455":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"VIZZOLINI NESTOR J.","cuit":"0","titular":"VIZZOLINI NESTOR J."},"456":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"WEHRHANNE HORACIO MA","cuit":"0","titular":"WEHRHANNE HORACIO MA"},"457":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"WEST FERNANDO LUIS","cuit":"0","titular":"WEST FERNANDO LUIS"},"458":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ZIJLSTRA JORGE ROBER","cuit":"0","titular":"ZIJLSTRA JORGE ROBER"},"459":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ZIJLSTRA SILVINA","cuit":"0","titular":"ZIJLSTRA SILVINA ELE"},"460":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ZORRILLA HNOS. S.R.L","cuit":"0","titular":"ZORRILLA HNOS. S.R.L"},"461":{"ModImpo":"Si","Empresa":"Actualizada","imp":50,"Medidor":"Actualizado","denominacion":"ZOTES SAUL FRANCISCO","cuit":"0","titular":"ZOTES SAUL FRANCISCO"},"462":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"ZURITA HNOS. Y CIA.","cuit":"0","titular":"ZURITA HNOS. Y CIA."},"463":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"18 DE SETIEMBRE S.A","cuit":"0","titular":"18 DE SETIEMBRE S.A"},"464":{"ModImpo":"Si","Empresa":"Actualizada","imp":250,"Medidor":"Actualizado","denominacion":"LASO - 3 ARROYOS S.A","cuit":"0","titular":"3 ARROYOS S.A."},"465":{"ModImpo":"Si","Empresa":"Actualizada","imp":87,"Medidor":"Actualizado","denominacion":"3 NET S.A.","cuit":"0","titular":"3 NET S.A."}}', 465, '2015-07-03 04:07:36', '""', 0, 0, 465, 411, 0, 0, 54);
+(21, '""', 465, '2015-07-16 07:07:43', '""', 465, 0, 0, 0, 0, 465, 0);
 
 -- --------------------------------------------------------
 
@@ -384,7 +718,7 @@ INSERT INTO `infmedidorexcel` (`id`, `actualizados`, `totalregistros`, `fecha`, 
 --
 
 CREATE TABLE IF NOT EXISTS `medidor` (
-`idmedidor` int(11) NOT NULL,
+  `idmedidor` int(11) NOT NULL AUTO_INCREMENT,
   `nomyap` varchar(20) NOT NULL,
   `telefono` varchar(20) NOT NULL,
   `domicilio` varchar(20) NOT NULL,
@@ -392,482 +726,480 @@ CREATE TABLE IF NOT EXISTS `medidor` (
   `numusuario` varchar(11) NOT NULL,
   `numsuministro` varchar(11) NOT NULL,
   `activo` tinyint(1) NOT NULL,
-  `fechadeultimopago` date NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3819 ;
+  `fechadeultimopago` date NOT NULL,
+  PRIMARY KEY (`idmedidor`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4285 ;
 
 --
 -- Volcado de datos para la tabla `medidor`
 --
 
 INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importepago`, `numusuario`, `numsuministro`, `activo`, `fechadeultimopago`) VALUES
-(3347, 'ABELLEIRA FABIAN-LEN', '00015611812', 'COLON 239', '65', '484901', '7712', 1, '2015-07-03'),
-(3348, 'ACA SALUD COOPERATIV', '0', 'CHACABUCO 549', '87', '549033', '45768', 1, '2015-07-03'),
-(3349, 'ACMC S.R.L.', '00000000000', 'MORENO 423', '50', '5597630', '8242', 1, '2015-07-03'),
-(3350, 'AGF ALLIANZ ARG.CIA ', '00000000000', 'MAIPU 80', '50', '543770', '7919', 1, '2015-07-03'),
-(3351, 'AGRO EL CARRETERO S.', '00000431650', 'R.PEÃ‘A 14', '87', '342458', '16068', 1, '2015-07-03'),
-(3352, 'AGRO INDUSTRIA TRES ', '00000434443', 'P.INDUSTRIAL', '50', '410854', '40121', 1, '2015-07-03'),
-(3353, 'AGRO-GILARDONI S.R.L', '00000000000', 'ALMAFUERTE 3500', '87', '588393', '23756', 1, '2015-07-03'),
-(3354, 'AGROPAL S.A.', '00000423718', 'BELGRANO 571', '50', '327253', '9806', 1, '2015-07-03'),
-(3355, 'AGROPRIMUS S.A', '00000000000', 'P.INDUSTRIAL', '50', '565886', '40139', 1, '2015-07-03'),
-(3356, 'AGUADAS GOMEZ HNOS S', '00000000000', 'V.SARSFIELD 998', '87', '593052', '14445', 1, '2015-07-03'),
-(3357, 'AIELLO JOSE E HIJOS ', '00000431430', 'P.INDUSTRIAL', '250', '319766', '40126', 1, '2015-07-03'),
-(3358, 'AIELLO NATALIO', '00000423249', 'BELGRANO 333', '50', '162926', '9372', 1, '2015-07-03'),
-(3359, 'ALARCON ANA VERONICA', '00000000000', '25 DE MAYO 345', '50', '486165', '7044', 1, '2015-07-03'),
-(3360, 'ALBA E.A.DE Y G.ALBA', '00000426691', 'PUEYRREDON 987', '50', '229401', '2864', 1, '2015-07-03'),
-(3361, 'ALBA MIRTA GRACIELA', '00000000000', 'ALSINA 745', '50', '310499', '16149', 1, '2015-07-03'),
-(3362, 'ALBERCA FACUNDO SEBA', '00000000000', 'COLON 876', '50', '557865', '1628', 1, '2015-07-03'),
-(3364, 'ALEGRO MARIA ANTONEL', '00000000000', 'H.YRIGOYEN 237', '50', '592563', '7271', 1, '2015-07-03'),
-(3366, 'ALEMANI CARLOS DANIE', '00000429412', 'BALCARCE 459', '50', '286808', '16858', 1, '2015-07-03'),
-(3367, 'ALONSO CARLOS ALBERT', '00000000000', 'SAAVEDRA 1284', '50', '531689', '2628', 1, '2015-07-03'),
-(3368, 'ALONSO MARIA ROSARIO', '00000000000', 'I.LA CATOLICA 758', '50', '475420', '17632', 1, '2015-07-03'),
-(3369, 'ALTUNA CARLOS F.', '00000431392', 'BELGRANO 665', '87', '318219', '10030', 1, '2015-07-03'),
-(3370, 'ALVARADO S.A.', '00000433163', 'ALSINA 235', '87', '374130', '15993', 1, '2015-07-03'),
-(3371, 'ALVAREZ TARGISE JUAN', '00015458621', 'ISTILART 715', '50', '250359', '10157', 1, '2015-07-03'),
-(3372, 'ANA JORGE OSCAR', '00000422426', 'COLON 156', '50', '202260', '8137', 1, '2015-07-03'),
-(3373, 'ANDERBERG FERNANDO A', '00000431422', 'MORENO 126', '50', '400956', '8566', 1, '2015-07-03'),
-(3374, 'ANDREATTA GRACIELA D', '00000000000', 'LAMADRID 685', '50', '477772', '15132', 1, '2015-07-03'),
-(3375, 'ANTONIO MACIEL S.R.L', '428475-15647166', 'AV.TRABAJADOR 846', '50', '567806', '3314', 1, '2015-07-03'),
-(3376, 'AQUATICA S.A. E/F.', '00000000000', 'RIVADAVIA 334', '87', '593775', '40018', 1, '2015-07-03'),
-(3377, 'ARAMBERRI LUIS ALFRE', '00000425047', 'CASTELLI 802', '87', '475723', '3089', 1, '2015-07-03'),
-(3378, 'ARANEGUI KARINA BEAT', '00000000000', 'GUEMES 109', '50', '5594571', '5350', 1, '2015-07-03'),
-(3379, 'ARENAL PABLO E.', '00000423179', 'I.LA CATOLICA 84', '50', '184322', '17719', 1, '2015-07-03'),
-(3380, 'ARENAS OSVALDO ARIEL', '00000431506', 'MORENO 1004', '87', '251981', '1428', 1, '2015-07-03'),
-(3381, 'ARIAS AMALIA-GROENEN', '00000000000', 'H.YRIGOYEN 63', '50', '552671', '8109', 1, '2015-07-03'),
-(3383, 'ARISTEGUI SERGIO FAB', '00000000000', 'COLON 442', '50', '406280', '7897', 1, '2015-07-03'),
-(3384, 'ARNAIS FERNANDO ALFO', '00000000000', 'CASTELLI 66', '50', '529484', '6004', 1, '2015-07-03'),
-(3385, 'ARRECHEA JUAN FRANCI', '15404190', 'BETOLAZA 461', '50', '5596670', '45939', 1, '2015-07-03'),
-(3386, 'ARTURE DE MARTINEZ C', '00000424010', 'COLON 379', '87', '261704', '7736', 1, '2015-07-03'),
-(3387, 'ASEF EDUARDO RUBEN', '00000000000', 'MAIPU 585', '50', '479239', '6413', 1, '2015-07-03'),
-(3388, 'ASOC. DE ABOGADOS DE', '00000000000', 'BRANDSEN 474', '87', '320980', '8982', 1, '2015-07-03'),
-(3389, 'ASOC. MUTUAL DAN', '00000431623', 'MORENO 114', '87', '172446', '8598', 1, '2015-07-03'),
-(3390, 'ASOC.PRO ENSEÃ‘ANZA ', '00000432616', 'DERIVACION NÃ¸4', '50', '355139', '40148', 1, '2015-07-03'),
-(3391, 'ASTIZ JORGE ARIEL', '00000000000', 'LIBERTAD 303', '50', '480961', '2372', 1, '2015-07-03'),
-(3392, 'ASTIZ MARIANA', '00000000000', 'SAAVEDRA 399', '50', '561152', '6406', 1, '2015-07-03'),
-(3393, 'ASTIZ MARIO SANTIAGO', '00000000000', 'TACUARI 436', '50', '502360', '14420', 1, '2015-07-03'),
-(3394, 'AUSTRAL MOTOR S.A.', '00000425777', 'MAGALLANES 1560', '87', '403537', '20729', 1, '2015-07-03'),
-(3395, 'AYALA RAMON ANDRES', '00000420868', 'PELLEGRINI 6', '50', '400682', '8423', 1, '2015-07-03'),
-(3396, 'BAQUEDANO MARTIN', 'VIMAX50', 'RIVADAVIA 199', '50', '494737', '16309', 1, '2015-07-03'),
-(3397, 'BARAINCA EDUARDO JUA', '00000429228', 'R.PEÃ‘A 67', '50', '314455', '16093', 1, '2015-07-03'),
-(3398, 'BARCALA SERGIO ANDRE', '00000425339', 'FALUCHO 134', '50', '389538', '9343', 1, '2015-07-03'),
-(3399, 'BARRAZA MARIA MATILD', '00000420311', 'RIVADAVIA 320', '50', '450195', '6995', 1, '2015-07-03'),
-(3400, 'BARRERAS ALBERTO MIG', '00000000000', 'ISTILART 568', '50', '537320', '9727', 1, '2015-07-03'),
-(3401, 'BARUTTA VERONICA BEA', '00000000000', 'FALUCHO 366', '50', '594482', '9291', 1, '2015-07-03'),
-(3402, 'BASSINI MARIA PAULA', '00000433523', 'GOMILA 146', '50', '543552', '15360', 1, '2015-07-03'),
-(3403, 'BAZAR EL MUNDIAL S.R', '00000424221', '9 DE JULIO 200', '50', '425089', '7535', 1, '2015-07-03'),
-(3404, 'BEITIA LUIS ALBERTO', '00000430689', 'QUINTANA 836', '50', '361837', '15571', 1, '2015-07-03'),
-(3405, 'BENGOCHEA SUSANA MAR', '00000000000', 'SARMIENTO 205', '50', '565684', '8637', 1, '2015-07-03'),
-(3406, 'BERESFORD S.A', '00000424445', 'RIVADAVIA 399', '87', '5595861', '17068', 1, '2015-07-03'),
-(3407, 'BETTOMEO ROBERTO SAN', '00000430873-15646873', 'ALMAFUERTE 436', '50', '329954', '21414', 1, '2015-07-03'),
-(3408, 'BIANCHI LUCIANO SEBA', '00000000000', 'J.INGENIEROS 148', '50', '541268', '21022', 1, '2015-07-03'),
-(3409, 'BONIFACIO LILIANA', '00000000000', 'H.YRIGOYEN 14', '50', '532530', '8062', 1, '2015-07-03'),
-(3410, 'BONINI JUAN CARLOS', '00000000000', 'CHACABUCO 227', '50', '473237', '7383', 1, '2015-07-03'),
-(3411, 'BORIONI JUAN PABLO', '00000431095', 'ISTILART 78', '87', '451873', '8476', 1, '2015-07-03'),
-(3412, 'BORRA JORGE RENATO', '00000426033', 'DORREGO 379', '50', '236018', '6789', 1, '2015-07-03'),
-(3413, 'BRAJOVICH GUILLERMO ', '00000000000', 'SARMIENTO 282', '50', '456894', '8797', 1, '2015-07-03'),
-(3414, 'BRAVO CARLOS-MARQUIS', '00000000000', 'CALLE 1810 68', '50', '552192', '8516', 1, '2015-07-03'),
-(3415, 'BREA DIEGO ALBERTO', '00000422844', 'CALLE 1810 876', '50', '258876', '10372', 1, '2015-07-03'),
-(3416, 'BREA OMAR', '00000428150', 'O.DUGGAN 1165', '50', '193571', '11758', 1, '2015-07-03'),
-(3417, 'BUSTOS SILVINA LILIA', '00015552287', 'CASTELLI 1525', '50', '572709', '3254', 1, '2015-07-03'),
-(3418, 'CABANE OSMAR ALBERTO', '00000000000', 'RIVADAVIA 164', '50', '509415', '7660', 1, '2015-07-03'),
-(3419, 'CALVETE ESTEBAN DANI', '00000000000', 'LAVALLE 835', '50', '384823', '5664', 1, '2015-07-03'),
-(3420, 'CAMBEX S.A.', '00000431383', 'MAIPU 37', '87', '383187', '7933', 1, '2015-07-03'),
-(3421, 'CAMPAGNE MARIO CESAR', '00000423600', 'RIVADAVIA 351', '50', '240451', '17060', 1, '2015-07-03'),
-(3422, 'CAMPAÃ‘A GERMAN MARC', '00000000000', 'OLAVARRIA 564', '50', '533931', '10488', 1, '2015-07-03'),
-(3423, 'CAMPOS CARMEN', '00000000000', 'MAIPU 770', '50', '397100', '5895', 1, '2015-07-03'),
-(3424, 'CAMUS FLORENCIA AGUS', '00000000000', 'CHACABUCO 261', '50', '599849', '7394', 1, '2015-07-03'),
-(3425, 'CARBONETTI SEBASTIAN', '00000000000', '9 DE JULIO 84', '50', '507466', '7965', 1, '2015-07-03'),
-(3426, 'CARRACEDO NORMA', '00000000000', 'RECONQUISTA 1036', '50', '543813', '19381', 1, '2015-07-03'),
-(3427, 'CARRERA HNOS.', '00000000000', 'SARMIENTO 1077', '87', '530536', '1358', 1, '2015-07-03'),
-(3428, 'CARRERA MARIA INES', '00000000000', 'CALLE 1810 59', '50', '502041', '8498', 1, '2015-07-03'),
-(3429, 'CARRERA NELIDA SUSAN', '00000000000', 'CHACABUCO 425', '50', '575146', '7415', 1, '2015-07-03'),
-(3430, 'CARRERA Y SALDUNA SO', '00000000000', 'COLON 509', '50', '506906', '7764', 1, '2015-07-03'),
-(3431, 'CARRIL CLAUDIA ANAHI', '00000000000', 'COLON 264', '87', '5596361', '8031', 1, '2015-07-03'),
-(3432, 'CASA HUMBERTO LUCAIO', '00000000000', 'CALLE 1810 356', '50', '457660', '40043', 1, '2015-07-03'),
-(3433, 'CASTRO NELLY', '00000000000', 'B.DE IRIGOYEN 868', '50', '573562', '12978', 1, '2015-07-03'),
-(3434, 'CATALANO MAURO ELIO', '00000000000', 'RIVADAVIA 623', '50', '584210', '18114', 1, '2015-07-03'),
-(3435, 'CENTRO ACOPIADORES C', '00000423801', 'P.N.CARRERA 142', '87', '290166', '7451', 1, '2015-07-03'),
-(3436, 'CENTRO BULONERO TS.A', '00000421144', 'SAN MARTIN 632', '87', '427979', '15875', 1, '2015-07-03'),
-(3437, 'CEPEDA MARISOL GRACI', '00000000000', 'ISTILART 23', '50', '573184', '8459', 1, '2015-07-03'),
-(3438, 'CEPEDA SILVIA MARIA', '00000000000', 'CHACABUCO 469', '50', '603881', '7419', 1, '2015-07-03'),
-(3439, 'CEREALERA TRES ARROY', '00000432670', 'SAN MARTIN 1725', '87', '407173', '40074', 1, '2015-07-03'),
-(3440, 'CERIANI NANCY GRACIE', '00000000000', '25 DE MAYO 62', '50', '564834', '7331', 1, '2015-07-03'),
-(3441, 'CERRI CARLOS E HIJOS', '00000430300', 'J.INGENIEROS 1000', '87', '395601', '40051', 1, '2015-07-03'),
-(3442, 'CERVINI MARIA SUSANA', '00000000000', 'MAIPU 210', '50', '291987', '7205', 1, '2015-07-03'),
-(3443, 'CIA.DE SEG.LA MERCAN', '00000000000', 'MORENO 511', '250', '484220', '40034', 1, '2015-07-03'),
-(3444, 'CLERCH AGUSTIN', '00000000000', 'DERIVACION NÃ¸4', '50', '609160', '21539', 1, '2015-07-03'),
-(3445, 'CLERCH IGNACIO', '00000000000', 'RECONQUISTA 430', '50', '485852', '17430', 1, '2015-07-03'),
-(3446, 'CLUB DE CAZADORES DE', '00000431505', 'V.SARSFIELD 285', '50', '175564', '14265', 1, '2015-07-03'),
-(3447, 'COCIMANO LAURA ANDRE', '00000422295', 'COLON 265', '50', '554330', '7717', 1, '2015-07-03'),
-(3448, 'COLANTONIO JOSE A.Y ', '00000426300', 'GUEMES 199', '50', '243191', '5359', 1, '2015-07-03'),
-(3449, 'COLL PATRICIA', '00000000000', 'L.V.LOPEZ 569', '50', '582649', '9779', 1, '2015-07-03'),
-(3450, 'COLLAZOS ALDO O.', '00000426344', 'RIVADAVIA 609', '87', '176949', '18109', 1, '2015-07-03'),
-(3451, 'COLOMBO OSCAR LUIS', '00000423665', 'SAAVEDRA 445', '50', '213370', '6556', 1, '2015-07-03'),
-(3452, 'COLONNA OMAR RODOLFO', '00000430136', 'COLON 299', '50', '340672', '7726', 1, '2015-07-03'),
-(3453, 'COMASA S.A.', '00000000000', '9 DE JULIO 231', '50', '505475', '7235', 1, '2015-07-03'),
-(3454, 'COMPAÃ‘IA EURO SRL.', '00000000000', 'MORENO 350', '50', '485230', '8431', 1, '2015-07-03'),
-(3455, 'CONFITERIA LA PERLA ', '00000423152', 'MORENO 155', '50', '164089', '8216', 1, '2015-07-03'),
-(3456, 'CONTI Y MELITA', '00000424885', 'BOLIVIA 950', '50', '182201', '717', 1, '2015-07-03'),
-(3457, 'CONTRERAS LUIS ALBER', '00000429318', 'PELLEGRINI 319', '50', '304951', '9271', 1, '2015-07-03'),
-(3458, 'COOP.AGRARIA DE TS.A', '431340', 'ALSINA 1015', '200', '53862', '40067', 1, '2015-07-03'),
-(3459, 'COOP.DE TRANSP.DE TS', '00000426287', 'MATHEU 850', '87', '80187', '2879', 1, '2015-07-03'),
-(3460, 'COOP.ELECT.LTDA.DE C', '00000432743', 'PELLEGRINI 102', '250', '237549', '8761', 1, '2015-07-03'),
-(3461, 'COOP.RURAL LTDA.ALFA', '00000431839', 'SAAVEDRA 398', '87', '79426', '6623', 1, '2015-07-03'),
-(3462, 'COSTANZO HUGO JUAN', '00000425757', 'BERUTTI 210', '50', '220020', '10175', 1, '2015-07-03'),
-(3463, 'COTABARREN DANIEL', '00000000000', 'QUINTANA 501', '87', '472517', '15482', 1, '2015-07-03'),
-(3464, 'CREDIL S.R.L.', '00000433096', 'BETOLAZA 70', '50', '455334', '8195', 1, '2015-07-03'),
-(3465, 'CUMECHE S.R.L.', '00000000000', 'SAN MARTIN 495', '87', '460963', '40056', 1, '2015-07-03'),
-(3466, 'DABIEN DE CHIRINO MA', '00000000000', 'ROCA 174', '50', '340685', '8715', 1, '2015-07-03'),
-(3467, 'DAGUERRE CRISTINA JO', '00000000000', 'MITRE 514', '50', '382047', '9466', 1, '2015-07-03'),
-(3468, 'D''ATRI SANDRA ELIZAB', '00000000000', 'BALCARCE 179', '50', '405717', '16759', 1, '2015-07-03'),
-(3469, 'DAWSON S.A.', '00000431350', 'PELLEGRINI 15', '87', '190886', '40037', 1, '2015-07-03'),
-(3470, 'DE ADURIZ MARIA JULI', '432113', 'B.OBRERO CASA 78', '50', '495822', '571', 1, '2015-07-03'),
-(3471, 'DE BENEDETTO JUAN CA', '0', 'RIVADAVIA 785', '50', '271253', '42940', 1, '2015-07-03'),
-(3472, 'DE LA CAL FRANCISCO', '00000422647', 'O.DUGGAN 675', '50', '319346', '11517', 1, '2015-07-03'),
-(3473, 'DE LA PENNA JUAN CAR', '00000430652', 'RIVADAVIA 602', '50', '322391', '6266', 1, '2015-07-03'),
-(3474, 'DE LA PENNA SEGURID.', '00000000000', 'CASEROS 955', '50', '569275', '19276', 1, '2015-07-03'),
-(3475, 'DE MARTINO MARIA EST', '00000000000', 'H.YRIGOYEN 62', '50', '333007', '8053', 1, '2015-07-03'),
-(3476, 'DE ZOETE SANDRA MARI', '00000000000', 'ROCA 814', '50', '498041', '10325', 1, '2015-07-03'),
-(3477, 'DEJEAN ROBERTO OSCAR', '432479', 'CONSTITUYENTES 75', '50', '399087', '1421', 1, '2015-07-03'),
-(3478, 'DEL CASTAÃ‘O ANGEL R', '00000430224', 'COLON 347', '87', '418603', '7730', 1, '2015-07-03'),
-(3479, 'DEL GRANDE SERGIO FA', '00000426311', 'MORENO 1317', '50', '438034', '1564', 1, '2015-07-03'),
-(3480, 'DEL VALLE MARIA LOUR', '00000000000', 'RECONQUISTA 281', '50', '479529', '16778', 1, '2015-07-03'),
-(3481, 'DEL VALLE NELSON BER', '00000429188', 'TACUARI 615', '50', '420097', '13680', 1, '2015-07-03'),
-(3482, 'DELGADO SONIA ALEJAN', '15510949', 'PRINGLES 327', '50', '5595502', '47705', 1, '2015-07-03'),
-(3483, 'DEMATEO ROBERTO PABL', '0', 'RIVADAVIA 1148', '50', '5594425', '41613', 1, '2015-07-03'),
-(3484, 'DI CROCE CLAUDIA ALE', '00000000000', 'LAVALLE 402', '50', '537854', '6613', 1, '2015-07-03'),
-(3485, 'DI CROCE LAURA OFELI', '00000000000', 'FALUCHO 204', '50', '431194', '9319', 1, '2015-07-03'),
-(3486, 'DI FELICE DORA NOEMI', '00015612128', 'BETOLAZA 787', '50', '582955', '6000', 1, '2015-07-03'),
-(3487, 'DI FULVIO LUIS EUGEN', '00000000000', '1RA.JUNTA 536', '50', '287355', '10675', 1, '2015-07-03'),
-(3488, 'DI MARCO JUAN E.', '00000423489', 'SAN MARTIN 390', '50', '199791', '15905', 1, '2015-07-03'),
-(3489, 'DI ROCCO MARIA CECIL', '00000430479', 'MORENO 953', '50', '448323', '1597', 1, '2015-07-03'),
-(3490, 'DI SALVI GUILLERMO E', '00000000000', 'R.MARGARITA 1405', '87', '465492', '11855', 1, '2015-07-03'),
-(3491, 'DI SALVO GRACIELA ES', '00000000000', 'GARIBALDI 2200', '50', '534097', '23689', 1, '2015-07-03'),
-(3492, 'DI SALVO S.A.', '00000423884', 'CALLE 1810 951', '50', '257345', '10566', 1, '2015-07-03'),
-(3493, 'DI TOMMASO MARIO Y T', '00000431022', 'ROCHA 10', '87', '307255', '40058', 1, '2015-07-03'),
-(3494, 'DI VITO CARMELO A.', '00000424649', 'B.DE IRIGOYEN 51', '87', '200312', '15755', 1, '2015-07-03'),
-(3495, 'DI VITO CLAUDIA SUSA', '00000000000', 'COLON 178', '50', '427429', '8133', 1, '2015-07-03'),
-(3496, 'DIAZ RAUL ALBERTO', '15505542', 'G.MOSCONI 35', '50', '451642', '20774', 1, '2015-07-03'),
-(3497, 'DIFONZO & MARCHI', '00000423658', '1RA.JUNTA 667', '87', '234304', '10664', 1, '2015-07-03'),
-(3498, 'DIMARCO ADRIANA GABR', '0', '9 DE JULIO 117', '50', '532585', '41853', 1, '2015-07-03'),
-(3499, 'DOMINGUEZ MARIELA PA', '15618871', 'COUNTRY ZURITA 1', '50', '589156', '42307', 1, '2015-07-03'),
-(3500, 'DUCHOSAL VERONICA', '00000000000', 'COLON 526', '50', '459967', '7880', 1, '2015-07-03'),
-(3501, 'DUPUY STELLA MARIS', '00000000000', 'V.SARSFIELD 9', '50', '570200', '14194', 1, '2015-07-03'),
-(3502, 'EICHLER EDUARDO HUGO', '00000425209', 'RIVADAVIA 501', '50', '295422', '17743', 1, '2015-07-03'),
-(3503, 'ELCUAZ HECTOR A.', '00000424193', 'P.N.CARRERA 899', '87', '195012', '5649', 1, '2015-07-03'),
-(3504, 'ELGART REYNALDO E Y ', '00000000000', 'SAN MARTIN 835', '87', '555845', '15818', 1, '2015-07-03'),
-(3505, 'ELGART VERONICA Y EL', '00000000000', 'L.V.LOPEZ 465', '50', '580430', '9554', 1, '2015-07-03'),
-(3506, 'ELICALDE NESTOR JUAN', '00000000000', 'MORENO 379', '50', '406075', '8240', 1, '2015-07-03'),
-(3507, 'ERRAZU MARIA EMILIA', '00000000000', 'COLON 286', '50', '588380', '8024', 1, '2015-07-03'),
-(3508, 'ESPELUSE RODOLFO Y C', '00000000000', 'ISTILART 76', '87', '528041', '8477', 1, '2015-07-03'),
-(3509, 'ETCHEVERRY ALFREDO J', '00000432289', 'I.LA CATOLICA 815', '50', '317078', '17572', 1, '2015-07-03'),
-(3510, 'ETERNET S.R.L.', '00015513040', 'ISTILART 255', '87', '479587', '9030', 1, '2015-07-03'),
-(3511, 'EXPRESO EL VASQUITO ', '00000000000', 'J.INGENIEROS 770', '50', '589387', '11998', 1, '2015-07-03'),
-(3512, 'FAGEMAR S.A.', '00000000000', 'CHACABUCO 587', '50', '576909', '7441', 1, '2015-07-03'),
-(3513, 'FAMTEX S.R.L.', '00000000000', 'COLON 131', '87', '499745', '7704', 1, '2015-07-03'),
-(3514, 'FARIAS MIRTA ANGELIC', '00000000000', 'COLON 59', '50', '461247', '7698', 1, '2015-07-03'),
-(3515, 'FARINA AMERICO', '00000423608', 'BETOLAZA 843', '50', '132756', '5774', 1, '2015-07-03'),
-(3516, 'FARMACIA TRES ARROYO', '00000000000', 'SAN MARTIN 733', '50', '5594842', '15794', 1, '2015-07-03'),
-(3517, 'FERNANDEZ JAVIER EDU', '00000000000', 'COLON 375', '50', '533944', '7734', 1, '2015-07-03'),
-(3518, 'FERNANDEZ MARIA CRIS', '420099', 'MAGALLANES 284', '50', '510222', '40901', 1, '2015-07-03'),
-(3519, 'FERNANDEZ MIGUEL ANG', '00000430880', 'MORENO 609', '50', '320733', '8295', 1, '2015-07-03'),
-(3520, 'FERNANDEZ RODOLFO Y ', '00000000000', 'DERQUI 53', '50', '497738', '15737', 1, '2015-07-03'),
-(3521, 'FERNANDEZ VILLANUEVA', '00000425356', 'COLON 218', '87', '411369', '8044', 1, '2015-07-03'),
-(3522, 'FERRARI RICARDO DOMI', '00000000000', 'SARMIENTO 375', '50', '421661', '8660', 1, '2015-07-03'),
-(3523, 'FERRARIO GUILLERMO E', '00000424445', 'COLON 435', '50', '393144', '7747', 1, '2015-07-03'),
-(3524, 'FERRARIO GUSTAVO ADR', '00000000000', 'AV.TRABAJADOR 46', '50', '394402', '1624', 1, '2015-07-03'),
-(3525, 'FERRARO MARIO CESAR', '00000423106', 'ALSINA 654', '50', '283360', '16231', 1, '2015-07-03'),
-(3526, 'FERREIROS DIEGO RUBE', '00000000000', 'P.N.CARRERA 985', '50', '592156', '5430', 1, '2015-07-03'),
-(3527, 'FIDUCIARIA CASTELLI ', '00000431333', 'MORENO 322', '87', '5596868', '8456', 1, '2015-07-03'),
-(3528, 'FINVERCAR S.A', '433795', '9 DE JULIO 210', '87', '491664', '7230', 1, '2015-07-03'),
-(3529, 'FLECHA MARCELO ANGEL', '00000000000', 'LAPRIDA 246', '50', '583659', '13806', 1, '2015-07-03'),
-(3530, 'FORTE SILVIA NOEMI', '00000000000', 'ROCA 421', '87', '294656', '9468', 1, '2015-07-03'),
-(3531, 'FOSQUE MARIA ADELA', '00000000000', '9 DE JULIO 88', '50', '435251', '7963', 1, '2015-07-03'),
-(3532, 'FRIGORIFICO CAPRIATA', '00000000000', 'GOMILA 268', '87', '516077', '40055', 1, '2015-07-03'),
-(3533, 'FUCHS SANDRA CECILIA', '00000000000', '9 DE JULIO 358', '50', '592941', '6908', 1, '2015-07-03'),
-(3534, 'GALENO ARGENTINA SOC', '00000000000', 'MAIPU 6', '87', '5594363', '7931', 1, '2015-07-03'),
-(3535, 'GALILEA EUGENIO HECT', '00000424278', 'COLON 424', '87', '185127', '7900', 1, '2015-07-03'),
-(3536, 'GALLARDO JAVIER NEST', '00015614365', 'BRANDSEN 772', '87', '420518', '42', 1, '2015-07-03'),
-(3537, 'GANIM CESAR DAMIAN', '15521567', '17 DE AGOSTO', '50', '5597710', '49421', 1, '2015-07-03'),
-(3538, 'GANIM NESTOR HUGO', '00000000000', 'PASSO 235', '50', '455291', '12882', 1, '2015-07-03'),
-(3539, 'GARAT ELSA MARIA', '00000431200', 'DORREGO 966', '50', '380623', '2358', 1, '2015-07-03'),
-(3540, 'GARCIA ANA CAROLINA', '0', 'S.COSTA 87', '50', '559191', '47804', 1, '2015-07-03'),
-(3541, 'GARCIA GABRIEL Y GUS', '00000422856', 'SAN MARTIN 1760', '87', '399191', '20893', 1, '2015-07-03'),
-(3542, 'GARCIA MARCONI ROCIO', '00000000000', '9 DE JULIO 62', '50', '530015', '7969', 1, '2015-07-03'),
-(3543, 'GARCIA MARIA DEL CAR', '00000425641', '9 DE JULIO 131', '50', '345912', '7550', 1, '2015-07-03'),
-(3544, 'GARCIA MAURICIO DAVI', '00015645479', 'MORENO 581', '50', '421238', '8284', 1, '2015-07-03'),
-(3545, 'GARCIA SERGIO RAUL', '00000000000', 'ALVEAR 633', '87', '500089', '10274', 1, '2015-07-03'),
-(3546, 'GASANEO Y AMESTOY', '00000000000', 'SARMIENTO 489', '50', '233336', '8667', 1, '2015-07-03'),
-(3547, 'GASPAROLI ANA TERESA', '425361', 'H.PRIMO 991', '50', '568874', '777', 1, '2015-07-03'),
-(3548, 'GEJO RUBEN Y RODOLFO', '00000000000', 'DORREGO 534', '50', '486758', '6851', 1, '2015-07-03'),
-(3549, 'GENOVESI HNOS.S.R.L', '00000424926', 'RUTA 3 KM 496', '50', '248095', '23394', 1, '2015-07-03'),
-(3550, 'GIACOMINO ANDREA SUS', '00000423268', 'R.PEÃ‘A 67', '87', '411705', '16082', 1, '2015-07-03'),
-(3551, 'GIARDINO P Y DE TORR', '00000431320', 'H.PRIMO 442', '50', '435440', '9689', 1, '2015-07-03'),
-(3552, 'GIDINI MARGARITA AGU', '00000432366', 'URQUIZA 47', '50', '431266', '1736', 1, '2015-07-03'),
-(3553, 'GIMNASIO STADIUM', '00000000000', 'MORENO 715', '87', '302234', '1615', 1, '2015-07-03'),
-(3554, 'GIUDICI ADRIAN ANDRE', '425685', 'CHACABUCO 101', '50', '493916', '42756', 1, '2015-07-03'),
-(3555, 'GIULIANI HECTOR Y LU', '00000000000', 'ESTRADA 666', '50', '310040', '13521', 1, '2015-07-03'),
-(3556, 'GONZALEZ JORGE VENTU', '00000000000', 'BROWN 176', '50', '516442', '16420', 1, '2015-07-03'),
-(3557, 'GONZALEZ LUIS ALBERT', '427068', 'CONSTITUYENTES 174', '50', '379252', '1210', 1, '2015-07-03'),
-(3558, 'GONZALEZ MARCELO GAB', '00000424023', '25 DE MAYO 275', '50', '365819', '7032', 1, '2015-07-03'),
-(3559, 'GONZALEZ MARCELO OSC', '00000429920', 'O.DUGGAN 750', '50', '443647', '12471', 1, '2015-07-03'),
-(3560, 'GONZALEZ MARIA LAURA', '00000000000', '9 DE JULIO 46', '50', '469012', '7975', 1, '2015-07-03'),
-(3561, 'GRANDA LUCIANO', '00000000000', 'FRENCH 15', '50', '563983', '13138', 1, '2015-07-03'),
-(3562, 'GROSSO CLAUDIA LUJAN', '00000000000', '25 DE MAYO 373', '50', '133519', '7046', 1, '2015-07-03'),
-(3563, 'GRUAS Y MONTAJES IOR', '00000000000', 'G.MOSCONI 399', '87', '571614', '20800', 1, '2015-07-03'),
-(3564, 'GUAZZORA ELSA CELICA', '00000426679', '25 DE MAYO 82', '50', '360595', '7330', 1, '2015-07-03'),
-(3565, 'GUILLERMO ECHEVARRIA', '00334000401', 'SAN MARTIN 1080', '87', '472041', '20225', 1, '2015-07-03'),
-(3566, 'GUISASOLA MARIA LEON', '00000000000', 'ALVARADO 325', '50', '215879', '9831', 1, '2015-07-03'),
-(3567, 'GURIDI PAULA ANDREA', '00000000000', 'BETOLAZA 124', '50', '504465', '7629', 1, '2015-07-03'),
-(3568, 'GUSTAVO FIORDA MAQUI', '00000000000', 'J.INGENIEROS 1020', '87', '580502', '11910', 1, '2015-07-03'),
-(3569, 'HERNANDEZ HUGO SEBAS', '00000000000', 'FALUCHO 195', '50', '529064', '9164', 1, '2015-07-03'),
-(3570, 'HERRERA F-HERRERA N-', '00000000000', 'URQUIZA 1300', '50', '583936', '4196', 1, '2015-07-03'),
-(3571, 'HERRERO RAUL MARIO', '00000433530', 'MORENO 255', '87', '318769', '8225', 1, '2015-07-03'),
-(3572, 'HID MARIO HORACIO', '00000000000', '1RA.JUNTA 367', '50', '382975', '10645', 1, '2015-07-03'),
-(3573, 'HIDALGO MARIA EUGENI', '00000000000', 'CALLE 1810 15', '50', '507163', '8493', 1, '2015-07-03'),
-(3574, 'HOJBJERG MYRIAN MABE', '00000000000', 'MORENO 999', '50', '5596036', '1593', 1, '2015-07-03'),
-(3575, 'HOJOBAR S.A.', '00000000000', 'BELGRANO 495', '50', '519007', '9580', 1, '2015-07-03'),
-(3576, 'HOLLENDER PEDRO MARC', '00000000000', 'R.PEÃ‘A 4200', '50', '468291', '21528', 1, '2015-07-03'),
-(3577, 'IACOVIELLO HECTOR FR', '00000424649', 'SAN MARTIN 551', '50', '386481', '15752', 1, '2015-07-03'),
-(3578, 'IELMINI NELIDA ESTER', '00000000000', 'BROWN 97', '50', '483571', '16016', 1, '2015-07-03'),
-(3579, 'IGLESIAS JUAN CARLOS', '00000000000', 'CALLE 1810 58', '50', '524665', '8517', 1, '2015-07-03'),
-(3580, 'INGENERARE SRL', '00000000000', 'ALVEAR 210', '50', '545211', '10363', 1, '2015-07-03'),
-(3581, 'INSTITUTO BIOQUIMICO', '00000431347', 'RIVADAVIA 183', '87', '280617', '16307', 1, '2015-07-03'),
-(3582, 'IRIART FERNANDO RAUL', '00000429221', 'TACUARI 585', '50', '257462', '14081', 1, '2015-07-03'),
-(3583, 'IRIBARNE EDUARDO', '0', 'H.YRIGOYEN 769', '50', '610472', '40199', 1, '2015-07-03'),
-(3584, 'IRIBARREN DANIEL CAR', '00000000000', '1RA.JUNTA 1074', '50', '420420', '507', 1, '2015-07-03'),
-(3585, 'ISMAEL CLAUDIO ANIBA', '00000000000', 'BELGRANO 680', '50', '456689', '13466', 1, '2015-07-03'),
-(3586, 'ITALIANI MARIA ELENA', '00000430189', 'MORENO 227', '50', '378314', '8223', 1, '2015-07-03'),
-(3587, 'ITURBURU MARIA ISABE', '00000000000', 'MITRE 65', '50', '478069', '9385', 1, '2015-07-03'),
-(3588, 'JACOBSEN ANDRES RAUL', '00000428097', 'FALUCHO 985', '50', '354695', '928', 1, '2015-07-03'),
-(3589, 'JALLE ANDRES', '00000000000', 'CHACABUCO 75', '50', '572901', '7360', 1, '2015-07-03'),
-(3590, 'JAUREGUIBEHERE LIA M', '00000000000', 'H.YRIGOYEN 172', '50', '467382', '7576', 1, '2015-07-03'),
-(3591, 'JEANNERET JULIO', '00000422712', 'RIVADAVIA 545', '50', '205450', '17750', 1, '2015-07-03'),
-(3592, 'JORGE ALBERTO', '00000000000', 'BRANDSEN 365', '50', '499123', '8893', 1, '2015-07-03'),
-(3593, 'JUAN EDUARDO', '00000424361', 'D.VASQUEZ 924', '87', '393245', '12642', 1, '2015-07-03'),
-(3594, 'JURORUSA S.A', '00000000000', 'MORENO 164', '87', '559074', '8530', 1, '2015-07-03'),
-(3595, 'LA AGRICOLA GANAD.DE', '00000424312', 'SARMIENTO 221', '87', '19914', '8639', 1, '2015-07-03'),
-(3596, 'LA CASA DE LOS BULON', '00000000000', 'LAVALLE 1', '50', '459840', '7893', 1, '2015-07-03'),
-(3597, 'LA PERSEVERANCIA SEG', '00000430780', 'COLON 87', '250', '20167', '40026', 1, '2015-07-03'),
-(3598, 'LABORDE CARLOS ALBER', '00000426811', 'COLON 627', '50', '222721', '7809', 1, '2015-07-03'),
-(3599, 'LAGO S.A.', '00000000000', 'SAN MARTIN 1386', '87', '498416', '21069', 1, '2015-07-03'),
-(3600, 'LAMBERTA JORGE MIGUE', '00000423118', 'BRANDSEN 134', '50', '459361', '9095', 1, '2015-07-03'),
-(3601, 'LANCE FABIANA', '00000000000', 'COLON 481', '50', '570574', '7761', 1, '2015-07-03'),
-(3602, 'LARA ROBERTO MARCELO', '00000429538', '1RA.JUNTA 226', '50', '391951', '10749', 1, '2015-07-03'),
-(3603, 'LARRIESTRA BEATRIZ C', '00000000000', 'COLON 545', '50', '437776', '7787', 1, '2015-07-03'),
-(3604, 'LARSEN CESAR GERARDO', '00000000000', 'RECONQUISTA 801', '50', '379005', '18730', 1, '2015-07-03'),
-(3605, 'LAS MECHAS SOCIEDAD ', '00000000000', 'L.V.LOPEZ 9', '50', '566098', '8606', 1, '2015-07-03'),
-(3606, 'LATORRE ALEJANDRO MA', '00000000000', 'B.DE IRIGOYEN 755', '50', '522993', '13286', 1, '2015-07-03'),
-(3607, 'LATORRE JOAQUIN IGNA', '00000000000', 'LIBERTAD 115', '50', '550055', '1907', 1, '2015-07-03'),
-(3608, 'LAVANDERIA TRES ARRO', '00000425350', 'DORREGO 502', '50', '229270', '6852', 1, '2015-07-03'),
-(3609, 'LAVERENS NELSON A.', '00000000000', 'S.PEÃ‘A 135', '50', '220525', '15404', 1, '2015-07-03'),
-(3610, 'LEGUIZAMON CLAUDIA I', '00000000000', 'LAVALLE 661', '50', '558282', '6107', 1, '2015-07-03'),
-(3611, 'LEGUIZAMON ESTEBAN H', '00015562931', 'ALVARADO 675', '50', '558341', '9858', 1, '2015-07-03'),
-(3612, 'LETAMENDI LUIS ANGEL', '00000420913', 'L.V.LOPEZ 1250', '50', '392671', '10921', 1, '2015-07-03'),
-(3613, 'LIEBANA JORGE F.', '00000431615', 'SAN LORENZO 56', '50', '188359', '16701', 1, '2015-07-03'),
-(3614, 'LIFIRON S.A', '00000000000', 'DERIVACION NÂ°2 2', '50', '548935', '22159', 1, '2015-07-03'),
-(3615, 'LLANOS ALICIA CLALFI', '00000000000', 'COLON 430', '50', '594466', '7898', 1, '2015-07-03'),
-(3616, 'LOFIEGO JOSE JUIS', '00000430152', 'ISTILART 630', '50', '406583', '9949', 1, '2015-07-03'),
-(3617, 'LOPEZ IRMA ELENA', '00000000000', 'CALLE 1810 550', '50', '471305', '9756', 1, '2015-07-03'),
-(3618, 'LOPEZ NESTOR FABIAN', '00000000000', 'LAVALLE 395', '50', '445931', '6871', 1, '2015-07-03'),
-(3619, 'LOSADA RICARDO OSVAL', '00000423259', 'LAVALLE 410', '50', '346889', '6612', 1, '2015-07-03'),
-(3620, 'LUCERO OLGA', '0', '9 DE JULIO 922', '50', '575364', '44961', 1, '2015-07-03'),
-(3621, 'LUIS BLANCO S.A', '00000433533', 'BELGRANO 970', '87', '300357', '12532', 1, '2015-07-03'),
-(3622, 'MACHADO ROBERTO OSCA', '00000432079', 'L.N.ALEM 546', '50', '396998', '2822', 1, '2015-07-03'),
-(3623, 'MACIEL HERMANOS S.A.', '00000430680', 'SAN MARTIN 985', '250', '223744', '40059', 1, '2015-07-03'),
-(3624, 'MADERAS S. JOSE DE L', '00000000000', 'S.COSTA 1009', '50', '536844', '10667', 1, '2015-07-03'),
-(3625, 'M.A.M. S.A.', '00000424441', 'FORMOSA 1050', '87', '421456', '40050', 1, '2015-07-03'),
-(3626, 'MARINO MONICA GRACIE', '00000000000', 'COLON 363', '50', '476791', '7733', 1, '2015-07-03'),
-(3627, 'MARTINEZ CLAUDIO NES', '00000000000', 'URQUIZA 116', '50', '402745', '1993', 1, '2015-07-03'),
-(3628, 'MARTINEZ DE CAMPOS A', '00000000000', 'CHACABUCO 325', '50', '456618', '7405', 1, '2015-07-03'),
-(3629, 'MARTINEZ FRANKLIN SE', '00000433007', 'RIVADAVIA 885', '50', '411835', '18764', 1, '2015-07-03'),
-(3630, 'MARTINEZ GUILLERMO O', '424748', 'BETOLAZA 711', '50', '483816', '42405', 1, '2015-07-03'),
-(3631, 'MARTINEZ JULIO CESAR', '00000000000', 'COLON 346', '87', '548759', '7950', 1, '2015-07-03'),
-(3632, 'MASCHI EDUARDO ERNES', '00000430870', 'SAN LORENZO 281', '50', '199485', '16417', 1, '2015-07-03'),
-(3633, 'MASTROSIMONE GUSTAVO', '00000422231', 'BELGRANO 702', '50', '402370', '13136', 1, '2015-07-03'),
-(3634, 'MAVIGLIA YAMILA BELE', '0', 'MORENO 598', '50', '5594953', '41377', 1, '2015-07-03'),
-(3635, 'MAYER RICARDO AUTOMO', '00000428350', 'O.DUGGAN 875', '50', '530725', '11650', 1, '2015-07-03'),
-(3636, 'MENNA ELIANA ANDREA', '00000000000', 'RIVADAVIA 599', '50', '599793', '17757', 1, '2015-07-03'),
-(3637, 'MENNA JOSE ANGEL', '00000422842', 'CONSTITUYENTES 50', '50', '343471', '1417', 1, '2015-07-03'),
-(3638, 'MENNA LORENZO N.', '00000426588', 'SAN LORENZO 184', '87', '187828', '16688', 1, '2015-07-03'),
-(3639, 'MEO GUZMAN ENRIQUE F', '00000423287', 'DERQUI 134', '50', '399683', '15479', 1, '2015-07-03'),
-(3640, 'MERLINO PLAN S.A.', '00000000000', 'H.YRIGOYEN 73', '87', '450661', '8110', 1, '2015-07-03'),
-(3641, 'MERLO CARMEN HERMINI', '00000000000', 'ESTRADA 55', '50', '335421', '15664', 1, '2015-07-03'),
-(3642, 'MESA DE FORCHETTI MO', '00000000000', 'SARMIENTO 201', '50', '354826', '8636', 1, '2015-07-03'),
-(3643, 'MIEDAN ANA KARINA', '00000432829', 'H.YRIGOYEN 431', '50', '439826', '6677', 1, '2015-07-03'),
-(3644, 'MILLA SUR S.A.', '00000000000', 'GUEMES 45', '87', '604774', '5347', 1, '2015-07-03'),
-(3645, 'MIO FIGLIO  S.R.L.', '15507169', 'LAVALLE 52', '50', '5594994', '45928', 1, '2015-07-03'),
-(3646, 'MOIRANO EVELIA LILIA', '00000000000', 'ROCA 13', '50', '512776', '8373', 1, '2015-07-03'),
-(3647, 'MOIZZI JUAN JOSE', '00000000000', 'BROWN 1', '50', '468796', '16007', 1, '2015-07-03'),
-(3648, 'MOLFESE ISIDRO', '00000432176', 'CANGALLO 664', '50', '351056', '13642', 1, '2015-07-03'),
-(3649, 'MOLINA EUGENIO ALFRE', '00000423034', 'LAVALLE 357', '50', '386872', '6864', 1, '2015-07-03'),
-(3650, 'MOLINA HECTOR MARIAN', '00000000000', 'COLON 255', '50', '561279', '7714', 1, '2015-07-03'),
-(3651, 'MOLINOS TRES ARROYOS', '00000432494', 'P.INDUSTRIAL', '87', '400725', '40130', 1, '2015-07-03'),
-(3652, 'MOLINOS ZALLA S.A.', '00000420759', 'RUTA 3 KM 495.5', '87', '525473', '40120', 1, '2015-07-03'),
-(3653, 'MOLLER ARTURO', '00000429848', 'V.SARSFIELD 375', '50', '285436', '14299', 1, '2015-07-03'),
-(3654, 'MONSALVO MARIA DE LO', '00000000000', 'MORENO 265', '50', '522980', '8227', 1, '2015-07-03'),
-(3655, 'MONTESINOS JOSE MANU', '00000420783', 'L.V.LOPEZ 176', '87', '308092', '8839', 1, '2015-07-03'),
-(3656, 'MORAN JORGE ANTONIO', '00000428895', 'LAMADRID 167', '50', '366021', '14983', 1, '2015-07-03'),
-(3657, 'MORAN MARCELO ANTONI', '00000000000', '25 DE MAYO 299', '50', '492850', '7033', 1, '2015-07-03'),
-(3658, 'MUNGAI MARIA MERCEDE', '00000000000', 'CORDOBA 44', '50', '566740', '10874', 1, '2015-07-03'),
-(3659, 'MUTUAL FEDERADA 25 D', '431819', 'MORENO 456', '50', '5597222', '8400', 1, '2015-07-03'),
-(3660, 'NALDO LOMBARDI S.A', '424178', 'CALLE 1810 75', '87', '555438', '40039', 1, '2015-07-03'),
-(3661, 'NIKRO S.A', '00000433344', 'RIVADAVIA 620', '50', '532514', '6263', 1, '2015-07-03'),
-(3662, 'NOICSA S.A.', '00000000000', 'MAZZINI 950', '87', '533638', '11665', 1, '2015-07-03'),
-(3663, 'NOVILLO VIRGINIA VER', '00000000000', 'SALTA 321', '50', '513555', '4744', 1, '2015-07-03'),
-(3664, 'OHACO RAUL BAUTISTA', '00000428430', 'CHACABUCO 390', '50', '336734', '7524', 1, '2015-07-03'),
-(3665, 'OLEOHIDRAULICA DI RO', '00000423815', 'SAN MARTIN 1375', '50', '381516', '21130', 1, '2015-07-03'),
-(3666, 'OLOCCO BARTOLO', '00000431844', 'H.YRIGOYEN 91', '50', '240116', '8113', 1, '2015-07-03'),
-(3667, 'OLSEN CRISTIAN', '00000000000', 'LAMADRID 273', '50', '460093', '15019', 1, '2015-07-03'),
-(3668, 'ONGARINI LIVIO', '00000426468', 'QUINTANA 375', '50', '195911', '15425', 1, '2015-07-03'),
-(3669, 'OTERO OSCAR ALBERTO', '00000427339', 'ALSINA 32', '50', '268598', '16300', 1, '2015-07-03'),
-(3670, 'PALLA SILVIA CRISTIN', '00000000000', 'MORENO 623', '50', '500757', '8297', 1, '2015-07-03'),
-(3671, 'PALLADINO  S.A.', '00000424896', '1RA.JUNTA 999', '87', '392802', '534', 1, '2015-07-03'),
-(3672, 'PALMA NORA', '00000000000', 'LAVALLE 196', '50', '488853', '7468', 1, '2015-07-03'),
-(3673, 'PASCUAL SILVIA ADRIA', '00000430612', 'L.V.LOPEZ 81', '50', '398761', '8622', 1, '2015-07-03'),
-(3674, 'PAZOS DE VELOSO MABE', '00000000000', 'H.YRIGOYEN 420', '50', '417071', '6671', 1, '2015-07-03'),
-(3675, 'PC TRUCKS TRES ARROY', '00000000000', 'J.INGENIEROS 804', '50', '574455', '11996', 1, '2015-07-03'),
-(3676, 'PEQUEÃ‘O JOSE', '00000424243', 'CHACABUCO 163', '50', '213817', '7377', 1, '2015-07-03'),
-(3677, 'PEREYRA ESTEBAN CEFE', '00000000000', 'SAN MARTIN 1315', '50', '485386', '21074', 1, '2015-07-03'),
-(3678, 'PEREZ DALSGAARD Y CI', '00000000000', 'MORENO 798', '87', '261225', '6', 1, '2015-07-03'),
-(3679, 'PEREZ GUILLERMO LUIS', '00000429763', '1RA.JUNTA 250', '50', '271729', '10746', 1, '2015-07-03'),
-(3680, 'PEREZ GUSTAVO MIGUEL', '00000000000', 'BELGRANO 625', '50', '431048', '10024', 1, '2015-07-03'),
-(3681, 'PEREZ MARIA ISABEL', '00000000000', 'LIBERTAD 385', '50', '459938', '2362', 1, '2015-07-03'),
-(3682, 'PEREZ NELSON ADRIAN', '00000000000', 'LAMADRID 436', '50', '480336', '15270', 1, '2015-07-03'),
-(3683, 'PEREZ PAULA ANDREA', '00000000000', 'B.OBRERO CASA 54', '50', '464554', '603', 1, '2015-07-03'),
-(3684, 'PEREZ RAUL MARTIN', '00000000000', 'CHACABUCO 39', '87', '363280', '7356', 1, '2015-07-03'),
-(3685, 'PERTICARARI JUAN PAB', '15613025', 'SAN MARTIN 402', '50', '505840', '15902', 1, '2015-07-03'),
-(3686, 'PETELA HECTOR', '00000420407', 'CATAMARCA 934', '87', '307138', '20521', 1, '2015-07-03'),
-(3687, 'PIERINI CARLOS FABIA', '00000428707', 'SARMIENTO 1165', '50', '451206', '1352', 1, '2015-07-03'),
-(3688, 'PINTURERIAS RUCCI S.', '00000422054', 'CHACABUCO 324', '87', '520667', '7533', 1, '2015-07-03'),
-(3689, 'PIROSANTO CAMILO ALD', '00000427500', 'V.SARSFIELD 295', '50', '318613', '14266', 1, '2015-07-03'),
-(3690, 'PODESTA MARIANA', '00000000000', 'BETOLAZA 114', '50', '491840', '7631', 1, '2015-07-03'),
-(3691, 'PONCE EDUARDO ESTEBA', '00000429069', 'S.PEÃ‘A 460', '50', '336620', '14281', 1, '2015-07-03'),
-(3692, 'POULSEN PEDRO-CAZEAU', '00000000000', 'BALCARCE 568', '50', '543871', '17001', 1, '2015-07-03'),
-(3693, 'POZZOLI LAURA CECILI', '00000000000', 'MORENO 585', '50', '538880', '8278', 1, '2015-07-03'),
-(3694, 'PRADO RUBEN OSCAR', '00000000000', 'CORDOBA 260', '87', '5596384', '10829', 1, '2015-07-03'),
-(3695, 'PRIETO JUAN JOSE', '00000000000', 'PASSO 620', '50', '483148', '13086', 1, '2015-07-03'),
-(3696, 'PROCACCINI FRANCISCO', '00015618430-434077-', 'ALMAFUERTE 40', '50', '265122', '21079', 1, '2015-07-03'),
-(3697, 'QUIMICA MOLERO S.R.L', '00000000000', 'CASEROS 816', '50', '521811', '19295', 1, '2015-07-03'),
-(3698, 'RACCIATTI PEDRO ALEJ', '00015458789', 'DERIVACION NÂ°2 0000', '50', '580313', '22151', 1, '2015-07-03'),
-(3699, 'RANZINI MATIAS FEDER', '00000000000', 'ALSINA 469', '50', '581961', '16057', 1, '2015-07-03'),
-(3700, 'RANZINI RICARDO VALE', '432553', 'J.INGENIEROS 360', '87', '434443', '21030', 1, '2015-07-03'),
-(3701, 'RAVELLA RICARDO H.', '00000433507', 'LAS HERAS 455', '50', '237406', '17543', 1, '2015-07-03'),
-(3702, 'RE MARIO CESAR', '00000431251', 'LAVALLE 155', '50', '460110', '7492', 1, '2015-07-03'),
-(3703, 'RECARI MARIANO', '00000422878', 'GOMILA 798', '50', '446101', '13119', 1, '2015-07-03'),
-(3704, 'REFAFLOTO S.A', '00000000000', 'COLON 399', '87', '507701', '7738', 1, '2015-07-03'),
-(3705, 'RENDO DE PODESTA IRM', '00000425524', 'H.PRIMO 384', '50', '404374', '9708', 1, '2015-07-03'),
-(3706, 'REY ANA MARIA', '00000430467', 'S.CABRAL 46', '87', '408574', '14937', 1, '2015-07-03'),
-(3707, 'RIDINO EDUARDO NICOL', '00000000000', 'BETOLAZA 757', '50', '478825', '5995', 1, '2015-07-03'),
-(3708, 'RIVOLTA JOSE EDUARDO', '15506110', 'QUINTANA 75', '50', '5597618', '49145', 1, '2015-07-03'),
-(3709, 'ROAS SACIF', '42955800000000000', 'SAN MARTIN 461', '50', '585507', '15733', 1, '2015-07-03'),
-(3710, 'RODERA FRANCISCO Y J', '00000000000', 'CHACABUCO 173', '50', '471565', '7378', 1, '2015-07-03'),
-(3711, 'RODRIGUEZ ELSA TERES', '00000430930', '9 DE JULIO 216', '50', '399133', '7231', 1, '2015-07-03'),
-(3712, 'RODRIGUEZ TERESA ANG', '00000000000', 'MAIPU 165', '50', '470933', '7519', 1, '2015-07-03'),
-(3713, 'ROLANDO LUIS ROBERTO', '00000430479', 'SAN LORENZO 164', '87', '352691', '16691', 1, '2015-07-03'),
-(3714, 'ROLDAN JUANA MARIELA', '00000000000', 'RIVADAVIA 223', '50', '470959', '16709', 1, '2015-07-03'),
-(3715, 'ROLDAN LILIANA VALER', '00000000000', 'MATHEU 515', '50', '475866', '6067', 1, '2015-07-03'),
-(3716, 'RUBIO DANIEL CECILIO', '00000429451', '1RA.JUNTA 531', '50', '312321', '10658', 1, '2015-07-03'),
-(3717, 'RUTA 2 S.R.L.', '00000000000', 'L.DE LA TORRE 1496', '50', '261179', '40048', 1, '2015-07-03'),
-(3718, 'SABATINI MARCELO EDM', '00000000000', 'R.PEÃ‘A 81', '50', '502490', '16084', 1, '2015-07-03'),
-(3719, 'SAEZ JUAN EMILIO', '00000423535', 'CASEROS 601', '50', '5596738', '19223', 1, '2015-07-03'),
-(3720, 'SAEZ SILVIA NELLY', '00000420847', 'CHACABUCO 299', '50', '348926', '7403', 1, '2015-07-03'),
-(3721, 'SAGARDOY FERNANDO JO', '00000000000', 'GARIBALDI 354', '50', '514611', '11152', 1, '2015-07-03'),
-(3722, 'SAINI SERGIO DANIEL', '00000427369', 'BELGRANO 560', '50', '430487', '13843', 1, '2015-07-03'),
-(3723, 'SALOME JULIO', '00000000000', 'O.DUGGAN 610', '50', '256159', '12483', 1, '2015-07-03'),
-(3724, 'SAN PELLEGRINI DE M.', '00000000000', 'J.INGENIEROS 255', '87', '78546', '21048', 1, '2015-07-03'),
-(3725, 'SANCHEZ ELIZABETH', '00000000000', 'BETOLAZA 546', '50', '581828', '6485', 1, '2015-07-03'),
-(3726, 'SANCHEZ MONICA LUJAN', '00000000000', 'ALSINA 298', '50', '572800', '16266', 1, '2015-07-03'),
-(3727, 'SANCHEZ N.DE PEREYRA', '00000000000', 'FRENCH 536', '50', '401689', '13423', 1, '2015-07-03'),
-(3728, 'SANCINETO VICTOR MAR', '00015612593', 'DERIVACION NÂ°6 0002', '50', '346788', '21601', 1, '2015-07-03'),
-(3729, 'SANDE JUAN JOSE', '00000420682', 'SARMIENTO 456', '50', '349965', '8730', 1, '2015-07-03'),
-(3730, 'SANI TRES S.A.', '00000000000', 'R.PEÃ‘A 235', '87', '544227', '16879', 1, '2015-07-03'),
-(3731, 'SANTAGIULIANA MARIA ', '00000000000', 'ALSINA 854', '50', '444628', '16213', 1, '2015-07-03'),
-(3732, 'SANTIRSO MARIA ROSAN', '00000000000', 'L.V.LOPEZ 1008', '50', '558976', '10792', 1, '2015-07-03'),
-(3733, 'SAURO ROBERTO CESAR', '00000000000', '9 DE JULIO 109', '50', '360973', '7727', 1, '2015-07-03'),
-(3734, 'SCARCELLA DIEGO JOSE', '00000000000', 'ROCHA 486', '50', '566304', '14399', 1, '2015-07-03'),
-(3735, 'SCHENCK ANDREA FABIA', '00000000000', 'LAS HERAS 69', '50', '584441', '16143', 1, '2015-07-03'),
-(3736, 'SCHUMACHER ALFREDO Y', '00000000000', 'SOLIS 929', '50', '576143', '3543', 1, '2015-07-03'),
-(3737, 'SEMILLERA PAMPA FERT', '00000425092', 'CASEROS 668', '50', '326399', '19303', 1, '2015-07-03'),
-(3738, 'SEQUEIRA CARLOS ENRI', '00000429131', 'COLON 357', '50', '229717', '7731', 1, '2015-07-03'),
-(3739, 'SERRANO ELSA GLORIA', '00000000000', 'BRANDSEN 244', '87', '579782', '9060', 1, '2015-07-03'),
-(3740, 'SISTEMAS TERMODINAMI', '00000427055', 'TACUARI 1050', '50', '463124', '11655', 1, '2015-07-03'),
-(3741, 'SKOU BERTEL S.A.', '00000426783', 'CASEROS 10', '87', '176079', '19344', 1, '2015-07-03'),
-(3742, 'SOBANSKI VICTOR ADOL', '00000421098', 'SAN LUIS 932', '50', '400044', '20590', 1, '2015-07-03'),
-(3743, 'SOC. DE TRANSP.LIBRE', '00000000000', 'J.INGENIEROS 250', '87', '171263', '21024', 1, '2015-07-03'),
-(3744, 'SOC.ESPAÃ‘OLA DE S.M', '00000431365', 'DORREGO 268', '87', '38928', '6929', 1, '2015-07-03'),
-(3745, 'SOCOLOFF MARTIN IVAN', '15549858', '25 DE MAYO 146', '87', '588784', '42516', 1, '2015-07-03'),
-(3746, 'SODA LA HUELLA S.R.L', '00000424828', 'S.CABRAL 1599', '87', '359225', '40076', 1, '2015-07-03'),
-(3747, 'SODE HORACIO ABEL', '00000424337', 'B.MACHADO 1244', '50', '230928', '364', 1, '2015-07-03'),
-(3748, 'SORIANO MIGUEL ANGEL', '00000431443', 'LINIERS 165', '50', '262714', '17785', 1, '2015-07-03'),
-(3749, 'SORIANO RAFAEL', '00000433718', 'SAN MARTIN 345', '50', '233714', '15700', 1, '2015-07-03'),
-(3750, 'SOULE SERGIO OSVALDO', '00015501624', 'SAN MARTIN 901', '87', '519850', '15840', 1, '2015-07-03'),
-(3751, 'SOUMOULOU PABLO HERN', '00000422213', 'PASSO 550', '50', '375788', '13089', 1, '2015-07-03'),
-(3752, 'SPENZA MARIANO MARTI', '15603805', 'V.SARSFIELD 367', '50', '5596458', '45371', 1, '2015-07-03'),
-(3753, 'STALLONE JUDIT ELIZA', '00000000000', 'P.N.CARRERA 999', '50', '493466', '5432', 1, '2015-07-03'),
-(3754, 'STARCEL PAMPA CENTRO', '00000000000', 'COLON 182', '50', '601728', '8132', 1, '2015-07-03'),
-(3755, 'STIVABAD S.A', '15382871', 'COLON 153', '50', '5597773', '49697', 1, '2015-07-03'),
-(3756, 'SUAREZ ADELA JOSEFIN', '431490', 'BRANDSEN 1176', '50', '474625', '1026', 1, '2015-07-03'),
-(3757, 'SUAREZ JORGE EDUARDO', '00000431374', 'LAS HERAS 25', '87', '175766', '16141', 1, '2015-07-03'),
-(3758, 'SUPERCARNE S.A.', '00000431381', 'RIVADAVIA 453', '87', '439969', '40063', 1, '2015-07-03'),
-(3759, 'SUPERMERCADO PLANETA', '00000431359', 'ALSINA 6', '87', '310659', '16302', 1, '2015-07-03'),
-(3760, 'SUR AGROPECUARIA S.A', '00000426600', 'O.DUGGAN 1415', '87', '565583', '11805', 1, '2015-07-03'),
-(3761, 'TARABORELLI ALEJANDR', '00000000000', 'H.YRIGOYEN 765', '50', '505808', '5967', 1, '2015-07-03'),
-(3762, 'TARABORELLI MARIO JE', '00000000000', '1RA.JUNTA 2', '50', '420550', '10802', 1, '2015-07-03'),
-(3763, 'TARANTELA ELVIRA ELS', '00000000000', 'OLAVARRIA 66', '50', '548661', '10604', 1, '2015-07-03'),
-(3764, 'TARJETA NARANJA SA.', '00000000000', 'CALLE 1810 72', '87', '561918', '8515', 1, '2015-07-03'),
-(3765, 'TARTAGLINO Y CIA. SR', '00000424225', 'RIVADAVIA 402', '50', '315609', '40016', 1, '2015-07-03'),
-(3766, 'TEILETCHE ENRIQUE Y ', '00000426605', 'COLON 102', '50', '189907', '8191', 1, '2015-07-03'),
-(3767, 'TERRASANTA MONICA', '15618714', 'L.N.ALEM 1602', '50', '452359', '4105', 1, '2015-07-03'),
-(3768, 'TIEMERSMA SEBASTIAN', '00000000000', 'PARQUESITO 2', '87', '520319', '23405', 1, '2015-07-03'),
-(3769, 'TORRES CARIONI SANTI', '00000432313', 'MAZZINI 455', '50', '346140', '11238', 1, '2015-07-03'),
-(3770, 'TORRES MARCELA NOEMI', '15572453', 'P.N.CARRERA 60', '50', '5597880', '50401', 1, '2015-07-03'),
-(3771, 'TOSTEX S.A.', '00000000000', 'CASEROS 50', '250', '541691', '40065', 1, '2015-07-03'),
-(3772, 'TRAFER SAIC', '00000424707', 'AV.TRABAJADOR 901', '87', '329749', '40009', 1, '2015-07-03'),
-(3773, 'TRANSPORTE GOIZUETA', '00000426645', 'CASEROS 1360', '87', '366122', '20701', 1, '2015-07-03'),
-(3774, 'TRAVERSO GUILLERMO H', '00000000000', 'ALSINA 541', '87', '482750', '16103', 1, '2015-07-03'),
-(3775, 'TRESNECO S.A.', '00000000000', 'ROCA 12', '50', '552655', '8397', 1, '2015-07-03'),
-(3776, 'TRONCOSO PEDRO ARTUR', '00000428931', 'E.DE LA CALLE 144', '50', '274502', '5137', 1, '2015-07-03'),
-(3777, 'TRUCK EXPRESS S.R.L.', '00000000000', 'GUEMES 535', '87', '506498', '5391', 1, '2015-07-03'),
-(3778, 'TUMINI D. Y J. Y MEN', '00000000000', 'GUEMES 297', '50', '311571', '5371', 1, '2015-07-03'),
-(3779, 'TURINI PABLO RENATO', '00000000000', 'SAN MARTIN 799', '50', '587859', '15802', 1, '2015-07-03'),
-(3780, 'ULLERUP RAUL ADOLFO', '00000000000', 'ESTRADA 1365', '50', '316811', '11033', 1, '2015-07-03'),
-(3781, 'UNIVALORES S.A.', '00000422735', 'ISTILART 120', '50', '5594397', '8795', 1, '2015-07-03'),
-(3782, 'URBAN ANDERSEN MARCO', '00000000000', 'BELGRANO 470', '50', '590367', '14184', 1, '2015-07-03'),
-(3783, 'URBIETA ANDRES', '00000000000', 'V.SARSFIELD 725', '50', '5596845', '14378', 1, '2015-07-03'),
-(3784, 'URRUTIA MARIA MARTA', '00000000000', 'MORENO 475', '87', '522300', '8248', 1, '2015-07-03'),
-(3785, 'URTASUN ANA LIA', '00000000000', 'BALCARCE 351', '50', '571180', '16825', 1, '2015-07-03'),
-(3786, 'UZCUDUN S.A.F.I.M.', '00000431496', 'MORENO 851', '87', '431413', '1607', 1, '2015-07-03'),
-(3787, 'UZIDINGER EDUARDO NI', '00000000000', 'AMEGHINO 997', '50', '392479', '20062', 1, '2015-07-03'),
-(3788, 'VACCA REINALDO RUBEN', '00000428087', 'G.MOSCONI 1650', '50', '311861', '23409', 1, '2015-07-03'),
-(3789, 'VAZQUEZ MIGUEL ANGEL', '00000428230', 'SAN MARTIN 1497', '50', '264835', '21141', 1, '2015-07-03'),
-(3790, 'VERGNANO RAUL ANDRES', '00000000000', 'AV.TRABAJADOR 842', '50', '524971', '3313', 1, '2015-07-03'),
-(3791, 'VERKUYL ASTRID CINTI', '00000000000', 'MORENO 315', '50', '525792', '8232', 1, '2015-07-03'),
-(3792, 'VIAL AGRO S.A.', '00000430610', 'SARMIENTO 757', '250', '225764', '12', 1, '2015-07-03'),
-(3793, 'VIGILAN S.R.L.AG.DE ', '428811', 'SAN MARTIN 465', '50', '595160', '15735', 1, '2015-07-03'),
-(3794, 'VILLAFRANCA MARTA S.', '00000422340', 'COLON 348', '50', '421528', '7947', 1, '2015-07-03'),
-(3795, 'VILLALBA JORGE ALFRE', '00000430238', 'BRANDSEN 1285', '50', '229658', '1131', 1, '2015-07-03'),
-(3796, 'VILLALBA PEDRO', '00000000000', 'CHACABUCO 222', '87', '536134', '7571', 1, '2015-07-03'),
-(3797, 'VILLANUEVA JUAN CARL', '00000424464', 'LAVALLE 30', '50', '315638', '7889', 1, '2015-07-03'),
-(3798, 'VILLEMUR GUSTAVO MIG', '00000000000', 'D.VASQUEZ 550', '50', '370477', '13951', 1, '2015-07-03'),
-(3799, 'VINOTECA LOS TONELES', '00000422236', 'CASTELLI 374', '50', '598725', '5915', 1, '2015-07-03'),
-(3800, 'VIVIANI CARMEN', '00000000000', 'COLON 284', '50', '209692', '8026', 1, '2015-07-03'),
-(3801, 'VIZZOLINI NESTOR J.', '00000422775', 'RIVADAVIA 655', '50', '221043', '18116', 1, '2015-07-03'),
-(3802, 'WEHRHANNE HORACIO MA', '00000429967', 'J.INGENIEROS 555', '50', '340816', '12072', 1, '2015-07-03'),
-(3803, 'WEST FERNANDO LUIS', '00000000000', 'LIBERTAD 646', '50', '552336', '2918', 1, '2015-07-03'),
-(3804, 'ZIJLSTRA JORGE ROBER', '00000431376', 'FRENCH 332', '87', '424255', '13437', 1, '2015-07-03'),
-(3805, 'ZIJLSTRA SILVINA ELE', '00000000000', 'BERUTTI 145', '50', '586458', '10046', 1, '2015-07-03'),
-(3806, 'ZORRILLA HNOS. S.R.L', '00000429380', 'COLON 899', '87', '5595870', '1836', 1, '2015-07-03'),
-(3807, 'ZOTES SAUL FRANCISCO', '00000000000', 'MAZZINI 765', '50', '338943', '11544', 1, '2015-07-03'),
-(3808, 'ZURITA HNOS. Y CIA.', '00000433469', 'ALMAFUERTE 1074', '87', '152897', '11731', 1, '2015-07-03'),
-(3809, '18 DE SETIEMBRE S.A', '00000431428', 'CASEROS 1090', '87', '467715', '20547', 1, '2015-07-03'),
-(3810, '3 ARROYOS S.A.', '00000000000', 'CHACO 350', '250', '583819', '40071', 1, '2015-07-03'),
-(3811, '3 NET S.A.', '00000420903', 'CHACABUCO 98', '87', '532006', '7641', 1, '2015-07-03'),
-(3812, 'Tito Puente', '123123', 'Moreno 856', '2', '123222', '5456464654', 1, '2015-07-16'),
-(3814, 'From', '123123', 'Moreno 8567', '0.0', '0', '7712', 1, '2015-07-11'),
-(3815, 'Tito Puente', '123123', 'Moreno 8567', '0.0', '1212', '5456464654', 1, '2015-07-10'),
-(3816, 'hjo', '', 'jjolojl', '56', '456645', '564321', 1, '2015-07-08'),
-(3817, 'Roberto Carlos', '654987263', 'Moreno 999', '180', '7516387', '98754', 1, '0000-00-00'),
-(3818, 'wetweg', '', '', '35', '354245', '3544444', 1, '2014-12-30');
+(3820, 'ABELLEIRA FABIAN-LEN', '00015611812', 'COLON 239', '50', '484901', '7712', 1, '2015-07-16'),
+(3821, 'ACA SALUD COOPERATIV', '0', 'CHACABUCO 549', '87', '549033', '45768', 1, '2015-07-16'),
+(3822, 'ACMC S.R.L.', '00000000000', 'MORENO 423', '50', '5597630', '8242', 1, '2015-07-16'),
+(3823, 'AGF ALLIANZ ARG.CIA ', '00000000000', 'MAIPU 80', '50', '543770', '7919', 1, '2015-07-16'),
+(3824, 'AGRO EL CARRETERO S.', '00000431650', 'R.PEÃ‘A 14', '87', '342458', '16068', 1, '2015-07-16'),
+(3825, 'AGRO INDUSTRIA TRES ', '00000434443', 'P.INDUSTRIAL', '50', '410854', '40121', 1, '2015-07-16'),
+(3826, 'AGRO-GILARDONI S.R.L', '00000000000', 'ALMAFUERTE 3500', '87', '588393', '23756', 1, '2015-07-16'),
+(3827, 'AGROPAL S.A.', '00000423718', 'BELGRANO 571', '50', '327253', '9806', 1, '2015-07-16'),
+(3828, 'AGROPRIMUS S.A', '00000000000', 'P.INDUSTRIAL', '50', '565886', '40139', 1, '2015-07-16'),
+(3829, 'AGUADAS GOMEZ HNOS S', '00000000000', 'V.SARSFIELD 998', '87', '593052', '14445', 1, '2015-07-16'),
+(3830, 'AIELLO JOSE E HIJOS ', '00000431430', 'P.INDUSTRIAL', '250', '319766', '40126', 1, '2015-07-16'),
+(3831, 'AIELLO NATALIO', '00000423249', 'BELGRANO 333', '50', '162926', '9372', 1, '2015-07-16'),
+(3832, 'ALARCON ANA VERONICA', '00000000000', '25 DE MAYO 345', '50', '486165', '7044', 1, '2015-07-16'),
+(3833, 'ALBA E.A.DE Y G.ALBA', '00000426691', 'PUEYRREDON 987', '50', '229401', '2864', 1, '2015-07-16'),
+(3834, 'ALBA MIRTA GRACIELA', '00000000000', 'ALSINA 745', '50', '310499', '16149', 1, '2015-07-16'),
+(3835, 'ALBERCA FACUNDO SEBA', '00000000000', 'COLON 876', '50', '557865', '1628', 1, '2015-07-16'),
+(3836, 'ALEGRE AGUSTIN', '00000000000', 'CASEROS 153', '87', '5594344', '19121', 1, '2015-07-16'),
+(3837, 'ALEGRO MARIA ANTONEL', '00000000000', 'H.YRIGOYEN 237', '50', '592563', '7271', 1, '2015-07-16'),
+(3838, 'ALEJANDRO BRACERAS S', '00000427003', 'RIVADAVIA 130', '87', '486846', '7662', 1, '2015-07-16'),
+(3839, 'ALEMANI CARLOS DANIE', '00000429412', 'BALCARCE 459', '50', '286808', '16858', 1, '2015-07-16'),
+(3840, 'ALONSO CARLOS ALBERT', '00000000000', 'SAAVEDRA 1284', '50', '531689', '2628', 1, '2015-07-16'),
+(3841, 'ALONSO MARIA ROSARIO', '00000000000', 'I.LA CATOLICA 758', '50', '475420', '17632', 1, '2015-07-16'),
+(3842, 'ALTUNA CARLOS F.', '00000431392', 'BELGRANO 665', '87', '318219', '10030', 1, '2015-07-16'),
+(3843, 'ALVARADO S.A.', '00000433163', 'ALSINA 235', '87', '374130', '15993', 1, '2015-07-16'),
+(3844, 'ALVAREZ TARGISE JUAN', '00015458621', 'ISTILART 715', '50', '250359', '10157', 1, '2015-07-16'),
+(3845, 'ANA JORGE OSCAR', '00000422426', 'COLON 156', '50', '202260', '8137', 1, '2015-07-16'),
+(3846, 'ANDERBERG FERNANDO A', '00000431422', 'MORENO 126', '50', '400956', '8566', 1, '2015-07-16'),
+(3847, 'ANDREATTA GRACIELA D', '00000000000', 'LAMADRID 685', '50', '477772', '15132', 1, '2015-07-16'),
+(3848, 'ANTONIO MACIEL S.R.L', '428475-15647166', 'AV.TRABAJADOR 846', '50', '567806', '3314', 1, '2015-07-16'),
+(3849, 'AQUATICA S.A. E/F.', '00000000000', 'RIVADAVIA 334', '87', '593775', '40018', 1, '2015-07-16'),
+(3850, 'ARAMBERRI LUIS ALFRE', '00000425047', 'CASTELLI 802', '87', '475723', '3089', 1, '2015-07-16'),
+(3851, 'ARANEGUI KARINA BEAT', '00000000000', 'GUEMES 109', '50', '5594571', '5350', 1, '2015-07-16'),
+(3852, 'ARENAL PABLO E.', '00000423179', 'I.LA CATOLICA 84', '50', '184322', '17719', 1, '2015-07-16'),
+(3853, 'ARENAS OSVALDO ARIEL', '00000431506', 'MORENO 1004', '87', '251981', '1428', 1, '2015-07-16'),
+(3854, 'ARIAS AMALIA-GROENEN', '00000000000', 'H.YRIGOYEN 63', '50', '552671', '8109', 1, '2015-07-16'),
+(3855, 'ARISTEGUI CARLOS MAR', '00000000000', 'BRANDSEN 243', '50', '463762', '8872', 1, '2015-07-16'),
+(3856, 'ARISTEGUI SERGIO FAB', '00000000000', 'COLON 442', '50', '406280', '7897', 1, '2015-07-16'),
+(3857, 'ARNAIS FERNANDO ALFO', '00000000000', 'CASTELLI 66', '50', '529484', '6004', 1, '2015-07-16'),
+(3858, 'ARRECHEA JUAN FRANCI', '15404190', 'BETOLAZA 461', '50', '5596670', '45939', 1, '2015-07-16'),
+(3859, 'ARTURE DE MARTINEZ C', '00000424010', 'COLON 379', '87', '261704', '7736', 1, '2015-07-16'),
+(3860, 'ASEF EDUARDO RUBEN', '00000000000', 'MAIPU 585', '50', '479239', '6413', 1, '2015-07-16'),
+(3861, 'ASOC. DE ABOGADOS DE', '00000000000', 'BRANDSEN 474', '87', '320980', '8982', 1, '2015-07-16'),
+(3862, 'ASOC. MUTUAL DAN', '00000431623', 'MORENO 114', '87', '172446', '8598', 1, '2015-07-16'),
+(3863, 'ASOC.PRO ENSEÃ‘ANZA ', '00000432616', 'DERIVACION NÃ¸4', '50', '355139', '40148', 1, '2015-07-16'),
+(3864, 'ASTIZ JORGE ARIEL', '00000000000', 'LIBERTAD 303', '50', '480961', '2372', 1, '2015-07-16'),
+(3865, 'ASTIZ MARIANA', '00000000000', 'SAAVEDRA 399', '50', '561152', '6406', 1, '2015-07-16'),
+(3866, 'ASTIZ MARIO SANTIAGO', '00000000000', 'TACUARI 436', '50', '502360', '14420', 1, '2015-07-16'),
+(3867, 'AUSTRAL MOTOR S.A.', '00000425777', 'MAGALLANES 1560', '87', '403537', '20729', 1, '2015-07-16'),
+(3868, 'AYALA RAMON ANDRES', '00000420868', 'PELLEGRINI 6', '50', '400682', '8423', 1, '2015-07-16'),
+(3869, 'BAQUEDANO MARTIN', 'VIMAX50', 'RIVADAVIA 199', '50', '494737', '16309', 1, '2015-07-16'),
+(3870, 'BARAINCA EDUARDO JUA', '00000429228', 'R.PEÃ‘A 67', '50', '314455', '16093', 1, '2015-07-16'),
+(3871, 'BARCALA SERGIO ANDRE', '00000425339', 'FALUCHO 134', '50', '389538', '9343', 1, '2015-07-16'),
+(3872, 'BARRAZA MARIA MATILD', '00000420311', 'RIVADAVIA 320', '50', '450195', '6995', 1, '2015-07-16'),
+(3873, 'BARRERAS ALBERTO MIG', '00000000000', 'ISTILART 568', '50', '537320', '9727', 1, '2015-07-16'),
+(3874, 'BARUTTA VERONICA BEA', '00000000000', 'FALUCHO 366', '50', '594482', '9291', 1, '2015-07-16'),
+(3875, 'BASSINI MARIA PAULA', '00000433523', 'GOMILA 146', '50', '543552', '15360', 1, '2015-07-16'),
+(3876, 'BAZAR EL MUNDIAL S.R', '00000424221', '9 DE JULIO 200', '50', '425089', '7535', 1, '2015-07-16'),
+(3877, 'BEITIA LUIS ALBERTO', '00000430689', 'QUINTANA 836', '50', '361837', '15571', 1, '2015-07-16'),
+(3878, 'BENGOCHEA SUSANA MAR', '00000000000', 'SARMIENTO 205', '50', '565684', '8637', 1, '2015-07-16'),
+(3879, 'BERESFORD S.A', '00000424445', 'RIVADAVIA 399', '87', '5595861', '17068', 1, '2015-07-16'),
+(3880, 'BETTOMEO ROBERTO SAN', '00000430873-15646873', 'ALMAFUERTE 436', '50', '329954', '21414', 1, '2015-07-16'),
+(3881, 'BIANCHI LUCIANO SEBA', '00000000000', 'J.INGENIEROS 148', '50', '541268', '21022', 1, '2015-07-16'),
+(3882, 'BONIFACIO LILIANA', '00000000000', 'H.YRIGOYEN 14', '50', '532530', '8062', 1, '2015-07-16'),
+(3883, 'BONINI JUAN CARLOS', '00000000000', 'CHACABUCO 227', '50', '473237', '7383', 1, '2015-07-16'),
+(3884, 'BORIONI JUAN PABLO', '00000431095', 'ISTILART 78', '87', '451873', '8476', 1, '2015-07-16'),
+(3885, 'BORRA JORGE RENATO', '00000426033', 'DORREGO 379', '50', '236018', '6789', 1, '2015-07-16'),
+(3886, 'BRAJOVICH GUILLERMO ', '00000000000', 'SARMIENTO 282', '50', '456894', '8797', 1, '2015-07-16'),
+(3887, 'BRAVO CARLOS-MARQUIS', '00000000000', 'CALLE 1810 68', '50', '552192', '8516', 1, '2015-07-16'),
+(3888, 'BREA DIEGO ALBERTO', '00000422844', 'CALLE 1810 876', '50', '258876', '10372', 1, '2015-07-16'),
+(3889, 'BREA OMAR', '00000428150', 'O.DUGGAN 1165', '50', '193571', '11758', 1, '2015-07-16'),
+(3890, 'BUSTOS SILVINA LILIA', '00015552287', 'CASTELLI 1525', '50', '572709', '3254', 1, '2015-07-16'),
+(3891, 'CABANE OSMAR ALBERTO', '00000000000', 'RIVADAVIA 164', '50', '509415', '7660', 1, '2015-07-16'),
+(3892, 'CALVETE ESTEBAN DANI', '00000000000', 'LAVALLE 835', '50', '384823', '5664', 1, '2015-07-16'),
+(3893, 'CAMBEX S.A.', '00000431383', 'MAIPU 37', '87', '383187', '7933', 1, '2015-07-16'),
+(3894, 'CAMPAGNE MARIO CESAR', '00000423600', 'RIVADAVIA 351', '50', '240451', '17060', 1, '2015-07-16'),
+(3895, 'CAMPAÃ‘A GERMAN MARC', '00000000000', 'OLAVARRIA 564', '50', '533931', '10488', 1, '2015-07-16'),
+(3896, 'CAMPOS CARMEN', '00000000000', 'MAIPU 770', '50', '397100', '5895', 1, '2015-07-16'),
+(3897, 'CAMUS FLORENCIA AGUS', '00000000000', 'CHACABUCO 261', '50', '599849', '7394', 1, '2015-07-16'),
+(3898, 'CARBONETTI SEBASTIAN', '00000000000', '9 DE JULIO 84', '50', '507466', '7965', 1, '2015-07-16'),
+(3899, 'CARRACEDO NORMA', '00000000000', 'RECONQUISTA 1036', '50', '543813', '19381', 1, '2015-07-16'),
+(3900, 'CARRERA HNOS.', '00000000000', 'SARMIENTO 1077', '87', '530536', '1358', 1, '2015-07-16'),
+(3901, 'CARRERA MARIA INES', '00000000000', 'CALLE 1810 59', '50', '502041', '8498', 1, '2015-07-16'),
+(3902, 'CARRERA NELIDA SUSAN', '00000000000', 'CHACABUCO 425', '50', '575146', '7415', 1, '2015-07-16'),
+(3903, 'CARRERA Y SALDUNA SO', '00000000000', 'COLON 509', '50', '506906', '7764', 1, '2015-07-16'),
+(3904, 'CARRIL CLAUDIA ANAHI', '00000000000', 'COLON 264', '87', '5596361', '8031', 1, '2015-07-16'),
+(3905, 'CASA HUMBERTO LUCAIO', '00000000000', 'CALLE 1810 356', '50', '457660', '40043', 1, '2015-07-16'),
+(3906, 'CASTRO NELLY', '00000000000', 'B.DE IRIGOYEN 868', '50', '573562', '12978', 1, '2015-07-16'),
+(3907, 'CATALANO MAURO ELIO', '00000000000', 'RIVADAVIA 623', '50', '584210', '18114', 1, '2015-07-16'),
+(3908, 'CENTRO ACOPIADORES C', '00000423801', 'P.N.CARRERA 142', '87', '290166', '7451', 1, '2015-07-16'),
+(3909, 'CENTRO BULONERO TS.A', '00000421144', 'SAN MARTIN 632', '87', '427979', '15875', 1, '2015-07-16'),
+(3910, 'CEPEDA MARISOL GRACI', '00000000000', 'ISTILART 23', '50', '573184', '8459', 1, '2015-07-16'),
+(3911, 'CEPEDA SILVIA MARIA', '00000000000', 'CHACABUCO 469', '50', '603881', '7419', 1, '2015-07-16'),
+(3912, 'CEREALERA TRES ARROY', '00000432670', 'SAN MARTIN 1725', '87', '407173', '40074', 1, '2015-07-16'),
+(3913, 'CERIANI NANCY GRACIE', '00000000000', '25 DE MAYO 62', '50', '564834', '7331', 1, '2015-07-16'),
+(3914, 'CERRI CARLOS E HIJOS', '00000430300', 'J.INGENIEROS 1000', '87', '395601', '40051', 1, '2015-07-16'),
+(3915, 'CERVINI MARIA SUSANA', '00000000000', 'MAIPU 210', '50', '291987', '7205', 1, '2015-07-16'),
+(3916, 'CIA.DE SEG.LA MERCAN', '00000000000', 'MORENO 511', '250', '484220', '40034', 1, '2015-07-16'),
+(3917, 'CLERCH AGUSTIN', '00000000000', 'DERIVACION NÃ¸4', '50', '609160', '21539', 1, '2015-07-16'),
+(3918, 'CLERCH IGNACIO', '00000000000', 'RECONQUISTA 430', '50', '485852', '17430', 1, '2015-07-16'),
+(3919, 'CLUB DE CAZADORES DE', '00000431505', 'V.SARSFIELD 285', '50', '175564', '14265', 1, '2015-07-16'),
+(3920, 'COCIMANO LAURA ANDRE', '00000422295', 'COLON 265', '50', '554330', '7717', 1, '2015-07-16'),
+(3921, 'COLANTONIO JOSE A.Y ', '00000426300', 'GUEMES 199', '50', '243191', '5359', 1, '2015-07-16'),
+(3922, 'COLL PATRICIA', '00000000000', 'L.V.LOPEZ 569', '50', '582649', '9779', 1, '2015-07-16'),
+(3923, 'COLLAZOS ALDO O.', '00000426344', 'RIVADAVIA 609', '87', '176949', '18109', 1, '2015-07-16'),
+(3924, 'COLOMBO OSCAR LUIS', '00000423665', 'SAAVEDRA 445', '50', '213370', '6556', 1, '2015-07-16'),
+(3925, 'COLONNA OMAR RODOLFO', '00000430136', 'COLON 299', '50', '340672', '7726', 1, '2015-07-16'),
+(3926, 'COMASA S.A.', '00000000000', '9 DE JULIO 231', '50', '505475', '7235', 1, '2015-07-16'),
+(3927, 'COMPAÃ‘IA EURO SRL.', '00000000000', 'MORENO 350', '50', '485230', '8431', 1, '2015-07-16'),
+(3928, 'CONFITERIA LA PERLA ', '00000423152', 'MORENO 155', '50', '164089', '8216', 1, '2015-07-16'),
+(3929, 'CONTI Y MELITA', '00000424885', 'BOLIVIA 950', '50', '182201', '717', 1, '2015-07-16'),
+(3930, 'CONTRERAS LUIS ALBER', '00000429318', 'PELLEGRINI 319', '50', '304951', '9271', 1, '2015-07-16'),
+(3931, 'COOP.AGRARIA DE TS.A', '431340', 'ALSINA 1015', '200', '53862', '40067', 1, '2015-07-16'),
+(3932, 'COOP.DE TRANSP.DE TS', '00000426287', 'MATHEU 850', '87', '80187', '2879', 1, '2015-07-16'),
+(3933, 'COOP.ELECT.LTDA.DE C', '00000432743', 'PELLEGRINI 102', '250', '237549', '8761', 1, '2015-07-16'),
+(3934, 'COOP.RURAL LTDA.ALFA', '00000431839', 'SAAVEDRA 398', '87', '79426', '6623', 1, '2015-07-16'),
+(3935, 'COSTANZO HUGO JUAN', '00000425757', 'BERUTTI 210', '50', '220020', '10175', 1, '2015-07-16'),
+(3936, 'COTABARREN DANIEL', '00000000000', 'QUINTANA 501', '87', '472517', '15482', 1, '2015-07-16'),
+(3937, 'CREDIL S.R.L.', '00000433096', 'BETOLAZA 70', '50', '455334', '8195', 1, '2015-07-16'),
+(3938, 'CUMECHE S.R.L.', '00000000000', 'SAN MARTIN 495', '87', '460963', '40056', 1, '2015-07-16'),
+(3939, 'DABIEN DE CHIRINO MA', '00000000000', 'ROCA 174', '50', '340685', '8715', 1, '2015-07-16'),
+(3940, 'DAGUERRE CRISTINA JO', '00000000000', 'MITRE 514', '50', '382047', '9466', 1, '2015-07-16'),
+(3941, 'D''ATRI SANDRA ELIZAB', '00000000000', 'BALCARCE 179', '50', '405717', '16759', 1, '2015-07-16'),
+(3942, 'DAWSON S.A.', '00000431350', 'PELLEGRINI 15', '87', '190886', '40037', 1, '2015-07-16'),
+(3943, 'DE ADURIZ MARIA JULI', '432113', 'B.OBRERO CASA 78', '50', '495822', '571', 1, '2015-07-16'),
+(3944, 'DE BENEDETTO JUAN CA', '0', 'RIVADAVIA 785', '50', '271253', '42940', 1, '2015-07-16'),
+(3945, 'DE LA CAL FRANCISCO', '00000422647', 'O.DUGGAN 675', '50', '319346', '11517', 1, '2015-07-16'),
+(3946, 'DE LA PENNA JUAN CAR', '00000430652', 'RIVADAVIA 602', '50', '322391', '6266', 1, '2015-07-16'),
+(3947, 'DE LA PENNA SEGURID.', '00000000000', 'CASEROS 955', '50', '569275', '19276', 1, '2015-07-16'),
+(3948, 'DE MARTINO MARIA EST', '00000000000', 'H.YRIGOYEN 62', '50', '333007', '8053', 1, '2015-07-16'),
+(3949, 'DE ZOETE SANDRA MARI', '00000000000', 'ROCA 814', '50', '498041', '10325', 1, '2015-07-16'),
+(3950, 'DEJEAN ROBERTO OSCAR', '432479', 'CONSTITUYENTES 75', '50', '399087', '1421', 1, '2015-07-16'),
+(3951, 'DEL CASTAÃ‘O ANGEL R', '00000430224', 'COLON 347', '87', '418603', '7730', 1, '2015-07-16'),
+(3952, 'DEL GRANDE SERGIO FA', '00000426311', 'MORENO 1317', '50', '438034', '1564', 1, '2015-07-16'),
+(3953, 'DEL VALLE MARIA LOUR', '00000000000', 'RECONQUISTA 281', '50', '479529', '16778', 1, '2015-07-16'),
+(3954, 'DEL VALLE NELSON BER', '00000429188', 'TACUARI 615', '50', '420097', '13680', 1, '2015-07-16'),
+(3955, 'DELGADO SONIA ALEJAN', '15510949', 'PRINGLES 327', '50', '5595502', '47705', 1, '2015-07-16'),
+(3956, 'DEMATEO ROBERTO PABL', '0', 'RIVADAVIA 1148', '50', '5594425', '41613', 1, '2015-07-16'),
+(3957, 'DI CROCE CLAUDIA ALE', '00000000000', 'LAVALLE 402', '50', '537854', '6613', 1, '2015-07-16'),
+(3958, 'DI CROCE LAURA OFELI', '00000000000', 'FALUCHO 204', '50', '431194', '9319', 1, '2015-07-16'),
+(3959, 'DI FELICE DORA NOEMI', '00015612128', 'BETOLAZA 787', '50', '582955', '6000', 1, '2015-07-16'),
+(3960, 'DI FULVIO LUIS EUGEN', '00000000000', '1RA.JUNTA 536', '50', '287355', '10675', 1, '2015-07-16'),
+(3961, 'DI MARCO JUAN E.', '00000423489', 'SAN MARTIN 390', '50', '199791', '15905', 1, '2015-07-16'),
+(3962, 'DI ROCCO MARIA CECIL', '00000430479', 'MORENO 953', '50', '448323', '1597', 1, '2015-07-16'),
+(3963, 'DI SALVI GUILLERMO E', '00000000000', 'R.MARGARITA 1405', '87', '465492', '11855', 1, '2015-07-16'),
+(3964, 'DI SALVO GRACIELA ES', '00000000000', 'GARIBALDI 2200', '50', '534097', '23689', 1, '2015-07-16'),
+(3965, 'DI SALVO S.A.', '00000423884', 'CALLE 1810 951', '50', '257345', '10566', 1, '2015-07-16'),
+(3966, 'DI TOMMASO MARIO Y T', '00000431022', 'ROCHA 10', '87', '307255', '40058', 1, '2015-07-16'),
+(3967, 'DI VITO CARMELO A.', '00000424649', 'B.DE IRIGOYEN 51', '87', '200312', '15755', 1, '2015-07-16'),
+(3968, 'DI VITO CLAUDIA SUSA', '00000000000', 'COLON 178', '50', '427429', '8133', 1, '2015-07-16'),
+(3969, 'DIAZ RAUL ALBERTO', '15505542', 'G.MOSCONI 35', '50', '451642', '20774', 1, '2015-07-16'),
+(3970, 'DIFONZO & MARCHI', '00000423658', '1RA.JUNTA 667', '87', '234304', '10664', 1, '2015-07-16'),
+(3971, 'DIMARCO ADRIANA GABR', '0', '9 DE JULIO 117', '50', '532585', '41853', 1, '2015-07-16'),
+(3972, 'DOMINGUEZ MARIELA PA', '15618871', 'COUNTRY ZURITA 1', '50', '589156', '42307', 1, '2015-07-16'),
+(3973, 'DUCHOSAL VERONICA', '00000000000', 'COLON 526', '50', '459967', '7880', 1, '2015-07-16'),
+(3974, 'DUPUY STELLA MARIS', '00000000000', 'V.SARSFIELD 9', '50', '570200', '14194', 1, '2015-07-16'),
+(3975, 'EICHLER EDUARDO HUGO', '00000425209', 'RIVADAVIA 501', '50', '295422', '17743', 1, '2015-07-16'),
+(3976, 'ELCUAZ HECTOR A.', '00000424193', 'P.N.CARRERA 899', '87', '195012', '5649', 1, '2015-07-16'),
+(3977, 'ELGART REYNALDO E Y ', '00000000000', 'SAN MARTIN 835', '87', '555845', '15818', 1, '2015-07-16'),
+(3978, 'ELGART VERONICA Y EL', '00000000000', 'L.V.LOPEZ 465', '50', '580430', '9554', 1, '2015-07-16'),
+(3979, 'ELICALDE NESTOR JUAN', '00000000000', 'MORENO 379', '50', '406075', '8240', 1, '2015-07-16'),
+(3980, 'ERRAZU MARIA EMILIA', '00000000000', 'COLON 286', '50', '588380', '8024', 1, '2015-07-16'),
+(3981, 'ESPELUSE RODOLFO Y C', '00000000000', 'ISTILART 76', '87', '528041', '8477', 1, '2015-07-16'),
+(3982, 'ETCHEVERRY ALFREDO J', '00000432289', 'I.LA CATOLICA 815', '50', '317078', '17572', 1, '2015-07-16'),
+(3983, 'ETERNET S.R.L.', '00015513040', 'ISTILART 255', '87', '479587', '9030', 1, '2015-07-16'),
+(3984, 'EXPRESO EL VASQUITO ', '00000000000', 'J.INGENIEROS 770', '50', '589387', '11998', 1, '2015-07-16'),
+(3985, 'FAGEMAR S.A.', '00000000000', 'CHACABUCO 587', '50', '576909', '7441', 1, '2015-07-16'),
+(3986, 'FAMTEX S.R.L.', '00000000000', 'COLON 131', '87', '499745', '7704', 1, '2015-07-16'),
+(3987, 'FARIAS MIRTA ANGELIC', '00000000000', 'COLON 59', '50', '461247', '7698', 1, '2015-07-16'),
+(3988, 'FARINA AMERICO', '00000423608', 'BETOLAZA 843', '50', '132756', '5774', 1, '2015-07-16'),
+(3989, 'FARMACIA TRES ARROYO', '00000000000', 'SAN MARTIN 733', '50', '5594842', '15794', 1, '2015-07-16'),
+(3990, 'FERNANDEZ JAVIER EDU', '00000000000', 'COLON 375', '50', '533944', '7734', 1, '2015-07-16'),
+(3991, 'FERNANDEZ MARIA CRIS', '420099', 'MAGALLANES 284', '50', '510222', '40901', 1, '2015-07-16'),
+(3992, 'FERNANDEZ MIGUEL ANG', '00000430880', 'MORENO 609', '50', '320733', '8295', 1, '2015-07-16'),
+(3993, 'FERNANDEZ RODOLFO Y ', '00000000000', 'DERQUI 53', '50', '497738', '15737', 1, '2015-07-16'),
+(3994, 'FERNANDEZ VILLANUEVA', '00000425356', 'COLON 218', '87', '411369', '8044', 1, '2015-07-16'),
+(3995, 'FERRARI RICARDO DOMI', '00000000000', 'SARMIENTO 375', '50', '421661', '8660', 1, '2015-07-16'),
+(3996, 'FERRARIO GUILLERMO E', '00000424445', 'COLON 435', '50', '393144', '7747', 1, '2015-07-16'),
+(3997, 'FERRARIO GUSTAVO ADR', '00000000000', 'AV.TRABAJADOR 46', '50', '394402', '1624', 1, '2015-07-16'),
+(3998, 'FERRARO MARIO CESAR', '00000423106', 'ALSINA 654', '50', '283360', '16231', 1, '2015-07-16'),
+(3999, 'FERREIROS DIEGO RUBE', '00000000000', 'P.N.CARRERA 985', '50', '592156', '5430', 1, '2015-07-16'),
+(4000, 'FIDUCIARIA CASTELLI ', '00000431333', 'MORENO 322', '87', '5596868', '8456', 1, '2015-07-16'),
+(4001, 'FINVERCAR S.A', '433795', '9 DE JULIO 210', '87', '491664', '7230', 1, '2015-07-16'),
+(4002, 'FLECHA MARCELO ANGEL', '00000000000', 'LAPRIDA 246', '50', '583659', '13806', 1, '2015-07-16'),
+(4003, 'FORTE SILVIA NOEMI', '00000000000', 'ROCA 421', '87', '294656', '9468', 1, '2015-07-16'),
+(4004, 'FOSQUE MARIA ADELA', '00000000000', '9 DE JULIO 88', '50', '435251', '7963', 1, '2015-07-16'),
+(4005, 'FRIGORIFICO CAPRIATA', '00000000000', 'GOMILA 268', '87', '516077', '40055', 1, '2015-07-16'),
+(4006, 'FUCHS SANDRA CECILIA', '00000000000', '9 DE JULIO 358', '50', '592941', '6908', 1, '2015-07-16'),
+(4007, 'GALENO ARGENTINA SOC', '00000000000', 'MAIPU 6', '87', '5594363', '7931', 1, '2015-07-16'),
+(4008, 'GALILEA EUGENIO HECT', '00000424278', 'COLON 424', '87', '185127', '7900', 1, '2015-07-16'),
+(4009, 'GALLARDO JAVIER NEST', '00015614365', 'BRANDSEN 772', '87', '420518', '42', 1, '2015-07-16'),
+(4010, 'GANIM CESAR DAMIAN', '15521567', '17 DE AGOSTO', '50', '5597710', '49421', 1, '2015-07-16'),
+(4011, 'GANIM NESTOR HUGO', '00000000000', 'PASSO 235', '50', '455291', '12882', 1, '2015-07-16'),
+(4012, 'GARAT ELSA MARIA', '00000431200', 'DORREGO 966', '50', '380623', '2358', 1, '2015-07-16'),
+(4013, 'GARCIA ANA CAROLINA', '0', 'S.COSTA 87', '50', '559191', '47804', 1, '2015-07-16'),
+(4014, 'GARCIA GABRIEL Y GUS', '00000422856', 'SAN MARTIN 1760', '87', '399191', '20893', 1, '2015-07-16'),
+(4015, 'GARCIA MARCONI ROCIO', '00000000000', '9 DE JULIO 62', '50', '530015', '7969', 1, '2015-07-16'),
+(4016, 'GARCIA MARIA DEL CAR', '00000425641', '9 DE JULIO 131', '50', '345912', '7550', 1, '2015-07-16'),
+(4017, 'GARCIA MAURICIO DAVI', '00015645479', 'MORENO 581', '50', '421238', '8284', 1, '2015-07-16'),
+(4018, 'GARCIA SERGIO RAUL', '00000000000', 'ALVEAR 633', '87', '500089', '10274', 1, '2015-07-16'),
+(4019, 'GASANEO Y AMESTOY', '00000000000', 'SARMIENTO 489', '50', '233336', '8667', 1, '2015-07-16'),
+(4020, 'GASPAROLI ANA TERESA', '425361', 'H.PRIMO 991', '50', '568874', '777', 1, '2015-07-16'),
+(4021, 'GEJO RUBEN Y RODOLFO', '00000000000', 'DORREGO 534', '50', '486758', '6851', 1, '2015-07-16'),
+(4022, 'GENOVESI HNOS.S.R.L', '00000424926', 'RUTA 3 KM 496', '50', '248095', '23394', 1, '2015-07-16'),
+(4023, 'GIACOMINO ANDREA SUS', '00000423268', 'R.PEÃ‘A 67', '87', '411705', '16082', 1, '2015-07-16'),
+(4024, 'GIARDINO P Y DE TORR', '00000431320', 'H.PRIMO 442', '50', '435440', '9689', 1, '2015-07-16'),
+(4025, 'GIDINI MARGARITA AGU', '00000432366', 'URQUIZA 47', '50', '431266', '1736', 1, '2015-07-16'),
+(4026, 'GIMNASIO STADIUM', '00000000000', 'MORENO 715', '87', '302234', '1615', 1, '2015-07-16'),
+(4027, 'GIUDICI ADRIAN ANDRE', '425685', 'CHACABUCO 101', '50', '493916', '42756', 1, '2015-07-16'),
+(4028, 'GIULIANI HECTOR Y LU', '00000000000', 'ESTRADA 666', '50', '310040', '13521', 1, '2015-07-16'),
+(4029, 'GONZALEZ JORGE VENTU', '00000000000', 'BROWN 176', '50', '516442', '16420', 1, '2015-07-16'),
+(4030, 'GONZALEZ LUIS ALBERT', '427068', 'CONSTITUYENTES 174', '50', '379252', '1210', 1, '2015-07-16'),
+(4031, 'GONZALEZ MARCELO GAB', '00000424023', '25 DE MAYO 275', '50', '365819', '7032', 1, '2015-07-16'),
+(4032, 'GONZALEZ MARCELO OSC', '00000429920', 'O.DUGGAN 750', '50', '443647', '12471', 1, '2015-07-16'),
+(4033, 'GONZALEZ MARIA LAURA', '00000000000', '9 DE JULIO 46', '50', '469012', '7975', 1, '2015-07-16'),
+(4034, 'GRANDA LUCIANO', '00000000000', 'FRENCH 15', '50', '563983', '13138', 1, '2015-07-16'),
+(4035, 'GROSSO CLAUDIA LUJAN', '00000000000', '25 DE MAYO 373', '50', '133519', '7046', 1, '2015-07-16'),
+(4036, 'GRUAS Y MONTAJES IOR', '00000000000', 'G.MOSCONI 399', '87', '571614', '20800', 1, '2015-07-16'),
+(4037, 'GUAZZORA ELSA CELICA', '00000426679', '25 DE MAYO 82', '50', '360595', '7330', 1, '2015-07-16'),
+(4038, 'GUILLERMO ECHEVARRIA', '00334000401', 'SAN MARTIN 1080', '87', '472041', '20225', 1, '2015-07-16'),
+(4039, 'GUISASOLA MARIA LEON', '00000000000', 'ALVARADO 325', '50', '215879', '9831', 1, '2015-07-16'),
+(4040, 'GURIDI PAULA ANDREA', '00000000000', 'BETOLAZA 124', '50', '504465', '7629', 1, '2015-07-16'),
+(4041, 'GUSTAVO FIORDA MAQUI', '00000000000', 'J.INGENIEROS 1020', '87', '580502', '11910', 1, '2015-07-16'),
+(4042, 'HERNANDEZ HUGO SEBAS', '00000000000', 'FALUCHO 195', '50', '529064', '9164', 1, '2015-07-16'),
+(4043, 'HERRERA F-HERRERA N-', '00000000000', 'URQUIZA 1300', '50', '583936', '4196', 1, '2015-07-16'),
+(4044, 'HERRERO RAUL MARIO', '00000433530', 'MORENO 255', '87', '318769', '8225', 1, '2015-07-16'),
+(4045, 'HID MARIO HORACIO', '00000000000', '1RA.JUNTA 367', '50', '382975', '10645', 1, '2015-07-16'),
+(4046, 'HIDALGO MARIA EUGENI', '00000000000', 'CALLE 1810 15', '50', '507163', '8493', 1, '2015-07-16'),
+(4047, 'HOJBJERG MYRIAN MABE', '00000000000', 'MORENO 999', '50', '5596036', '1593', 1, '2015-07-16'),
+(4048, 'HOJOBAR S.A.', '00000000000', 'BELGRANO 495', '50', '519007', '9580', 1, '2015-07-16'),
+(4049, 'HOLLENDER PEDRO MARC', '00000000000', 'R.PEÃ‘A 4200', '50', '468291', '21528', 1, '2015-07-16'),
+(4050, 'IACOVIELLO HECTOR FR', '00000424649', 'SAN MARTIN 551', '50', '386481', '15752', 1, '2015-07-16'),
+(4051, 'IELMINI NELIDA ESTER', '00000000000', 'BROWN 97', '50', '483571', '16016', 1, '2015-07-16'),
+(4052, 'IGLESIAS JUAN CARLOS', '00000000000', 'CALLE 1810 58', '50', '524665', '8517', 1, '2015-07-16'),
+(4053, 'INGENERARE SRL', '00000000000', 'ALVEAR 210', '50', '545211', '10363', 1, '2015-07-16'),
+(4054, 'INSTITUTO BIOQUIMICO', '00000431347', 'RIVADAVIA 183', '87', '280617', '16307', 1, '2015-07-16'),
+(4055, 'IRIART FERNANDO RAUL', '00000429221', 'TACUARI 585', '50', '257462', '14081', 1, '2015-07-16'),
+(4056, 'IRIBARNE EDUARDO', '0', 'H.YRIGOYEN 769', '50', '610472', '40199', 1, '2015-07-16'),
+(4057, 'IRIBARREN DANIEL CAR', '00000000000', '1RA.JUNTA 1074', '50', '420420', '507', 1, '2015-07-16'),
+(4058, 'ISMAEL CLAUDIO ANIBA', '00000000000', 'BELGRANO 680', '50', '456689', '13466', 1, '2015-07-16'),
+(4059, 'ITALIANI MARIA ELENA', '00000430189', 'MORENO 227', '50', '378314', '8223', 1, '2015-07-16'),
+(4060, 'ITURBURU MARIA ISABE', '00000000000', 'MITRE 65', '50', '478069', '9385', 1, '2015-07-16'),
+(4061, 'JACOBSEN ANDRES RAUL', '00000428097', 'FALUCHO 985', '50', '354695', '928', 1, '2015-07-16'),
+(4062, 'JALLE ANDRES', '00000000000', 'CHACABUCO 75', '50', '572901', '7360', 1, '2015-07-16'),
+(4063, 'JAUREGUIBEHERE LIA M', '00000000000', 'H.YRIGOYEN 172', '50', '467382', '7576', 1, '2015-07-16'),
+(4064, 'JEANNERET JULIO', '00000422712', 'RIVADAVIA 545', '50', '205450', '17750', 1, '2015-07-16'),
+(4065, 'JORGE ALBERTO', '00000000000', 'BRANDSEN 365', '50', '499123', '8893', 1, '2015-07-16'),
+(4066, 'JUAN EDUARDO', '00000424361', 'D.VASQUEZ 924', '87', '393245', '12642', 1, '2015-07-16'),
+(4067, 'JURORUSA S.A', '00000000000', 'MORENO 164', '87', '559074', '8530', 1, '2015-07-16'),
+(4068, 'LA AGRICOLA GANAD.DE', '00000424312', 'SARMIENTO 221', '87', '19914', '8639', 1, '2015-07-16'),
+(4069, 'LA CASA DE LOS BULON', '00000000000', 'LAVALLE 1', '50', '459840', '7893', 1, '2015-07-16'),
+(4070, 'LA PERSEVERANCIA SEG', '00000430780', 'COLON 87', '250', '20167', '40026', 1, '2015-07-16'),
+(4071, 'LABORDE CARLOS ALBER', '00000426811', 'COLON 627', '50', '222721', '7809', 1, '2015-07-16'),
+(4072, 'LAGO S.A.', '00000000000', 'SAN MARTIN 1386', '87', '498416', '21069', 1, '2015-07-16'),
+(4073, 'LAMBERTA JORGE MIGUE', '00000423118', 'BRANDSEN 134', '50', '459361', '9095', 1, '2015-07-16'),
+(4074, 'LANCE FABIANA', '00000000000', 'COLON 481', '50', '570574', '7761', 1, '2015-07-16'),
+(4075, 'LARA ROBERTO MARCELO', '00000429538', '1RA.JUNTA 226', '50', '391951', '10749', 1, '2015-07-16'),
+(4076, 'LARRIESTRA BEATRIZ C', '00000000000', 'COLON 545', '50', '437776', '7787', 1, '2015-07-16'),
+(4077, 'LARSEN CESAR GERARDO', '00000000000', 'RECONQUISTA 801', '50', '379005', '18730', 1, '2015-07-16'),
+(4078, 'LAS MECHAS SOCIEDAD ', '00000000000', 'L.V.LOPEZ 9', '50', '566098', '8606', 1, '2015-07-16'),
+(4079, 'LATORRE ALEJANDRO MA', '00000000000', 'B.DE IRIGOYEN 755', '50', '522993', '13286', 1, '2015-07-16'),
+(4080, 'LATORRE JOAQUIN IGNA', '00000000000', 'LIBERTAD 115', '50', '550055', '1907', 1, '2015-07-16'),
+(4081, 'LAVANDERIA TRES ARRO', '00000425350', 'DORREGO 502', '50', '229270', '6852', 1, '2015-07-16'),
+(4082, 'LAVERENS NELSON A.', '00000000000', 'S.PEÃ‘A 135', '50', '220525', '15404', 1, '2015-07-16'),
+(4083, 'LEGUIZAMON CLAUDIA I', '00000000000', 'LAVALLE 661', '50', '558282', '6107', 1, '2015-07-16'),
+(4084, 'LEGUIZAMON ESTEBAN H', '00015562931', 'ALVARADO 675', '50', '558341', '9858', 1, '2015-07-16'),
+(4085, 'LETAMENDI LUIS ANGEL', '00000420913', 'L.V.LOPEZ 1250', '50', '392671', '10921', 1, '2015-07-16'),
+(4086, 'LIEBANA JORGE F.', '00000431615', 'SAN LORENZO 56', '50', '188359', '16701', 1, '2015-07-16'),
+(4087, 'LIFIRON S.A', '00000000000', 'DERIVACION NÂ°2 2', '50', '548935', '22159', 1, '2015-07-16'),
+(4088, 'LLANOS ALICIA CLALFI', '00000000000', 'COLON 430', '50', '594466', '7898', 1, '2015-07-16'),
+(4089, 'LOFIEGO JOSE JUIS', '00000430152', 'ISTILART 630', '50', '406583', '9949', 1, '2015-07-16'),
+(4090, 'LOPEZ IRMA ELENA', '00000000000', 'CALLE 1810 550', '50', '471305', '9756', 1, '2015-07-16'),
+(4091, 'LOPEZ NESTOR FABIAN', '00000000000', 'LAVALLE 395', '50', '445931', '6871', 1, '2015-07-16'),
+(4092, 'LOSADA RICARDO OSVAL', '00000423259', 'LAVALLE 410', '50', '346889', '6612', 1, '2015-07-16'),
+(4093, 'LUCERO OLGA', '0', '9 DE JULIO 922', '50', '575364', '44961', 1, '2015-07-16'),
+(4094, 'LUIS BLANCO S.A', '00000433533', 'BELGRANO 970', '87', '300357', '12532', 1, '2015-07-16'),
+(4095, 'MACHADO ROBERTO OSCA', '00000432079', 'L.N.ALEM 546', '50', '396998', '2822', 1, '2015-07-16'),
+(4096, 'MACIEL HERMANOS S.A.', '00000430680', 'SAN MARTIN 985', '250', '223744', '40059', 1, '2015-07-16'),
+(4097, 'MADERAS S. JOSE DE L', '00000000000', 'S.COSTA 1009', '50', '536844', '10667', 1, '2015-07-16'),
+(4098, 'M.A.M. S.A.', '00000424441', 'FORMOSA 1050', '87', '421456', '40050', 1, '2015-07-16'),
+(4099, 'MARINO MONICA GRACIE', '00000000000', 'COLON 363', '50', '476791', '7733', 1, '2015-07-16'),
+(4100, 'MARTINEZ CLAUDIO NES', '00000000000', 'URQUIZA 116', '50', '402745', '1993', 1, '2015-07-16'),
+(4101, 'MARTINEZ DE CAMPOS A', '00000000000', 'CHACABUCO 325', '50', '456618', '7405', 1, '2015-07-16'),
+(4102, 'MARTINEZ FRANKLIN SE', '00000433007', 'RIVADAVIA 885', '50', '411835', '18764', 1, '2015-07-16'),
+(4103, 'MARTINEZ GUILLERMO O', '424748', 'BETOLAZA 711', '50', '483816', '42405', 1, '2015-07-16'),
+(4104, 'MARTINEZ JULIO CESAR', '00000000000', 'COLON 346', '87', '548759', '7950', 1, '2015-07-16'),
+(4105, 'MASCHI EDUARDO ERNES', '00000430870', 'SAN LORENZO 281', '50', '199485', '16417', 1, '2015-07-16'),
+(4106, 'MASTROSIMONE GUSTAVO', '00000422231', 'BELGRANO 702', '50', '402370', '13136', 1, '2015-07-16'),
+(4107, 'MAVIGLIA YAMILA BELE', '0', 'MORENO 598', '50', '5594953', '41377', 1, '2015-07-16'),
+(4108, 'MAYER RICARDO AUTOMO', '00000428350', 'O.DUGGAN 875', '50', '530725', '11650', 1, '2015-07-16'),
+(4109, 'MENNA ELIANA ANDREA', '00000000000', 'RIVADAVIA 599', '50', '599793', '17757', 1, '2015-07-16'),
+(4110, 'MENNA JOSE ANGEL', '00000422842', 'CONSTITUYENTES 50', '50', '343471', '1417', 1, '2015-07-16'),
+(4111, 'MENNA LORENZO N.', '00000426588', 'SAN LORENZO 184', '87', '187828', '16688', 1, '2015-07-16'),
+(4112, 'MEO GUZMAN ENRIQUE F', '00000423287', 'DERQUI 134', '50', '399683', '15479', 1, '2015-07-16'),
+(4113, 'MERLINO PLAN S.A.', '00000000000', 'H.YRIGOYEN 73', '87', '450661', '8110', 1, '2015-07-16'),
+(4114, 'MERLO CARMEN HERMINI', '00000000000', 'ESTRADA 55', '50', '335421', '15664', 1, '2015-07-16'),
+(4115, 'MESA DE FORCHETTI MO', '00000000000', 'SARMIENTO 201', '50', '354826', '8636', 1, '2015-07-16'),
+(4116, 'MIEDAN ANA KARINA', '00000432829', 'H.YRIGOYEN 431', '50', '439826', '6677', 1, '2015-07-16'),
+(4117, 'MILLA SUR S.A.', '00000000000', 'GUEMES 45', '87', '604774', '5347', 1, '2015-07-16'),
+(4118, 'MIO FIGLIO  S.R.L.', '15507169', 'LAVALLE 52', '50', '5594994', '45928', 1, '2015-07-16'),
+(4119, 'MOIRANO EVELIA LILIA', '00000000000', 'ROCA 13', '50', '512776', '8373', 1, '2015-07-16'),
+(4120, 'MOIZZI JUAN JOSE', '00000000000', 'BROWN 1', '50', '468796', '16007', 1, '2015-07-16'),
+(4121, 'MOLFESE ISIDRO', '00000432176', 'CANGALLO 664', '50', '351056', '13642', 1, '2015-07-16'),
+(4122, 'MOLINA EUGENIO ALFRE', '00000423034', 'LAVALLE 357', '50', '386872', '6864', 1, '2015-07-16'),
+(4123, 'MOLINA HECTOR MARIAN', '00000000000', 'COLON 255', '50', '561279', '7714', 1, '2015-07-16'),
+(4124, 'MOLINOS TRES ARROYOS', '00000432494', 'P.INDUSTRIAL', '87', '400725', '40130', 1, '2015-07-16'),
+(4125, 'MOLINOS ZALLA S.A.', '00000420759', 'RUTA 3 KM 495.5', '87', '525473', '40120', 1, '2015-07-16'),
+(4126, 'MOLLER ARTURO', '00000429848', 'V.SARSFIELD 375', '50', '285436', '14299', 1, '2015-07-16'),
+(4127, 'MONSALVO MARIA DE LO', '00000000000', 'MORENO 265', '50', '522980', '8227', 1, '2015-07-16'),
+(4128, 'MONTESINOS JOSE MANU', '00000420783', 'L.V.LOPEZ 176', '87', '308092', '8839', 1, '2015-07-16'),
+(4129, 'MORAN JORGE ANTONIO', '00000428895', 'LAMADRID 167', '50', '366021', '14983', 1, '2015-07-16'),
+(4130, 'MORAN MARCELO ANTONI', '00000000000', '25 DE MAYO 299', '50', '492850', '7033', 1, '2015-07-16'),
+(4131, 'MUNGAI MARIA MERCEDE', '00000000000', 'CORDOBA 44', '50', '566740', '10874', 1, '2015-07-16'),
+(4132, 'MUTUAL FEDERADA 25 D', '431819', 'MORENO 456', '50', '5597222', '8400', 1, '2015-07-16'),
+(4133, 'NALDO LOMBARDI S.A', '424178', 'CALLE 1810 75', '87', '555438', '40039', 1, '2015-07-16'),
+(4134, 'NIKRO S.A', '00000433344', 'RIVADAVIA 620', '50', '532514', '6263', 1, '2015-07-16'),
+(4135, 'NOICSA S.A.', '00000000000', 'MAZZINI 950', '87', '533638', '11665', 1, '2015-07-16'),
+(4136, 'NOVILLO VIRGINIA VER', '00000000000', 'SALTA 321', '50', '513555', '4744', 1, '2015-07-16'),
+(4137, 'OHACO RAUL BAUTISTA', '00000428430', 'CHACABUCO 390', '50', '336734', '7524', 1, '2015-07-16'),
+(4138, 'OLEOHIDRAULICA DI RO', '00000423815', 'SAN MARTIN 1375', '50', '381516', '21130', 1, '2015-07-16'),
+(4139, 'OLOCCO BARTOLO', '00000431844', 'H.YRIGOYEN 91', '50', '240116', '8113', 1, '2015-07-16'),
+(4140, 'OLSEN CRISTIAN', '00000000000', 'LAMADRID 273', '50', '460093', '15019', 1, '2015-07-16'),
+(4141, 'ONGARINI LIVIO', '00000426468', 'QUINTANA 375', '50', '195911', '15425', 1, '2015-07-16'),
+(4142, 'OTERO OSCAR ALBERTO', '00000427339', 'ALSINA 32', '50', '268598', '16300', 1, '2015-07-16'),
+(4143, 'PALLA SILVIA CRISTIN', '00000000000', 'MORENO 623', '50', '500757', '8297', 1, '2015-07-16'),
+(4144, 'PALLADINO  S.A.', '00000424896', '1RA.JUNTA 999', '87', '392802', '534', 1, '2015-07-16'),
+(4145, 'PALMA NORA', '00000000000', 'LAVALLE 196', '50', '488853', '7468', 1, '2015-07-16'),
+(4146, 'PASCUAL SILVIA ADRIA', '00000430612', 'L.V.LOPEZ 81', '50', '398761', '8622', 1, '2015-07-16'),
+(4147, 'PAZOS DE VELOSO MABE', '00000000000', 'H.YRIGOYEN 420', '50', '417071', '6671', 1, '2015-07-16'),
+(4148, 'PC TRUCKS TRES ARROY', '00000000000', 'J.INGENIEROS 804', '50', '574455', '11996', 1, '2015-07-16'),
+(4149, 'PEQUEÃ‘O JOSE', '00000424243', 'CHACABUCO 163', '50', '213817', '7377', 1, '2015-07-16'),
+(4150, 'PEREYRA ESTEBAN CEFE', '00000000000', 'SAN MARTIN 1315', '50', '485386', '21074', 1, '2015-07-16'),
+(4151, 'PEREZ DALSGAARD Y CI', '00000000000', 'MORENO 798', '87', '261225', '6', 1, '2015-07-16'),
+(4152, 'PEREZ GUILLERMO LUIS', '00000429763', '1RA.JUNTA 250', '50', '271729', '10746', 1, '2015-07-16'),
+(4153, 'PEREZ GUSTAVO MIGUEL', '00000000000', 'BELGRANO 625', '50', '431048', '10024', 1, '2015-07-16'),
+(4154, 'PEREZ MARIA ISABEL', '00000000000', 'LIBERTAD 385', '50', '459938', '2362', 1, '2015-07-16'),
+(4155, 'PEREZ NELSON ADRIAN', '00000000000', 'LAMADRID 436', '50', '480336', '15270', 1, '2015-07-16'),
+(4156, 'PEREZ PAULA ANDREA', '00000000000', 'B.OBRERO CASA 54', '50', '464554', '603', 1, '2015-07-16'),
+(4157, 'PEREZ RAUL MARTIN', '00000000000', 'CHACABUCO 39', '87', '363280', '7356', 1, '2015-07-16'),
+(4158, 'PERTICARARI JUAN PAB', '15613025', 'SAN MARTIN 402', '50', '505840', '15902', 1, '2015-07-16'),
+(4159, 'PETELA HECTOR', '00000420407', 'CATAMARCA 934', '87', '307138', '20521', 1, '2015-07-16'),
+(4160, 'PIERINI CARLOS FABIA', '00000428707', 'SARMIENTO 1165', '50', '451206', '1352', 1, '2015-07-16'),
+(4161, 'PINTURERIAS RUCCI S.', '00000422054', 'CHACABUCO 324', '87', '520667', '7533', 1, '2015-07-16'),
+(4162, 'PIROSANTO CAMILO ALD', '00000427500', 'V.SARSFIELD 295', '50', '318613', '14266', 1, '2015-07-16'),
+(4163, 'PODESTA MARIANA', '00000000000', 'BETOLAZA 114', '50', '491840', '7631', 1, '2015-07-16'),
+(4164, 'PONCE EDUARDO ESTEBA', '00000429069', 'S.PEÃ‘A 460', '50', '336620', '14281', 1, '2015-07-16'),
+(4165, 'POULSEN PEDRO-CAZEAU', '00000000000', 'BALCARCE 568', '50', '543871', '17001', 1, '2015-07-16'),
+(4166, 'POZZOLI LAURA CECILI', '00000000000', 'MORENO 585', '50', '538880', '8278', 1, '2015-07-16'),
+(4167, 'PRADO RUBEN OSCAR', '00000000000', 'CORDOBA 260', '87', '5596384', '10829', 1, '2015-07-16'),
+(4168, 'PRIETO JUAN JOSE', '00000000000', 'PASSO 620', '50', '483148', '13086', 1, '2015-07-16'),
+(4169, 'PROCACCINI FRANCISCO', '00015618430-434077-', 'ALMAFUERTE 40', '50', '265122', '21079', 1, '2015-07-16'),
+(4170, 'QUIMICA MOLERO S.R.L', '00000000000', 'CASEROS 816', '50', '521811', '19295', 1, '2015-07-16'),
+(4171, 'RACCIATTI PEDRO ALEJ', '00015458789', 'DERIVACION NÂ°2 0000', '50', '580313', '22151', 1, '2015-07-16'),
+(4172, 'RANZINI MATIAS FEDER', '00000000000', 'ALSINA 469', '50', '581961', '16057', 1, '2015-07-16'),
+(4173, 'RANZINI RICARDO VALE', '432553', 'J.INGENIEROS 360', '87', '434443', '21030', 1, '2015-07-16'),
+(4174, 'RAVELLA RICARDO H.', '00000433507', 'LAS HERAS 455', '50', '237406', '17543', 1, '2015-07-16'),
+(4175, 'RE MARIO CESAR', '00000431251', 'LAVALLE 155', '50', '460110', '7492', 1, '2015-07-16'),
+(4176, 'RECARI MARIANO', '00000422878', 'GOMILA 798', '50', '446101', '13119', 1, '2015-07-16'),
+(4177, 'REFAFLOTO S.A', '00000000000', 'COLON 399', '87', '507701', '7738', 1, '2015-07-16'),
+(4178, 'RENDO DE PODESTA IRM', '00000425524', 'H.PRIMO 384', '50', '404374', '9708', 1, '2015-07-16'),
+(4179, 'REY ANA MARIA', '00000430467', 'S.CABRAL 46', '87', '408574', '14937', 1, '2015-07-16'),
+(4180, 'RIDINO EDUARDO NICOL', '00000000000', 'BETOLAZA 757', '50', '478825', '5995', 1, '2015-07-16'),
+(4181, 'RIVOLTA JOSE EDUARDO', '15506110', 'QUINTANA 75', '50', '5597618', '49145', 1, '2015-07-16'),
+(4182, 'ROAS SACIF', '42955800000000000', 'SAN MARTIN 461', '50', '585507', '15733', 1, '2015-07-16'),
+(4183, 'RODERA FRANCISCO Y J', '00000000000', 'CHACABUCO 173', '50', '471565', '7378', 1, '2015-07-16'),
+(4184, 'RODRIGUEZ ELSA TERES', '00000430930', '9 DE JULIO 216', '50', '399133', '7231', 1, '2015-07-16'),
+(4185, 'RODRIGUEZ TERESA ANG', '00000000000', 'MAIPU 165', '50', '470933', '7519', 1, '2015-07-16'),
+(4186, 'ROLANDO LUIS ROBERTO', '00000430479', 'SAN LORENZO 164', '87', '352691', '16691', 1, '2015-07-16'),
+(4187, 'ROLDAN JUANA MARIELA', '00000000000', 'RIVADAVIA 223', '50', '470959', '16709', 1, '2015-07-16'),
+(4188, 'ROLDAN LILIANA VALER', '00000000000', 'MATHEU 515', '50', '475866', '6067', 1, '2015-07-16'),
+(4189, 'RUBIO DANIEL CECILIO', '00000429451', '1RA.JUNTA 531', '50', '312321', '10658', 1, '2015-07-16'),
+(4190, 'RUTA 2 S.R.L.', '00000000000', 'L.DE LA TORRE 1496', '50', '261179', '40048', 1, '2015-07-16'),
+(4191, 'SABATINI MARCELO EDM', '00000000000', 'R.PEÃ‘A 81', '50', '502490', '16084', 1, '2015-07-16'),
+(4192, 'SAEZ JUAN EMILIO', '00000423535', 'CASEROS 601', '50', '5596738', '19223', 1, '2015-07-16'),
+(4193, 'SAEZ SILVIA NELLY', '00000420847', 'CHACABUCO 299', '50', '348926', '7403', 1, '2015-07-16'),
+(4194, 'SAGARDOY FERNANDO JO', '00000000000', 'GARIBALDI 354', '50', '514611', '11152', 1, '2015-07-16'),
+(4195, 'SAINI SERGIO DANIEL', '00000427369', 'BELGRANO 560', '50', '430487', '13843', 1, '2015-07-16'),
+(4196, 'SALOME JULIO', '00000000000', 'O.DUGGAN 610', '50', '256159', '12483', 1, '2015-07-16'),
+(4197, 'SAN PELLEGRINI DE M.', '00000000000', 'J.INGENIEROS 255', '87', '78546', '21048', 1, '2015-07-16'),
+(4198, 'SANCHEZ ELIZABETH', '00000000000', 'BETOLAZA 546', '50', '581828', '6485', 1, '2015-07-16'),
+(4199, 'SANCHEZ MONICA LUJAN', '00000000000', 'ALSINA 298', '50', '572800', '16266', 1, '2015-07-16'),
+(4200, 'SANCHEZ N.DE PEREYRA', '00000000000', 'FRENCH 536', '50', '401689', '13423', 1, '2015-07-16'),
+(4201, 'SANCINETO VICTOR MAR', '00015612593', 'DERIVACION NÂ°6 0002', '50', '346788', '21601', 1, '2015-07-16'),
+(4202, 'SANDE JUAN JOSE', '00000420682', 'SARMIENTO 456', '50', '349965', '8730', 1, '2015-07-16'),
+(4203, 'SANI TRES S.A.', '00000000000', 'R.PEÃ‘A 235', '87', '544227', '16879', 1, '2015-07-16'),
+(4204, 'SANTAGIULIANA MARIA ', '00000000000', 'ALSINA 854', '50', '444628', '16213', 1, '2015-07-16'),
+(4205, 'SANTIRSO MARIA ROSAN', '00000000000', 'L.V.LOPEZ 1008', '50', '558976', '10792', 1, '2015-07-16'),
+(4206, 'SAURO ROBERTO CESAR', '00000000000', '9 DE JULIO 109', '50', '360973', '7727', 1, '2015-07-16'),
+(4207, 'SCARCELLA DIEGO JOSE', '00000000000', 'ROCHA 486', '50', '566304', '14399', 1, '2015-07-16'),
+(4208, 'SCHENCK ANDREA FABIA', '00000000000', 'LAS HERAS 69', '50', '584441', '16143', 1, '2015-07-16'),
+(4209, 'SCHUMACHER ALFREDO Y', '00000000000', 'SOLIS 929', '50', '576143', '3543', 1, '2015-07-16'),
+(4210, 'SEMILLERA PAMPA FERT', '00000425092', 'CASEROS 668', '50', '326399', '19303', 1, '2015-07-16'),
+(4211, 'SEQUEIRA CARLOS ENRI', '00000429131', 'COLON 357', '50', '229717', '7731', 1, '2015-07-16'),
+(4212, 'SERRANO ELSA GLORIA', '00000000000', 'BRANDSEN 244', '87', '579782', '9060', 1, '2015-07-16'),
+(4213, 'SISTEMAS TERMODINAMI', '00000427055', 'TACUARI 1050', '50', '463124', '11655', 1, '2015-07-16'),
+(4214, 'SKOU BERTEL S.A.', '00000426783', 'CASEROS 10', '87', '176079', '19344', 1, '2015-07-16'),
+(4215, 'SOBANSKI VICTOR ADOL', '00000421098', 'SAN LUIS 932', '50', '400044', '20590', 1, '2015-07-16'),
+(4216, 'SOC. DE TRANSP.LIBRE', '00000000000', 'J.INGENIEROS 250', '87', '171263', '21024', 1, '2015-07-16'),
+(4217, 'SOC.ESPAÃ‘OLA DE S.M', '00000431365', 'DORREGO 268', '87', '38928', '6929', 1, '2015-07-16'),
+(4218, 'SOCOLOFF MARTIN IVAN', '15549858', '25 DE MAYO 146', '87', '588784', '42516', 1, '2015-07-16'),
+(4219, 'SODA LA HUELLA S.R.L', '00000424828', 'S.CABRAL 1599', '87', '359225', '40076', 1, '2015-07-16'),
+(4220, 'SODE HORACIO ABEL', '00000424337', 'B.MACHADO 1244', '50', '230928', '364', 1, '2015-07-16'),
+(4221, 'SORIANO MIGUEL ANGEL', '00000431443', 'LINIERS 165', '50', '262714', '17785', 1, '2015-07-16'),
+(4222, 'SORIANO RAFAEL', '00000433718', 'SAN MARTIN 345', '50', '233714', '15700', 1, '2015-07-16'),
+(4223, 'SOULE SERGIO OSVALDO', '00015501624', 'SAN MARTIN 901', '87', '519850', '15840', 1, '2015-07-16'),
+(4224, 'SOUMOULOU PABLO HERN', '00000422213', 'PASSO 550', '50', '375788', '13089', 1, '2015-07-16'),
+(4225, 'SPENZA MARIANO MARTI', '15603805', 'V.SARSFIELD 367', '50', '5596458', '45371', 1, '2015-07-16'),
+(4226, 'STALLONE JUDIT ELIZA', '00000000000', 'P.N.CARRERA 999', '50', '493466', '5432', 1, '2015-07-16'),
+(4227, 'STARCEL PAMPA CENTRO', '00000000000', 'COLON 182', '50', '601728', '8132', 1, '2015-07-16'),
+(4228, 'STIVABAD S.A', '15382871', 'COLON 153', '50', '5597773', '49697', 1, '2015-07-16'),
+(4229, 'SUAREZ ADELA JOSEFIN', '431490', 'BRANDSEN 1176', '50', '474625', '1026', 1, '2015-07-16'),
+(4230, 'SUAREZ JORGE EDUARDO', '00000431374', 'LAS HERAS 25', '87', '175766', '16141', 1, '2015-07-16'),
+(4231, 'SUPERCARNE S.A.', '00000431381', 'RIVADAVIA 453', '87', '439969', '40063', 1, '2015-07-16'),
+(4232, 'SUPERMERCADO PLANETA', '00000431359', 'ALSINA 6', '87', '310659', '16302', 1, '2015-07-16'),
+(4233, 'SUR AGROPECUARIA S.A', '00000426600', 'O.DUGGAN 1415', '87', '565583', '11805', 1, '2015-07-16'),
+(4234, 'TARABORELLI ALEJANDR', '00000000000', 'H.YRIGOYEN 765', '50', '505808', '5967', 1, '2015-07-16'),
+(4235, 'TARABORELLI MARIO JE', '00000000000', '1RA.JUNTA 2', '50', '420550', '10802', 1, '2015-07-16'),
+(4236, 'TARANTELA ELVIRA ELS', '00000000000', 'OLAVARRIA 66', '50', '548661', '10604', 1, '2015-07-16'),
+(4237, 'TARJETA NARANJA SA.', '00000000000', 'CALLE 1810 72', '87', '561918', '8515', 1, '2015-07-16'),
+(4238, 'TARTAGLINO Y CIA. SR', '00000424225', 'RIVADAVIA 402', '50', '315609', '40016', 1, '2015-07-16'),
+(4239, 'TEILETCHE ENRIQUE Y ', '00000426605', 'COLON 102', '50', '189907', '8191', 1, '2015-07-16'),
+(4240, 'TERRASANTA MONICA', '15618714', 'L.N.ALEM 1602', '50', '452359', '4105', 1, '2015-07-16'),
+(4241, 'TIEMERSMA SEBASTIAN', '00000000000', 'PARQUESITO 2', '87', '520319', '23405', 1, '2015-07-16'),
+(4242, 'TORRES CARIONI SANTI', '00000432313', 'MAZZINI 455', '50', '346140', '11238', 1, '2015-07-16'),
+(4243, 'TORRES MARCELA NOEMI', '15572453', 'P.N.CARRERA 60', '50', '5597880', '50401', 1, '2015-07-16'),
+(4244, 'TOSTEX S.A.', '00000000000', 'CASEROS 50', '250', '541691', '40065', 1, '2015-07-16'),
+(4245, 'TRAFER SAIC', '00000424707', 'AV.TRABAJADOR 901', '87', '329749', '40009', 1, '2015-07-16'),
+(4246, 'TRANSPORTE GOIZUETA', '00000426645', 'CASEROS 1360', '87', '366122', '20701', 1, '2015-07-16'),
+(4247, 'TRAVERSO GUILLERMO H', '00000000000', 'ALSINA 541', '87', '482750', '16103', 1, '2015-07-16'),
+(4248, 'TRESNECO S.A.', '00000000000', 'ROCA 12', '50', '552655', '8397', 1, '2015-07-16'),
+(4249, 'TRONCOSO PEDRO ARTUR', '00000428931', 'E.DE LA CALLE 144', '50', '274502', '5137', 1, '2015-07-16'),
+(4250, 'TRUCK EXPRESS S.R.L.', '00000000000', 'GUEMES 535', '87', '506498', '5391', 1, '2015-07-16'),
+(4251, 'TUMINI D. Y J. Y MEN', '00000000000', 'GUEMES 297', '50', '311571', '5371', 1, '2015-07-16'),
+(4252, 'TURINI PABLO RENATO', '00000000000', 'SAN MARTIN 799', '50', '587859', '15802', 1, '2015-07-16'),
+(4253, 'ULLERUP RAUL ADOLFO', '00000000000', 'ESTRADA 1365', '50', '316811', '11033', 1, '2015-07-16'),
+(4254, 'UNIVALORES S.A.', '00000422735', 'ISTILART 120', '50', '5594397', '8795', 1, '2015-07-16'),
+(4255, 'URBAN ANDERSEN MARCO', '00000000000', 'BELGRANO 470', '50', '590367', '14184', 1, '2015-07-16'),
+(4256, 'URBIETA ANDRES', '00000000000', 'V.SARSFIELD 725', '50', '5596845', '14378', 1, '2015-07-16'),
+(4257, 'URRUTIA MARIA MARTA', '00000000000', 'MORENO 475', '87', '522300', '8248', 1, '2015-07-16'),
+(4258, 'URTASUN ANA LIA', '00000000000', 'BALCARCE 351', '50', '571180', '16825', 1, '2015-07-16'),
+(4259, 'UZCUDUN S.A.F.I.M.', '00000431496', 'MORENO 851', '87', '431413', '1607', 1, '2015-07-16'),
+(4260, 'UZIDINGER EDUARDO NI', '00000000000', 'AMEGHINO 997', '50', '392479', '20062', 1, '2015-07-16'),
+(4261, 'VACCA REINALDO RUBEN', '00000428087', 'G.MOSCONI 1650', '50', '311861', '23409', 1, '2015-07-16'),
+(4262, 'VAZQUEZ MIGUEL ANGEL', '00000428230', 'SAN MARTIN 1497', '50', '264835', '21141', 1, '2015-07-16'),
+(4263, 'VERGNANO RAUL ANDRES', '00000000000', 'AV.TRABAJADOR 842', '50', '524971', '3313', 1, '2015-07-16'),
+(4264, 'VERKUYL ASTRID CINTI', '00000000000', 'MORENO 315', '50', '525792', '8232', 1, '2015-07-16'),
+(4265, 'VIAL AGRO S.A.', '00000430610', 'SARMIENTO 757', '250', '225764', '12', 1, '2015-07-16'),
+(4266, 'VIGILAN S.R.L.AG.DE ', '428811', 'SAN MARTIN 465', '50', '595160', '15735', 1, '2015-07-16'),
+(4267, 'VILLAFRANCA MARTA S.', '00000422340', 'COLON 348', '50', '421528', '7947', 1, '2015-07-16'),
+(4268, 'VILLALBA JORGE ALFRE', '00000430238', 'BRANDSEN 1285', '50', '229658', '1131', 1, '2015-07-16'),
+(4269, 'VILLALBA PEDRO', '00000000000', 'CHACABUCO 222', '87', '536134', '7571', 1, '2015-07-16'),
+(4270, 'VILLANUEVA JUAN CARL', '00000424464', 'LAVALLE 30', '50', '315638', '7889', 1, '2015-07-16'),
+(4271, 'VILLEMUR GUSTAVO MIG', '00000000000', 'D.VASQUEZ 550', '50', '370477', '13951', 1, '2015-07-16'),
+(4272, 'VINOTECA LOS TONELES', '00000422236', 'CASTELLI 374', '50', '598725', '5915', 1, '2015-07-16'),
+(4273, 'VIVIANI CARMEN', '00000000000', 'COLON 284', '50', '209692', '8026', 1, '2015-07-16'),
+(4274, 'VIZZOLINI NESTOR J.', '00000422775', 'RIVADAVIA 655', '50', '221043', '18116', 1, '2015-07-16'),
+(4275, 'WEHRHANNE HORACIO MA', '00000429967', 'J.INGENIEROS 555', '50', '340816', '12072', 1, '2015-07-16'),
+(4276, 'WEST FERNANDO LUIS', '00000000000', 'LIBERTAD 646', '50', '552336', '2918', 1, '2015-07-16'),
+(4277, 'ZIJLSTRA JORGE ROBER', '00000431376', 'FRENCH 332', '87', '424255', '13437', 1, '2015-07-16'),
+(4278, 'ZIJLSTRA SILVINA ELE', '00000000000', 'BERUTTI 145', '50', '586458', '10046', 1, '2015-07-16'),
+(4279, 'ZORRILLA HNOS. S.R.L', '00000429380', 'COLON 899', '87', '5595870', '1836', 1, '2015-07-16'),
+(4280, 'ZOTES SAUL FRANCISCO', '00000000000', 'MAZZINI 765', '50', '338943', '11544', 1, '2015-07-16'),
+(4281, 'ZURITA HNOS. Y CIA.', '00000433469', 'ALMAFUERTE 1074', '87', '152897', '11731', 1, '2015-07-16'),
+(4282, '18 DE SETIEMBRE S.A', '00000431428', 'CASEROS 1090', '87', '467715', '20547', 1, '2015-07-16'),
+(4283, '3 ARROYOS S.A.', '00000000000', 'CHACO 350', '250', '583819', '40071', 1, '2015-07-16'),
+(4284, '3 NET S.A.', '00000420903', 'CHACABUCO 98', '87', '532006', '7641', 1, '2015-07-16');
 
 -- --------------------------------------------------------
 
@@ -876,18 +1208,431 @@ INSERT INTO `medidor` (`idmedidor`, `nomyap`, `telefono`, `domicilio`, `importep
 --
 
 CREATE TABLE IF NOT EXISTS `medidorempresa` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idmedidor` int(11) NOT NULL,
-  `idempresa` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+  `idempresa` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idempresa` (`idempresa`),
+  KEY `idmedidor` (`idmedidor`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=423 ;
 
 --
 -- Volcado de datos para la tabla `medidorempresa`
 --
 
 INSERT INTO `medidorempresa` (`id`, `idmedidor`, `idempresa`) VALUES
-(8, 3347, 8658),
-(9, 3817, 8660);
+(11, 4282, 12419),
+(12, 4284, 12420),
+(13, 3820, 12421),
+(14, 3839, 12422),
+(15, 3821, 12423),
+(16, 3822, 12424),
+(17, 4025, 12425),
+(18, 4187, 12426),
+(19, 3823, 12427),
+(20, 3824, 12428),
+(21, 3825, 12429),
+(22, 3826, 12430),
+(23, 4102, 12431),
+(24, 3827, 12432),
+(25, 3828, 12433),
+(26, 3829, 12434),
+(27, 3917, 12435),
+(28, 3830, 12436),
+(29, 3831, 12437),
+(30, 3832, 12438),
+(31, 3833, 12439),
+(32, 3835, 12440),
+(33, 3837, 12441),
+(34, 3840, 12442),
+(35, 3841, 12443),
+(36, 3842, 12444),
+(37, 3843, 12445),
+(38, 3844, 12446),
+(39, 4019, 12447),
+(40, 3845, 12448),
+(41, 3846, 12449),
+(42, 3847, 12451),
+(43, 3858, 12452),
+(44, 3849, 12453),
+(45, 3850, 12454),
+(46, 3851, 12455),
+(47, 3853, 12456),
+(48, 3854, 12457),
+(49, 3856, 12458),
+(50, 3859, 12460),
+(51, 3860, 12461),
+(52, 3861, 12462),
+(53, 3862, 12463),
+(54, 3864, 12464),
+(55, 3865, 12465),
+(56, 3867, 12466),
+(57, 4262, 12467),
+(58, 3868, 12468),
+(59, 3866, 12469),
+(60, 3869, 12470),
+(61, 3870, 12471),
+(62, 3871, 12473),
+(63, 3872, 12474),
+(64, 3873, 12475),
+(65, 3875, 12476),
+(66, 3876, 12477),
+(67, 3877, 12478),
+(68, 3878, 12480),
+(69, 3879, 12481),
+(70, 4214, 12483),
+(71, 3880, 12484),
+(72, 3881, 12485),
+(73, 4166, 12486),
+(74, 3882, 12487),
+(75, 3883, 12488),
+(76, 3884, 12489),
+(77, 3886, 12491),
+(78, 3887, 12492),
+(79, 3888, 12493),
+(80, 3889, 12494),
+(81, 3890, 12495),
+(82, 3891, 12496),
+(83, 3893, 12497),
+(84, 3894, 12498),
+(85, 3896, 12499),
+(86, 3897, 12500),
+(87, 3900, 12502),
+(88, 3901, 12503),
+(89, 3902, 12504),
+(90, 3903, 12505),
+(91, 3905, 12506),
+(92, 3906, 12507),
+(93, 3907, 12508),
+(94, 3908, 12510),
+(95, 3909, 12511),
+(96, 3910, 12512),
+(97, 3911, 12513),
+(98, 3912, 12514),
+(99, 3913, 12515),
+(100, 3915, 12516),
+(101, 4013, 12518),
+(102, 3916, 12520),
+(103, 3918, 12522),
+(104, 4217, 12523),
+(105, 3919, 12524),
+(106, 3921, 12525),
+(107, 3923, 12526),
+(108, 3925, 12527),
+(109, 3926, 12528),
+(110, 3927, 12529),
+(111, 4103, 12530),
+(112, 3928, 12531),
+(113, 3885, 12532),
+(114, 3930, 12533),
+(115, 3932, 12534),
+(116, 3933, 12535),
+(117, 3934, 12536),
+(118, 3931, 12537),
+(119, 3937, 12538),
+(120, 3938, 12541),
+(121, 3939, 12542),
+(122, 3940, 12543),
+(123, 3941, 12547),
+(124, 4131, 12548),
+(125, 3945, 12549),
+(126, 3946, 12550),
+(127, 3949, 12551),
+(128, 3950, 12552),
+(129, 3951, 12553),
+(130, 3952, 12554),
+(131, 3953, 12555),
+(132, 3954, 12556),
+(133, 3955, 12557),
+(134, 4093, 12558),
+(135, 3957, 12561),
+(136, 3960, 12562),
+(137, 3961, 12563),
+(138, 3962, 12565),
+(139, 3964, 12566),
+(140, 3963, 12567),
+(141, 3965, 12568),
+(142, 3966, 12569),
+(143, 3967, 12570),
+(144, 3968, 12571),
+(145, 3969, 12572),
+(146, 3970, 12575),
+(147, 4083, 12576),
+(148, 3974, 12577),
+(149, 3852, 12579),
+(150, 4066, 12580),
+(151, 3975, 12581),
+(152, 3976, 12582),
+(153, 3977, 12584),
+(154, 3978, 12585),
+(155, 3979, 12586),
+(156, 4012, 12587),
+(157, 3980, 12589),
+(158, 3981, 12590),
+(159, 4238, 12591),
+(160, 4212, 12593),
+(161, 3982, 12596),
+(162, 3983, 12597),
+(163, 3984, 12598),
+(164, 3985, 12599),
+(165, 3986, 12600),
+(166, 3988, 12601),
+(167, 3989, 12602),
+(168, 3991, 12604),
+(169, 3992, 12606),
+(170, 3993, 12608),
+(171, 3994, 12609),
+(172, 3995, 12610),
+(173, 3997, 12612),
+(174, 4150, 12614),
+(175, 4004, 12615),
+(176, 4005, 12616),
+(177, 4006, 12617),
+(178, 4009, 12619),
+(179, 4011, 12620),
+(180, 4014, 12621),
+(181, 4016, 12622),
+(182, 4017, 12623),
+(183, 4015, 12624),
+(184, 4018, 12625),
+(185, 4020, 12627),
+(186, 4021, 12628),
+(187, 4022, 12629),
+(188, 4157, 12630),
+(189, 4023, 12631),
+(190, 4026, 12633),
+(191, 4028, 12634),
+(192, 4029, 12635),
+(193, 4030, 12636),
+(194, 4031, 12637),
+(195, 4032, 12638),
+(196, 4033, 12639),
+(197, 4034, 12640),
+(198, 4035, 12641),
+(199, 4036, 12642),
+(200, 4037, 12643),
+(201, 4038, 12644),
+(202, 4039, 12645),
+(203, 4041, 12646),
+(204, 4042, 12647),
+(205, 4043, 12648),
+(206, 4044, 12649),
+(207, 4048, 12650),
+(208, 4049, 12651),
+(209, 3935, 12653),
+(210, 4051, 12654),
+(211, 4053, 12655),
+(212, 4054, 12658),
+(213, 4055, 12659),
+(214, 4056, 12660),
+(215, 4058, 12661),
+(216, 4059, 12662),
+(217, 4061, 12663),
+(218, 4062, 12664),
+(219, 4063, 12665),
+(220, 4064, 12666),
+(221, 4065, 12667),
+(222, 4068, 12668),
+(223, 3914, 12669),
+(224, 4069, 12670),
+(225, 4008, 12671),
+(226, 4070, 12672),
+(227, 3848, 12673),
+(228, 4071, 12674),
+(229, 4072, 12675),
+(230, 4073, 12676),
+(231, 4074, 12677),
+(232, 4075, 12678),
+(233, 4076, 12679),
+(234, 4077, 12680),
+(235, 4078, 12681),
+(236, 4283, 12682),
+(237, 4079, 12683),
+(238, 4080, 12684),
+(239, 4081, 12685),
+(240, 4084, 12687),
+(241, 4085, 12688),
+(242, 4086, 12689),
+(243, 4087, 12690),
+(244, 4088, 12691),
+(245, 4089, 12692),
+(246, 4090, 12693),
+(247, 4091, 12694),
+(248, 4092, 12695),
+(249, 4094, 12696),
+(250, 4098, 12697),
+(251, 4045, 12698),
+(252, 4095, 12699),
+(253, 4096, 12700),
+(254, 4097, 12701),
+(255, 3990, 12703),
+(256, 4046, 12704),
+(257, 4099, 12705),
+(258, 4100, 12707),
+(259, 4101, 12708),
+(260, 4104, 12709),
+(261, 4105, 12712),
+(262, 4106, 12713),
+(263, 4108, 12714),
+(264, 4110, 12715),
+(265, 4109, 12716),
+(266, 4111, 12717),
+(267, 4112, 12718),
+(268, 4136, 12719),
+(269, 4113, 12720),
+(270, 4114, 12721),
+(271, 4115, 12722),
+(272, 4122, 12723),
+(273, 4116, 12724),
+(274, 4117, 12725),
+(275, 4118, 12726),
+(276, 4119, 12727),
+(277, 4120, 12728),
+(278, 4123, 12729),
+(279, 4124, 12730),
+(280, 4125, 12731),
+(281, 4126, 12732),
+(282, 4127, 12733),
+(283, 4128, 12734),
+(284, 3959, 12735),
+(285, 4129, 12736),
+(286, 4134, 12739),
+(287, 4135, 12740),
+(288, 4137, 12741),
+(289, 4138, 12742),
+(290, 4139, 12743),
+(291, 4140, 12744),
+(292, 4141, 12745),
+(293, 4143, 12746),
+(294, 4144, 12747),
+(295, 4145, 12748),
+(296, 4223, 12750),
+(297, 3942, 12753),
+(298, 4146, 12755),
+(299, 4147, 12756),
+(300, 4148, 12757),
+(301, 4184, 12759),
+(302, 4149, 12761),
+(303, 4151, 12763),
+(304, 4152, 12764),
+(305, 4153, 12765),
+(306, 4154, 12766),
+(307, 4155, 12767),
+(308, 4156, 12768),
+(309, 3948, 12769),
+(310, 4158, 12770),
+(311, 4159, 12771),
+(312, 4160, 12772),
+(313, 4161, 12773),
+(314, 4162, 12774),
+(315, 4067, 12775),
+(316, 4163, 12776),
+(317, 4164, 12778),
+(318, 4165, 12779),
+(319, 4168, 12780),
+(320, 4169, 12781),
+(321, 4170, 12784),
+(322, 4201, 12785),
+(323, 4172, 12786),
+(324, 4174, 12787),
+(325, 4175, 12788),
+(326, 4176, 12789),
+(327, 4240, 12790),
+(328, 4218, 12791),
+(329, 4177, 12792),
+(330, 3996, 12793),
+(331, 4178, 12794),
+(332, 4179, 12795),
+(333, 4180, 12796),
+(334, 4182, 12797),
+(335, 4183, 12798),
+(336, 4185, 12799),
+(337, 4186, 12800),
+(338, 4189, 12801),
+(339, 4191, 12802),
+(340, 4193, 12803),
+(341, 4194, 12804),
+(342, 4195, 12805),
+(343, 4196, 12806),
+(344, 4197, 12807),
+(345, 4198, 12808),
+(346, 4199, 12810),
+(347, 4200, 12811),
+(348, 4202, 12812),
+(349, 4234, 12813),
+(350, 4203, 12814),
+(351, 4204, 12815),
+(352, 4205, 12816),
+(353, 4206, 12818),
+(354, 4207, 12819),
+(355, 4208, 12820),
+(356, 4209, 12821),
+(357, 3947, 12823),
+(358, 4210, 12824),
+(359, 4211, 12825),
+(360, 4213, 12826),
+(361, 4215, 12827),
+(362, 4216, 12828),
+(363, 4219, 12829),
+(364, 4220, 12830),
+(365, 4221, 12831),
+(366, 4222, 12832),
+(367, 4225, 12833),
+(368, 4227, 12834),
+(369, 4229, 12835),
+(370, 4230, 12836),
+(371, 4231, 12837),
+(372, 4232, 12838),
+(373, 4233, 12839),
+(374, 4235, 12841),
+(375, 4236, 12842),
+(376, 4237, 12843),
+(377, 4239, 12845),
+(378, 4241, 12846),
+(379, 4142, 12847),
+(380, 4224, 12848),
+(381, 4242, 12849),
+(382, 4244, 12850),
+(383, 4245, 12851),
+(384, 4246, 12852),
+(385, 4247, 12853),
+(386, 3958, 12854),
+(387, 4248, 12855),
+(388, 3973, 12856),
+(389, 4250, 12857),
+(390, 4251, 12858),
+(391, 4252, 12859),
+(392, 4253, 12861),
+(393, 4254, 12862),
+(394, 4255, 12863),
+(395, 4256, 12864),
+(396, 4257, 12865),
+(397, 4259, 12866),
+(398, 4260, 12867),
+(399, 4261, 12868),
+(400, 3899, 12869),
+(401, 4263, 12870),
+(402, 4264, 12871),
+(403, 4060, 12872),
+(404, 4266, 12873),
+(405, 4267, 12874),
+(406, 4269, 12875),
+(407, 4271, 12876),
+(408, 4272, 12877),
+(409, 4268, 12878),
+(410, 4273, 12879),
+(411, 3834, 12880),
+(412, 4274, 12881),
+(413, 4275, 12882),
+(414, 4276, 12883),
+(415, 4277, 12884),
+(416, 4278, 12885),
+(417, 4279, 12886),
+(418, 4280, 12887),
+(419, 4281, 12888),
+(420, 4190, 12889),
+(421, 4118, 12890),
+(422, 4133, 12891);
 
 -- --------------------------------------------------------
 
@@ -896,7 +1641,7 @@ INSERT INTO `medidorempresa` (`id`, `idmedidor`, `idempresa`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `permisos` (
-`idpermiso` int(11) NOT NULL,
+  `idpermiso` int(11) NOT NULL AUTO_INCREMENT,
   `csocio` tinyint(1) NOT NULL,
   `rsocio` tinyint(1) NOT NULL,
   `usocio` tinyint(1) NOT NULL,
@@ -920,16 +1665,16 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   `enviarcorreo` tinyint(1) NOT NULL,
   `cargarexcelmedidor` tinyint(1) NOT NULL,
   `verinfexcelmedidor` tinyint(1) NOT NULL,
-  `verinfcorreo` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  `verinfcorreo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`idpermiso`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
 INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cmedidor`, `rmedidor`, `umedidor`, `dmedidor`, `cci`, `rci`, `uci`, `dci`, `crol`, `rrol`, `urol`, `drol`, `cusuario`, `rusuario`, `uusuario`, `dusuario`, `enviarcorreo`, `cargarexcelmedidor`, `verinfexcelmedidor`, `verinfcorreo`) VALUES
-(6, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0),
-(7, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1);
+(8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -938,18 +1683,19 @@ INSERT INTO `permisos` (`idpermiso`, `csocio`, `rsocio`, `usocio`, `dsocio`, `cm
 --
 
 CREATE TABLE IF NOT EXISTS `rol` (
-`idrol` int(11) NOT NULL,
+  `idrol` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(10) NOT NULL,
-  `idpermisos` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+  `idpermisos` int(11) NOT NULL,
+  PRIMARY KEY (`idrol`),
+  KEY `idpermisos` (`idpermisos`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`idrol`, `nombre`, `idpermisos`) VALUES
-(7, 'root', 6),
-(10, 'sin permis', 7);
+(11, 'root', 8);
 
 -- --------------------------------------------------------
 
@@ -958,19 +1704,18 @@ INSERT INTO `rol` (`idrol`, `nombre`, `idpermisos`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `rubro` (
-`id` int(11) NOT NULL,
-  `descripcion` varchar(500) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(500) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Volcado de datos para la tabla `rubro`
 --
 
 INSERT INTO `rubro` (`id`, `descripcion`) VALUES
-(11, 'N/A'),
-(12, 'Camnines'),
-(13, 'Panader&iacute;a'),
-(14, 'Panaderia');
+(17, 'N/A');
 
 -- --------------------------------------------------------
 
@@ -979,26 +1724,20 @@ INSERT INTO `rubro` (`id`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `telefonoempresa` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idempresa` int(11) NOT NULL,
   `telefono` varchar(100) NOT NULL,
-  `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+  `descripcion` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idempresa` (`idempresa`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
 
 --
 -- Volcado de datos para la tabla `telefonoempresa`
 --
 
 INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VALUES
-(3, 8653, '272727', ''),
-(4, 8654, '0800 - NISMAN', ''),
-(5, 8655, '213', ''),
-(8, 8658, '213', ''),
-(9, 8659, '213', ''),
-(16, 8660, '454', '453'),
-(17, 8660, '65354', 'Local'),
-(18, 8661, '35434', ''),
-(22, 8652, '123321', '');
+(49, 12893, '0', '');
 
 -- --------------------------------------------------------
 
@@ -1007,213 +1746,26 @@ INSERT INTO `telefonoempresa` (`id`, `idempresa`, `telefono`, `descripcion`) VAL
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
-`idusuario` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(10) NOT NULL,
   `apellido` varchar(10) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` varchar(25) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `correo` varchar(30) NOT NULL,
-  `idrol` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  `idrol` int(11) NOT NULL,
+  PRIMARY KEY (`idusuario`),
+  KEY `idrol` (`idrol`),
+  KEY `idrol_2` (`idrol`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `password`, `activo`, `correo`, `idrol`) VALUES
-(4, 'Nñlson', 'Garrido', 'neg90', 'kapanga', 1, '1', 7);
+(5, 'Camara', 'Economica', 'CE', '16072015', 1, 'administracion@camaratsas.com', 11);
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `abonado`
---
-ALTER TABLE `abonado`
- ADD PRIMARY KEY (`numabonado`);
-
---
--- Indices de la tabla `abonadoempresa`
---
-ALTER TABLE `abonadoempresa`
- ADD PRIMARY KEY (`id`), ADD KEY `numabonado` (`numabonado`), ADD KEY `idempresa` (`idempresa`);
-
---
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
- ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `contacto`
---
-ALTER TABLE `contacto`
- ADD PRIMARY KEY (`idcontacto`);
-
---
--- Indices de la tabla `contactoempresa`
---
-ALTER TABLE `contactoempresa`
- ADD PRIMARY KEY (`id`), ADD KEY `idcontacto` (`idcontacto`), ADD KEY `idempresa` (`idempresa`);
-
---
--- Indices de la tabla `correoempresa`
---
-ALTER TABLE `correoempresa`
- ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`);
-
---
--- Indices de la tabla `domicilioempresa`
---
-ALTER TABLE `domicilioempresa`
- ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`);
-
---
--- Indices de la tabla `empresa`
---
-ALTER TABLE `empresa`
- ADD PRIMARY KEY (`idempresa`), ADD KEY `idrubro` (`idrubro`), ADD KEY `idcategoria` (`idcategoria`);
-
---
--- Indices de la tabla `infcorreo`
---
-ALTER TABLE `infcorreo`
- ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `infmedidorexcel`
---
-ALTER TABLE `infmedidorexcel`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `id` (`id`);
-
---
--- Indices de la tabla `medidor`
---
-ALTER TABLE `medidor`
- ADD PRIMARY KEY (`idmedidor`);
-
---
--- Indices de la tabla `medidorempresa`
---
-ALTER TABLE `medidorempresa`
- ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`), ADD KEY `idmedidor` (`idmedidor`);
-
---
--- Indices de la tabla `permisos`
---
-ALTER TABLE `permisos`
- ADD PRIMARY KEY (`idpermiso`);
-
---
--- Indices de la tabla `rol`
---
-ALTER TABLE `rol`
- ADD PRIMARY KEY (`idrol`), ADD KEY `idpermisos` (`idpermisos`);
-
---
--- Indices de la tabla `rubro`
---
-ALTER TABLE `rubro`
- ADD PRIMARY KEY (`id`), ADD KEY `id` (`id`);
-
---
--- Indices de la tabla `telefonoempresa`
---
-ALTER TABLE `telefonoempresa`
- ADD PRIMARY KEY (`id`), ADD KEY `idempresa` (`idempresa`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
- ADD PRIMARY KEY (`idusuario`), ADD KEY `idrol` (`idrol`), ADD KEY `idrol_2` (`idrol`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `abonado`
---
-ALTER TABLE `abonado`
-MODIFY `numabonado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=49;
---
--- AUTO_INCREMENT de la tabla `abonadoempresa`
---
-ALTER TABLE `abonadoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
---
--- AUTO_INCREMENT de la tabla `categoria`
---
-ALTER TABLE `categoria`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT de la tabla `contacto`
---
-ALTER TABLE `contacto`
-MODIFY `idcontacto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=219;
---
--- AUTO_INCREMENT de la tabla `contactoempresa`
---
-ALTER TABLE `contactoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=218;
---
--- AUTO_INCREMENT de la tabla `correoempresa`
---
-ALTER TABLE `correoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT de la tabla `domicilioempresa`
---
-ALTER TABLE `domicilioempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT de la tabla `empresa`
---
-ALTER TABLE `empresa`
-MODIFY `idempresa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8662;
---
--- AUTO_INCREMENT de la tabla `infmedidorexcel`
---
-ALTER TABLE `infmedidorexcel`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
---
--- AUTO_INCREMENT de la tabla `medidor`
---
-ALTER TABLE `medidor`
-MODIFY `idmedidor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3819;
---
--- AUTO_INCREMENT de la tabla `medidorempresa`
---
-ALTER TABLE `medidorempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT de la tabla `permisos`
---
-ALTER TABLE `permisos`
-MODIFY `idpermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT de la tabla `rubro`
---
-ALTER TABLE `rubro`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
---
--- AUTO_INCREMENT de la tabla `telefonoempresa`
---
-ALTER TABLE `telefonoempresa`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --
@@ -1222,59 +1774,59 @@ MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- Filtros para la tabla `abonadoempresa`
 --
 ALTER TABLE `abonadoempresa`
-ADD CONSTRAINT `abonadoempresa_ibfk_2` FOREIGN KEY (`numabonado`) REFERENCES `abonado` (`numabonado`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `abonadoempresa_ibfk_3` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `abonadoempresa_ibfk_2` FOREIGN KEY (`numabonado`) REFERENCES `abonado` (`numabonado`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `abonadoempresa_ibfk_3` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `contactoempresa`
 --
 ALTER TABLE `contactoempresa`
-ADD CONSTRAINT `contactoempresa_ibfk_1` FOREIGN KEY (`idcontacto`) REFERENCES `contacto` (`idcontacto`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `contactoempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `contactoempresa_ibfk_1` FOREIGN KEY (`idcontacto`) REFERENCES `contacto` (`idcontacto`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `contactoempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `correoempresa`
 --
 ALTER TABLE `correoempresa`
-ADD CONSTRAINT `correoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `correoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `domicilioempresa`
 --
 ALTER TABLE `domicilioempresa`
-ADD CONSTRAINT `domicilioempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `domicilioempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `empresa`
 --
 ALTER TABLE `empresa`
-ADD CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `empresa_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `empresa_ibfk_2` FOREIGN KEY (`idrubro`) REFERENCES `rubro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `medidorempresa`
 --
 ALTER TABLE `medidorempresa`
-ADD CONSTRAINT `medidorempresa_ibfk_1` FOREIGN KEY (`idmedidor`) REFERENCES `medidor` (`idmedidor`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `medidorempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `medidorempresa_ibfk_1` FOREIGN KEY (`idmedidor`) REFERENCES `medidor` (`idmedidor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `medidorempresa_ibfk_2` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `rol`
 --
 ALTER TABLE `rol`
-ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`idpermisos`) REFERENCES `permisos` (`idpermiso`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`idpermisos`) REFERENCES `permisos` (`idpermiso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `telefonoempresa`
 --
 ALTER TABLE `telefonoempresa`
-ADD CONSTRAINT `telefonoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `telefonoempresa_ibfk_1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

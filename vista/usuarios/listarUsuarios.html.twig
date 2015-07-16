@@ -196,10 +196,10 @@ $(document).ready(function() {
 	{% else %}
 		{% for usuario in ListaUsuarios %}
 			<tr>
-				<td> {{ usuario.nombre }}</td>
-				<td> {{ usuario.apellido }}</td>
-				<td> {{ usuario.username }}</td>
-				<td> {{ usuario.correo }}</td>
+				<td> {{ usuario.nombre|raw }}</td>
+				<td> {{ usuario.apellido|raw }}</td>
+				<td> {{ usuario.username|raw }}</td>
+				<td> {{ usuario.correo|raw }}</td>
 				{% if ListaRoles is null %}
 					<td> - </td>
 				{% else %}

@@ -75,7 +75,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Nombre: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="nombre" value="{{unUsuario.nombre}}" title="No parece un nombre válido"  pattern="[a-zA-Z ]+" required/>
+						  <input type="text" class="form-control" name="nombre" value="{{unUsuario.nombre|raw}}" title="No parece un nombre válido"  pattern="[a-zA-Z ]+" required/>
 						</div>
 					</div>
 				</div>
@@ -83,7 +83,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Apellido: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="apellido" value="{{unUsuario.apellido}}" title="No parece un apellido válido"  pattern="[a-zA-Z ]+" required/>
+						  <input type="text" class="form-control" name="apellido" value="{{unUsuario.apellido|raw}}" title="No parece un apellido válido"  pattern="[a-zA-Z ]+" required/>
 						</div>
 					</div>
 				</div>
@@ -93,7 +93,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Usuario: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="usuario" value="{{unUsuario.username}}" title="No parece un usuario válido" required/>
+						  <input type="text" class="form-control" name="usuario" value="{{unUsuario.username|raw}}" title="No parece un usuario válido" required/>
 						</div>
 					</div>
 				</div>
@@ -101,7 +101,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">Contraseña: </label>
 						<div class="col-lg-6 "> 
-						  <input type="password" class="form-control" name="password" value="{{unUsuario.password}}" title="Los caracteres que se aceptan son sólo letras y números" required/>
+						  <input type="password" class="form-control" name="password" value="{{unUsuario.password|raw}}" title="Los caracteres que se aceptan son sólo letras y números" required/>
 						</div>
 					</div>
 				</div>
@@ -111,7 +111,7 @@ function cambiarActivo(nuevoActivo){
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">E-mail: </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="email" value="{{unUsuario.correo}}" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido" required/>
+						  <input type="text" class="form-control" name="email" value="{{unUsuario.correo|raw}}" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="No parece un E-mail válido" required/>
 						</div>
 					</div>
 				</div>

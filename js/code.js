@@ -170,7 +170,7 @@ function comprobar(valorID,entidad,accion) {
 }
 
 function opcionNueva(texto,id,input){
-	var option = document.createElement("option");
+	var option = (document.createElement("option");
 	option.text = texto;
 	option.value = id;
 	var select = document.getElementById(input);

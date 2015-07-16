@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %}Formulario Empresa {% endblock %}
+{% block title %}Formulario Asociado {% endblock %}
 
 {% block contenedor %}
 		
@@ -32,9 +32,9 @@
 							<label class="col-lg-3 control-label">Telefono {{i + 1 }}: </label>
 							<div class="col-lg-5"> 
 								{% if i == 0 %}
-									<input type="text" class="form-control" name="telefono{{i}}" value="{{telefonosRelacionados[i].telefono}}" required/>
+									<input type="text" class="form-control" name="telefono{{i}}" value="{{telefonosRelacionados[i].telefono|raw}}" required/>
 								{% else %}
-									<input type="text" class="form-control" name="telefono{{i}}" value="{{telefonosRelacionados[i].telefono}}" />
+									<input type="text" class="form-control" name="telefono{{i}}" value="{{telefonosRelacionados[i].telefono|raw}}" />
 								{% endif %}
 							</div>
 						</div>
@@ -43,7 +43,7 @@
 					 	<div class="form-group"  >
 							<label class="col-lg-2 control-label">Descripcion: </label>
 							<div class="col-lg-6 "> 
-								<input type="text" class="form-control" value="{{telefonosRelacionados[i].descripcion}}" name="caractel{{i}}/" />
+								<input type="text" class="form-control" value="{{telefonosRelacionados[i].descripcion|raw}}" name="caractel{{i}}/" />
 							</div>
 						</div>
 					</div>

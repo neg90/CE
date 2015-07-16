@@ -207,12 +207,12 @@ class controladorCorreo {
 	  		//Creacion de correo.
 	  		$mail = new PHPMailer();
 	  		$mail->isSMTP();                                      
-			$mail->Host = 'smtp.gmail.com';  
-			$mail->SMTPAuth = true;                              
-			$mail->Username = 'neg90.ng@gmail.com';              
-			$mail->Password = 'kapanga123';                          
-			$mail->SMTPSecure = 'tls';                          
-			$mail->Port = 587;
+			$mail->Host = 'mail.camaratsas.com.ar';  
+			//$mail->SMTPAuth = true;                              
+			$mail->Username = 'camaratsas@eternet.cc';              
+			$mail->Password = '10102176';                          
+			//$mail->SMTPSecure = 'tls';                          
+			$mail->Port = 25;
 
 			$mail->FromName = '';
 			$mail->addAddress($unEmail);    

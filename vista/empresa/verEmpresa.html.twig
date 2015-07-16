@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %} Detalle de Empresa {% endblock %}
+{% block title %} Detalle de Asociado {% endblock %}
 {% block contenedor %}
 <script>
 function cambiarAction(accion){
@@ -35,7 +35,7 @@ function cambiarAction(accion){
   <div class="row fila-de-titulo">
         <div class=" col-lg-4"></div>
          <div class=" col-lg-4">
-          <h3> Detalle Empresa</h3>
+          <h3> Detalle Asociado</h3>
          </div>
       </div>
   <div class="clearfix"></div>
@@ -52,17 +52,17 @@ function cambiarAction(accion){
         </p>
          </span>
         <li class="generales">
-            <p><b>Nombre: </b> {{empresa.denominacion}} </p>
-            <p><b>Rubro: </b>{{rubro.descripcion}}</p>
-            <p><b>Detale actividad: </b> {{empresa.detactividad}} </p>
-            <p><b>Cantidad de empleados: </b> {{empresa.cantempleados}} </p>
-            <p><b>Categoría: </b>  {{categoria.descripcion}}</p>
+            <p><b>Nombre: </b> {{empresa.denominacion|raw}} </p>
+            <p><b>Rubro: </b>{{rubro.descripcion|raw}}</p>
+            <p><b>Detale actividad: </b> {{empresa.detactividad|raw}} </p>
+            <p><b>Cantidad de empleados: </b> {{empresa.cantempleados|raw}} </p>
+            <p><b>Categoría: </b>  {{categoria.descripcion|raw}}</p>
             <p><b>Fecha de inicio C.E.: </b> {{empresa.fechainicioce | date('d/m/Y')}} </p>
-            <p><b>Nro. Socio: </b> {{empresa.nrosocio}} </p>
-            <p><b>Importe mensual: </b> ${{empresa.importemensual}} </p>
+            <p><b>Nro. Socio: </b> {{empresa.nrosocio|raw}} </p>
+            <p><b>Importe mensual: </b> ${{empresa.importemensual|raw}} </p>
             <p><b>Fecha fundación: </b> {{empresa.fechafundacion | date('d/m/Y')}} </p>
-            <p><b>CUIT: </b> {{empresa.cuit}} </p>
-            <p><b>Web: </b> {{empresa.web}} </p>
+            <p><b>CUIT: </b> {{empresa.cuit|raw}} </p>
+            <p><b>Web: </b> {{empresa.web|raw}} </p>
         </li>
     </div>
     <div id="detAdicionales">
@@ -79,8 +79,8 @@ function cambiarAction(accion){
                                 {% for contacto in contactos %}
                                   <li class="contacto"> 
                                       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                      {{ contacto.getApellido|convert_encoding(from='iso-2022-jp', to='UTF-8') }}, 
-                                      {{ contacto.getNombre|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                                      {{ contacto.getApellido|raw }}, 
+                                      {{ contacto.getNombre|raw }}
                                   </li>
                                 {% endfor %}
                         {% endif %}
@@ -95,9 +95,9 @@ function cambiarAction(accion){
                         {% for itemtel in telefonos %}
                                 <li class="telefono"> 
                                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                                    {{ itemtel.telefono |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                                    {{ itemtel.telefono|raw }}
                                     {% if itemtel.descripcion != null%}
-                                        ( {{ itemtel.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                        ( {{ itemtel.descripcion|raw }} )
                                     {% else %}
                                         
                                     {% endif %}
@@ -117,10 +117,10 @@ function cambiarAction(accion){
                         {% for itemcorreo in correos %}
                                 <li class="correo"> 
                                     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                    {{ itemcorreo.correo |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                                    {{ itemcorreo.correo|raw }}
 
                                     {% if itemcorreo.descripcion != null%}
-                                        ( {{ itemcorreo.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                        ( {{ itemcorreo.descripcion|raw }} )
                                     {% else %}
                                           
                                     {% endif %}
@@ -140,9 +140,9 @@ function cambiarAction(accion){
                         {% for itemdomicilio in domicilios %}
                                 <li class="domicilio"> 
                                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                    {{ itemdomicilio.domicilio |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                                    {{ itemdomicilio.domicilio |raw }}
                                     {% if itemdomicilio.descripcion != null%}
-                                        ( {{ itemdomicilio.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
+                                        ( {{ itemdomicilio.descripcion|raw }} )
                                     {% else %}
                                         
                                     {% endif %}
@@ -183,18 +183,18 @@ function cambiarAction(accion){
                                       {% for medidor in medidores %}
                                         <li class="medidor"> 
                                             <div class="left inline-block">
-                                                <p><b>Nombre: </b>{{ medidor.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Nombre: </b>{{ medidor.nomyap|raw }}</p>
                                                 
-                                                <p><b>Num. Usuario: </b>{{ medidor.numusuario|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Num. Usuario: </b>{{ medidor.numusuario|raw }}</p>
                                                 
-                                                <p><b>Num. Suministro: </b>{{ medidor.numsuministro|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Num. Suministro: </b>{{ medidor.numsuministro|raw }}</p>
                                             </div>
                                             <div class="right inline-block">
-                                                <p><b>Teléfono: </b>{{ medidor.telefono|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Teléfono: </b>{{ medidor.telefono|raw}}</p>
 
-                                                <p><b>Domicilio: </b>{{ medidor.domicilio|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Domicilio: </b>{{ medidor.domicilio|raw }}</p>
 
-                                                <p><b>Importe pago: </b>$ {{ medidor.importepago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Importe pago: </b>$ {{ medidor.importepago|raw }}</p>
                                             </div>
                                         </li>
                                       {% endfor %}
@@ -209,11 +209,11 @@ function cambiarAction(accion){
                                       {% for abonado in abonados %}
                                         <li class="abonado"> 
                                             <div class="left inline-block">
-                                                <p><b>Importe: </b>{{ abonado.importe|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Importe: </b>{{ abonado.importe|raw }}</p>
                                                 
-                                                <p><b>Fecha ultimo pago: </b>{{ abonado.fechadeultimopago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Fecha ultimo pago: </b>{{ abonado.fechadeultimopago }}</p>
                                                 
-                                                <p><b>Num. Abonado: </b>{{ abonado.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
+                                                <p><b>Num. Abonado: </b>{{ abonado.numabonado }}</p>
                                             </div>
                                         </li>
                                       {% endfor %}

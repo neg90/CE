@@ -11,7 +11,6 @@ require_once 'controladorExcel.php';
 require_once 'controladorAbonado.php';
 require_once '../modelo/PDO/PDOPermisos.php';
 
-
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');
 $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '../cache',')); 
@@ -104,10 +103,6 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					}	
 				}elseif ($accion == 'cargarempresa') {
 					controladorExcel::cargarempresa();
-				}elseif ($accion == 'listarinfempresa') {
-					controladorExcel::listarinfempresa();
-				}elseif ($accion == 'bajainformeempresa') {
-					controladorExcel::bajainformeempresa();
 				}elseif ($accion == 'bajainfempresaall') {
 					controladorExcel::bajainfempresaall();
 				}elseif ($accion == 'verdetalleinfromeempresa') {

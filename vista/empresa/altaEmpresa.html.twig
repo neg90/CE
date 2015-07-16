@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %}Formulario Empresa {% endblock %}
+{% block title %}Formulario Asociado {% endblock %}
 
 {% block contenedor %}
 
@@ -22,12 +22,12 @@
 				 	{% if aviso == 1 %}
 						<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>Perfecto!</strong> La empresa fue guardada con exito.
+		    				<strong>Perfecto!</strong> El asociado fue guardado con exito.
 	  					</div>
   					{% elseif  aviso == 2 %}
   						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>No se guardo la empresa!</strong> No recargues ni utilices f5 en el formulario. Causa: La empresa ya se encuentra registrada.
+		    				<strong>No se guardo el asociado!</strong> No recargues ni utilices f5 en el formulario. Causa: La empresa ya se encuentra registrada.
 	  					</div>
 	  				{% endif %}
 				 </div>
@@ -123,7 +123,7 @@
 						<div class="col-lg-4 "> 
 							<select class="form-control" name="categoria" id="categoria" required/>
 								{% for item in categorias %}
-									<option value="{{item.id}}">{{item.descripcion}}</option>
+									<option value="{{item.id}}">{{item.descripcion|raw}}</option>
 								{% endfor %}	
 							</select>
 						</div>
@@ -140,7 +140,7 @@
 						<div class="col-lg-4 "> 
 							<select class="form-control" name="rubro" id="rubro" >
 								{% for item in rubros %}
-									<option value="{{item.id}}">{{item.descripcion}}</option>
+									<option value="{{item.id}}">{{item.descripcion|raw}}</option>
 								{% endfor %}	
 							</select>
 						</div>
@@ -246,7 +246,7 @@
 									<select  class="form-control" name="contacto0" id="contacto0">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
-											<option value="{{item.idcontacto}}">{{item.nombre}} {{item.apellido}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre|raw}} {{item.apellido|raw}}</option>
 										{% endfor %}	
 									</select>
 								</div>
@@ -275,7 +275,7 @@
 									<select class="form-control"  name="contacto{{i}}" id="contacto{{i}}">
 										<option value="-1">Contacto</option>
 										{% for item in contactos %}
-											<option value="{{item.idcontacto}}">{{item.nombre}} {{item.apellido}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre|raw}} {{item.apellido|raw}}</option>
 										{% endfor %}	
 									</select>
 								</div>
@@ -322,7 +322,7 @@
 								<select class="form-control" name="medidor" id="selectMedidor">
 									<option value="-1">Medidor</option>
 								{% for item in medidores %}
-									<option value="{{item.idmedidor}}">{{item.nomyap}}</option>
+									<option value="{{item.idmedidor}}">{{item.nomyap|raw}}</option>
 								{% endfor %}
 								</select>
 							</div>	

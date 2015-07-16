@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %}Formulario Empresa {% endblock %}
+{% block title %}Formulario Asociado {% endblock %}
 
 {% block contenedor %}
 		<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificar" role="form" method="POST">
@@ -20,17 +20,17 @@
 				 	{% if aviso == 1 %}
 						<div class="alert alert-success alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>Perfecto!</strong> La empresa fue guardada con exito.
+		    				<strong>Perfecto!</strong> El asociado fue guardado con exito.
 	  					</div>
   					{% elseif  aviso == 2 %}
   						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>No se guardo la empresa!</strong> No recargues ni utilices f5 en el formulario. Causa: La empresa ya se encuentra registrada.
+		    				<strong>No se guardo el asociado!</strong> No recargues ni utilices f5 en el formulario. Causa: La empresa ya se encuentra registrada.
 	  					</div>
 	  				{% elseif  aviso == 3 %}
   						<div class="alert alert-danger alert-dismissable">
 		   	 				<button type="button" class="close" data-dismiss="alert">×</button>
-		    				<strong>No se guardo la empresa!</strong> No pudimos encontrar la empresa que intentas modificar
+		    				<strong>No se guardo el asociado!</strong> No pudimos encontrar el asociado que intentas modificar
 	  					</div>
 	  				{% endif %}
 				 </div>
@@ -46,7 +46,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-3 control-label">Denominacion:* </label>
 						<div class="col-lg-5 "> 
-							<input type="text" class="form-control" name="denominacion" placeholder="Denominacion" value="{{unaEmpresa.getDenominacion}}" required/>
+							<input type="text" class="form-control" name="denominacion" placeholder="Denominacion" value="{{unaEmpresa.getDenominacion|raw}}" required/>
 						</div>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-6 control-label">Cant. Empleados:</label>
 						<div class="col-lg-2 "> 
-						  <input type="number" class="form-control" name="cantempleados" min='0' value="{{unaEmpresa.getCantempleados}}" />
+						  <input type="number" class="form-control" name="cantempleados" min='0' value="{{unaEmpresa.getCantempleados|raw}}" />
 						</div>
 					</div>
 				</div>
@@ -64,7 +64,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-6 control-label">Impor. Mensual:* </label>
 						<div class="col-lg-2 "> 
-						  <input type="text" class="form-control" name="importemensual" value="{{unaEmpresa.getImportemensual}}"placeholder="40.56" required/>
+						  <input type="text" class="form-control" name="importemensual" value="{{unaEmpresa.getImportemensual|raw}}"placeholder="40.56" required/>
 						</div>
 					</div>
 				</div>
@@ -72,7 +72,7 @@
 				    <div class="form-group">
 						<label class="col-lg-2 control-label">WEB:</label>
 						<div class="col-lg-6 "> 
-							<input type="text" class="form-control" name="web" value="{{unaEmpresa.getWeb}}"placeholder="www.ejemplo.com.ar" requiered/>
+							<input type="text" class="form-control" name="web" value="{{unaEmpresa.getWeb|raw}}"placeholder="www.ejemplo.com.ar" requiered/>
 						</div>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 			 		<div class="form-group">
 						<label class="col-lg-2 control-label">CUIT:* </label>
 						<div class="col-lg-6 "> 
-						  <input type="text" class="form-control" name="cuit" value="{{unaEmpresa.getCuit}}" placeholder="00-00000000-0" requiered/>
+						  <input type="text" class="form-control" name="cuit" value="{{unaEmpresa.getCuit|raw}}" placeholder="00-00000000-0" requiered/>
 						</div>
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 			 		<div class="form-group">
 					 	<label class="col-lg-4 control-label">Fecha Inicio como socio: *</label>
 					 	<div class="col-lg-3">
-							<input type="date" class="form-control" name="fechainicioce" value="{{unaEmpresa.getFechainicioce}}"required/>
+							<input type="date" class="form-control" name="fechainicioce" value="{{unaEmpresa.getFechainicioce|raw}}"required/>
 						</div>
 					</div>
 				</div> 
@@ -103,7 +103,7 @@
 			 		<div class="form-group">
 					 	<label class="col-lg-4 control-label">Fecha Fundacion empresa: </label>
 					 	<div class="col-lg-3">
-							<input type="date" class="form-control" name="fechafundacion" value="{{unaEmpresa.getFechafundacion}}" />
+							<input type="date" class="form-control" name="fechafundacion" value="{{unaEmpresa.getFechafundacion|raw}}" />
 					 	
 						</div>
 					</div>
@@ -117,9 +117,9 @@
 							<select class="form-control" name="categoria" id="categoria" required/>
 								{% for item in categorias %}
 									{% if  item.id == unaEmpresa.getIdcategoria %}
-										<option value="{{item.id}}" selected>{{item.descripcion}}</option>
+										<option value="{{item.id}}" selected>{{item.descripcion|raw}}</option>
 									{% else %}
-										<option value="{{item.id}}">{{item.descripcion}}</option>
+										<option value="{{item.id}}">{{item.descripcion|raw}}</option>
 									{% endif %}
 								{% endfor %}	
 							</select>
@@ -138,9 +138,9 @@
 							<select class="form-control" name="rubro" id="rubro" >
 								{% for item in rubros %}
 									{% if  item.id == unaEmpresa.getIdrubro %}
-										<option value="{{item.id}}" selected>{{item.descripcion}}</option>
+										<option value="{{item.id}}" selected>{{item.descripcion|raw}}</option>
 									{% else %}
-										<option value="{{item.id}}">{{item.descripcion}}</option>
+										<option value="{{item.id}}">{{item.descripcion|raw}}</option>
 									{% endif %}
 									
 								{% endfor %}	
@@ -157,7 +157,7 @@
 			 		<div class="form-group">
 			 			<label class="col-lg-4 control-label">Detalle Actividad: </label>
 					 	<div class="col-lg-3">
-					 		<textarea id="detactividad" name="detactividad"onkeypress="return limita(event, 499);"rows="5"cols="90">{{unaEmpresa.getDetactividad}}</textarea>
+					 		<textarea id="detactividad" name="detactividad"onkeypress="return limita(event, 499);"rows="5"cols="90">{{unaEmpresa.getDetactividad|raw}}</textarea>
 						</div>
 					</div>
 				</div> 
@@ -189,7 +189,7 @@
 			 			
 				 			{% for item in medidores %}
 				 				{% if item.idmedidor == medidorRelacionado.idmedidor %}
-									<label class=" control-label">Titular del medidor : {{item.nomyap}}</label>
+									<label class=" control-label">Titular del medidor : {{item.nomyap|raw}}</label>
 								{% endif %}
 							{% endfor %}
 					</div>
@@ -226,7 +226,7 @@
 									<select class="form-control" name="medidor" id="selectMedidor">
 										<option value="-1">Medidor</option>
 									{% for item in medidores %}
-										<option value="{{item.idmedidor}}">{{item.nomyap}}</option>
+										<option value="{{item.idmedidor}}">{{item.nomyap|raw}}</option>
 									{% endfor %}
 									</select>
 								</div>	

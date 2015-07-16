@@ -6,9 +6,9 @@
   <div class="clearfix"></div>
   <div id="bloqueInfo">
   	<input type="hidden" value="{{usuario.idusuario}}" name="idusuario">
-	  <p><b>Nombre de usuario: </b> {{usuario.username}} </p>
-	  <p> <b> Apellido y Nombre: </b> {{usuario.apellido}}, {{usuario.nombre}}</p>
-	  <p> <b> E-mail: </b> {{usuario.correo}}</p>
+	  <p><b>Nombre de usuario: </b> {{usuario.username|raw}} </p>
+	  <p> <b> Apellido y Nombre: </b> {{usuario.apellido|raw}}, {{usuario.nombre|raw}}</p>
+	  <p> <b> E-mail: </b> {{usuario.correo|raw}}</p>
 	  <p> <b> Rol: </b>
 	  	{% if ListaRoles is null %}
 						<td> - </td>

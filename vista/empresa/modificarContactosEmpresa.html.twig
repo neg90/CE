@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %}Formulario Empresa {% endblock %}
+{% block title %}Formulario Asociado {% endblock %}
 
 {% block contenedor %}
 		
@@ -13,12 +13,12 @@
 				 {% if aviso == 1 %}
 					<div class="alert alert-success alert-dismissable">
 		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
-		    			<strong>Perfecto!</strong> La empresa fue guardada con exito.
+		    			<strong>Perfecto!</strong> El asociado fue guardado con exito.
 	  				</div>
   				{% elseif  aviso == 2 %}
   					<div class="alert alert-danger alert-dismissable">
 		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
-		    			<strong>No se guardo la empresa!</strong> No recargues ni utilices f5 en el formulario. Causa: La empresa ya se encuentra registrada.
+		    			<strong>No se guardo el asociado!</strong> No recargues ni utilices f5 en el formulario. Causa: La empresa ya se encuentra registrada.
 	  				</div>
 	  			{% endif %}
 				</div>
@@ -40,9 +40,9 @@
 									<option value="-1">Contacto</option>
 									{% for item in contactos %}
 										{% if (contactosRelacionados[i].idcontacto ==  item.idcontacto) %}
-											<option value="{{item.idcontacto}}" selected>{{item.nombre}}</option>
+											<option value="{{item.idcontacto}}" selected>{{item.nombre|raw}} {{item.apellido|raw}}</option>
 										{% else %}
-											<option value="{{item.idcontacto}}">{{item.nombre}} {{item.apellido}}</option>
+											<option value="{{item.idcontacto}}">{{item.nombre|raw}} {{item.apellido|raw}}</option>
 										{% endif %}	
 										
 									{% endfor %}	
@@ -54,7 +54,7 @@
 					 	<div class="form-group">
 							<label class="col-lg-2 control-label">Relacion: </label>
 							<div class="col-lg-6">  
-								<input type="text" class="form-control" value="{{contactosRelacionados[i].relacion}}" name="relacion{{i}}" />
+								<input type="text" class="form-control" value="{{contactosRelacionados[i].relacion|raw}}" name="relacion{{i}}" />
 							</div>
 						</div>
 					</div>
