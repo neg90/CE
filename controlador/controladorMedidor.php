@@ -126,6 +126,8 @@ class controladorMedidor {
 			elseif (!empty($_POST['dato'])){
 					$datoFiltro=htmlEntities($_POST['dato']);
 			}
+			else
+					$datoFiltro='';
 		}
 
 			/* if ((isset($tipoFiltro)) and (isset($datoFiltro))) $ok = true;
@@ -134,6 +136,7 @@ class controladorMedidor {
 			}*/
 
 			//statusActivo es 2 si se ven Activos e Inactivos
+			if (($datoFiltro != null) AND ($datoFiltro != ''))
 			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
 				case 'nomyap':
 					$ListaMedidores=PDOMedidor::filtroNomyAp($datoFiltro);
@@ -153,10 +156,6 @@ class controladorMedidor {
 				case 'numsuministro':
 					$ListaMedidores=PDOMedidor::filtroNumsuministro($datoFiltro);
 					break;
-				case 'sinempresa':
-					$ListaMedidores=PDOMedidor::filtroSinEmpresa();
-					$datoFiltro=null;
-					break;
 				case 'nada':
 					$ListaMedidores=PDOMedidor::listarMedidores();
 					break;
@@ -164,6 +163,8 @@ class controladorMedidor {
 					$ListaMedidores=PDOMedidor::filtroActivo($datoFiltro);
 				break;
 			}
+			elseif ($tipoFiltro == 'sinempresa') $ListaMedidores=PDOMedidor::filtroSinEmpresa();
+			else header('Location:privado.php?c=medidor&a=listar&pagina=1');
 
 			$medidoresempresa = PDOmedidorempresa::listar();
 

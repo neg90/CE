@@ -62,6 +62,13 @@ $(document).ready(function() {
           document.getElementById('tipoFiltro').value = 'activo';
             break;  
 
+          case "Sin empresa asignada":
+          $("#dato").css("display", "none");
+          $("#datoTexto").attr("placeholder", " ");
+          $("#activo").css("display","none");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'sinempresa';
+            break;
         }
     }
 
@@ -143,6 +150,7 @@ $(document).ready(function() {
                     <option selected>Todos</option>
                     <option>Num. Abonado</option>
                     <option>Empresa</option>
+                    <option>Sin empresa asignada</option>
                     <option>Importe</option>
                     <option>Activo</option>
                   </select>
@@ -181,6 +189,9 @@ $(document).ready(function() {
               {% else %}
                   {% set datoFiltro='Sólo inactivos'%}
               {% endif %}
+           {% elseif tipoFiltro == 'sinempresa' %}
+                {% set tipoFiltro = 'Abonados' %}
+                {% set datoFiltro = ' sin empresa'%}
            {% endif %}
             <span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
           </div>            

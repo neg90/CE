@@ -73,6 +73,21 @@ class PDOabonado extends abonado{
       return $objeto;
    } 
 
+      public static function filtroSinEmpresa(){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+
+      $consulta= $conexion->prepare(
+         'SELECT * FROM abonado WHERE numabonado NOT IN 
+            (SELECT numabonado FROM abonadoempresa)');
+
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
 
    public function guardar(){
       try {$conexion = new conexion;}catch (PDOException $e){}

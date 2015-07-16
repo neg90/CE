@@ -252,8 +252,11 @@ class controladorContacto {
 				elseif (!empty($_POST['dato'])){
 						$datoFiltro=htmlEntities($_POST['dato']);
 				}
+				else
+					$datoFiltro='';
 			}
 			//statusActivo es 2 si se ven Activos e Inactivos
+			if (($datoFiltro != null) AND ($datoFiltro != ''))
 			switch($tipoFiltro){ // Sino, es 2, entonces no filtra con ACTIVO
 				case 'nomyap':
 					$contactos=PDOContacto::filtroNomyAp($datoFiltro);
@@ -277,6 +280,7 @@ class controladorContacto {
 					$contactos=PDOContacto::filtroActivo($datoFiltro);
 				break;
 			}
+			else header('Location:privado.php?c=contacto&a=listar&pagina=1');
 
 			//Si está filtrando la tabla, es 1.
 			if ($tipoFiltro != 'nada') $filtroActivo = 1; else $filtroActivo=0; 

@@ -44,6 +44,8 @@ class controladorAbonado {
 			elseif (!empty($_POST['dato'])){
 					$datoFiltro=htmlEntities($_POST['dato']);
 			}
+			else
+					$datoFiltro='';
 		}
 
 		if (isset($_POST['datoCriterio'])){
@@ -55,6 +57,7 @@ class controladorAbonado {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false')); 
 
+	  	if (($datoFiltro != null) AND ($datoFiltro != ''))
 		switch($tipoFiltro){
 			case 'numabonado':
 				$abonado=PDOabonado::filtroNumabonado($datoFiltro);
@@ -72,6 +75,8 @@ class controladorAbonado {
 				$abonado=PDOabonado::filtroActivo($datoFiltro);
 				break;
 		}
+		elseif ($tipoFiltro == 'sinempresa') $abonado=PDOabonado::filtroSinEmpresa();
+		else header('Location:privado.php?c=abonado&a=listar&pagina=1');
 
 		$filtroActivo=1;
 

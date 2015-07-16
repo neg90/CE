@@ -98,6 +98,8 @@ class controladorEmpresa {
 			elseif (!empty($_POST['dato'])){
 					$datoFiltro=htmlEntities($_POST['dato']);
 			}
+			else
+					$datoFiltro='';
 		}
 
 
@@ -116,6 +118,7 @@ class controladorEmpresa {
 		$categorias = PDOcategoria::listar();
 		//$empresas = PDOempresa::listar();
 
+		if (($datoFiltro != null) AND ($datoFiltro != ''))
 		switch($tipoFiltro){
 			case 'denominacion':
 				$empresas=PDOempresa::filtroDenominacion($datoFiltro);
@@ -147,6 +150,8 @@ class controladorEmpresa {
 				$empresas=PDOempresa::filtroActivo($datoFiltro);
 				break;
 		}
+		else header('Location:privado.php?c=empresa&a=listar&pagina=1');
+
 
 		$rubros = PDOrubro::listar();
 		$totalEmpresas = intval(PDOempresa::contarEmpresas()['count(idempresa)']);
