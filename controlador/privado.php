@@ -123,18 +123,38 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 			
 			}elseif ($controlador == 'abonado') {
 				if($accion == 'alta'){
-					if (isset($_GET['id'])) {
-						$id=htmlEntities(@$_GET['id']); 
-						controladorAbonado::alta($id);
+					if ($permiso->cmedidor == 1) {
+						if (isset($_GET['id'])) {
+							$id=htmlEntities(@$_GET['id']); 
+							controladorAbonado::alta($id);
+						}
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
 					}
 				}elseif ($accion == 'modificar') {
-					controladorAbonado::modificar();
+					if ($permiso->umedidor == 1) {
+						controladorAbonado::modificar();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'baja') {
-					$pag=htmlEntities(@$_GET['pagina']);
-					controladorAbonado::baja($pag);
+					if ($permiso->dmedidor == 1) {
+						$pag=htmlEntities(@$_GET['pagina']);
+						controladorAbonado::baja($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'listar') {
-					$pag =htmlEntities(@$_GET['pagina']); 
-					controladorAbonado::listar($pag);
+					if ($permiso->rmedidor == 1) {
+						$pag =htmlEntities(@$_GET['pagina']); 
+						controladorAbonado::listar($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif ($accion == 'eleccion'){
 					if (isset($_GET['id'])) {
 						$id=htmlEntities(@$_GET['id']); 
