@@ -24,7 +24,7 @@ $(document).ready(function() {
 
          case "Nombre y/o Apellido":
           $("#dato").css("display", "inline-block");
-          $("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
+          $("#datoTexto").attr("placeholder", "Ej.: Jorge P&eacute;rez");
           $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           $("#asociados").css("display", "none");
@@ -108,7 +108,7 @@ $(document).ready(function() {
           <ul class="pagination">
             <li class="">
               <a href="privado.php?c=contacto&a=listar&pagina={{ant}}" aria-label="Previous">
-              <span aria-hidden="true">«</span></a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             </li> 
             
             <li><a href="privado.php?c=contacto&a=listar&pagina=1">Primera</a></li>
@@ -123,7 +123,7 @@ $(document).ready(function() {
             <li><a href="privado.php?c=contacto&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=contacto&a=listar&pagina={{sig}}" aria-label="Next">
-              <span aria-hidden="true">»</span></a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </li>
          </ul>
        </nav>
@@ -168,8 +168,8 @@ $(document).ready(function() {
           <div id="activo" class="none">
                   <select name="datoActivo" id="datoActivo" class="form-control">
                       <option value="0" selected>Seleccione</option>
-                      <option value="1">Sólo Activos</option>
-                      <option value="2">Sólo Inactivos</option>
+                      <option value="1">S&oacute;lo Activos</option>
+                      <option value="2">S&oacute;lo Inactivos</option>
                   </select>
 
               </div>
@@ -201,9 +201,9 @@ $(document).ready(function() {
               {% set tipoFiltro = '' %}
           {% elseif tipoFiltro == 'activo' %}
               {% if datoFiltro == '1' %}
-                  {% set datoFiltro='Sólo activos'%}
+                  {% set datoFiltro='S&oacute;lo activos'%}
               {% else %}
-                  {% set datoFiltro='Sólo inactivos'%}
+                  {% set datoFiltro='S&oacute;lo inactivos'%}
               {% endif %}
           {% endif %}
 
@@ -228,7 +228,7 @@ $(document).ready(function() {
                 <input type="hidden" id="datosPDF" name="datosPDF" value="{{ contactos|json_encode() }}"/>
             {% if contactos is null %}
             {% else %}
-                <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+                <a target="_blank" href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
                     Ver en PDF
                 </a>
             {% endif %}
@@ -244,7 +244,7 @@ $(document).ready(function() {
       <th>Nombre</th>
       <th>Apellido</th>
       <th>Documento</th>
-      <th>Telefono</th>
+      <th>Tel&eacute;fono</th>
       <th>Correo</th>
       <th>Asociado a SM</th>
       <th>Activo</th>
@@ -311,7 +311,7 @@ $(document).ready(function() {
             {% endif %}
             <form method="post" action="privado.php?c=contacto&a=baja&pagina={{paginaBaja}}" id="bajaContacto{{item.idcontacto}}">
               <input type="hidden" value="{{item.idcontacto}}" name="idcontacto">
-              <a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el contacto?')){document.getElementById('bajaContacto{{item.idcontacto}}').submit();}">
+              <a href="javascript:{}" onclick="if(confirm('¿Est&aacute; seguro que desea eliminar el contacto?')){document.getElementById('bajaContacto{{item.idcontacto}}').submit();}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </a>
             </form> 
@@ -328,7 +328,7 @@ $(document).ready(function() {
           <ul class="pagination">
             <li class="">
               <a href="privado.php?c=contacto&a=listar&pagina={{ant}}" aria-label="Previous">
-              <span aria-hidden="true">«</span></a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             </li> 
             
             <li><a href="privado.php?c=contacto&a=listar&pagina=1">Primera</a></li>
@@ -343,7 +343,7 @@ $(document).ready(function() {
             <li><a href="privado.php?c=contacto&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=contacto&a=listar&pagina={{sig}}" aria-label="Next">
-              <span aria-hidden="true">»</span></a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </li>
          </ul>
        </nav>

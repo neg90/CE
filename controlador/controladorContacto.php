@@ -22,7 +22,7 @@ class controladorContacto {
 		// Cargo la info
 		$data = html_entity_decode($datosPDF);
 		$data = json_decode($data, true);
-		$pdf->SetFont('Arial','',14);
+		$pdf->SetFont('Arial','',12);
 		$_SESSION['tituloPDF']=('Contactos'); //título PDF
 		$pdf->AddPage();
 		$pdf->TablaContacto($header,$data);

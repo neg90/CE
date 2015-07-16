@@ -129,10 +129,15 @@ function TablaAbonado($header, $data)
 		$this->Cell($w[0],6,utf8_decode($row['numabonado']),'LR',0,'C',$fill);
 
 		$abonadoEmpresa=PDOabonadoempresa::buscarAbonadoId($row['numabonado']);
-		$empresaid=$abonadoEmpresa->idempresa;
-		$empresa=PDOempresa::buscarEmpresa($empresaid);
+		if ($abonadoEmpresa!=null){
+				$empresaid=$abonadoEmpresa->idempresa;
+				$empresa=PDOempresa::buscarEmpresa($empresaid);
+				$this->Cell($w[1],6,utf8_decode($empresa->getDenominacion()),'LR',0,'C',$fill);
+		}
+		else {
+			$this->Cell($w[1],6,utf8_decode(''),'LR',0,'C',$fill);	
+		}
 
-		$this->Cell($w[1],6,utf8_decode($empresa->getDenominacion()),'LR',0,'C',$fill);
 		$this->Cell($w[2],6,'    $'.$row['importe'],'LR',0,'L',$fill);
 
 		$ultPago = new DateTime($row['fechadeultimopago']);
@@ -154,7 +159,7 @@ function TablaMedidor($header, $data)
 	$this->SetLineWidth(0);
 	$this->SetFont('','B');
 	// Header
-	$w = array(60, 45, 50, 30, 40, 45);
+	$w = array(73, 37, 50, 25, 30, 35,26);
 	for($i=0;$i<count($header);$i++)
 		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
 	$this->Ln();
@@ -169,9 +174,13 @@ function TablaMedidor($header, $data)
 		$this->Cell($w[0],6,utf8_decode($row['nomyap']),'LR',0,'L',$fill);
 		$this->Cell($w[1],6,$row['telefono'],'LR',0,'L',$fill);
 		$this->Cell($w[2],6,utf8_decode($row['domicilio']),'LR',0,'L',$fill);
-		$this->Cell($w[3],6,$row['importepago'],'LR',0,'L',$fill);
+		$this->Cell($w[3],6,'$'.$row['importepago'],'LR',0,'L',$fill);
 		$this->Cell($w[4],6,$row['numusuario'],'LR',0,'L',$fill);
 		$this->Cell($w[5],6,$row['numsuministro'],'LR',0,'L',$fill);
+
+		$ultPago = new DateTime($row['fechadeultimopago']);
+		
+		$this->Cell($w[6],6,$ultPago->format('d/m/Y'),'LR',0,'L',$fill);
 		//$this->Cell($w[3],6,number_format($row[3]),'LR',0,'R',$fill);
 		$this->Ln();
 		$fill = !$fill;
@@ -375,7 +384,7 @@ function TablaListadoEmpresas($header,$datos)
 	// Header
 	$w = array(80, 45, 30, 30, 45, 45);
 	for($i=0;$i<count($header);$i++)
-		$this->Cell($w[$i],7,$header[$i],1,0,'L',true);
+		$this->Cell($w[$i],7,$header[$i],1,0,'C',true);
 	$this->Ln();
 	// Color and font restoration
 	$this->SetFillColor(235,235,235);

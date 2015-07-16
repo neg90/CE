@@ -58,7 +58,7 @@ class controladorEmpresa {
 			// Cargo la info
 			//$data = html_entity_decode($datosPDF);
 			//$data = json_decode($data, true);
-			$pdf->SetFont('Arial','',14);
+			$pdf->SetFont('Arial','',12);
 			$empresa= PDOEmpresa::buscarEmpresa($idempresa);
 			$_SESSION['tituloPDF']=($empresa->getDenominacion()); //título PDF
 			$pdf->AddPage('P','A4');
@@ -75,7 +75,7 @@ class controladorEmpresa {
 		$header = array(utf8_decode('Denominación'), 'CUIT', 'Rubro', utf8_decode('Categoría'),'Importe Mensual', 'Cant. Empleados');
 		$data = html_entity_decode($datosPDF);
 		$data = json_decode($data, true);
-		$pdf->SetFont('Arial','',14);
+		$pdf->SetFont('Arial','',12);
 		$_SESSION['tituloPDF']=('Listado de Empresas'); //título PDF
 		$pdf->AddPage();
 		$pdf->TablaListadoEmpresas($header,$data);

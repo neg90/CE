@@ -100,7 +100,7 @@ $(document).ready(function() {
           <ul class="pagination">
             <li class="">
               <a href="privado.php?c=abonado&a=listar&pagina={{ant}}" aria-label="Previous">
-              <span aria-hidden="true">«</span></a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             </li> 
             
             <li><a href="privado.php?c=abonado&a=listar&pagina=1">Primera</a></li>
@@ -115,7 +115,7 @@ $(document).ready(function() {
             <li><a href="privado.php?c=abonado&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=abonado&a=listar&pagina={{sig}}" aria-label="Next">
-              <span aria-hidden="true">»</span></a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </li>
          </ul>
        </nav>
@@ -217,10 +217,10 @@ $(document).ready(function() {
   <table class="table table-hover">
   <thead>
     <tr>
-      <th>Numero Abonado</th>
+      <th>N&uacute;mero Abonado</th>
       <th>Empresa</th>
       <th>Importe</th>
-      <th>Fecha de ultimo pago</th>
+      <th>Fecha de &uacute;ltimo pago</th>
       <th>Activo</th>
       <th>Controles</th>
     </tr>
@@ -251,7 +251,7 @@ $(document).ready(function() {
         </td>
         <td>
           {% autoescape 'html' %}
-            {{item.fechadeultimopago}}  
+            {{item.fechadeultimopago|date("d/m/Y")}}  
           {% endautoescape %}
         </td>
         <td class="celda-numero">
@@ -295,7 +295,7 @@ $(document).ready(function() {
           <ul class="pagination">
             <li class="">
               <a href="privado.php?c=abonado&a=listar&pagina={{ant}}" aria-label="Previous">
-              <span aria-hidden="true">«</span></a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             </li> 
             
             <li><a href="privado.php?c=abonado&a=listar&pagina=1">Primera</a></li>
@@ -309,7 +309,7 @@ $(document).ready(function() {
             <li><a href="privado.php?c=abonado&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=abonado&a=listar&pagina={{sig}}" aria-label="Next">
-              <span aria-hidden="true">»</span></a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </li>
          </ul>
        </nav>
