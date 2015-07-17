@@ -21,7 +21,7 @@ $(document).ready(function() {
 
          case "Nombre y/o Apellido":
          	$("#dato").css("display", "inline-block");
-         	$("#datoTexto").attr("placeholder", "Ej.: Jorge Pérez");
+         	$("#datoTexto").attr("placeholder", "Ej.: Jorge Perez");
           $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'nomyap';
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
          case "Domicilio":
          	$("#dato").css("display", "inline-block");
-         	$("#datoTexto").attr("placeholder", "Ej.: Azcuénaga 123");
+         	$("#datoTexto").attr("placeholder", "Ej.: Azcuenaga 123");
           $("#activo").css("display","none");
          	$("#EnviarFiltro").css("display", "inline-block");
          	document.getElementById('tipoFiltro').value = 'domicilio';
@@ -125,7 +125,7 @@ $(document).ready(function() {
           <ul class="pagination">
             <li class="">
               <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
-              <span aria-hidden="true">«</span></a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             </li> 
             <li><a href="privado.php?c=medidor&a=listar&pagina=1">Primera</a></li>
               {% set pintar = actual %}
@@ -139,7 +139,7 @@ $(document).ready(function() {
             <li><a href="privado.php?c=medidor&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=medidor&a=listar&pagina={{sig}}" aria-label="Next">
-              <span aria-hidden="true">»</span></a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </li>
          </ul>
        </nav>
@@ -187,8 +187,8 @@ $(document).ready(function() {
           <div id="activo" class="none">
                   <select name="datoActivo" id="datoActivo" class="form-control">
                       <option value="0" selected>Seleccione</option>
-                      <option value="1">Sólo Activos</option>
-                      <option value="2">Sólo Inactivos</option>
+                      <option value="1">Solo Activos</option>
+                      <option value="2">Solo Inactivos</option>
                   </select>
 
               </div>
@@ -213,14 +213,14 @@ $(document).ready(function() {
             {% elseif tipoFiltro == 'nomyap' %}
                 {% set tipoFiltro = 'Nombre/Apellido' %}
             {% elseif tipoFiltro == 'numusuario' %}
-                {% set tipoFiltro = 'número de usuario' %}
+                {% set tipoFiltro = 'n&uacute;mero de usuario' %}
             {% elseif tipoFiltro == 'numsuministro' %}
-                {% set tipoFiltro = 'número de suministro' %}
+                {% set tipoFiltro = 'n&uacute;mero de suministro' %}
             {% elseif tipoFiltro == 'activo' %}
               {% if datoFiltro == '1' %}
-                  {% set datoFiltro='Sólo activos'%}
+                  {% set datoFiltro='Solo activos'%}
               {% else %}
-                  {% set datoFiltro='Sólo inactivos'%}
+                  {% set datoFiltro='Solo inactivos'%}
               {% endif %}
             {% endif %}
         		<span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
@@ -236,7 +236,7 @@ $(document).ready(function() {
                 <input type="hidden" id="datosPDF" name="datosPDF" value="{{ ListaMedidores|json_encode() }}"/>
             {% if ListaMedidores is null %}
             {% else %}
-                <a href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
+                <a target="_blank" href="#" onclick="document.getElementById('enviarPDF').submit();" style="text-decoration:none" class="btn btn-default btn-block inline-block">
               		Ver en PDF
             	</a>
             {% endif %}
@@ -249,13 +249,13 @@ $(document).ready(function() {
   <thead>
     <tr>
       <th>Apellido y Nombre</th>
-      <th>Teléfono</th>
+      <th>Tel&eacute;fono</th>
       <th>Domicilio</th>
       <th>Empresa</th>
       <th>Imp. Pago</th>
       <th>Num. Usuario</th>
       <th>Num. Suministro</th>
-      <th>Ultimo Pago</th>
+      <th>&Uacute;ltimo Pago</th>
       <th>Activo</th>
       <th>Controles</th>
     </tr>
@@ -299,7 +299,7 @@ $(document).ready(function() {
 				<td> <small>$</small> {{ medidor.importepago|raw }}</td>
 				<td> {{ medidor.numusuario|raw }}</td>
 				<td> {{ medidor.numsuministro|raw }}</td>
-        <td> {{ medidor.fechadeultimopago|raw }}</td>
+        <td> {{ medidor.fechadeultimopago|date("d/m/Y") }}</td>
 				<td> 
 					{% if medidor.activo == 1 %}
 						<span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
@@ -322,7 +322,7 @@ $(document).ready(function() {
               {% endif %}
     					<form method="post" action="privado.php?c=medidor&a=eliminar&pagina={{paginaBaja}}" id="eliminaMedidor{{medidor.idmedidor}}">
                 <input type="hidden" value="{{medidor.idmedidor}}" name="idmedidor">
-    						<a href="javascript:{}" onclick="if(confirm('¿Está seguro que desea eliminar el titular?')){document.getElementById('eliminaMedidor{{medidor.idmedidor}}').submit();} return false;">
+    						<a href="javascript:{}" onclick="if(confirm('¿Est&acute; seguro que desea eliminar el titular?')){document.getElementById('eliminaMedidor{{medidor.idmedidor}}').submit();} return false;">
   							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
   						</a>
   					 </form>
@@ -341,7 +341,7 @@ $(document).ready(function() {
           <ul class="pagination">
             <li class="">
               <a href="privado.php?c=medidor&a=listar&pagina={{ant}}" aria-label="Previous">
-              <span aria-hidden="true">«</span></a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
             </li> 
             <li><a href="privado.php?c=medidor&a=listar&pagina=1">Primera</a></li>
               {% for item in actual..cantMostrar %}
@@ -354,7 +354,7 @@ $(document).ready(function() {
             <li><a href="privado.php?c=medidor&a=listar&pagina={{cantidadPaginas}}">Ultima</a></li>
             <li>
               <a href="privado.php?c=medidor&a=listar&pagina={{sig}}" aria-label="Next">
-              <span aria-hidden="true">»</span></a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </li>
          </ul>
        </nav>
