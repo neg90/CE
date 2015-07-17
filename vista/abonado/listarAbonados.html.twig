@@ -169,8 +169,8 @@ $(document).ready(function() {
               <div id="activo" class="none">
                   <select name="datoActivo" id="datoActivo" class="form-control">
                       <option value="0" selected>Seleccione</option>
-                      <option value="1">Sólo Activos</option>
-                      <option value="2">Sólo Inactivos</option>
+                      <option value="1">Solo Activos</option>
+                      <option value="2">Solo Inactivos</option>
                   </select>
 
               </div>
@@ -185,9 +185,9 @@ $(document).ready(function() {
           <div class="alert alert-info col-lg-4 filtrandoresultados" role="alert">
            {% if tipoFiltro == 'activo' %}
               {% if datoFiltro == '1' %}
-                  {% set datoFiltro='Sólo activos'%}
+                  {% set datoFiltro='Solo activos'%}
               {% else %}
-                  {% set datoFiltro='Sólo inactivos'%}
+                  {% set datoFiltro='Solo inactivos'%}
               {% endif %}
            {% elseif tipoFiltro == 'sinempresa' %}
                 {% set tipoFiltro = 'Abonados' %}

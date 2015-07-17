@@ -24,7 +24,7 @@ $(document).ready(function() {
 
          case "Nombre y/o Apellido":
           $("#dato").css("display", "inline-block");
-          $("#datoTexto").attr("placeholder", "Ej.: Jorge P&eacute;rez");
+          $("#datoTexto").attr("placeholder", "Ej.: Jorge Perez");
           $("#activo").css("display", "none"); 
           $("#EnviarFiltro").css("display", "inline-block");
           $("#asociados").css("display", "none");
@@ -67,6 +67,7 @@ $(document).ready(function() {
             break;
 
           case "Activo":
+          $("#asociados").css("display", "none");
           $("#dato").css("display", "none");
           $("#criterio").css("display", "none");
           $("#activo").css("display","inline-block");
@@ -168,8 +169,8 @@ $(document).ready(function() {
           <div id="activo" class="none">
                   <select name="datoActivo" id="datoActivo" class="form-control">
                       <option value="0" selected>Seleccione</option>
-                      <option value="1">S&oacute;lo Activos</option>
-                      <option value="2">S&oacute;lo Inactivos</option>
+                      <option value="1">Solo Activos</option>
+                      <option value="2">Solo Inactivos</option>
                   </select>
 
               </div>
@@ -201,9 +202,9 @@ $(document).ready(function() {
               {% set tipoFiltro = '' %}
           {% elseif tipoFiltro == 'activo' %}
               {% if datoFiltro == '1' %}
-                  {% set datoFiltro='S&oacute;lo activos'%}
+                  {% set datoFiltro='Solo activos'%}
               {% else %}
-                  {% set datoFiltro='S&oacute;lo inactivos'%}
+                  {% set datoFiltro='Solo inactivos'%}
               {% endif %}
           {% endif %}
 

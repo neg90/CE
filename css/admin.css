@@ -137,7 +137,7 @@ hr{border:1px solid #ccc;}
 
 #form_herramientas_abonado{width:740px;}
 
-.filtrandoresultados{margin-bottom:12px!important;}
+.filtrandoresultados{margin-bottom:10px!important;  padding-top: 7px!important; padding-bottom: 25px!important;}
 
 .verPdfboton#formBotonesTop{margin-top:-14px!important;}
 
