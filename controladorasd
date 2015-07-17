@@ -1,6 +1,6 @@
 <?php
 
-	require '../vendor/PHPMailer/PHPMailerAutoload.php';
+	require_once '../vendor/PHPMailer/PHPMailerAutoload.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 	require_once '../modelo/PDO/PDOempresa.php';
 	require_once '../modelo/PDO/PDOinfcorreo.php';
