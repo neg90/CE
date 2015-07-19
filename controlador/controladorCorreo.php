@@ -1,6 +1,6 @@
 <?php
 
-	require '../vendor/PHPMailer/PHPMailerAutoload.php';
+	require_once '../vendor/PHPMailer/PHPMailerAutoload.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 	require_once '../modelo/PDO/PDOempresa.php';
 	require_once '../modelo/PDO/PDOinfcorreo.php';
@@ -88,7 +88,11 @@ class controladorCorreo {
 				  			//correos relacionados a la empresa.
 				  			$limitCorreos = count($unosCorreo);
 				  			for ($c=0; $c < $limitCorreos ; $c++){ 
-				  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+				  				if (!controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo)) {
+	  								$template = $twig->loadTemplate('falloCorreo.html.twig');
+									echo $template->render(array('empresas'=>$empresas));
+									exit();
+				  				}
 				  				$cantEmpresas++;
 				  			}
 				  			//busco el contacto con la idempresa.
@@ -97,7 +101,11 @@ class controladorCorreo {
 				  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
 				  				$unCorreo = $unContacto->getCorreo();
 				  				$cantContactos++;
-				  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
+				  				if (!controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo)) {
+								  	$template = $twig->loadTemplate('falloCorreo.html.twig');
+									echo $template->render(array('empresas'=>$empresas));
+									exit();
+				  				}
 				  			}
 				  			$unaEmpresa = null;
 			  			}
@@ -123,7 +131,11 @@ class controladorCorreo {
 				  			//correos relacionados a la empresa.
 				  			$limitCorreos = count($unosCorreo);
 				  			for ($c=0; $c < $limitCorreos ; $c++){ 
-				  				controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo);
+				  				if (!controladorCorreo::enviarCorreo($unosCorreo[$c]['correo'],$adjunto,$asunto,$cuerpo)) {
+	  								$template = $twig->loadTemplate('falloCorreo.html.twig');
+									echo $template->render(array('empresas'=>$empresas));
+									exit();
+				  				}
 				  				$cantEmpresas++;
 				  			}
 				  			//busco el contacto con la idempresa.
@@ -132,11 +144,15 @@ class controladorCorreo {
 				  				$unContacto = PDOcontacto::buscarContacto($relaciones[$i]->idcontacto);
 				  				$unCorreo = $unContacto->getCorreo();
 				  				$cantContactos++;
-				  				controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo);
+				  				if (!controladorCorreo::enviarCorreo($unCorreo,$adjunto,$asunto,$cuerpo)) {
+								  	$template = $twig->loadTemplate('falloCorreo.html.twig');
+									echo $template->render(array('empresas'=>$empresas));
+									exit();
+				  				}
 				  			}
 				  			$unaEmpresa = null;
 			  			}
-
+			  			
 				  		//delete del anterior.
 				  		PDOinfcorreo::eliminar();
 				  		//cargo nuevo :D
@@ -207,22 +223,26 @@ class controladorCorreo {
 	  		//Creacion de correo.
 	  		$mail = new PHPMailer();
 	  		$mail->isSMTP();                                      
-			$mail->Host = 'mail.camaratsas.com.ar';  
-			//$mail->SMTPAuth = true;                              
-			$mail->Username = 'camaratsas@eternet.cc';              
-			$mail->Password = '10102176';                          
-			//$mail->SMTPSecure = 'tls';                          
-			$mail->Port = 25;
-
-			$mail->FromName = '';
+			$mail->Host = 'smtp.gmail.com';  
+			$mail->SMTPAuth = true;                              
+			$mail->Username = 'camaraeconomicadetresarroyos@gmail.com';
+			$mail->AddReplyTo("administracion@camaratsas.com.ar", "Administracion CETA");
+			$mail->Password = 'kapanga321';
+			$mail->SMTPSecure = 'tls';                          
+			$mail->Port = 587;
+			$mail->SetFrom('camaraeconomicadetresarroyos@gmail.com', 'Administracion CETA');
+			//$mail->FromName = '';
 			$mail->addAddress($unEmail);    
 			$mail->Subject = $asunto;
 			$mail->AddAttachment($ruta,$nombre,$encoding,$tipo);
 			
 		    $mail->Body = $cuerpo;
 		    $mail->IsHTML(true);
-		    $mail->send();
-
+		 	if ($mail->send()) {
+		 		return true;  
+		 	}else{
+		 		return false;
+		 	}  
 	  	}
 
 }
