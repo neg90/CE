@@ -253,6 +253,7 @@ $(document).ready(function() {
   <table class="table table-hover">
   <thead>
     <tr>
+      <th>Nro. Asociado</th>
       <th>Denominaci&oacute;n</th>
       <th>CUIT</th>
       <th>Rubro</th>
@@ -268,6 +269,11 @@ $(document).ready(function() {
      <input type="hidden" name="arrayIdempresa[]" value="{{item.idempresa}}" >
         <tr>
   </form>
+          <td>
+            {% autoescape 'html' %}
+              {{item.idempresa|raw }}    
+            {% endautoescape %}
+          </td>
           <td>
             {% autoescape 'html' %}
               {{item.denominacion|raw }}    

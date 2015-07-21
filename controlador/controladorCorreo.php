@@ -168,6 +168,7 @@ class controladorCorreo {
 		  		
 	  		}
 	  	}
+	  	
 	}
 
 	public static function mostrarInforme(){
@@ -222,6 +223,7 @@ class controladorCorreo {
 
 	  		//Creacion de correo.
 	  		$mail = new PHPMailer();
+	  		//$mail->SMTPDebug = 4;
 	  		$mail->isSMTP();                                      
 			$mail->Host = 'smtp.gmail.com';  
 			$mail->SMTPAuth = true;                              
@@ -231,13 +233,16 @@ class controladorCorreo {
 			$mail->SMTPSecure = 'tls';                          
 			$mail->Port = 587;
 			$mail->SetFrom('camaraeconomicadetresarroyos@gmail.com', 'Administracion CETA');
-			//$mail->FromName = '';
+			//$mail->FromName = ''
+		 	//$mail->AddBCC('neg90.ng@gmail.com');
 			$mail->addAddress($unEmail);    
 			$mail->Subject = $asunto;
-			$mail->AddAttachment($ruta,$nombre,$encoding,$tipo);
-			
+			if (!empty($ruta)) {
+				$mail->AddAttachment($ruta,$nombre,$encoding,$tipo);
+			}			
 		    $mail->Body = $cuerpo;
 		    $mail->IsHTML(true);
+		 	
 		 	if ($mail->send()) {
 		 		return true;  
 		 	}else{
