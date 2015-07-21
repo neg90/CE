@@ -1,7 +1,6 @@
 <?php
 
 	require_once '../modelo/conexionDB.php';	 
-	
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../modelo/PDO/PDOempresa.php';
 	require_once '../modelo/PDO/PDOinfmedidorexcel.php';
@@ -30,7 +29,17 @@ class controladorExcel {
 
 	public function descargarExcel (){
 		require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
-		var_dump('hola');
+		// Se crea el objeto PHPExcel
+ 		$objPHPExcel = new PHPExcel();
+ 		//Propiedades excel
+ 		// Se asignan las propiedades del libro
+		$objPHPExcel->getProperties()->setCreator("Codedrinks") // Nombre del autor
+   		->setLastModifiedBy("Codedrinks") //Ultimo usuario que lo modificó
+    	->setTitle("Reporte Excel con PHP y MySQL") // Titulo
+   		->setSubject("Reporte Excel con PHP y MySQL") //Asunto
+   		->setDescription("Reporte de alumnos") //Descripción
+   	 	->setKeywords("reporte alumnos carreras") //Etiquetas
+    	->setCategory("Reporte excel"); //Categorias
 	}
 
 
