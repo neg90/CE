@@ -107,6 +107,8 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					controladorExcel::bajainfempresaall();
 				}elseif ($accion == 'verdetalleinfromeempresa') {
 					controladorExcel::verdetalleinfromeempresa();
+				}elseif ($accion == 'descargarExcel') {
+					controladorExcel::descargarExcel();
 				}
 			/* -------- INICIO ---------- */
 			}elseif ($controlador=='inicio') {

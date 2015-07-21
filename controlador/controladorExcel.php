@@ -1,10 +1,11 @@
 <?php
 
 	require_once '../modelo/conexionDB.php';	 
-	require_once '../vendor/PHPepeExcel/PHPepeExcel.php';
+	
 	require_once '../modelo/PDO/PDOMedidor.php';
 	require_once '../modelo/PDO/PDOempresa.php';
 	require_once '../modelo/PDO/PDOinfmedidorexcel.php';
+	
 
 class controladorExcel {
 
@@ -26,7 +27,15 @@ class controladorExcel {
 		} 
 		return $esValido; 
 	}
+
+	public function descargarExcel (){
+		require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
+		var_dump('hola');
+	}
+
+
 	private function crearInstanciaMedidro($arrayExcel,$i){
+		
 		if (empty($arrayExcel[$i][2])) {
 			$domicilio = 0;
 		}else{
@@ -64,6 +73,7 @@ class controladorExcel {
 	}
 	/*Si el parametro tip vale 2 es por que el medidor se actualizo si es 1 entonces fue insertar*/
 	private function informeActualizacion($actImp,$unMedidor,$tipo,$idempresa){
+		
 		if($actImp ){
 			$unaEmpresaAct = PDOempresa::buscarEmpresa($idempresa);	
 			if ($tipo == 1) {
@@ -83,7 +93,9 @@ class controladorExcel {
 	}
 
 	private function actualizarMedidor($unMedidor){
+
 		$fechadeultimopago = date('Y-m-d');
+
 		$unMedidorActualizable = PDOMedidor::medidorporNumusuario($unMedidor->getNumusuario());
 		$unMedidorActualizable->setFechadeultimopago($fechadeultimopago);
 		$unMedidorActualizable->setImportepago($unMedidor->getImportepago());
@@ -114,6 +126,7 @@ class controladorExcel {
 	}
 	/**/
 	public function cargarmedidor(){
+		require_once '../vendor/PHPepeExcel/PHPepeExcel.php';
 
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
@@ -171,6 +184,7 @@ class controladorExcel {
 		  		}else{
 		  			//Traer medidor
 		  			$unMedidorAct = self::actualizarMedidor($unMedidor);
+		  			$unMedidorAct->guardar();
 		  			$medidorActualizado++;
 		  			//pregunto si existe la empresa
 		  			if(PDOempresa::buscarMedidorUno($unMedidorAct->getNumusuario())){
@@ -308,6 +322,7 @@ class controladorExcel {
 	}
 
 	public static function cargarempresa(){
+		require_once '../vendor/PHPepeExcel/PHPepeExcel.php';
 		Twig_Autoloader::register();
 	 	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));

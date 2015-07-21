@@ -253,7 +253,6 @@ class PDOMedidor extends medidor{
       $objeto = new PDOMedidor ($resultado['idmedidor'],$resultado['nomyap'],$resultado['telefono'],
       $resultado['domicilio'],$resultado['importepago'],$resultado['numusuario'],$resultado['numsuministro'],
       $resultado['activo'],$resultado['fechadeultimopago']);
-     
       return $objeto;
    }
 
