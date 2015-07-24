@@ -29,11 +29,16 @@ class controladorExcel {
 
 	public function descargarExcel (){
 		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
 		require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
 		date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 		if (PHP_SAPI == 'cli'){
-			die('Este archivo solo se puede ver desde un navegador web');
+			$template = $twig->loadTemplate('falloDescarga.html.twig');
+			echo $template->render(array('user'=>$user));
 		}else{
 			// Se crea el objeto PHPExcel
  			$archivoExcel = new PHPExcel();
@@ -122,13 +127,8 @@ class controladorExcel {
 			$objWriter = PHPExcel_IOFactory::createWriter($archivoExcel, 'Excel2007');
 			$objWriter->save('php://output');
 			exit;
-			
-			
-
 
 		}
-   			
-		
    		
 	}
 
@@ -370,7 +370,7 @@ class controladorExcel {
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
-		$id = $_POST['id'];
+	  $id = $_POST['id'];
 		PDOinfmedidorexcel::borrarID($id);
 	  //nueva info (todo blanco)
 	  $unInforme = PDOinfmedidorexcel::listar();
@@ -394,7 +394,6 @@ class controladorExcel {
 	  	$acuAux = html_entity_decode($unInforme->actualizados);
 	  	$actualizados = json_decode($acuAux,true);
 
-
 	 	$totalRegistros = $unInforme->totalregistros;
 		$medidorInsertado = $unInforme->medidorInsertado;
 		$registroNoInsertado = $unInforme->registroNoInsertado;
@@ -407,6 +406,7 @@ class controladorExcel {
 
 	$template = $twig->loadTemplate('excel/detalleInformeMedidor.html.twig');
 	echo $template->render(array(
+	'user'=>$user,
 	'fallados'=>$fallados,
 	'actualizados'=>$actualizados,
 	'totalRegistros'=>$totalRegistros,
@@ -419,6 +419,47 @@ class controladorExcel {
 	'medidorSinEmpresaInsertado'=>$medidorSinEmpresaInsertado,
 	'medidorSinEmpresaActualizado'=>$medidorSinEmpresaActualizado));
 	}
+
+	public static function medidoresdesactualizados(){
+		
+		$user=$_SESSION['user'];
+	  	Twig_Autoloader::register();
+	 	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+		//Medidores que no fueron actualizados este mes o que hace rato nos e actualizan!
+	  	$hoy = date('Y-m-d');
+	  	$fechaActual = strtotime($hoy);	
+	  	$mesActual = date("m", $fechaActual );
+	  	
+	  	$medidores = PDOmedidor::listarMedidores();
+	  	$medidoresDesactualizados= '';
+	  	for ($i=0; $i < count($medidores); $i++) { 
+	  		$fechadePago = strtotime($medidores[$i]->fechadeultimopago);	
+	  		$mes = date("m", $fechadePago );
+	  		
+	  		if ($mes != $mesActual) {
+	  			$medidoresDesactualizados[$i] = $medidores[$i]; 			
+	  		}
+	  	}
+	  	$fecha =  date('Y-m-d');
+	 
+	  	//esto es para ver la empresa en el listado 
+	  	$arayVista = '';
+	  	$medidoresempresa = PDOmedidorempresa::listar();
+	  	for ($i=0; $i < count($medidoresempresa); $i++) { 
+			$denominasao = PDOempresa::buscarEmpresa($medidoresempresa[$i]->idempresa);
+			$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
+			$arayVista[$i] = $arrayUnario;
+		}
+	  	$cantDesactualizados = count($medidoresDesactualizados);
+	  	$cant = count($medidores);
+	  	$template = $twig->loadTemplate('excel/medidoresDesactualizados.html.twig');
+		echo $template->render(array('user'=>$user,'cantDesactualizados'=>$cantDesactualizados,
+		'cantMedidores'=>$cant,'fecha'=>$fecha,'medidoresDesactualizados'=>$medidoresDesactualizados,'mes'=>$mesActual,
+		'relacion'=>$arayVista));
+	}
+
+	
 
 	private function insertarRelacionE($nu,$idempresa){
 		$medidor = PDOmedidor::medidorporNumusuario($nu);

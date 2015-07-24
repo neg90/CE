@@ -108,7 +108,19 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 				}elseif ($accion == 'verdetalleinfromeempresa') {
 					controladorExcel::verdetalleinfromeempresa();
 				}elseif ($accion == 'descargarExcel') {
-					controladorExcel::descargarExcel();
+					if ($permiso->cargarexcelmedidor == 1) {
+						controladorExcel::descargarExcel();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+				}elseif ($accion == 'medidoresdesactualizados') {
+					if ($permiso->verinfexcelmedidor == 1) {
+						controladorExcel::medidoresdesactualizados();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}	
 				}
 			/* -------- INICIO ---------- */
 			}elseif ($controlador=='inicio') {

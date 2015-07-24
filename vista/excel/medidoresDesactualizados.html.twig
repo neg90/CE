@@ -1,0 +1,109 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Listado de medidores Desactualizados {% endblock %}
+{% block contenedor %}{{id}}
+
+ 
+  <div class="clearfix"></div>
+  <div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6">
+      <div class="panel panel-primary ">
+          <div class="panel-heading">
+            <h3 class="panel-title">Detalle de Medidores sin actualizar</h3>
+          </div>
+          <div class="panel-body">
+             <div class="row inf" >
+                <h5> Total de medidores: {{cantMedidores}} </h5> 
+              </div>
+              <div class="row inf" >
+                <h5> Total de medidores sin actualizar: {{cantDesactualizados}} </h5> 
+              </div>
+              <div class="row inf" >
+                <h5> Numero de mes que esta siendo comparado: {{mes}} </h5> 
+              </div>
+              <div class="row inf">
+                <h5> Informe generado: {{fecha}}</h5>
+              </div>
+          </div>
+        </div>
+  </div>
+  </div>
+  
+  <div class="row">
+    <div class="row fila-de-titulo">
+      <div class=" col-lg-1"></div>
+      <div class=" col-lg-10">
+        <h4> Informe de medidores Desactualizados</h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Apellido y Nombre</th>
+          <th>Teléfono</th>
+          <th>Domicilio</th>
+          <th>Empresa</th>
+          <th>Imp. Pago</th>
+          <th>Num. Usuario</th>
+          <th>Num. Suministro</th>
+          <th>Último Pago</th>
+          <th>Activo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if medidoresDesactualizados == null %}
+          <tr>
+            <td colspan="9">
+              No tenemos ningun medidor desactualizado 
+            </td>
+          </tr>
+        {% else %}
+          {% for item in medidoresDesactualizados %}
+              <tr>
+                <td>
+                  {{item.nomyap|raw}}
+                </td>
+                <td>
+                  {{item.telefono|raw}}
+                </td>
+                <td>
+                  {{item.domicilio|raw}}
+                </td>
+                <td>
+                 {% for em in relacion  %}
+                    {% if em.idmedidor == item.idmedidor %}
+                      <li>{{em.denominacion|raw }} </li>
+                    {% endif %}
+                  {% endfor %}  
+                </td>
+                <td>
+                  {{item.importepago|raw}}
+                </td>
+                <td>
+                  {{item.numusuario|raw}}
+                </td>
+                <td>
+                  {{item.numsuministro|raw}}
+                </td>
+                <td>
+                  {{item.fechadeultimopago|raw}}
+                </td>
+                 <td>
+                    {% if item.activo == 1 %}
+                      <span class="glyphicon glyphicon-ok" style="color:green" aria-hidden="true"></span>
+                    {% else %}
+                      <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+                    {% endif %}
+                </td>
+              </tr>
+          {% endfor %}
+         {% endif %}
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="clearfix"></div>
+{% endblock %}

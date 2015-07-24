@@ -196,7 +196,6 @@ class controladorContacto {
 			$valor = intval($pag-1) * $cantResultados ;
 		}
 		$cantPaginas = ceil(count(PDOContacto::listar()) / $cantResultados);
-
 		if ($pag == 1 ) {
 			$actual = 1;
 		}else{
