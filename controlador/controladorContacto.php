@@ -226,9 +226,10 @@ class controladorContacto {
 			$ant = $pag - 1;
 		}
 		$paginaBaja = $pag;
-
+		$relaciones = PDOcontactoempresa::listar();
+		$empresas = PDOempresa::listar();
 		$template = $twig->loadTemplate('contacto/listarContacto.html.twig');
-		echo $template->render(array('pag'=>$pag,'user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
+		echo $template->render(array('empresas'=>$empresas,'relaciones'=>$relaciones,'pag'=>$pag,'user'=>$user,'paginaBaja'=>$paginaBaja,'actual'=>$actual,
 		'cantMostrar'=>$cantMostrar,'sig'=>$sig,'ant'=>$ant,'cantidadPaginas'=>$cantPaginas,
 		'user'=>$user,'contactos'=>$contactos));
 
