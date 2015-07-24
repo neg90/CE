@@ -28,18 +28,86 @@ class controladorExcel {
 	}
 
 	public function descargarExcel (){
+		$user=$_SESSION['user'];
 		require_once '../vendor/PHPExcel/Classes/PHPExcel.php';
-		// Se crea el objeto PHPExcel
- 		$objPHPExcel = new PHPExcel();
- 		//Propiedades excel
- 		// Se asignan las propiedades del libro
-		$objPHPExcel->getProperties()->setCreator("Codedrinks") // Nombre del autor
-   		->setLastModifiedBy("Codedrinks") //Ultimo usuario que lo modificó
-    	->setTitle("Reporte Excel con PHP y MySQL") // Titulo
-   		->setSubject("Reporte Excel con PHP y MySQL") //Asunto
-   		->setDescription("Reporte de alumnos") //Descripción
-   	 	->setKeywords("reporte alumnos carreras") //Etiquetas
-    	->setCategory("Reporte excel"); //Categorias
+		date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+		if (PHP_SAPI == 'cli'){
+			die('Este archivo solo se puede ver desde un navegador web');
+		}else{
+			// Se crea el objeto PHPExcel
+ 			$archivoExcel = new PHPExcel();
+ 			//Propiedades excel
+ 			$fecha = date('Y-m-d');
+	 		// Se asignan las propiedades del libro
+			$archivoExcel->getProperties()->setCreator($user) // Nombre del autor
+   			->setLastModifiedBy($user) //Ultimo usuario que lo modificó
+    		->setTitle("Asociados CETA" . $fecha) // Titulo
+   			->setDescription("Reporte de Asociado CETA"); //Descripción
+   			$tituloReporte = "Asociados CETA" . $fecha;
+			$titulosColumnas = array('Nro Asociado','Denominacion','Importe','CUIT','Rubro','Categoria','Cantidad de Empleados','Fecha de Asociacion','Fecha de Fundacion','WEB','Usuario CELTA','Activo');
+			$archivoExcel->setActiveSheetIndex(0)
+    		->mergeCells('A1:L1');
+
+    		// Se agregan los titulos del reporte
+			$archivoExcel->setActiveSheetIndex(0)
+		    ->setCellValue('A1',$tituloReporte) // Titulo del reporte
+		    ->setCellValue('A2',  $titulosColumnas[0]) //Titulo de las columnas
+		    ->setCellValue('B2',  $titulosColumnas[1])
+		    ->setCellValue('C2',  $titulosColumnas[2]) 
+		    ->setCellValue('D2',  $titulosColumnas[3])
+		    ->setCellValue('E2',  $titulosColumnas[4]) 
+		    ->setCellValue('F2',  $titulosColumnas[5])
+		    ->setCellValue('G2',  $titulosColumnas[6]) 
+		    ->setCellValue('H2',  $titulosColumnas[7])
+		    ->setCellValue('I2',  $titulosColumnas[8]) 
+		    ->setCellValue('J2',  $titulosColumnas[9])
+		    ->setCellValue('K2',  $titulosColumnas[10])
+		    ->setCellValue('L2',  $titulosColumnas[11]);
+
+		    //traigo los datos de las empresas
+		    $asociados = PDOempresa::listar();
+		   // var_dump($asociados);
+		  
+		    for ($i=3; $i < count($asociados) ; $i++) { 
+		    	
+		    	 $archivoExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $asociados[$i]->idempresa);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $asociados[$i]->denominacion);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, $asociados[$i]->importemensual); 
+		   		 $archivoExcel->setActiveSheetIndex(0)->setCellValue('D'.$i, $asociados[$i]->cuit);
+		   		 $rubro = PDOrubro::buscarDescripcion($asociados[$i]->idrubro);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('E'.$i, $rubro['descripcion']);
+			     $categoria = PDOcategoria::buscarDescripcion($asociados[$i]->idcategoria);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, $categoria['descripcion']);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('G'.$i, $asociados[$i]->cantempleados);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('H'.$i, $asociados[$i]->fechainicioce);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('I'.$i, $asociados[$i]->fechafundacion); 
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('J'.$i, $asociados[$i]->web);
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('K'.$i, $asociados[$i]->numusuario);
+			     if ($asociados[$i]->activo) {
+			    	$archivoExcel->setActiveSheetIndex(0)->setCellValue('L'.$i, 'SI');
+			     }else{
+					$archivoExcel->setActiveSheetIndex(0)->setCellValue('L'.$i, 'NO');
+			     }
+			    
+		    }
+			
+		    // Se manda el archivo al navegador web, con el nombre que se indica, en formato 2007
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="Asociados CETA.xls"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($archivoExcel, 'Excel2007');
+			$objWriter->save('php://output');
+			exit;
+			
+			
+
+
+		}
+   			
+		
+   		
 	}
 
 
@@ -113,6 +181,8 @@ class controladorExcel {
 	}
 
 	private function informeErrores($unRegistro,$nroFila){
+
+		$user=$_SESSION['user'];
 		$erroNumusuario = 'Correcto';
 		$errorNumSuminsitros = 'Correcto' ;
 		$errorApeynom = 'Correcto';
@@ -129,14 +199,14 @@ class controladorExcel {
 		if (empty($unRegistro[3])){
 			$errorImporte = 'Revisar';
 		} 
-		$informeErrores = array('numusuario' =>$erroNumusuario, 'numsuministros' =>$errorNumSuminsitros, 
+		$informeErrores = array('user'=>$user,'numusuario' =>$erroNumusuario, 'numsuministros' =>$errorNumSuminsitros, 
 		'apeynom' =>$errorApeynom, 'importe' =>$errorImporte,'numerodefila'=>$nroFila );
 		return $informeErrores;
 	}
 	/**/
 	public function cargarmedidor(){
 		require_once '../vendor/PHPepeExcel/PHPepeExcel.php';
-
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -234,7 +304,7 @@ class controladorExcel {
 		 
 	  	}else{
 	  		$template = $twig->loadTemplate('excel/cargarExcelMedidor.html.twig');
-			echo $template->render(array());
+			echo $template->render(array('user'=>$user));
 	  }
 	  	/* Descomentar para borrar todo en tabla medidor */
 	  	//PDOMedidor::borrartodoslosmedidoresporquedaaltapajadesdephpmyadmin();
@@ -242,19 +312,21 @@ class controladorExcel {
 	}
 
 	public function listarinfmedidores(){
-		Twig_Autoloader::register();
+	  $user=$_SESSION['user'];
+	  Twig_Autoloader::register();
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
 	  $unInforme = PDOinfmedidorexcel::listar();
 
 	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
-	  echo $template->render(array('informes'=>$unInforme));
+	  echo $template->render(array('user'=>$user,'informes'=>$unInforme));
 
 	
 	}
 
 	public function bajainformesexel(){
+		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -265,13 +337,14 @@ class controladorExcel {
 	  $unInforme = PDOinfmedidorexcel::listar();
 
 	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
-		echo $template->render(array('informes'=>$unInforme));
+		echo $template->render(array('user'=>$user,'informes'=>$unInforme));
 
 	
 	}
 
 	public function bajainformemedidor(){
-		Twig_Autoloader::register();
+		$user=$_SESSION['user'];
+	  Twig_Autoloader::register();
 	  $loader = new Twig_Loader_Filesystem('../vista');
 	  $twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
 
@@ -281,10 +354,11 @@ class controladorExcel {
 	  $unInforme = PDOinfmedidorexcel::listar();
 
 	  $template = $twig->loadTemplate('excel/listadoInformesMedidor.html.twig');
-		echo $template->render(array('informes'=>$unInforme));
+		echo $template->render(array('user'=>$user,'informes'=>$unInforme));
 	}
 
 	public function verdetalleinformemedidor(){
+		$user=$_SESSION['user'];
 	  	Twig_Autoloader::register();
 	 	$loader = new Twig_Loader_Filesystem('../vista');
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
@@ -331,6 +405,7 @@ class controladorExcel {
 	}
 
 	public static function cargarempresa(){
+		$user=$_SESSION['user'];
 		require_once '../vendor/PHPepeExcel/PHPepeExcel.php';
 		Twig_Autoloader::register();
 	 	$loader = new Twig_Loader_Filesystem('../vista');
@@ -378,7 +453,7 @@ class controladorExcel {
 			
 		}else{
 			$template = $twig->loadTemplate('excel/cargarExcelEmpresa.html.twig');
-			echo $template->render(array());
+			echo $template->render(array('user'=>$user));
 		} 	
 	}
 
