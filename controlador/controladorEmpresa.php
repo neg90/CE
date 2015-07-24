@@ -22,6 +22,7 @@
 class controladorEmpresa {
 
 
+
 	public static function pdfEmpresa(){
 
 	if (isset($_POST['datosPDF'])){
@@ -769,6 +770,67 @@ class controladorEmpresa {
 	  		$template = $twig->loadTemplate('empresa/modificarDomiciliosEmpresa.html.twig');
 			echo $template->render(array ('idempresa'=>$idempresa,'domiciliosRelacionados'=>$domiciliosRelacionados,'aviso'=>$aviso,'user'=>$user));
 	  	}
+	}
+
+	public static function rucat(){
+		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+
+	  	$aviso = 0;
+	  	$rubros = PDOrubro::listar();
+	  	$categorias = PDOcategoria::listar();
+	  	$empresas = PDOempresa::listar();
+
+	  	$template = $twig->loadTemplate('empresa/rucat.html.twig');
+		echo $template->render(array ('empresas'=>$empresas,'aviso'=>$aviso,'categorias'=>$categorias,'rubros'=>$rubros,'user'=>$user));
+
+
+	}
+
+	public static function bajaru(){
+
+		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	$id = $_POST['id'];
+	  	
+	  	$aviso = 0;
+	  	PDOrubro::baja($id);
+	  	$aviso = 1;
+	  	$categorias = PDOcategoria::listar();
+	  	$rubros = PDOrubro::listar();
+	  	$empresas = PDOempresa::listar();
+	  	
+
+	  	$template = $twig->loadTemplate('empresa/rucat.html.twig');
+		echo $template->render(array ('empresas'=>$empresas,'aviso'=>$aviso,'categorias'=>$categorias,'rubros'=>$rubros,'user'=>$user));
+
+
+	}
+
+	public static function bajacat(){
+
+		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
+	  	$id = $_POST['id'];
+	  	
+	  	$aviso = 0;
+	  	PDOcategoria::baja($id);
+	  	$aviso = 1;
+	  	$categorias = PDOcategoria::listar();
+	  	$rubros = PDOrubro::listar();
+	  	$empresas = PDOempresa::listar();
+	  	
+
+	  	$template = $twig->loadTemplate('empresa/rucat.html.twig');
+		echo $template->render(array ('empresas'=>$empresas,'aviso'=>$aviso,'categorias'=>$categorias,'rubros'=>$rubros,'user'=>$user));
+
+
 	}
 }
 ?>

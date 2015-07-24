@@ -11,6 +11,15 @@ class PDOcategoria extends categoria{
 		parent::__construct($idcategoria,$descripcion);
 	
 	}
+   public function baja($id){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM categoria WHERE id =  :id');
+
+      $consulta->bindParam(':id', $id);
+    
+      $consulta->execute();
+      
+   }
 
    /* FILTROS */
 

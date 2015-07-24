@@ -54,6 +54,7 @@ class controladorExcel {
 			$archivoExcel->setActiveSheetIndex(0)
     		->mergeCells('A1:L1');
 
+
     		// Se agregan los titulos del reporte
 			$archivoExcel->setActiveSheetIndex(0)
 		    ->setCellValue('A1',$tituloReporte) // Titulo del reporte
@@ -72,6 +73,9 @@ class controladorExcel {
 
 		    //traigo los datos de las empresas
 		    $asociados = PDOempresa::listar();
+		    //Negrita a los titulos
+		    $archivoExcel->getActiveSheet()->getStyle('A1:L1')->getFont()->setBold(true);
+		    $archivoExcel->getActiveSheet()->getStyle('A2:L2')->getFont()->setBold(true);
 		    //Centrar texto
 		    $archivoExcel->getActiveSheet()->getStyle('A1:L1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		    $archivoExcel->getActiveSheet()->getStyle('A2:L2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -529,7 +533,7 @@ class controladorExcel {
    		$fechainicioce = date('Y-m-d');
    		$activo = false;
    		
-		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,17,'Sin completar',0,24,$fechainicioce,$activo,0,$fechainicioce,0,$unRegistro[1]);
+		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,18,'Sin completar',0,24,$fechainicioce,$activo,0,$fechainicioce,0,$unRegistro[1]);
 		
 		return $unaEmpresa;
 

@@ -11,6 +11,15 @@ class PDOrubro extends rubro{
 		parent::__construct($idrubro,$descripcion);
 	
 	}
+   public function baja($id){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM rubro WHERE id =  :id');
+
+      $consulta->bindParam(':id', $id);
+    
+      $consulta->execute();
+      
+   }
 
 
    /* FILTROS */

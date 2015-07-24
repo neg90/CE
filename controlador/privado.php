@@ -308,6 +308,27 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$template = $twig->loadTemplate('accesodenegado.html.twig');
 						echo $template->render(array());
 					}
+				}elseif($accion == 'rucat'){
+					if ($permiso->rci == 1) {
+						controladorEmpresa::rucat();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+				}elseif($accion == 'bajaRubro'){
+					if ($permiso->dci == 1) {
+						controladorEmpresa::bajaru();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+				}elseif($accion == 'bajaCategoria'){
+					if ($permiso->dci == 1) {
+						controladorEmpresa::bajacat();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
 				}elseif($accion == 'listar'){
 					if ($permiso->rci == 1) {
 						$pag=htmlEntities(@$_GET['pagina']);

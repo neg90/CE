@@ -1,0 +1,120 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Eliminar Categoria y Rubro {% endblock %}
+{% block contenedor %}
+
+ 
+  <div class="clearfix"></div>
+
+  
+    <div class="row aviso-completar">
+      <div class=" col-lg-3"></div>
+      <div class=" col-lg-6 col-md-6 col-sm-6 recuadro-aviso">
+        <div class="alert alert-warning">
+            <strong> En los rubros o categorias que no aparece la opciond e eliminar es por que tiene asociados relacionados ,primero debe eliminar o modificar el asociado </strong>
+          </div>
+      </div>
+    </div>  
+    <div class="row fila-de-alerta">
+      <div class=" col-lg-2"></div>
+         <div class=" col-lg-8">
+          {% if aviso == 1 %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Perfecto!</strong> Fue eliminado correctamente.
+              </div>
+            {% elseif  aviso == 2 %}
+              <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Error!</strong> No se pudo eliminar 
+              </div>
+            {% endif %}
+         </div>
+    </div>
+
+ <div class="row">
+    <div class="row fila-de-titulo">
+      <div class=" col-lg-1"></div>
+      <div class=" col-lg-10">
+        <h4> Elimine categorias o rubros desde aqui </h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Rubros</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in rubros %}
+            <tr>
+              <td>
+               {{item.descripcion|raw}}
+              </td>
+                {% set ruTieneEmpresa = false %}
+                {% for em in empresas %}
+                  {% if item.id == em.idrubro %}
+                    {% set ruTieneEmpresa = true %}
+                  {% endif %}  
+                {% endfor %}
+                {% if ruTieneEmpresa == false %}
+                    <td>
+                      <form method="post" action="privado.php?c=empresa&a=bajaRubro" id="bajaru{{item.id}}">
+                        <input type="hidden" value="{{item.id}}" name="id">
+                        <a 
+                          href="javascript:{}" 
+                          onclick="if(confirm('¿Est&aacute; seguro que desea eliminar?')){document.getElementById('bajaru{{item.id}}').submit();}">
+                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                      </form> 
+                    </td>
+                {% endif %}  
+            </tr> 
+          {% endfor %}
+        </tbody>
+      </table>
+     </div>
+    <div class="col-lg-6">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Categorias</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in categorias %}
+            <tr>
+              <td>
+               {{item.descripcion|raw}}
+              </td>
+              {% set catTieneEmpresa = false %}
+                {% for em in empresas %}
+                  {% if item.id == em.idcategoria %}
+                    {% set catTieneEmpresa = true %}
+                  {% endif %}  
+              {% endfor %}
+              {% if catTieneEmpresa == false %}
+                <td>
+                  <form method="post" action="privado.php?c=empresa&a=bajaCategoria" id="bajacat{{item.id}}">
+                    <input type="hidden" value="{{item.id}}" name="id">
+                    <a 
+                      href="javascript:{}" 
+                      onclick="if(confirm('¿Est&aacute; seguro que desea eliminar?')){document.getElementById('bajacat{{item.id}}').submit();}">
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                  </form> 
+                </td>
+              {% endif %}  
+             </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+     </div>
+  </div>
+  <div class="clearfix"></div>
+{% endblock %}
