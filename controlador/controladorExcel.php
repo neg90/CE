@@ -84,7 +84,7 @@ class controladorExcel {
 		    $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
 		    $cellIterator->setIterateOnlyExistingCells( true );
 		    foreach( $cellIterator as $cell ){ 
-		    	$sheet->getColumnDimension( $cell->getColumn() )->setAutoSize( true ); 
+		    	$sheet->getColumnDimension( $cell->getColumn())->setAutoSize( true ); 
 		    } 
 
 		    for ($i=3; $i < count($asociados) ; $i++) { 
@@ -104,7 +104,7 @@ class controladorExcel {
 		    	//Cargo todo en el excel
 		    	 $archivoExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $asociados[$i]->idempresa);
 			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $asociados[$i]->denominacion);
-			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, $asociados[$i]->importemensual); 
+			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('C'.$i,'$ ' . $asociados[$i]->importemensual); 
 		   		 $archivoExcel->setActiveSheetIndex(0)->setCellValue('D'.$i, $asociados[$i]->cuit);
 		   		 $rubro = PDOrubro::buscarDescripcion($asociados[$i]->idrubro);
 			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('E'.$i, $rubro['descripcion']);
