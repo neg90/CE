@@ -44,7 +44,7 @@ class controladorExcel {
    			->setLastModifiedBy($user) //Ultimo usuario que lo modificó
     		->setTitle("Asociados CETA" . $fecha) // Titulo
    			->setDescription("Reporte de Asociado CETA"); //Descripción
-   			$tituloReporte = "Asociados CETA" . $fecha;
+   			$tituloReporte = "Asociados CETA " . $fecha;
 			$titulosColumnas = array('Nro Asociado','Denominacion','Importe','CUIT','Rubro','Categoria','Cantidad de Empleados','Fecha de Asociacion','Fecha de Fundacion','WEB','Usuario CELTA','Activo');
 			$archivoExcel->setActiveSheetIndex(0)
     		->mergeCells('A1:L1');
@@ -67,10 +67,32 @@ class controladorExcel {
 
 		    //traigo los datos de las empresas
 		    $asociados = PDOempresa::listar();
-		   // var_dump($asociados);
-		  
+		    //Centrar texto
+		    $archivoExcel->getActiveSheet()->getStyle('A1:L1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    $archivoExcel->getActiveSheet()->getStyle('A2:L2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    //Codigo para darle auto size a las celdas..
+		    $sheet = $archivoExcel->getActiveSheet(); 
+		    $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
+		    $cellIterator->setIterateOnlyExistingCells( true );
+		    foreach( $cellIterator as $cell ){ 
+		    	$sheet->getColumnDimension( $cell->getColumn() )->setAutoSize( true ); 
+		    } 
+
 		    for ($i=3; $i < count($asociados) ; $i++) { 
-		    	
+		    	//Centrar texto
+		    	 $archivoExcel->getActiveSheet()->getStyle('A'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('B'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('D'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('E'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('G'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('H'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('I'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('J'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('K'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	 $archivoExcel->getActiveSheet()->getStyle('L'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		    	//Cargo todo en el excel
 		    	 $archivoExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $asociados[$i]->idempresa);
 			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $asociados[$i]->denominacion);
 			     $archivoExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, $asociados[$i]->importemensual); 
@@ -91,7 +113,7 @@ class controladorExcel {
 			     }
 			    
 		    }
-			
+		
 		    // Se manda el archivo al navegador web, con el nombre que se indica, en formato 2007
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			header('Content-Disposition: attachment;filename="Asociados CETA.xls"');
