@@ -76,6 +76,15 @@ $(document).ready(function() {
           document.getElementById('tipoFiltro').value = 'activo';
             break;  
 
+          case "Sin empresa asignada":
+          $("#asociados").css("display", "none");
+          $("#dato").css("display", "none");
+          $("#datoTexto").attr("placeholder", " ");
+          $("#criterio").css("display", "none");
+          $("#activo").css("display","none");
+          $("#EnviarFiltro").css("display", "inline-block");
+          document.getElementById('tipoFiltro').value = 'sinempresa';
+            break;
         }
     }
 
@@ -160,6 +169,7 @@ $(document).ready(function() {
                 <option>Telefono</option>
                 <option>Correo</option>
                 <option>Asociados a SM</option>
+                <option>Sin empresa asignada</option>
                 <option>Activo</option>
               </select>
               </form>
@@ -204,6 +214,9 @@ $(document).ready(function() {
               {% else %}
                   {% set datoFiltro='Solo inactivos'%}
               {% endif %}
+          {% elseif tipoFiltro == 'sinempresa' %}
+                {% set tipoFiltro = 'Contactos' %}
+                {% set datoFiltro = ' sin empresa'%}
           {% endif %}
 
             <span>Filtrando resultados para {{tipoFiltro}} 

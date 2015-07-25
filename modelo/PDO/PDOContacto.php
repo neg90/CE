@@ -218,5 +218,20 @@ class PDOcontacto extends contacto{
       return $objeto;
    }
 
+   public static function filtroSinEmpresa(){
+      try{
+         $conexion=new conexion; //creo la instancia de la conexión
+      }
+      catch (PDOException $e){}
+
+      $consulta= $conexion->prepare(
+         'SELECT * FROM contacto WHERE idcontacto NOT IN 
+            (SELECT idcontacto FROM contactoempresa)');
+
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      return $objeto;
+   }
+
 }
 ?>

@@ -280,6 +280,7 @@ class controladorContacto {
 					$contactos=PDOContacto::filtroActivo($datoFiltro);
 				break;
 			}
+			elseif ($tipoFiltro == 'sinempresa') $contactos=PDOContacto::filtroSinEmpresa();
 			else header('Location:privado.php?c=contacto&a=listar&pagina=1');
 
 			//Si está filtrando la tabla, es 1.
