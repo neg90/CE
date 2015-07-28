@@ -76,8 +76,15 @@
                  {% for em in relacion  %}
                     {% if em.idmedidor == item.idmedidor %}
                       <li>{{em.denominacion|raw }} </li>
+                      {% set tiene = 1 %}
+                    {% else %}
+                       {% set tiene = 0 %}
                     {% endif %}
-                  {% endfor %}  
+                  {% endfor %} 
+                  {% if tiene == 0 %}
+                     <li>No tiene asociado</li>
+                  {% endif %}
+                    
                 </td>
                 <td>
                   {{item.importepago|raw}}

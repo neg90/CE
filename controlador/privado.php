@@ -24,6 +24,7 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 		------------------------------------------------------------------------------------------------*/
 		$user = $_SESSION['user'];
 		$pass = $_SESSION['clave'];
+		ini_set('max_execution_time', 300);
 		$usuario = PDOusuario::buscarUser($user,$pass);
 		$idRol = $usuario['idrol'];
 		$rol = PDOrol::rolPorID($idRol);

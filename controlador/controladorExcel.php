@@ -455,7 +455,12 @@ class controladorExcel {
 			$arrayUnario = array ('idmedidor'=>$medidoresempresa[$i]->idmedidor,'denominacion'=>$denominasao->getDenominacion());
 			$arayVista[$i] = $arrayUnario;
 		}
-	  	$cantDesactualizados = count($medidoresDesactualizados);
+	  	 
+	  	if (empty($medidoresDesactualizados)) {
+	  		$cantDesactualizados = 0;
+	  	}else{ 
+	  		$cantDesactualizados = count($medidoresDesactualizados);
+	  	}
 	  	$cant = count($medidores);
 	  	$template = $twig->loadTemplate('excel/medidoresDesactualizados.html.twig');
 		echo $template->render(array('user'=>$user,'cantDesactualizados'=>$cantDesactualizados,
