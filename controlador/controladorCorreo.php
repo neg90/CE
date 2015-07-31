@@ -238,8 +238,7 @@ class controladorCorreo {
 			$mail->SMTPSecure = 'tls';                          
 			$mail->Port = 587;
 			$mail->SetFrom('', '');
-			//$mail->FromName = ''
-		 	//$mail->AddBCC('neg90.ng@gmail.com');
+			
 			$mail->addAddress($unEmail);    
 			$mail->Subject = $asunto;
 			if (!empty($ruta)) {
