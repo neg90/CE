@@ -11,6 +11,7 @@
 	require_once '../modelo/PDO/PDOcontactoempresa.php';
 	require_once '../modelo/PDO/PDOabonado.php';
 	require_once '../modelo/PDO/PDOMedidor.php';
+	require_once '../modelo/PDO/PDOservicio.php';
 	require_once '../modelo/PDO/PDOabonadoempresa.php';
 	require_once '../vendor/twig/twig/lib/Twig/Autoloader.php';
 	
@@ -406,7 +407,7 @@ class controladorEmpresa {
 		}
 	}
 
-	private static function laCuestionDelCorreo ($idempresa){
+	private static function laCuestionDelCorreo($idempresa){
 		for ($i=0; $i < 13; $i++) { 
 			$auxStrCor = 'correo' . $i ;
 			$auxStrdesc = 'caraccorreo' . $i .'/';
@@ -419,12 +420,25 @@ class controladorEmpresa {
 					//validado con ajax
 					$unCorreo->guardar();
 					$unCorreo = null;
-				}
-				
+				}			
 			}
 		}
-	
 	}
+
+	private static function laCuestionDelServicio($idempresa){
+		$unasEmpresas = PDOempresa::listar();
+		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
+			var_dump($_POST[$unasEmpresas[$i]->idempresa]);
+			if (isset($_POST[$unasEmpresas[$i]->idempresa])) {
+				var_dump('hola');
+				//trabaja con ellos.
+				$unaRelacionServicio = new PDOservicio(0,$idempresa,$unasEmpresas[$i]->idempresa); 
+				$unaRelacionServicio->guardar();
+			}
+		}
+		
+	}
+
 	private static function validarMedidores ($idempresa){
 		for ($i=0; $i < 21 ; $i++) { 
 			$strContacto = 'contacto' . $i;
@@ -452,6 +466,7 @@ class controladorEmpresa {
 	  	$unasCategorias = PDOcategoria::listar();
 	  	$unosRubros = PDOrubro::listar();
 	  	$unosAbonados = PDOabonado::listar();
+	  	$unasEmpresas = PDOempresa::listar();
 	  	$ultimoIdempresaInsertado = null;
 		if (isset($_POST['guardarEmpresa'])){
 			$denominacion = htmlEntities(($_POST['denominacion']));
@@ -467,12 +482,18 @@ class controladorEmpresa {
 			$numabonado = htmlEntities($_POST['abonado']);
 			$idMedidor = htmlentities($_POST['medidor']);
 			$numusuario = htmlentities($_POST['numusuario']);
+			if (isset($_POST['prestaservicio'])) {
+				$prestaservicio = true;
+			}else{
+				$prestaservicio = false;
+			}
+			
 			$activo = true;
 			
 			//Veriifico que no exista uni identico, soluciona usuario soquete, f5 y reload de la pagina.
 			//id 0 pero se guarda incremental en el PDO
 			$unaEmpresa = new PDOempresa(0,$denominacion,$web,$rubroAJAX,$detactividad,$cantempleados,$categoriaAJAX,
-			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$numusuario);
+			$fechainicioce,$activo,$cuit,$fechafundacion,$importemensual,$numusuario,$prestaservicio);
 			if($unaEmpresa->validarInsertar()){
 				
 				$ultimoIdempresaInsertado = $unaEmpresa->guardar();
@@ -515,13 +536,14 @@ class controladorEmpresa {
 				controladorEmpresa::laCuestionDelDomicilio($unaEmpresa->getIdempresa());
 				//alta domicilios extra
 				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
-
+				//alta de servicios
+				controladorEmpresa::laCuestionDelServicio($unaEmpresa->getIdempresa());
 			}else{
 				//falla la validacion vamos de nuevo.
 				$aviso=2;
 				$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
 				echo $template->render(array('fecha'=>$fechaActual,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados));
+				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados,'empresas'=>$unasEmpresas));
 			}
 
 			//Decide si cargo o no cargo contribuyente
@@ -538,7 +560,7 @@ class controladorEmpresa {
 			$aviso=0;
 			$template = $twig->loadTemplate('empresa/altaEmpresa.html.twig');
 			echo $template->render(array('fecha'=>$fechaActual,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
-			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados,'user'=>$user));
+			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'abonados'=>$unosAbonados,'user'=>$user,'empresas'=>$unasEmpresas));
 		}
 	}
 

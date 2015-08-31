@@ -7,10 +7,10 @@ class PDOempresa extends empresa{
 	
 
 	public function __construct ($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo,
-   $cuit,$fechafundacion,$importemensual,$numusuario){
+   $cuit,$fechafundacion,$importemensual,$numusuario,$prestaservicio){
 
 		parent::__construct($idempresa,$denominacion,$web,$idrubro,$detactividad,$cantempleados,$idcategoria,$fechainicioce,$activo,
-      $cuit,$fechafundacion,$importemensual,$numusuario);
+      $cuit,$fechafundacion,$importemensual,$numusuario,$prestaservicio);
 
 	}
 
@@ -232,7 +232,7 @@ class PDOempresa extends empresa{
          $consulta = $conexion->prepare('UPDATE empresa SET denominacion = :denominacion, web = :web, idrubro = :idrubro, 
          detactividad = :detactividad, idcategoria = :idcategoria, fechainicioce = :fechainicioce, activo = :activo,
          cuit = :cuit, fechafundacion = :fechafundacion, importemensual = :importemensual, cantempleados = :cantempleados,
-         numusuario = :numusuario WHERE idempresa = :idempresa');
+         numusuario = :numusuario, prestaservicio = :prestaservicio WHERE idempresa = :idempresa');
          
          $consulta->bindParam('idempresa',$this->getIdempresa());
 
@@ -259,13 +259,15 @@ class PDOempresa extends empresa{
          $consulta->bindParam(':importemensual', $this->getImportemensual());
        
          $consulta->bindParam(':numusuario' ,$this->getNumusuario());
+
+         $consulta->bindParam(':prestaservicio', $this->getPrestaservicio());
        
          $consulta->execute();
 
       }else /*si no tiene id es un campo mas apra la tabla.*/ {
          $consulta = $conexion->prepare('INSERT INTO empresa (denominacion, web, idrubro, detactividad, cantempleados, idcategoria, fechainicioce,
-         activo, cuit,fechafundacion, importemensual,numusuario) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
-         :activo,:cuit,:fechafundacion,:importemensual,:numusuario)');
+         activo, cuit,fechafundacion, importemensual,numusuario,prestaservicio) VALUES(:denominacion,:web,:idrubro,:detactividad,:cantempleados,:idcategoria,:fechainicioce,
+         :activo,:cuit,:fechafundacion,:importemensual,:numusuario,:prestaservicio)');
        
          $consulta->bindParam(':denominacion', $this->getDenominacion());
 
@@ -291,6 +293,8 @@ class PDOempresa extends empresa{
 
          $consulta->bindParam(':numusuario' ,$this->getNumusuario());
       
+         $consulta->bindParam(':prestaservicio', $this->getPrestaservicio());
+         
          $consulta->execute();
 
          return $conexion->lastInsertId();
@@ -330,7 +334,7 @@ class PDOempresa extends empresa{
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],
       $resultado['activo'],$resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],
-      $resultado['numusuario']);
+      $resultado['numusuario'],$resultado['prestaservicio']);
 
       return $objeto;
 
@@ -359,7 +363,7 @@ class PDOempresa extends empresa{
 
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],$resultado['activo'],
-      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['numusuario']);
+      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['numusuario'],$resultado['prestaservicio']);
       
       return $objeto;
 
@@ -408,7 +412,7 @@ class PDOempresa extends empresa{
 
       $objeto = new PDOempresa($resultado['idempresa'],$resultado['denominacion'],$resultado['web'],$resultado['idrubro'],
       $resultado['detactividad'],$resultado['cantempleados'],$resultado['idcategoria'],$resultado['fechainicioce'],$resultado['activo'],
-      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['numusuario']);
+      $resultado['cuit'],$resultado['fechafundacion'],$resultado['importemensual'],$resultado['numusuario'],$resultado['prestaservicio']);
       
       return $objeto;
 

@@ -297,9 +297,9 @@
 			{% endfor %}
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
-				 <div class=" col-lg-4">
+				<div class=" col-lg-4">
 					<h3> Pago de Cuota </h3>
-				 </div>
+				</div>
 			</div>
 			<div id="esAbonado">
 				<div class="row">
@@ -330,19 +330,46 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="row">
-				<div id="Abonado">
+			<div class="row fila-de-titulo">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+					<h3> Ofrece Servicio </h3>
+				 </div>
+			</div>
+			<div class="row">
+				 <div class="col-lg-6"> 
+				 	<div class="form-group">						
+			  			<div class="checkbox">
+     						<label class="col-lg-4 control-label">
+     							 <input type="checkbox" name="prestaservicio"><strong> Presta Servicio </strong>
+     						</label>
+    					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row fila-de-titulo">
+				<div class=" col-lg-4"></div>
+				 <div class=" col-lg-4">
+					<h3> Recibe Servicio </h3>
+				 </div>
+			</div>
+			{% for item in empresas %}			
+				{% if item.prestaservicio == true %}
 					<div class="row">
 						 <div class="col-lg-6"> 
-						 		<div class="form-group">
-									<label class="col-lg-6 control-label">Crear un nuevo abonado 
-										<input type="checkbox" name="abonadoCheck" />
-									</label>
+						 	<div class="form-group">						
+					  			<div class="checkbox">
+		     						<label class="col-lg-4 control-label">
+		     							 <input type="checkbox" name="{{item.idempresa}}">
+		     							 <strong> {{item.denominacion}} </strong>
+		     						</label>
+		    					</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>-->
+				{% endif %}
+			{% endfor %}
+
 			<div class="row fila-de-boton">
 			 	<div class=" col-lg-4"></div>
 			 	<div class=" col-lg-2">
