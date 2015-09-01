@@ -31,7 +31,7 @@ class PDOservicio extends servicio{
          $consulta->bindParam(':idempresaofrece', $this->getIdempresaofrece());
          $consulta->execute();
         
-         $consulta->execute();
+         
          return $conexion->lastInsertId();
          
       }

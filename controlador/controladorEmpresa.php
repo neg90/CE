@@ -428,9 +428,8 @@ class controladorEmpresa {
 	private static function laCuestionDelServicio($idempresa){
 		$unasEmpresas = PDOempresa::listar();
 		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
-			var_dump($_POST[$unasEmpresas[$i]->idempresa]);
-			if (isset($_POST[$unasEmpresas[$i]->idempresa])) {
-				var_dump('hola');
+			
+			if ($_POST[$unasEmpresas[$i]->idempresa] == 'on'){
 				//trabaja con ellos.
 				$unaRelacionServicio = new PDOservicio(0,$idempresa,$unasEmpresas[$i]->idempresa); 
 				$unaRelacionServicio->guardar();
@@ -538,6 +537,7 @@ class controladorEmpresa {
 				controladorEmpresa::laCuestionDelCorreo($unaEmpresa->getIdempresa());
 				//alta de servicios
 				controladorEmpresa::laCuestionDelServicio($unaEmpresa->getIdempresa());
+				
 			}else{
 				//falla la validacion vamos de nuevo.
 				$aviso=2;
