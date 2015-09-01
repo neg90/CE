@@ -1,0 +1,62 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %}Formulario Asociado {% endblock %}
+
+{% block contenedor %}
+		
+	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarDomicilios" role="form" method="POST">
+	<input type="hidden" name="idempresa" value="{{idempresa}}">
+	<div class="contenedor-formulario">
+		<div class="row fila-de-alerta">
+			<div class=" col-lg-2"></div>
+			<div class=" col-lg-8">
+				 {% if aviso == 1 %}
+					<div class="alert alert-success alert-dismissable">
+		   	 			<button type="button" class="close" data-dismiss="alert">×</button>
+		    			<strong>Perfecto!</strong> modificaste los servicio con exito .
+	  				</div>
+	  			{% endif %}
+			</div>
+		</div>
+		<div class="row fila-de-titulo">
+			<div class=" col-lg-4"></div>
+			<div class=" col-lg-4">
+				<h3> Servicios que recibe</h3>
+			</div>
+		</div>
+		{% for item in empresas %}			
+			{% if item.prestaservicio == true %}
+				<div class="row">
+					<div class="col-lg-6"> 
+						<div class="form-group">						
+					  		<div class="checkbox">
+		     					<label class="col-lg-4 control-label">
+		     						<input type="checkbox" name="{{item.idempresa}}">
+		     						<strong> {{item.denominacion}} </strong>
+		     					</label>
+		    				</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+		<div class="row fila-de-boton">
+			 <div class=" col-lg-4"></div>
+			 <div class=" col-lg-2">
+				<a href="privado.php?c=empresa&a=listar&pagina=1">
+					<button type="button" class="btn btn-default btn-lg btn-block col-lg-4">
+						Volver al listado
+					</button>
+				</a>
+			</div>
+			 <div class=" col-lg-2">
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="guardarEmpresa">Guardar</button>
+			</div>
+				
+			<div class=" col-lg-4"></div>
+		</div>
+
+
+	</div>
+</form>
+{% endblock %}

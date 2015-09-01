@@ -38,6 +38,16 @@ class PDOservicio extends servicio{
       $conexion = null;
    }
 
+   public function baja($numabonado){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM abonado WHERE numabonado =  :numabonado');
+
+      $consulta->bindParam(':numabonado', $numabonado);
+    
+      $consulta->execute();
+      
+   }
+
    
 
   /* public function buscarAbonado ($numabonado){

@@ -696,6 +696,48 @@ class controladorEmpresa {
 		}
 		
 	}
+
+	public function modificarServicios(){
+		$user=$_SESSION['user'];
+		Twig_Autoloader::register();
+	  	$loader = new Twig_Loader_Filesystem('../vista');
+	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));	
+		$aviso = 0 ;
+		
+		$idempresa = $_POST['idempresa'];
+		$unasEmpresas = PDOempresa::listar();
+
+		if (isset($_POST['guardarEmpresa'])){
+			//Borro los q estaban
+			PDOservicio::borrarPorIdemrpesa($idempresa);
+			//Agrego los nuevos
+			$aviso = 1;
+			controladorEmpresa::laCuestionDelServicio($idempresa);
+			$template = $twig->loadTemplate('empresa/modificarServicios.html.twig');
+			echo $template->render(array ('idempresa'=>$idempresa,
+			'empresas'=>$unasEmpresas,'aviso'=>$aviso,'user'=>$user));
+		}else{
+			$template = $twig->loadTemplate('empresa/modificarServicios.html.twig');
+			echo $template->render(array ('idempresa'=>$idempresa,
+			'empresas'=>$unasEmpresas,'aviso'=>$aviso,'user'=>$user));
+			
+		}
+		/*$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
+	  	if (isset($_POST['guardarEmpresa'])){
+	  		//Borro lo que esta guardado.
+	  		PDOcorreoempresa::borrarCorreosRelacionados($idempresa);
+	  		//Cargar los nuevos.
+	  		controladorEmpresa::laCuestionDelCorreo($idempresa);
+	  		$aviso = 1 ;
+	  		$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
+			$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
+			echo $template->render(array('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso,'user'=>$user));
+	  	}else{
+	  		$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
+			echo $template->render(array ('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso,'user'=>$user));
+	  	}*/
+	}
+
 	public function modificarTelefonos(){
 		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
