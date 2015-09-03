@@ -1,0 +1,69 @@
+{% extends "basePrivada.html.twig" %}
+ 
+{% block title %} Lista de Asociado {% endblock %}
+{% block contenedor %}  
+    <h3 id="tituloBloque">Servicios Asociados a la empresa</h3>
+    <div class="clearfix"></div>
+
+   <div class="row fila-de-alerta">
+      <div class=" col-lg-2"></div>
+         <div class=" col-lg-8">
+          {% if aviso == 1 %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Perfecto!</strong> se elimino correctamente.
+              </div>
+            {% elseif  aviso == 2 %}
+              <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Error!</strong> No se pudo eliminar.
+              </div>
+            {% endif %}
+         </div>
+  </div>
+ <h5> Algunos asociados estan recibiendo servicios del asociado que queres eliminar, para continuar deberias dejar de dar servicio a esas empresas (click en borar todo) y luego ir al listado de asociados e intentar borrar el asociado nuevamente.</h5>
+  <div class="clearfix"></div>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Servicios Asociados</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in servicios %}
+        <tr>
+          <td>
+            {% autoescape 'html' %}
+              {% for em in empresas %}
+                {% if em.idempresa == item.idempresarecibe %}
+                  {{em.denominacion|raw }}  
+                {% endif %} 
+              {% endfor %}
+            {% endautoescape %}
+          </td>
+    {% endfor %}
+  </tbody>
+  </table>
+  <div id="botones" class="col-lg-12">
+      <div class="col-lg-3">
+      </div>
+      <div class="col-lg-3">
+          <a href="privado.php?c=empresa&a=listar&pagina=1">
+               <button type="button" class="btn btn-default btn-lg btn-block col-lg-2" name="volver">
+                  Descartar y volver
+               </button>
+          </a>
+      </div>
+
+      <div class="col-lg-3">
+          <form action="privado.php?c=empresa&a=borrarServicios" method="POST">
+               <input type="hidden" value="{{idempresa}}" name="idempresa">
+               <button type="submit" class="btn btn-default btn-lg btn-block col-lg-2" name="volver">
+                  Borrar todo
+               </button>
+          </form>
+    </div>
+  </div>
+
+
+{% endblock %}

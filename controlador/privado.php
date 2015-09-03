@@ -302,7 +302,6 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$template = $twig->loadTemplate('accesodenegado.html.twig');
 						echo $template->render(array());
 					}
-
 				}elseif($accion == 'modificar'){
 					if ($permiso->uci == 1) {
 						controladorEmpresa::modificar();
@@ -314,6 +313,13 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 					if ($permiso->dci == 1) {
 						$pag=htmlEntities(@$_GET['pagina']);
 						controladorEmpresa::baja($pag);
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+				}elseif($accion == 'borrarServicios'){
+					if ($permiso->dci == 1) {
+						controladorEmpresa::borrarServicios();
 					}else{
 						$template = $twig->loadTemplate('accesodenegado.html.twig');
 						echo $template->render(array());
