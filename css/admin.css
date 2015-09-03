@@ -159,13 +159,13 @@ hr{border:1px solid #ccc;}
 
 .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th{  text-align: center;}
 
-.verEmpresa .correo, .verEmpresa .domicilio, .verEmpresa .telefono, .verEmpresa .contacto, .verEmpresa .medidor, .verEmpresa .abonado {list-style: none; margin-left:20px;}
+.verEmpresa .correo, .verEmpresa .domicilio, .verEmpresa .telefono, .verEmpresa .contacto, .verEmpresa .medidor, .verEmpresa .abonado, .verEmpresa .itemServicio {list-style: none; margin-left:20px;}
 .verEmpresa #detGenerales, .verEmpresa #detTelefono, .verEmpresa #detMedidor, .verEmpresa #detAbonado,
-.verEmpresa #detCorreo, .verEmpresa #detDomicilio, .verEmpresa #detContacto, .verEmpresa #detMedidorAbonadoVacio{  border:1px solid #555;}
+.verEmpresa #detCorreo, .verEmpresa #detDomicilio, .verEmpresa #detContacto, .verEmpresa #detMedidorAbonadoVacio, .verEmpresa #detServicios{  border:1px solid #555;}
 
 .verEmpresa #detGenerales { float:left; width:600px; margin-top:20px;border-radius:5px;} 
 .verEmpresa #detTelefono, .verEmpresa #detCorreo, 
-.verEmpresa #detDomicilio, .verEmpresa #detContacto{ float:right; display:block; width:100%; margin:20px; border-radius:5px;}
+.verEmpresa #detDomicilio, .verEmpresa #detContacto, .verEmpresa #detServicios{ float:right; display:block; width:100%; margin:20px; border-radius:5px;}
 .verEmpresa #detAdicionales { float:left; display:inline-block; width:400px; margin-left:100px;}
 .verEmpresa #botones{float:right; display:block; margin-right:110px;}
 .verEmpresa #detMedidor, .verEmpresa #detAbonado, .verEmpresa #detMedidorAbonadoVacio{float:left; display:block;border-radius:5px; width:600px; }

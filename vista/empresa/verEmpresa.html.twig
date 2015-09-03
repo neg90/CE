@@ -153,6 +153,20 @@ function cambiarAction(accion){
                     {% endif %}
                 </p>
             </div>
+            <div id="detServicios">
+                <span class="tituloBloqueDet"><p><b>Recibe servicios de: </b></span>              
+                    {% if servicios != null %}
+                        {% for itemServicio in servicios %}
+                                <li class="itemServicio"> 
+                                    <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                                    {{ itemServicio.denominacion |raw }}
+                                </li>
+                              {% endfor %}  
+                    {% else %}
+                        <p class="noInfoDetalle">No recibe servicios.</p>      
+                    {% endif %}
+                </p>
+            </div>
       </div>
       <!-- ToDo: Detalles de Medidores
       <div id="detMedidores">

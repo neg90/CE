@@ -220,10 +220,16 @@ class controladorEmpresa {
 		$correos = PDOcorreoempresa::buscarCorreos($empresa->getIdempresa());
 		$domicilios = PDOdomicilioempresa::buscarDomicilios($empresa->getIdempresa());
 		$telefonos = PDOtelefonoempresa::buscarTelefonos($idempresa);
+		$serviciosID= PDOservicio::recibeServiciosID($idempresa);
+
+		foreach ($serviciosID as $servicioID) {
+			$servicios[$servicioID->idempresaofrece]=PDOempresa::buscarEmpresa($servicioID->idempresaofrece);
+		}
+
 
 		$template = $twig->loadTemplate('empresa/verEmpresa.html.twig');
 		echo $template->render(array('empresa'=>$empresa,'rubro'=>$rubro,'categoria'=>$categoria,
-		'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user));
+		'contactos'=>$contactos,'medidores'=>$medidores,'telefonos'=>$telefonos,'correos'=>$correos, 'domicilios'=>$domicilios,'abonados'=>$abonados,'user'=>$user, 'servicios'=>$servicios));
 	}
 	public static function listar($pag){
 		

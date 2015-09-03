@@ -48,6 +48,16 @@ class PDOservicio extends servicio{
       return $objeto;
    }
 
+   public static function recibeServiciosID($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT idempresaofrece FROM servicio WHERE idempresarecibe = :idempresarecibe');
+      $consulta->bindParam(':idempresarecibe',$idempresa);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }
+
    
    public function borrarPorIdemrpesa($idempresa){
       try {$conexion = new conexion;}catch (PDOException $e){} 
