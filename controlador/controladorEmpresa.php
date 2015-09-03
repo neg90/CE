@@ -811,6 +811,7 @@ class controladorEmpresa {
 	private static function miPrimerArrayKitty($idempresa){
 		$unasEmpresas = PDOempresa::listar();
 		$unosServicios = PDOservicio::listar();
+		$arrayParaVista = null;
 		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
 			$tieneServico = 2;
 			for ($y=0; $y < count($unosServicios) ; $y++) { 
@@ -819,8 +820,11 @@ class controladorEmpresa {
 					$tieneServico = 1;
 				}
 			}
-			$arrayParaVista[$i] = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
-			'denominacion'=>$unasEmpresas[$i]->denominacion);
+			if ($unasEmpresas[$i]->prestaservicio == true) {
+				$arrayParaVista[$i] = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
+				'denominacion'=>$unasEmpresas[$i]->denominacion);
+			}
+			
 		}
 		return $arrayParaVista;
 	}
@@ -856,20 +860,7 @@ class controladorEmpresa {
 			'empresas'=>$arrayParaVista,'aviso'=>$aviso,'user'=>$user));
 			
 		}
-		/*$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
-	  	if (isset($_POST['guardarEmpresa'])){
-	  		//Borro lo que esta guardado.
-	  		PDOcorreoempresa::borrarCorreosRelacionados($idempresa);
-	  		//Cargar los nuevos.
-	  		controladorEmpresa::laCuestionDelCorreo($idempresa);
-	  		$aviso = 1 ;
-	  		$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 
-			$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
-			echo $template->render(array('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso,'user'=>$user));
-	  	}else{
-	  		$template = $twig->loadTemplate('empresa/modificarCorreosEmpresa.html.twig');
-			echo $template->render(array ('idempresa'=>$idempresa,'correosRelacionados'=>$correosRelacionados,'aviso'=>$aviso,'user'=>$user));
-	  	}*/
+		
 	}
 
 	public function modificarTelefonos(){
