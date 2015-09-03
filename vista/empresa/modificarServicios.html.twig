@@ -24,15 +24,16 @@
 				<h3> Servicios que recibe</h3>
 			</div>
 		</div>
-		{% for item in arrayParaVista %}			
-			{% if item['tieneservicio'] == true %}
+
+		{% for item in empresas %}			
+			{% if item.tieneservicio == true %}
 				<div class="row">
 					<div class="col-lg-6"> 
 						<div class="form-group">						
 					  		<div class="checkbox">
 				     			<label class="col-lg-4 control-label">
 				     				<input type="checkbox" name="{{item.idempresa}}" checked>
-				     				<strong> {{item['tieneservicio']}} </strong>{{}}
+				     				<strong> {{item.denominacion}} </strong>
 				     			</label>
 		    				</div>
 						</div>
