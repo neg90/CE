@@ -168,27 +168,29 @@
 					<label class="col-lg-8">¿Activo? </label>
 				</div>
 			</div>
-			<div class="row fila-de-titulo">
-				<div class=" col-lg-4"></div>
-				 <div class=" col-lg-4">
-					<h3> Ofrece Servicio </h3>
-				 </div>
-			</div>
-			<div class="row">
-				 <div class="col-lg-6"> 
-				 	<div class="form-group">						
-			  			<div class="checkbox">
-     						<label class="col-lg-4 control-label">
-     							 {% if unaEmpresa.getPrestaservicio() == false %}
-     							 	<input type="checkbox" name="prestaservicio"><strong> Presta Servicio </strong>
-     							 {% else %}
-     							 	<input type="checkbox" name="prestaservicio" checked><strong> Presta Servicio </strong>
-     							 {% endif %}
-     						</label>
-    					</div>
+			{% if servicios == 2 %}
+				<div class="row fila-de-titulo">
+					<div class=" col-lg-4"></div>
+					 <div class=" col-lg-4">
+						<h3> Ofrece Servicio </h3>
+					 </div>
+				</div>
+				<div class="row">
+					 <div class="col-lg-6"> 
+					 	<div class="form-group">						
+				  			<div class="checkbox">
+	     						<label class="col-lg-4 control-label">
+	     							 {% if unaEmpresa.getPrestaservicio() == false %}
+	     							 	<input type="checkbox" name="prestaservicio"><strong> Presta Servicio </strong>
+	     							 {% else %}
+	     							 	<input type="checkbox" name="prestaservicio" checked><strong> Presta Servicio </strong>
+	     							 {% endif %}
+	     						</label>
+	    					</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			{% endif %}
 			<div class="row fila-de-titulo">
 				<div class=" col-lg-4"></div>
 				 <div class=" col-lg-4">

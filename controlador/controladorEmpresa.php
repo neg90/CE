@@ -699,6 +699,13 @@ class controladorEmpresa {
 	  	$unosRubros = PDOrubro::listar();
 	  	$medidorRelacionado = PDOmedidorempresa::buscarMedidorRelacionados($idempresa);
 	  	$unAbonadoRelacionado = PDOabonadoempresa::buscarAbonadosRelacionados($idempresa);
+	  	$servicios = PDOservicio::listar();
+	  	$noRomper = 2;
+	  	for ($i=0; $i < count($servicios); $i++) { 
+	  		if (PDOservicio::recibeServiciosID($idempresa)) {
+	  			$noRomper = 1;
+	  		}
+	  	}
 	  	$unosAbonados = PDOabonado::listar();
 		if (isset($_POST['guardarEmpresa'])){
 			if(PDOempresa::buscarEmpresa($idempresa)){
@@ -775,7 +782,7 @@ class controladorEmpresa {
 					$unAbonado = new PDOabonadoempresa(0,$ultimaID,$unaEmpresa->getIdempresa());
 					$unAbonado->guardar();
 				}
-					
+			
 				$unaEmpresa->guardar();
 				$aviso=1;
 				//Busco de nuevo la empresa actualizada.
@@ -785,7 +792,7 @@ class controladorEmpresa {
 				$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 				echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 				'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado,
-				'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado,'user'=>$user));
+				'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado,'user'=>$user,'servicios'=>$noRomper));
 			}else{
 				//No se encontro la empresa para modificar
 				$aviso = 3;
@@ -796,7 +803,7 @@ class controladorEmpresa {
 			$template = $twig->loadTemplate('empresa/modificarEmpresa.html.twig');
 			echo $template->render(array('idempresa'=>$idempresa,'aviso'=>$aviso,'contactos'=>$unosContactos,'medidores'=>$unosMedidores,
 			'rubros'=>$unosRubros,'categorias'=>$unasCategorias,'unaEmpresa'=>$unaEmpresa,'medidorRelacionado'=>$medidorRelacionado
-			,'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado,'user'=>$user));
+			,'abonados'=>$unosAbonados,'abonadoRelacionado'=>$unAbonadoRelacionado,'user'=>$user,'servicios'=>$noRomper));
 		}
 		
 	}
