@@ -179,10 +179,10 @@
 				 	<div class="form-group">						
 			  			<div class="checkbox">
      						<label class="col-lg-4 control-label">
-     							 {% if expression %}
+     							 {% if unaEmpresa.getPrestaservicio() == false %}
      							 	<input type="checkbox" name="prestaservicio"><strong> Presta Servicio </strong>
      							 {% else %}
-     							 	<input type="checkbox" name="prestaservicio"><strong> Presta Servicio </strong>
+     							 	<input type="checkbox" name="prestaservicio" checked><strong> Presta Servicio </strong>
      							 {% endif %}
      						</label>
     					</div>
