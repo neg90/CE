@@ -722,9 +722,10 @@ class controladorEmpresa {
 				$numabonado = htmlEntities($_POST['abonado']);
 				$idMedidor = htmlentities($_POST['medidor']);
 				if (isset($_POST['prestaservicio'])) {
-				$prestaservicio = true;
+					$prestaservicio = true;
 				}else{
 					$prestaservicio = false;
+					PDOservicio::borrarPorIdemrpesaV2($idempresa);
 				}
 				if (isset($_POST['activo'])) {
 					$activo = true;

@@ -79,6 +79,15 @@ class PDOservicio extends servicio{
       
    }
    
+   public function borrarPorIdemrpesaV2($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM servicio WHERE  idempresaofrece =  :idempresaofrece');
+
+      $consulta->bindParam(':idempresaofrece', $idempresa);
+    
+      $consulta->execute();
+      
+   }
 
   /* public function buscarAbonado ($numabonado){
       try {$conexion = new conexion;}catch (PDOException $e){} 
