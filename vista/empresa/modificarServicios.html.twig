@@ -4,7 +4,7 @@
 
 {% block contenedor %}
 		
-	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarDomicilios" role="form" method="POST">
+	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarServicios" role="form" method="POST">
 	<input type="hidden" name="idempresa" value="{{idempresa}}">
 	<div class="contenedor-formulario">
 		<div class="row fila-de-alerta">
@@ -24,16 +24,16 @@
 				<h3> Servicios que recibe</h3>
 			</div>
 		</div>
-		{% for item in empresas %}			
-			{% if item.prestaservicio == true %}
+		{% for item in arrayParaVista %}			
+			{% if item['tieneservicio'] == true %}
 				<div class="row">
 					<div class="col-lg-6"> 
 						<div class="form-group">						
 					  		<div class="checkbox">
-		     					<label class="col-lg-4 control-label">
-		     						<input type="checkbox" name="{{item.idempresa}}">
-		     						<strong> {{item.denominacion}} </strong>
-		     					</label>
+				     			<label class="col-lg-4 control-label">
+				     				<input type="checkbox" name="{{item.idempresa}}" checked>
+				     				<strong> {{item['tieneservicio']}} </strong>{{}}
+				     			</label>
 		    				</div>
 						</div>
 					</div>

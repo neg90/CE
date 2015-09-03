@@ -429,7 +429,7 @@ class controladorEmpresa {
 		$unasEmpresas = PDOempresa::listar();
 		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
 			
-			if ($_POST[$unasEmpresas[$i]->idempresa] == 'on'){
+			if (isset($_POST[$unasEmpresas[$i]->idempresa])){
 				//trabaja con ellos.
 				$unaRelacionServicio = new PDOservicio(0,$idempresa,$unasEmpresas[$i]->idempresa); 
 				$unaRelacionServicio->guardar();
@@ -697,6 +697,23 @@ class controladorEmpresa {
 		
 	}
 
+	private static function miPrimerArrayKitty($idempresa){
+		$unasEmpresas = PDOempresa::listar();
+		$unosServicios = PDOservicio::listar();
+		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
+			for ($i=0; $i < count($unosServicios) ; $i++) { 
+				if (($idempresa == $unosServicios[$i]->idempresarecibe)) {
+					$tieneServico = 1;
+				}else{
+					$tieneServico = 2;
+				}
+			}
+			$arrayParaVista = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
+			'denominacion'=>$unasEmpresas[$i]->denominacion);
+		}
+		return $arrayParaVista;
+	}
+
 	public function modificarServicios(){
 		$user=$_SESSION['user'];
 		Twig_Autoloader::register();
@@ -706,6 +723,9 @@ class controladorEmpresa {
 		
 		$idempresa = $_POST['idempresa'];
 		$unasEmpresas = PDOempresa::listar();
+		$unosServicios = PDOservicio::listar();
+		
+		$arrayParaVista = controladorEmpresa::miPrimerArrayKitty($idempresa);
 
 		if (isset($_POST['guardarEmpresa'])){
 			//Borro los q estaban
@@ -713,13 +733,15 @@ class controladorEmpresa {
 			//Agrego los nuevos
 			$aviso = 1;
 			controladorEmpresa::laCuestionDelServicio($idempresa);
+			$unasEmpresas = PDOempresa::listar();
+			$unosServicios = PDOservicio::listar();
 			$template = $twig->loadTemplate('empresa/modificarServicios.html.twig');
 			echo $template->render(array ('idempresa'=>$idempresa,
-			'empresas'=>$unasEmpresas,'aviso'=>$aviso,'user'=>$user));
+			'empresas'=>$arrayParaVista,'aviso'=>$aviso,'user'=>$user));
 		}else{
 			$template = $twig->loadTemplate('empresa/modificarServicios.html.twig');
 			echo $template->render(array ('idempresa'=>$idempresa,
-			'empresas'=>$unasEmpresas,'aviso'=>$aviso,'user'=>$user));
+			'empresas'=>$arrayParaVista,'aviso'=>$aviso,'user'=>$user));
 			
 		}
 		/*$correosRelacionados = PDOcorreoempresa::buscarCorreos($idempresa); 

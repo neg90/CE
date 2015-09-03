@@ -295,6 +295,14 @@ $twig = new Twig_Environment($loader, array('debug' => 'false'));//'cache' => '.
 						$template = $twig->loadTemplate('accesodenegado.html.twig');
 						echo $template->render(array());
 					}
+				}elseif($accion == 'modificarServicios'){
+					if ($permiso->cci == 1) {
+						controladorEmpresa::modificarServicios();
+					}else{
+						$template = $twig->loadTemplate('accesodenegado.html.twig');
+						echo $template->render(array());
+					}
+
 				}elseif($accion == 'modificar'){
 					if ($permiso->uci == 1) {
 						controladorEmpresa::modificar();

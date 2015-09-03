@@ -38,16 +38,26 @@ class PDOservicio extends servicio{
       $conexion = null;
    }
 
-   public function baja($numabonado){
-      try {$conexion = new conexion;}catch (PDOException $e){} 
-      $consulta = $conexion->prepare('DELETE FROM abonado WHERE numabonado =  :numabonado');
+   public static function listar(){
+      
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM servicio');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+      
+      return $objeto;
+   }
 
-      $consulta->bindParam(':numabonado', $numabonado);
+   
+   public function borrarPorIdemrpesa($idempresa){
+      try {$conexion = new conexion;}catch (PDOException $e){} 
+      $consulta = $conexion->prepare('DELETE FROM servicio WHERE  idempresarecibe =  :idempresarecibe');
+
+      $consulta->bindParam(':idempresarecibe', $idempresa);
     
       $consulta->execute();
       
    }
-
    
 
   /* public function buscarAbonado ($numabonado){
@@ -66,15 +76,7 @@ class PDOservicio extends servicio{
 
    }
 
-   public static function listar(){
-      try {$conexion = new conexion;}catch (PDOException $e){}
-      $consulta = $conexion->prepare('SELECT * FROM abonado');
-      $consulta->execute();
-      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
-      
-      return $objeto;
-   }
-
+  
    public static function listarPaginacion($valor,$cantResultados){
      
       try {$conexion = new conexion;}catch (PDOException $e){}
