@@ -24,33 +24,35 @@
 				<h3> Servicios que recibe</h3>
 			</div>
 		</div>
-		{% for item in empresas %}	
-			{% if item.tieneservicio == 1 %}
-				<div class="row">
-					<div class="col-lg-6"> 
-						<div class="form-group">						
-					  		<div class="checkbox">
-				     			<label class="col-lg-4 control-label">
-				     				<input type="checkbox" name="{{item.idempresa}}" checked>
-				     				<strong> {{item.denominacion}} </strong>
-				     			</label>
-		    				</div>
+		{% for item in empresas %}
+			{% if item.idempresa != idempresa  %}
+				{% if item.tieneservicio == 1 %}
+					<div class="row">
+						<div class="col-lg-6"> 
+							<div class="form-group">						
+						  		<div class="checkbox">
+					     			<label class="col-lg-4 control-label">
+					     				<input type="checkbox" name="{{item.idempresa}}" checked>
+					     				<strong> {{item.denominacion}} </strong>
+					     			</label>
+			    				</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			{% else %}
-				<div class="row">
-					<div class="col-lg-6"> 
-						<div class="form-group">						
-					  		<div class="checkbox">
-				     			<label class="col-lg-4 control-label">
-				     				<input type="checkbox" name="{{item.idempresa}}" >
-				     				<strong> {{item.denominacion}} </strong>
-				     			</label>
-		    				</div>
+				{% else %}
+					<div class="row">
+						<div class="col-lg-6"> 
+							<div class="form-group">						
+						  		<div class="checkbox">
+					     			<label class="col-lg-4 control-label">
+					     				<input type="checkbox" name="{{item.idempresa}}" >
+					     				<strong> {{item.denominacion}} </strong>
+					     			</label>
+			    				</div>
+							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 			{% endif %}
 		{% endfor %}
 		<div class="row fila-de-boton">
