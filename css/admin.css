@@ -197,4 +197,4 @@ hr{border:1px solid #ccc;}
 .paginacionGeneral ul li:last-child a{padding:6px 5px 6px 20px!important}
 
 .recibeUnServicio{width:50%; display:inline-block;}
-#nuevaempresa .checkbox .control-label{  text-align: left; margin-left:20px;}
+#nuevaempresa .checkbox .control-label, #modifServicios .checkbox .control-label{  text-align: left; margin-left:20px;}

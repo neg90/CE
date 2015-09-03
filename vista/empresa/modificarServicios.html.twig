@@ -4,7 +4,7 @@
 
 {% block contenedor %}
 		
-	<form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=modificarServicios" role="form" method="POST">
+	<form class="form-horizontal" id="modifServicios" action="privado.php?c=empresa&a=modificarServicios" role="form" method="POST">
 	<input type="hidden" name="idempresa" value="{{idempresa}}">
 	<div class="contenedor-formulario">
 		<div class="row fila-de-alerta">
@@ -27,8 +27,8 @@
 		{% for item in empresas %}
 			{% if item.idempresa != idempresa  %}
 				{% if item.tieneservicio == 1 %}
-					<div class="row">
-						<div class="col-lg-6"> 
+					<div class="row recibeUnServicio">
+						<div class="col-lg-12"> 
 							<div class="form-group">						
 						  		<div class="checkbox">
 					     			<label class="col-lg-4 control-label">
@@ -40,8 +40,8 @@
 						</div>
 					</div>
 				{% else %}
-					<div class="row">
-						<div class="col-lg-6"> 
+					<div class="row recibeUnServicio">
+						<div class="col-lg-12"> 
 							<div class="form-group">						
 						  		<div class="checkbox">
 					     			<label class="col-lg-4 control-label">

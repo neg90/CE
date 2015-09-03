@@ -26,7 +26,7 @@
   <table class="table table-hover">
   <thead>
     <tr>
-      <th>Servicios Asociados</th>
+      <th>Servicios Asociados ({{servicios | length}})</th>
     </tr>
   </thead>
   <tbody>
@@ -35,7 +35,7 @@
           <td>
             {% autoescape 'html' %}
               {% for em in empresas %}
-                {% if em.idempresa == item.idempresarecibe %}
+                {% if em.idempresa == item.idempresaofrece %}
                   {{em.denominacion|raw }}  
                 {% endif %} 
               {% endfor %}
