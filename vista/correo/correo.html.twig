@@ -4,6 +4,13 @@
 
 {% block contenedor %}
 	<script type="text/javascript">
+	function loading(){
+		var capa = document.getElementById("capa");
+		var h4 = document.createElement("h4");
+		h4.innerHTML = 'Se esta intentando enviar los correos, por favor espere!';
+		capa.appendChild(h4);
+	}
+
 		tinymce.init({
 			language : "es",
 		    selector: "textarea",theme: "modern",width: 750,height: 300,resize: false,
@@ -58,6 +65,8 @@
 					<h3> Formulario Correo</h3>
 				</div>
 		</div>
+		<div id="capa">
+		</div>
 		<div class="row aviso-completar">
 			<div class=" col-lg-3"></div>
 			<div class=" col-lg-6 col-md-6 col-sm-6 recuadro-aviso">
@@ -76,6 +85,8 @@
 				</div>
 			</div>
 		</div>
+
+		
 		<div class="row">
 			 <div class="col-lg-12"> 
 			 	<div class="form-group">
@@ -107,7 +118,7 @@
 		 <div class="row fila-de-boton">
 			 <div class=" col-lg-4"></div>
 			 <div class=" col-lg-4">
-				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarCorreo">Enviar</button>
+				<button type="submit" class="btn btn-default btn-lg btn-block col-lg-4" name="enviarCorreo" onclick="loading()">Enviar</button>
 			</div>
 			<div class=" col-lg-4"></div>
 		 </div>

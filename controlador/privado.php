@@ -10,7 +10,7 @@ require_once 'controladorCorreo.php';
 require_once 'controladorExcel.php';
 require_once 'controladorAbonado.php';
 require_once '../modelo/PDO/PDOPermisos.php';
-//error_reporting(0);
+error_reporting(0);
 
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../vista');

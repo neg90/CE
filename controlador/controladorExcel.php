@@ -538,7 +538,7 @@ class controladorExcel {
    		$fechainicioce = date('Y-m-d');
    		$activo = false;
    		
-		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,18,'Sin completar',0,24,$fechainicioce,$activo,0,$fechainicioce,0,$unRegistro[1]);
+		$unaEmpresa = new PDOempresa (0,$unRegistro[0],$web,18,'Sin completar',0,24,$fechainicioce,$activo,0,$fechainicioce,0,$unRegistro[1],0);
 		
 		return $unaEmpresa;
 

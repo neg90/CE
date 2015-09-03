@@ -38,16 +38,11 @@ class controladorCorreo {
 	  	$loader = new Twig_Loader_Filesystem('../vista');
 
 	  	$twig = new Twig_Environment($loader, array('cache' => '../cache','debug' => 'false'));
-	  	if (!isset($_POST['arrayIdempresa'])) {
+	  	if (isset($_POST['arrayIdempresa'])) {
 	  		$empresas = $_POST['arrayIdempresa'];
-	  	}else{
 	  		$template = $twig->loadTemplate('correo/correo.html.twig');
 			echo $template->render(array('empresas'=>$empresas));
 	  	}
-
-	  	$template = $twig->loadTemplate('FalloCargaMail.html.twig');
-		echo $template->render(array('empresas'=>$empresas));
-
 	}
 	/* Error 1 , es por que no tiene emrpesas seleccionadas , Error 2 sobrepasa el tamañ permiido por el server
 	Error 3 se canselo el envio durante la carga del archivo, Error 4 tiene tamaño nulo */
