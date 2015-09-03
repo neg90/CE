@@ -701,16 +701,16 @@ class controladorEmpresa {
 		$unasEmpresas = PDOempresa::listar();
 		$unosServicios = PDOservicio::listar();
 		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
-			for ($i=0; $i < count($unosServicios) ; $i++) { 
-				if (($idempresa == $unosServicios[$i]->idempresarecibe)) {
+			$tieneServico = 2;
+			for ($y=0; $y < count($unosServicios) ; $y++) { 
+				if (($idempresa == $unosServicios[$y]->idempresarecibe)) {
 					$tieneServico = 1;
-				}else{
-					$tieneServico = 2;
 				}
 			}
-			$arrayParaVista = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
+			$arrayParaVista[$i] = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
 			'denominacion'=>$unasEmpresas[$i]->denominacion);
 		}
+		var_dump($arrayParaVista);
 		return $arrayParaVista;
 	}
 
