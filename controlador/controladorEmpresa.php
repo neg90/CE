@@ -703,10 +703,12 @@ class controladorEmpresa {
 		for ($i=0; $i < count($unasEmpresas) ; $i++) { 
 			$tieneServico = 2;
 			for ($y=0; $y < count($unosServicios) ; $y++) { 
-				if (($idempresa == $unosServicios[$y]->idempresarecibe)) {
+				if (($idempresa == $unosServicios[$y]->idempresarecibe) and 
+				($unosServicios[$y]->idempresaofrece == $unasEmpresas[$i]->idempresa)) {
 					$tieneServico = 1;
 				}
 			}
+			var_dump($tieneServico);
 			$arrayParaVista[$i] = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
 			'denominacion'=>$unasEmpresas[$i]->denominacion);
 		}
