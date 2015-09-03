@@ -168,7 +168,7 @@ hr{border:1px solid #ccc;}
 .verEmpresa #detDomicilio, .verEmpresa #detContacto, .verEmpresa #detServicios{ float:right; display:block; width:100%; margin:20px; border-radius:5px;}
 .verEmpresa #detAdicionales { float:left; display:inline-block; width:400px; margin-left:100px;}
 .verEmpresa #botones{float:right; display:block; margin-right:110px;}
-.verEmpresa #detMedidor, .verEmpresa #detAbonado, .verEmpresa #detMedidorAbonadoVacio{float:left; display:block;border-radius:5px; width:600px; }
+.verEmpresa #detMedidor, .verEmpresa #detAbonado, .verEmpresa #detMedidorAbonadoVacio{float:left; display:block;border-radius:5px; width:600px;   margin-top: -115px; }
 .verEmpresa #detMedidor .medidor, .verEmpresa #detAbonado .abonado, .verEmpresa #detMedidorAbonadoVacio .medidorAbonado {margin-left:20px;}
 .medidor .right, .medidor .left, .medidorAbonado .left, .medidorAbonado .right{width:50%;}
 .verEmpresa .generales {margin-left:20px; list-style: none;}
@@ -195,3 +195,6 @@ hr{border:1px solid #ccc;}
 .paginacionGeneral, .paginacionGeneral ul{margin: 0 auto; text-align: center}
 .paginacionGeneral ul li:first-child a{padding:6px 5px 6px 20px!important;}
 .paginacionGeneral ul li:last-child a{padding:6px 5px 6px 20px!important}
+
+.recibeUnServicio{width:50%; display:inline-block;}
+#nuevaempresa .checkbox .control-label{  text-align: left; margin-left:20px;}
