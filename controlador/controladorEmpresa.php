@@ -708,11 +708,9 @@ class controladorEmpresa {
 					$tieneServico = 1;
 				}
 			}
-			var_dump($tieneServico);
 			$arrayParaVista[$i] = array('idempresa' =>$unasEmpresas[$i]->idempresa,'tieneservicio'=>$tieneServico,
 			'denominacion'=>$unasEmpresas[$i]->denominacion);
 		}
-		var_dump($arrayParaVista);
 		return $arrayParaVista;
 	}
 
@@ -737,6 +735,7 @@ class controladorEmpresa {
 			controladorEmpresa::laCuestionDelServicio($idempresa);
 			$unasEmpresas = PDOempresa::listar();
 			$unosServicios = PDOservicio::listar();
+			$arrayParaVista = controladorEmpresa::miPrimerArrayKitty($idempresa);
 			$template = $twig->loadTemplate('empresa/modificarServicios.html.twig');
 			echo $template->render(array ('idempresa'=>$idempresa,
 			'empresas'=>$arrayParaVista,'aviso'=>$aviso,'user'=>$user));
