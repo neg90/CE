@@ -9,6 +9,9 @@ $(document).ready(function() {
   /* Filtros */
      $("#dato").css("display", "none");
      $("#criterio").css("display", "none");
+     $("#servicios").css("display", "none");
+     $("#empresasBrindanServicios").css("display", "none");
+     $("#empresasRecibenServicios").css("display", "none");
      $("#activo").css("display", "none");
      $("#EnviarFiltro").css("display", "none");
 
@@ -33,6 +36,9 @@ $(document).ready(function() {
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: Empresa");
           $("#criterio").css("display", "none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#activo").css("display","none");
           $("#EnviarFiltro").css("display", "inline-block");
           document.getElementById('tipoFiltro').value = 'denominacion';
@@ -42,6 +48,9 @@ $(document).ready(function() {
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: 20-27000111-6");
           $("#criterio").css("display", "none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#activo").css("display","none");
           $("#EnviarFiltro").css("display", "inline-block");
           document.getElementById('tipoFiltro').value = 'cuit';
@@ -51,6 +60,9 @@ $(document).ready(function() {
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: Rubro");
           $("#criterio").css("display", "none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#activo").css("display","none");
           $("#EnviarFiltro").css("display", "inline-block");
           document.getElementById('tipoFiltro').value = 'rubro';
@@ -61,23 +73,44 @@ $(document).ready(function() {
           $("#dato").css("display", "inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: Categoria");
           $("#criterio").css("display", "none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#activo").css("display","none");
           $("#EnviarFiltro").css("display", "inline-block");
           document.getElementById('tipoFiltro').value = 'categoria';
             break;
 
+          case "Servicios":
+          $("#dato").css("display", "none");
+          $("#criterio").css("display", "none");
+          $("#activo").css("display","none");
+          $("#servicios").css("display", "inline-block");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
+          $("#datoTexto").attr("placeholder", "Ej.: 87");
+          $("#EnviarFiltro").css("display", "none");
+          document.getElementById('tipoFiltro').value = 'servicios';
+          break; 
+
           case "Importe":
           $("#dato").css("display", "none");
           $("#criterio").css("display", "inline-block");
           $("#activo").css("display","none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#datoTexto").attr("placeholder", "Ej.: 87");
           $("#EnviarFiltro").css("display", "none");
           document.getElementById('tipoFiltro').value = 'importe';
-            break; 
+          break; 
 
           case "Cant. Empleados":
           $("#dato").css("display", "inline-block");
           $("#criterio").css("display", "none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#activo").css("display","none");
           $("#datoTexto").attr("placeholder", "Ej.: 10");
           $("#EnviarFiltro").css("display", "inline-block");
@@ -87,6 +120,9 @@ $(document).ready(function() {
           case "Activo":
           $("#dato").css("display", "none");
           $("#criterio").css("display", "none");
+          $("#servicios").css("display", "none");
+          $("#empresasBrindanServicios").css("display", "none");
+          $("#empresasRecibenServicios").css("display", "none");
           $("#activo").css("display","inline-block");
           $("#datoTexto").attr("placeholder", "Ej.: 10");
           $("#EnviarFiltro").css("display", "inline-block");
@@ -97,6 +133,22 @@ $(document).ready(function() {
           
         }
     }
+
+  function getTipoServicio(sel2){
+      switch (sel2.value) {
+          case "1":
+              $("#empresasBrindanServicios").css("display", "none");
+              $("#empresasRecibenServicios").css("display", "inline-block");
+              $('#empresasRecibenServiciosID').select2();
+          break;
+
+          case "2":
+              $("#empresasBrindanServicios").css("display", "inline-block");
+              $("#empresasRecibenServicios").css("display", "none");
+              $('#empresasBrindanServiciosID').select2();
+          break;
+      }
+  }
 
 </script>
 
@@ -184,6 +236,7 @@ $(document).ready(function() {
                     <option>CUIT</option>
                     <option>Rubro</option>
                     <option>Categoria</option>
+                    <option>Servicios</option>
                     <option>Importe</option>
                     <option>Cant. Empleados</option>
                     <option>Activo</option>
@@ -206,7 +259,40 @@ $(document).ready(function() {
                       <option value="1">Solo Activos</option>
                       <option value="2">Solo Inactivos</option>
                   </select>
+              </div>
 
+              <div id="servicios" class="none">
+                  <select name="tipoServicio" id="tipoServicio" class="form-control" onchange="getTipoServicio(this);">
+                      <option value="0" selected>Seleccione</option>
+                      <option value="1">Recibe de...</option>
+                      <option value="2">Brinda a...</option>
+                  </select>
+
+              </div>
+              <div id="empresasBrindanServicios" class="none">
+                  <select name="empresasBrindanServicios" id="empresasBrindanServiciosID" class="form-control" onchange="document.getElementById('form_herramientas_empresa').submit();">
+                      <option value="0" selected>Seleccione</option>
+                      {% for empresaBrinda in idEmpresasBrindan %}
+                          {% for item in empresas %}
+                             {% if item.idempresa == empresaBrinda.idempresarecibe %}
+                                  <option value="{{item.idempresa}}">{{item.denominacion}}</option>
+                             {% endif %}
+                          {% endfor %}
+                      {% endfor %}
+                  </select>
+              </div>
+
+              <div id="empresasRecibenServicios" class="none">
+                  <select name="empresasRecibenServicios" id="empresasRecibenServiciosID" class="form-control" onchange="document.getElementById('form_herramientas_empresa').submit();">
+                      <option value="0" selected>Seleccione</option>
+                      {% for empresaRecibe in idEmpresasReciben %}
+                          {% for item in empresas %}
+                             {% if item.idempresa == empresaRecibe.idempresaofrece %}
+                                  <option value="{{item.idempresa}}">{{item.denominacion}}</option>
+                             {% endif %}
+                          {% endfor %}
+                      {% endfor %}
+                  </select>
               </div>
 
               <div id="dato">
@@ -224,7 +310,11 @@ $(document).ready(function() {
                   {% set datoFiltro='S&oacutelo inactivos'%}
               {% endif %}
            {% endif %}
+           {% if mensajeServicios == null %}
             <span>Filtrando resultados para {{tipoFiltro}} <b>{{datoFiltro}}</b></span>
+            {% else %}
+                  {{mensajeServicios}}
+            {% endif %}
           </div>            
           <div class="col-lg-2">
             <a href="privado.php?c=empresa&a=listar&pagina=1" style="text-decoration:none" class="btn btn-default btn-block inline-block" target="_self">

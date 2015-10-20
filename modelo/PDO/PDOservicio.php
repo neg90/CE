@@ -47,6 +47,68 @@ class PDOservicio extends servicio{
       
       return $objeto;
    }
+   
+   public static function todasEmpresasBrindan(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT DISTINCT idempresarecibe FROM servicio');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }
+
+   public static function todasEmpresasReciben(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT DISTINCT idempresaofrece FROM servicio');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }
+
+   /*   public static function todasEmpresasReciben(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT DISTINCT idempresarecibe FROM servicio');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }
+
+   public static function todasEmpresasBrindan(){
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT DISTINCT idempresaofrece FROM servicio');
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }*/
+
+   public static function empresaOfreceServiciosID($idempresarecibe){ //Devuelvo empresas que reciben servicios de esa empresa
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE idempresa IN (
+                                          SELECT idempresaofrece FROM servicio WHERE idempresarecibe = :idempresarecibe
+                                    )');
+      //$consulta = $conexion->prepare('SELECT idempresaofrece FROM servicio WHERE idempresarecibe = :idempresarecibe');
+      $consulta->bindParam(':idempresarecibe',$idempresarecibe);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }
+
+   public static function empresaRecibeServiciosID($idempresaofrece){ //Devuelvo empresas que reciben servicios de esa empresa
+      try {$conexion = new conexion;}catch (PDOException $e){}
+      $consulta = $conexion->prepare('SELECT * FROM empresa WHERE idempresa IN (
+                                          SELECT idempresarecibe FROM servicio WHERE idempresaofrece = :idempresaofrece
+                                    )');
+      //$consulta = $conexion->prepare('SELECT idempresaofrece FROM servicio WHERE idempresarecibe = :idempresarecibe');
+      $consulta->bindParam(':idempresaofrece',$idempresaofrece);
+      $consulta->execute();
+      $objeto = $consulta->fetchAll(PDO::FETCH_OBJ);
+
+      return $objeto;  
+   }
 
    public static function recibeServiciosID($idempresa){
       try {$conexion = new conexion;}catch (PDOException $e){}
