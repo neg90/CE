@@ -238,6 +238,16 @@ class PDOusuario extends usuario{
 		$objeto = $consulta->fetch(PDO::FETCH_OBJ);
       	return $objeto;
 	}
+	public static function buscarPorUsuarioArray($username){
+		try {
+		$conexion = new conexion; //creo instancia de la conexion
+		}catch (PDOException $e){}
+		$consulta = $conexion->prepare('SELECT * FROM usuario WHERE username = :username');
+		$consulta->bindParam(':username', $username);
+		$consulta->execute();
+		$objeto = $consulta->fetch();
+      	return $objeto;
+	}
 
 }
 ?>

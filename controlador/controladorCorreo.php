@@ -220,19 +220,21 @@ class controladorCorreo {
 	  		$tamaño = $adjunto['size'];
 	  		$tipo = $adjunto['type'];
 	  		$encoding = "base64";
+	  		$user = $_SESSION['user'];
+	  		$unUsuario = PDOusuario::buscarPorUsuarioArray($user);
 
 	  		//Creacion de correo.
 	  		$mail = new PHPMailer();
-	  		//$mail->SMTPDebug = 4;
 	  		$mail->isSMTP();                                      
-			$mail->Host = 'smtp.gmail.com';  
-			$mail->SMTPAuth = true;                              
-			$mail->Username = '';
-			$mail->AddReplyTo("", "");
-			$mail->Password = '';
-			$mail->SMTPSecure = 'tls';                          
-			$mail->Port = 587;
-			$mail->SetFrom('', '');
+				$mail->Host = 'smtp.gmail.com';  
+				$mail->SMTPAuth = true;                              
+				$mail->Username = $unUsuario['correo'];
+				$mail->AddReplyTo($unUsuario['correo'], $unUsuario['nombre'] . ' ' . $unUsuario['apellido']);
+				$mail->Password = $unUsuario['password'];
+				//$mail->SMTPSecure = 'tls';                          
+				$mail->Port = 587;
+				$mail->SetFrom('neg90@hotmail.com', $unUsuario['nombre'] . ' ' . $unUsuario['apellido']);
+			
 			
 			$mail->addAddress($unEmail);    
 			$mail->Subject = $asunto;

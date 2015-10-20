@@ -1,6 +1,6 @@
 {% extends "basePrivada.html.twig" %}
  
-{% block title %} Detalle de Asociado {% endblock %}
+{% block title %} Detalle de Empresa {% endblock %}
 {% block contenedor %}
 <script>
 function cambiarAction(accion){
@@ -35,7 +35,7 @@ function cambiarAction(accion){
   <div class="row fila-de-titulo">
         <div class=" col-lg-4"></div>
          <div class=" col-lg-4">
-          <h3> Detalle Asociado</h3>
+          <h3> Detalle Empresa</h3>
          </div>
       </div>
   <div class="clearfix"></div>
@@ -52,17 +52,17 @@ function cambiarAction(accion){
         </p>
          </span>
         <li class="generales">
-            <p><b>Nombre: </b> {{empresa.denominacion|raw}} </p>
-            <p><b>Rubro: </b>{{rubro.descripcion|raw}}</p>
-            <p><b>Detale actividad: </b> {{empresa.detactividad|raw}} </p>
-            <p><b>Cantidad de empleados: </b> {{empresa.cantempleados|raw}} </p>
-            <p><b>Categor&iacute;a: </b>  {{categoria.descripcion|raw}}</p>
+            <p><b>Nombre: </b> {{empresa.denominacion}} </p>
+            <p><b>Rubro: </b>{{rubro.descripcion}}</p>
+            <p><b>Detale actividad: </b> {{empresa.detactividad}} </p>
+            <p><b>Cantidad de empleados: </b> {{empresa.cantempleados}} </p>
+            <p><b>Categoría: </b>  {{categoria.descripcion}}</p>
             <p><b>Fecha de inicio C.E.: </b> {{empresa.fechainicioce | date('d/m/Y')}} </p>
-            <p><b>Nro. Asociado: </b> {{empresa.idempresa|raw}} </p>
-            <p><b>Importe mensual: </b> ${{empresa.importemensual|raw}} </p>
-            <p><b>Fecha fundaci&oacute;n: </b> {{empresa.fechafundacion | date('d/m/Y')}} </p>
-            <p><b>CUIT: </b> {{empresa.cuit|raw}} </p>
-            <p><b>Web: </b> {{empresa.web|raw}} </p>
+            <p><b>Nro. Socio: </b> {{empresa.nrosocio}} </p>
+            <p><b>Importe mensual: </b> ${{empresa.importemensual}} </p>
+            <p><b>Fecha fundación: </b> {{empresa.fechafundacion | date('d/m/Y')}} </p>
+            <p><b>CUIT: </b> {{empresa.cuit}} </p>
+            <p><b>Web: </b> {{empresa.web}} </p>
         </li>
     </div>
     <div id="detAdicionales">
@@ -79,32 +79,32 @@ function cambiarAction(accion){
                                 {% for contacto in contactos %}
                                   <li class="contacto"> 
                                       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                      {{ contacto.getApellido|raw }}, 
-                                      {{ contacto.getNombre|raw }}
+                                      {{ contacto.getApellido|convert_encoding(from='iso-2022-jp', to='UTF-8') }}, 
+                                      {{ contacto.getNombre|convert_encoding(from='iso-2022-jp', to='UTF-8') }}
                                   </li>
                                 {% endfor %}
                         {% endif %}
                 </p>
           </div>
             <div id="detTelefono">
-                <span class="tituloBloqueDet"><p><b>Tel&eacute;fonos: </b></span>
+                <span class="tituloBloqueDet"><p><b>Teléfonos: </b></span>
                 <a href="javascript:{}" onclick="cambiarAction('detTelefono');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
-                    {% if telefonos != null %}
+                    {% if telefonos is null %}
+                            <p class="noInfoDetalle">No se encontraron telefonos asignados.</p>
+                    {% else %}
                         {% for itemtel in telefonos %}
                                 <li class="telefono"> 
                                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                                    {{ itemtel.telefono|raw }}
-                                    {% if itemtel.descripcion != null%}
-                                        ( {{ itemtel.descripcion|raw }} )
+                                    {{ itemtel.telefono |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                                    {% if itemtel.descripcion is null%}
+
                                     {% else %}
-                                        
+                                        ( {{ itemtel.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
                                     {% endif %}
                                 </li>
                               {% endfor %}
-                    {% else %}                              
-                        <p class="noInfoDetalle">No se encontraron telefonos asignados.</p>
                     {% endif %}        
                 </p>
             </div>
@@ -113,21 +113,21 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detCorreo');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
-                    {% if correos != null %}
+                    {% if correos is null %}
+                            <p class="noInfoDetalle">No se encontraron correos asignados.</p>
+                    {% else %}
                         {% for itemcorreo in correos %}
                                 <li class="correo"> 
                                     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                    {{ itemcorreo.correo|raw }}
+                                    {{ itemcorreo.correo |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
 
-                                    {% if itemcorreo.descripcion != null%}
-                                        ( {{ itemcorreo.descripcion|raw }} )
+                                    {% if itemcorreo.descripcion is null%}
+
                                     {% else %}
-                                          
+                                          ( {{ itemcorreo.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
                                     {% endif %}
                                 </li>
                               {% endfor %}
-                    {% else %}                              
-                      <p class="noInfoDetalle">No se encontraron correos asignados.</p>
                     {% endif %}        
                 </p>
             </div>
@@ -136,34 +136,20 @@ function cambiarAction(accion){
                 <a href="javascript:{}" onclick="cambiarAction('detDomicilio');">
                     <span id="editar" class="glyphicon glyphicon-pencil right editBlockDet" aria-hidden="true"></span>
                 </a>
-                    {% if domicilios != null %}
+                    {% if domicilios is null %}
+                            <p class="noInfoDetalle">No se encontraron domicilios asignados.</p>
+                    {% else %}
                         {% for itemdomicilio in domicilios %}
                                 <li class="domicilio"> 
                                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                    {{ itemdomicilio.domicilio |raw }}
-                                    {% if itemdomicilio.descripcion != null%}
-                                        ( {{ itemdomicilio.descripcion|raw }} )
+                                    {{ itemdomicilio.domicilio |convert_encoding(from='iso-2022-jp', to='UTF-8') }}
+                                    {% if itemdomicilio.descripcion is null%}
+                                    
                                     {% else %}
-                                        
+                                        ( {{ itemdomicilio.descripcion |convert_encoding(from='iso-2022-jp', to='UTF-8') }} )
                                     {% endif %}
                                 </li>
-                              {% endfor %}  
-                    {% else %}
-                        <p class="noInfoDetalle">No se encontraron domicilios asignados.</p>      
-                    {% endif %}
-                </p>
-            </div>
-            <div id="detServicios">
-                <span class="tituloBloqueDet"><p><b>Recibe servicios de: </b></span>              
-                    {% if servicios != null %}
-                        {% for itemServicio in servicios %}
-                                <li class="itemServicio"> 
-                                    <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
-                                    {{ itemServicio.denominacion |raw }}
-                                </li>
-                              {% endfor %}  
-                    {% else %}
-                        <p class="noInfoDetalle">No recibe servicios.</p>      
+                              {% endfor %}        
                     {% endif %}
                 </p>
             </div>
@@ -184,6 +170,18 @@ function cambiarAction(accion){
                     <span class="tituloBloqueDet"><p><b>Medidor/Abonado: </b></span>
                                       <li class="medidorAbonado"> 
                                                   <p><b> No tiene ningun medidor / abonado asociado </b></p>
+                                                  <p><b> ¿Desea asociar uno? </b></p>
+                              <form class="form-horizontal" id="nuevaempresa" action="privado.php?c=empresa&a=eleccion&id={{empresa.idempresa}}" role="form" method="POST">
+                                          <input type="hidden" value="{{empresa.idempresa}}" name="idempresa">
+                                          <div class="left inline-block">
+                                                <button type="submit" class="btn btn-default btn-md btn-block col-lg-4 botonAsociarLeft" name="nuevoMedidor">  Asociar Medidor
+                                                </button>
+                                          </div>
+                                          <div class="right inline-block">
+                                                <button type="submit" class="btn btn-default btn-md btn-block col-lg-4 botonAsociarRight" name="nuevoAbonado">  Asociar Abonado
+                                                </button>
+                                          </div>
+                              </form>
                                       </li>
                     </p>
           </div>
@@ -197,18 +195,18 @@ function cambiarAction(accion){
                                       {% for medidor in medidores %}
                                         <li class="medidor"> 
                                             <div class="left inline-block">
-                                                <p><b>Nombre: </b>{{ medidor.nomyap|raw }}</p>
+                                                <p><b>Nombre: </b>{{ medidor.nomyap|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                                 
-                                                <p><b>Num. Usuario: </b>{{ medidor.numusuario|raw }}</p>
+                                                <p><b>Num. Usuario: </b>{{ medidor.numusuario|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                                 
-                                                <p><b>Num. Suministro: </b>{{ medidor.numsuministro|raw }}</p>
+                                                <p><b>Num. Suministro: </b>{{ medidor.numsuministro|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                             </div>
                                             <div class="right inline-block">
-                                                <p><b>Tel&eacute;fono: </b>{{ medidor.telefono|raw}}</p>
+                                                <p><b>Teléfono: </b>{{ medidor.telefono|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
 
-                                                <p><b>Domicilio: </b>{{ medidor.domicilio|raw }}</p>
+                                                <p><b>Domicilio: </b>{{ medidor.domicilio|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
 
-                                                <p><b>Importe pago: </b>$ {{ medidor.importepago|raw }}</p>
+                                                <p><b>Importe pago: </b>$ {{ medidor.importepago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                             </div>
                                         </li>
                                       {% endfor %}
@@ -223,11 +221,11 @@ function cambiarAction(accion){
                                       {% for abonado in abonados %}
                                         <li class="abonado"> 
                                             <div class="left inline-block">
-                                                <p><b>Importe: </b>{{ abonado.importe|raw }}</p>
+                                                <p><b>Importe: </b>{{ abonado.importe|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                                 
-                                                <p><b>Fecha ultimo pago: </b>{{ abonado.fechadeultimopago }}</p>
+                                                <p><b>Fecha ultimo pago: </b>{{ abonado.fechadeultimopago|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                                 
-                                                <p><b>Num. Abonado: </b>{{ abonado.numabonado }}</p>
+                                                <p><b>Num. Abonado: </b>{{ abonado.numabonado|convert_encoding(from='iso-2022-jp', to='UTF-8') }}</p>
                                             </div>
                                         </li>
                                       {% endfor %}
@@ -235,28 +233,34 @@ function cambiarAction(accion){
             </div>
     {% endif %}
 
-</form>
+
       <div class="clearfix"></div>
       <div id="botones">
+<<<<<<< HEAD
               <form id="enviarPDF" class="inline-block" action="privado.php?c=empresa&a=pdf" method="POST">
-                  <input type="hidden" value="{{empresa.idempresa}}" name="idempresa">
+                  <input type="hidden" id="datosPDFempresa" name="datosPDFempresa" value="{{ empresa|json_encode() }}"/>
                   <input type="hidden" id="datosPDFrubro" name="datosPDFrubro" value="{{ rubro|json_encode() }}"/>
                   <input type="hidden" id="datosPDFcategoria" name="datosPDFcategoria" value="{{ categoria|json_encode() }}"/>
                   <input type="hidden" id="datosPDFcontactos" name="datosPDFcontactos" value="{{ contactos|json_encode() }}"/>
                   <input type="hidden" id="datosPDFmedidores" name="datosPDFmedidores" value="{{ medidores|json_encode() }}"/>
                   <input type="hidden" id="datosPDFtelefonos" name="datosPDFtelefonos" value="{{ telefonos|json_encode() }}"/>
                   <input type="hidden" id="datosPDFcorreos" name="datosPDFcorreos" value="{{ correos|json_encode() }}"/>
-                  <input type="hidden" id="datosPDFdomicilios" name="datosPDFdomicilios" value="{{ domicilios|json_encode() }}"/>
+                  <input type="hidden" id="datosPDFdomcilios" name="datosPDFdomcilios" value="{{ domicilios|json_encode() }}"/>
                   <input type="hidden" id="datosPDFabonados" name="datosPDFabonados" value="{{ abonados|json_encode() }}"/>
-              <button formtarget="_blank" class="btn btn-default btn-lg btn-block col-lg-4">
+              <button style="text-decoration:none" class="btn btn-default btn-lg btn-block col-lg-4">
                   Ver en PDF
               </button>
+              </form>
+              <a href="privado.php?c=empresa&a=listar">
+                <button type="button" class="btn btn-default btn-lg btn-block col-lg-4 inline-block" name="volver">
+=======
               <a href="privado.php?c=empresa&a=listar&pagina=1">
                 <button type="button" class="btn btn-default btn-lg btn-block col-lg-4" name="volver">
+>>>>>>> 7f1ef1f002597f99fe39c492af57dd319b0522ca
                   Volver al listado
                 </button>
-        </a>
-              </form>
+              </a>
+
       </div>
   </div>
   <div class="clearfix"></div>
